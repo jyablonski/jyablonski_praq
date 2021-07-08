@@ -131,3 +131,9 @@ dmypy.json
 =======
 .pyre/
 >>>>>>> 1d5f792 (1st commit)
+
+# my stuff
+key
+credentials.json
+token.json
+quickstart.py
