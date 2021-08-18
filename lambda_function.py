@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime, timezone, timedelta
 import boto3
 import logging
-import sqlalchemy
+from sqlalchemy import exc, create_engine
 import os
 
 # starting logging
@@ -121,9 +121,7 @@ def schedule_scraper(month):
     schedule = pd.DataFrame(game_info, columns = headers)
     schedule['Date'] = date_info
     
-    # join_df = join_df.append(schedule)
     schedule_df = schedule_df.append(schedule)
-    # return(join_df)
     logging.info(f'Schedule Function Completed, retrieving {len(schedule_df)} rows')
 
 def get_advanced_stats():
@@ -179,14 +177,21 @@ odds = get_odds()
 logs = pd.read_csv('example.log', sep=r'\\t', engine='python', header = None)
 
 ### Writing Dataframes to SQL
-connection = sqlalchemy.create_engine('mysql+mysqlconnector://' + os.environ.get('RDS_USER') + ':' + os.environ.get('RDS_PW') + '@' + os.environ.get('IP') + ':' + os.environ.get('PORT') + '/' + os.environ.get('RDS_DB'),
+def sql_connection():
+    try:
+        connection = create_engine('mysql+mysqlconnector://' + os.environ.get('RDS_USER') + ':' + os.environ.get('RDS_PW') + '@' + os.environ.get('IP') + ':' + os.environ.get('PORT') + '/' + os.environ.get('RDS_DB'),
                      echo = False)
+        logging.info('SQL Connection Successful')
+        return(connection)
+    except exc.SQLAlchemyError as e:
+        logging.error('SQL Connection Failed, Error:', e)
+        return e
 
-player_stats.to_sql(con = connection, name = "my_python_injuries", index = False, if_exists = "replace")
-box_scores.to_sql(con = connection, name = "my_python_injuries", index = False, if_exists = "append")
-injury_data.to_sql(con = connection, name = "my_python_injuries", index = False, if_exists = "append")
-transactions.to_sql(con = connection, name = "my_python_injuries", index = False, if_exists = "replace")
-schedule_df.to_sql(con = connection, name = "my_python_injuries", index = False, if_exists = "replace")
-advanced_stats.to_sql(con = connection, name = "my_python_injuries", index = False, if_exists = "replace")
-odds.to_sql(con = connection, name = "my_python_injuries", index = False, if_exists = "append")
-logs.to_sql(con = connection, name = "my_python_injuries", index = False, if_exists = "append")
+player_stats.to_sql(con = connection, name = "player_stats", index = False, if_exists = "replace")
+box_scores.to_sql(con = connection, name = "box_scores", index = False, if_exists = "append")
+injury_data.to_sql(con = connection, name = "injury_data", index = False, if_exists = "append")
+transactions.to_sql(con = connection, name = "transactions", index = False, if_exists = "replace")
+schedule_df.to_sql(con = connection, name = "schedule", index = False, if_exists = "replace")
+advanced_stats.to_sql(con = connection, name = "advanced_stats", index = False, if_exists = "replace")
+odds.to_sql(con = connection, name = "odds", index = False, if_exists = "append")
+logs.to_sql(con = connection, name = "lambda_logs", index = False, if_exists = "append")
