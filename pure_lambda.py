@@ -1,35 +1,64 @@
-import logging
 import os
 from urllib.request import urlopen
-# from bs4 import BeautifulSoup
-from pandas import DataFrame, read_html, to_numeric
+import pandas as pd
 from sqlalchemy import exc, create_engine
+from bs4 import BeautifulSoup
 import pymysql
 
 print('LOADED FUNCTIONS')
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
 
 
-def get_injuries():
-    url = "https://www.basketball-reference.com/friv/injuries.fcgi"
-    df = read_html(url)[0]
-    logging.info(f'Injury Function Successful, retrieving {len(df)} rows')
-    return(df)
+def get_transactions():
+    url = "https://www.basketball-reference.com/leagues/NBA_2021_transactions.html"
+    html = urlopen(url)
+    soup = BeautifulSoup(html)
+    trs = soup.findAll('li')[71:] # theres a bunch of garbage in the first 71 rows - no matter what 
+    rows = []
+    mylist = []
+    for tr in trs:
+        date = tr.find('span')
+        if date is not None: # needed bc span can be null (multi <p> elements per span)
+            date = date.text
+        data = tr.findAll('p')
+        for p in data:
+            mylist.append(p.text)
+        data3 = [date] + [mylist]
+        rows.append(data3)
+        mylist = []
 
+    transactions = pd.DataFrame(rows)
+    transactions.columns = ['Date', 'Transaction']
+    transactions = transactions.explode('Transaction')
+    transactions['Date'] = pd.to_datetime(transactions['Date'])
+    transactions = transactions.query('Date != "NaN"')
+    transactions
+    print(f'Transactions Function Successful, retrieving {len(transactions)} rows')
+    return(transactions)
+    
+    
+d = {'col1': [1, 2], 'col2': [3, 4]}
+df = pd.DataFrame(data=d)
+df
 
 def sql_connection():
     try:
         connection = create_engine('mysql+pymysql://' + os.environ.get('RDS_USER') + ':' + os.environ.get('RDS_PW') + '@' + os.environ.get('IP') + ':' + os.environ.get('PORT') + '/' + os.environ.get('RDS_DB'),
                      echo = False)
-        logging.info('SQL Connection Successful')
+        print('SQL Connection Successful')
         return(connection)
     except exc.SQLAlchemyError as e:
-        logging.error('SQL Connection Failed, Error:', e)
+        print('SQL Connection Failed, Error:', e)
         return e
 
 print('STARTING HANDLER')
 def lambda_handler(event, context):
-    stats = get_injuries()
-    conn3 = sql_connection()
-    stats.to_sql(con=conn3, name="player_stats4", index=False, if_exists="replace")
+    conn = sql_connection()
+    df = get_transactions()
+    df.to_sql(con=conn, name="transactions", index=False, if_exists="replace")
+    print('WOOT FINISHED')
+
+# 1	Klayers-python38-pandas	38  	    arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-pandas:38
+# 2	Klayers-python38-lxml	6	        arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-lxml:6
+# 3	Klayers-python38-PyMySQL	4	    arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-PyMySQL:4
+# 4	Klayers-python38-SQLAlchemy	27  	arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-SQLAlchemy:27
+# 5	Klayers-python38-beautifulsoup4		arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-beautifulsoup4:10
