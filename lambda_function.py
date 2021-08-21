@@ -186,6 +186,7 @@ def sql_connection():
     except exc.SQLAlchemyError as e:
         logging.error('SQL Connection Failed, Error:', e)
         return e
+connection = sql_connection()
 
 player_stats.to_sql(con = connection, name = "player_stats", index = False, if_exists = "replace")
 box_scores.to_sql(con = connection, name = "box_scores", index = False, if_exists = "append")
