@@ -3,22 +3,17 @@ on:
   push:
     branches:
       - jacob
-    paths-ignore:
-      - 'package.json'
-      - 'CHANGELOG.md'
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.GH_TOKEN_ACTION }}
-    - name: Bump version and push tag
-      uses: TriPSs/conventional-changelog-action@master
-      with:
-        github-token: ${{ secrets.GH_TOKEN_ACTION }}
-        git-message: 'chore(release): {version}'
-        preset: 'angular'
-        tag-prefix: ''
-        output-file: 'CHANGELOG.md'
+      - uses: actions/checkout@v2
+      - name: Bump version and push tag
+        uses: jaumann/github-bumpversion-action@v0.0.7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tags: true
