@@ -18,6 +18,7 @@ day = (datetime.now() - timedelta(1)).day
 month = (datetime.now() - timedelta(1)).month
 year = (datetime.now() - timedelta(1)).year
 
+#       fuqqq
 # defining scraping functions
 def get_player_stats():
     year = 2021
@@ -47,13 +48,13 @@ def get_boxscores(month = month, day = day, year = year):
         headers = headers[1:]
         headers[2] = "Location"
         headers[4] = "Outcome"
-
         rows = soup.findAll('tr')[1:]
         player_stats = [[td.getText() for td in rows[i].findAll('td')]
             for i in range(len(rows))]
 
         df = pd.DataFrame(player_stats, columns = headers)
-        df[['FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'GmSc']] = df[['FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'GmSc']].apply(pd.to_numeric)
+        df[['FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'DRB', 
+        'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'GmSc']] = df[['FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'GmSc']].apply(pd.to_numeric)
 
         df.sort_values('PTS', ascending = False)
         logging.info(f'Box Score Function Successful, retrieving {len(df)} rows for {yesterday}')
