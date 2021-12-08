@@ -2,6 +2,7 @@ name: Lint & Bump bby
 on:
   # Trigger the workflow on push or pull request,
   # but only for the main branch
+  # https://github.com/wearerequired/lint-action
   push:
     branches:
       - jacob
@@ -31,6 +32,7 @@ jobs:
         with:
           black: true
           flake8: true
+          auto_fix: true
 
   build:
     runs-on: ubuntu-latest
