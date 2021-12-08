@@ -6,11 +6,13 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 
+
 @pytest.fixture
 def setup_database():
-    """ Fixture to set up an empty in-memory database """
-    conn = sqlite3.connect(':memory:')
+    """Fixture to set up an empty in-memory database"""
+    conn = sqlite3.connect(":memory:")
     yield conn
+
 
 # @pytest.fixture(scope='session')
 # def db_connection(docker_services, docker_ip):
@@ -67,12 +69,15 @@ def setup_database():
 #     df = df.reset_index(drop = True)
 #     return df
 
-@pytest.fixture(scope='session')
+
+@pytest.fixture(scope="session")
 def player_stats_data():
     """
     Fixture to load player stats data from a csv file for testing.
     """
-    fname = os.path.join(os.path.dirname(__file__), 'tests/fixture_csvs/player_stats_data.csv')
+    fname = os.path.join(
+        os.path.dirname(__file__), "tests/fixture_csvs/player_stats_data.csv"
+    )
     stats = pd.read_csv(fname)
     stats["PTS"] = pd.to_numeric(stats["PTS"])
 
@@ -88,60 +93,63 @@ def player_stats_data():
     stats = stats.drop("index", axis=1)
     return stats
 
-@pytest.fixture(scope='session')
+
+@pytest.fixture(scope="session")
 def boxscores_data():
     """
     Fixture to load boxscores data from a csv file for testing.
     """
-    fname = os.path.join(os.path.dirname(__file__), 'tests/fixture_csvs/boxscores_data.csv')
+    fname = os.path.join(
+        os.path.dirname(__file__), "tests/fixture_csvs/boxscores_data.csv"
+    )
     df = pd.read_csv(fname)
     day = (datetime.now() - timedelta(1)).day
     month = (datetime.now() - timedelta(1)).month
     year = (datetime.now() - timedelta(1)).year
-    season_type = 'Regular Season'
+    season_type = "Regular Season"
     df[
-            [
-                "FGM",
-                "FGA",
-                "FGPercent",
-                "threePFGMade",
-                "threePAttempted",
-                "threePointPercent",
-                "OREB",
-                "DREB",
-                "TRB",
-                "AST",
-                "STL",
-                "BLK",
-                "TOV",
-                "PF",
-                "PTS",
-                "PlusMinus",
-                "GmSc",
-            ]
-        ] = df[
-            [
-                "FGM",
-                "FGA",
-                "FGPercent",
-                "threePFGMade",
-                "threePAttempted",
-                "threePointPercent",
-                "OREB",
-                "DREB",
-                "TRB",
-                "AST",
-                "STL",
-                "BLK",
-                "TOV",
-                "PF",
-                "PTS",
-                "PlusMinus",
-                "GmSc",
-            ]
-        ].apply(
-            pd.to_numeric
-        )
+        [
+            "FGM",
+            "FGA",
+            "FGPercent",
+            "threePFGMade",
+            "threePAttempted",
+            "threePointPercent",
+            "OREB",
+            "DREB",
+            "TRB",
+            "AST",
+            "STL",
+            "BLK",
+            "TOV",
+            "PF",
+            "PTS",
+            "PlusMinus",
+            "GmSc",
+        ]
+    ] = df[
+        [
+            "FGM",
+            "FGA",
+            "FGPercent",
+            "threePFGMade",
+            "threePAttempted",
+            "threePointPercent",
+            "OREB",
+            "DREB",
+            "TRB",
+            "AST",
+            "STL",
+            "BLK",
+            "TOV",
+            "PF",
+            "PTS",
+            "PlusMinus",
+            "GmSc",
+        ]
+    ].apply(
+        pd.to_numeric
+    )
     df["date"] = str(year) + "-" + str(month) + "-" + str(day)
     df["date"] = pd.to_datetime(df["date"])
     df["Type"] = season_type
@@ -163,12 +171,15 @@ def boxscores_data():
     df.columns = df.columns.str.lower()
     return df
 
-@pytest.fixture(scope='session')
+
+@pytest.fixture(scope="session")
 def opp_stats_data():
     """
     Fixture to load team opponent stats data from a csv file for testing.
     """
-    fname = os.path.join(os.path.dirname(__file__), 'tests/fixture_csvs/opp_stats_data.csv')
+    fname = os.path.join(
+        os.path.dirname(__file__), "tests/fixture_csvs/opp_stats_data.csv"
+    )
     df = pd.read_csv(fname)
     df = df[["Team", "FG%", "3P%", "3P", "PTS"]]
     df = df.rename(
@@ -185,24 +196,30 @@ def opp_stats_data():
     df["scrape_date"] = datetime.now().date()
     return df
 
-@pytest.fixture(scope='session')
+
+@pytest.fixture(scope="session")
 def injuries_data():
     """
     Fixture to load injuries data from a csv file for testing.
     """
-    fname = os.path.join(os.path.dirname(__file__), 'tests/fixture_csvs/injuries_data.csv')
+    fname = os.path.join(
+        os.path.dirname(__file__), "tests/fixture_csvs/injuries_data.csv"
+    )
     df = pd.read_csv(fname)
     df = df.rename(columns={"Update": "Date"})
     df.columns = df.columns.str.lower()
     df["scrape_date"] = datetime.now().date()
     return df
 
-@pytest.fixture(scope='session')
+
+@pytest.fixture(scope="session")
 def transactions_data():
     """
     Fixture to load transactions data from a csv file for testing.
     """
-    fname = os.path.join(os.path.dirname(__file__), 'tests/fixture_csvs/transactions_data.csv')
+    fname = os.path.join(
+        os.path.dirname(__file__), "tests/fixture_csvs/transactions_data.csv"
+    )
     transactions = pd.read_csv(fname)
     transactions.columns = ["Date", "Transaction"]
     transactions = transactions.query(
@@ -218,12 +235,15 @@ def transactions_data():
     transactions["scrape_date"] = datetime.now().date()
     return transactions
 
-@pytest.fixture(scope='session')
+
+@pytest.fixture(scope="session")
 def advanced_stats_data():
     """
     Fixture to load team advanced stats data from a csv file for testing.
     """
-    fname = os.path.join(os.path.dirname(__file__), 'tests/fixture_csvs/advanced_stats_data.csv')
+    fname = os.path.join(
+        os.path.dirname(__file__), "tests/fixture_csvs/advanced_stats_data.csv"
+    )
     df = pd.read_csv(fname)
     df.drop(columns=df.columns[0], axis=1, inplace=True)
 
@@ -267,12 +287,13 @@ def advanced_stats_data():
     df.columns = df.columns.str.lower()
     return df
 
-@pytest.fixture(scope='session')
+
+@pytest.fixture(scope="session")
 def odds_data():
     """
     Fixture to load odds data from a csv file for testing.
     """
-    fname = os.path.join(os.path.dirname(__file__), 'tests/fixture_csvs/odds_data.csv')
+    fname = os.path.join(os.path.dirname(__file__), "tests/fixture_csvs/odds_data.csv")
     df = pd.read_csv(fname)
     day = (datetime.now() - timedelta(1)).day
     month = (datetime.now() - timedelta(1)).month
