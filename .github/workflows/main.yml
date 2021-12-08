@@ -32,15 +32,9 @@ jobs:
           black: true
           flake8: true
 
-
-name: Bump version
-on:
-  push:
-    branches:
-      - jacob
-jobs:
   build:
     runs-on: ubuntu-latest
+    needs: run-linters
     steps:
       - uses: actions/checkout@v2
       - name: Bump version and push tag
