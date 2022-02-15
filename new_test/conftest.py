@@ -7,22 +7,25 @@ import numpy as np
 import boto3
 from moto import mock_s3
 from datetime import datetime, timedelta
-from .. main import get_player_stats_transform
-from .. utils import *
+from ..main import get_player_stats_transform
+from ..utils import *
 
-@pytest.fixture(scope='function')
+
+@pytest.fixture(scope="function")
 def aws_credentials():
     """Mocked AWS Credentials for moto."""
-    os.environ['AWS_ACCESS_KEY_ID'] = 'testing'
-    os.environ['AWS_SECRET_ACCESS_KEY'] = 'testing'
-    os.environ['AWS_SECURITY_TOKEN'] = 'testing'
-    os.environ['AWS_SESSION_TOKEN'] = 'testing'
+    os.environ["AWS_ACCESS_KEY_ID"] = "testing"
+    os.environ["AWS_SECRET_ACCESS_KEY"] = "testing"
+    os.environ["AWS_SECURITY_TOKEN"] = "testing"
+    os.environ["AWS_SESSION_TOKEN"] = "testing"
+
 
 # this creates an s3 client where u can create a bucket and then test with.
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 def s3(aws_credentials):
     with mock_s3():
-        yield boto3.client('s3', region_name='us-east-1')
+        yield boto3.client("s3", region_name="us-east-1")
+
 
 class MyModel(object):
     def __init__(self, name, value):
@@ -30,14 +33,16 @@ class MyModel(object):
         self.value = value
 
     def save(self):
-        s3 = boto3.client('s3', region_name='us-east-1')
-        s3.put_object(Bucket='mybucket', Key=self.name, Body=self.value)
+        s3 = boto3.client("s3", region_name="us-east-1")
+        s3.put_object(Bucket="mybucket", Key=self.name, Body=self.value)
+
 
 @pytest.fixture
 def setup_database():
     """Fixture to set up an empty in-memory database"""
     conn = sqlite3.connect(":memory:")
     yield conn
+
 
 # @pytest.fixture
 # def s3_data():
@@ -512,6 +517,7 @@ def player_transformed_stats_data_raw():
         os.path.dirname(__file__), "tests/fixture_csvs/stats_html.html"
     )
 
+
 @pytest.fixture(scope="session")
 def player_transformed_stats_data():
     """
@@ -523,4 +529,3 @@ def player_transformed_stats_data():
     stats = pd.read_csv(fname)
     stats_transformed = get_player_stats_transform(stats)
     return stats_transformed
-

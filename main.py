@@ -34,7 +34,6 @@ year = (datetime.now() - timedelta(1)).year
 season_type = "Regular Season"
 
 
-
 def get_player_stats_data():
     """
     Web Scrape function w/ BS4 that grabs aggregate season stats
@@ -45,8 +44,10 @@ def get_player_stats_data():
     """
     try:
         year_stats = 2022
-        url = "https://www.basketball-reference.com/leagues/NBA_{}_per_game.html".format(
-            year_stats
+        url = (
+            "https://www.basketball-reference.com/leagues/NBA_{}_per_game.html".format(
+                year_stats
+            )
         )
         html = urlopen(url)
         soup = BeautifulSoup(html, "html.parser")
@@ -72,6 +73,7 @@ def get_player_stats_data():
         print(f"General Stats Extraction Function Failed, {error}")
         df = []
         return df
+
 
 def get_player_stats_transform(df):
     """
@@ -107,6 +109,7 @@ def get_player_stats_transform(df):
         print(f"General Stats Transformation Function Failed, {error}")
         df = []
         return df
+
 
 # stats_data = get_player_stats_data()
 
