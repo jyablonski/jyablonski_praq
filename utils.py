@@ -29,8 +29,10 @@ def get_player_stats_data():
     """
     try:
         year_stats = 2022
-        url = "https://www.basketball-reference.com/leagues/NBA_{}_per_game.html".format(
-            year_stats
+        url = (
+            "https://www.basketball-reference.com/leagues/NBA_{}_per_game.html".format(
+                year_stats
+            )
         )
         html = urlopen(url)
         soup = BeautifulSoup(html, "html.parser")
@@ -375,7 +377,7 @@ def get_transactions_transformed(df):
     Args:
         Raw Transactions DataFrame
     Returns:
-        Pandas DataFrame of all Transactions data 
+        Pandas DataFrame of all Transactions data
     """
     transactions = df
     try:
@@ -437,7 +439,7 @@ def get_advanced_stats_transformed(df):
     Args:
         Raw Advanced Stats DataFrame
     Returns:
-        Pandas DataFrame of all Advanced Stats data 
+        Pandas DataFrame of all Advanced Stats data
     """
     try:
         df.drop(columns=df.columns[0], axis=1, inplace=True)
@@ -535,7 +537,7 @@ def get_odds_transformed(df):
     Args:
         Raw Odds DataFrame
     Returns:
-        Pandas DataFrame of all Odds Data 
+        Pandas DataFrame of all Odds Data
     """
     try:
         data1 = df[0].copy()
@@ -924,13 +926,26 @@ def send_aws_email(logs):
     client = boto3.client("ses", region_name=aws_region)
     try:
         response = client.send_email(
-            Destination={"ToAddresses": [recipient,],},
+            Destination={
+                "ToAddresses": [
+                    recipient,
+                ],
+            },
             Message={
                 "Body": {
-                    "Html": {"Charset": charset, "Data": body_html,},
-                    "Text": {"Charset": charset, "Data": body_html,},
+                    "Html": {
+                        "Charset": charset,
+                        "Data": body_html,
+                    },
+                    "Text": {
+                        "Charset": charset,
+                        "Data": body_html,
+                    },
                 },
-                "Subject": {"Charset": charset, "Data": subject,},
+                "Subject": {
+                    "Charset": charset,
+                    "Data": subject,
+                },
             },
             Source=sender,
         )
