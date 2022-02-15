@@ -8,7 +8,7 @@ venv:
 
 .PHONY: bump-patch
 bump-patch:
-	@bumpv2ersion patch
+	@bump2version patch
 
 .PHONY: bump-minor
 bump-minor:
