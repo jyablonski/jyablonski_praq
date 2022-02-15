@@ -61,15 +61,6 @@ def get_boxscores(month=month, day=day, year=year):
         headers = headers[1:]
         headers[2] = "Location"
         headers[4] = "Outcome"
-<<<<<<< HEAD
-        rows = soup.findAll('tr')[1:]
-        player_stats = [[td.getText() for td in rows[i].findAll('td')]
-            for i in range(len(rows))]
-
-        df = pd.DataFrame(player_stats, columns = headers)
-        df[['FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'DRB', 
-        'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'GmSc']] = df[['FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'GmSc']].apply(pd.to_numeric)
-=======
 
         rows = soup.findAll("tr")[1:]
         player_stats = [
@@ -116,7 +107,6 @@ def get_boxscores(month=month, day=day, year=year):
         ].apply(
             pd.to_numeric
         )
->>>>>>> 8b44e99e3e2ee97a1c32b0fdb4a0a25e135692c6
 
         df.sort_values("PTS", ascending=False)
         logging.info(

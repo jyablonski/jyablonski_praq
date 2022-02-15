@@ -7,8 +7,9 @@ import numpy as np
 import boto3
 from moto import mock_s3
 from datetime import datetime, timedelta
+from .. main import get_player_stats_transform
+from .. utils import *
 
-<<<<<<< HEAD
 @pytest.fixture(scope='function')
 def aws_credentials():
     """Mocked AWS Credentials for moto."""
@@ -31,8 +32,6 @@ class MyModel(object):
     def save(self):
         s3 = boto3.client('s3', region_name='us-east-1')
         s3.put_object(Bucket='mybucket', Key=self.name, Body=self.value)
-=======
->>>>>>> 8b44e99e3e2ee97a1c32b0fdb4a0a25e135692c6
 
 @pytest.fixture
 def setup_database():
@@ -40,7 +39,6 @@ def setup_database():
     conn = sqlite3.connect(":memory:")
     yield conn
 
-<<<<<<< HEAD
 # @pytest.fixture
 # def s3_data():
 #     with mock_s3():
@@ -51,8 +49,6 @@ def setup_database():
 #         model_instance.save()
 #         body = conn.Object('mybucket', 'steve').get()['Body'].read().decode("utf-8")
 #         return body
-=======
->>>>>>> 8b44e99e3e2ee97a1c32b0fdb4a0a25e135692c6
 
 # @pytest.fixture(scope='session')
 # def db_connection(docker_services, docker_ip):
@@ -504,3 +500,27 @@ def odds_data():
 #     )
 #                 # filtering only scoring plays here, keep other all other rows in future for lineups stuff etc.
 #     return pbp_list
+
+# https://stackoverflow.com/questions/52973700/how-to-save-the-beautifulsoup-object-to-a-file-and-then-read-from-it-as-beautifu
+## NEW TESTS
+@pytest.fixture(scope="session")
+def player_transformed_stats_data_raw():
+    """
+    Fixture to load web scrape html from an html file for testing.
+    """
+    fname = os.path.join(
+        os.path.dirname(__file__), "tests/fixture_csvs/stats_html.html"
+    )
+
+@pytest.fixture(scope="session")
+def player_transformed_stats_data():
+    """
+    Fixture to load player stats data from a csv file for testing.
+    """
+    fname = os.path.join(
+        os.path.dirname(__file__), "tests/fixture_csvs/player_stats_data.csv"
+    )
+    stats = pd.read_csv(fname)
+    stats_transformed = get_player_stats_transform(stats)
+    return stats_transformed
+

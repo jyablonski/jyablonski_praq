@@ -1,9 +1,10 @@
+import os
 import pytest
-<<<<<<< HEAD
 import boto3
-from moto import mock_s3
-# import pandas as pd
-
+from botocore.exceptions import ClientError
+from moto import mock_s3, mock_ses
+import pandas as pd
+from ... utils import *
 class MyModel(object):
     def __init__(self, name, value):
         self.name = name
@@ -12,11 +13,24 @@ class MyModel(object):
     def save(self):
         s3 = boto3.client('s3', region_name='us-east-1')
         s3.put_object(Bucket='mybucket', Key=self.name, Body=self.value)
-=======
 
+@mock_ses
+def test_ses_email(aws_credentials):
+    ses = boto3.client("ses", region_name="us-east-1")
+    logs = pd.DataFrame({'errors': ['ex1', 'ex2', 'ex3']})
+    send_aws_email(logs)
+    assert ses.verify_email_identity(EmailAddress="jyablonski9@gmail.com")
 # import pandas as pd
 
->>>>>>> 8b44e99e3e2ee97a1c32b0fdb4a0a25e135692c6
+@mock_ses
+def test_ses_email2(aws_credentials):
+    ses = boto3.client("ses", region_name="us-east-1")
+    logs = pd.DataFrame({'errors': ['ex1', 'ex2', 'ex3']})
+    send_aws_email(logs)
+    send_quota = ses.get_send_quota()
+    sent_count = int(send_quota["SentLast24Hours"])
+    assert sent_count == 0
+
 
 def test_player_stats_sql(setup_database, player_stats_data):
     # Test to make sure that there are 2 items in the database
@@ -96,6 +110,13 @@ def test_player_stats_rows(player_stats_data):
 
 def test_player_stats_cols(player_stats_data):
     assert len(player_stats_data.columns) == 30
+
+def test_player_transformed_stats_rows(player_transformed_stats_data):
+    assert len(player_transformed_stats_data) >= 300
+
+
+def test_player_transformed_stats_cols(player_transformed_stats_data):
+    assert len(player_transformed_stats_data.columns) == 30
 
 
 def test_boxscores_cols(boxscores_data):
@@ -186,3 +207,13 @@ def test_create_bucket(s3):
 
 # def test_pbp_rows(pbp_data):
 #     assert len(pbp_data) >= 100
+
+def test_col_dtypes(dummy_data):
+    cols = dummy_data.dtypes.to_dict()
+
+    fixture_cols = {
+                    'col1': np.dtype('int64'),
+                    'col2': np.dtype('int64'),
+    }
+
+    assert fixture_cols == cols

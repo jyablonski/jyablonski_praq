@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pandas = "*"
+nest_asyncio = "*"
+twint = {git = "https://github.com/Museum-Barberini/twint.git"}
+nltk = "*"
+searchtweets = "*"
+python-twitter = "*"
+python-twitter-v2 = "*"
+boto3 = "*"
+awswrangler = "*"
+bump2version = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
