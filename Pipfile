@@ -14,6 +14,7 @@ python-twitter-v2 = "*"
 boto3 = "*"
 awswrangler = "*"
 bump2version = "*"
+slack-sdk = "*"
 
 [dev-packages]
 
