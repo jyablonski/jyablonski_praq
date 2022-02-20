@@ -15,6 +15,7 @@ boto3 = "*"
 awswrangler = "*"
 bump2version = "*"
 slack-sdk = "*"
+gspread = "*"
 
 [dev-packages]
 
