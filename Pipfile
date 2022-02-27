@@ -16,6 +16,7 @@ awswrangler = "*"
 bump2version = "*"
 slack-sdk = "*"
 gspread = "*"
+tweepy = "*"
 
 [dev-packages]
 
