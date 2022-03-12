@@ -29,10 +29,8 @@ def get_player_stats_data():
     """
     try:
         year_stats = 2022
-        url = (
-            "https://www.basketball-reference.com/leagues/NBA_{}_per_game.html".format(
-                year_stats
-            )
+        url = "https://www.basketball-reference.com/leagues/NBA_{}_per_game.html".format(
+            year_stats
         )
         html = urlopen(url)
         soup = BeautifulSoup(html, "html.parser")
@@ -926,26 +924,13 @@ def send_aws_email(logs):
     client = boto3.client("ses", region_name=aws_region)
     try:
         response = client.send_email(
-            Destination={
-                "ToAddresses": [
-                    recipient,
-                ],
-            },
+            Destination={"ToAddresses": [recipient,],},
             Message={
                 "Body": {
-                    "Html": {
-                        "Charset": charset,
-                        "Data": body_html,
-                    },
-                    "Text": {
-                        "Charset": charset,
-                        "Data": body_html,
-                    },
+                    "Html": {"Charset": charset, "Data": body_html,},
+                    "Text": {"Charset": charset, "Data": body_html,},
                 },
-                "Subject": {
-                    "Charset": charset,
-                    "Data": subject,
-                },
+                "Subject": {"Charset": charset, "Data": subject,},
             },
             Source=sender,
         )
