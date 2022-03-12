@@ -10,13 +10,14 @@ from sqlalchemy import exc, create_engine
 import boto3
 from botocore.exceptions import ClientError
 
+
 today = datetime.now().date()
 todaytime = datetime.now()
 yesterday = today - timedelta(1)
 day = (datetime.now() - timedelta(1)).day
 month = (datetime.now() - timedelta(1)).month
 year = (datetime.now() - timedelta(1)).year
-season_type = "Regular Season" # hello
+season_type = "Regular Season"  # hello
 
 
 def get_player_stats_data():
