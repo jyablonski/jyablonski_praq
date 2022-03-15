@@ -17,6 +17,7 @@ bump2version = "*"
 slack-sdk = "*"
 gspread = "*"
 tweepy = "*"
+sentry-sdk = "*"
 
 [dev-packages]
 
