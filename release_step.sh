@@ -11,7 +11,7 @@ fi
 
 # check bumpversion and parse the new version using awk
 set -eo pipefail
-new_version= "$(python3 -m bumpversion $1 --dry-run --list | awk -F'=' '/new_version/ {print $2}')"
+new_version="$(python3 -m bumpversion $1 --dry-run --list | awk -F'=' '/new_version/ {print $2}')"
 
 # do the bump, update changelog using sed
 sed -i 's/## \[Unreleased\]/## \[Unreleased\]\n\n\n## \['$new_version'\] - '$(date +%Y-%m-%d)'/g' CHANGELOG.md
