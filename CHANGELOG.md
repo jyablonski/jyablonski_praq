@@ -7,6 +7,9 @@ This documents follows the conventions laid out in [Keep a CHANGELOG](http://kee
 ## [Unreleased]
 
 
+## [2.7.1] - 2022-03-29
+
+
 ## [2.7.0] - 2022-03-22
 
 
