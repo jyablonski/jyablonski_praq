@@ -1,21 +1,61 @@
+# Lints all python files
+.PHONY: lint
+lint: 
+	black app.py utils.py tests/conftest.py tests/unit_test.py
+
 .PHONY: create-venv
 create-venv:
-	@pipenv install
+	pipenv install
 
 .PHONY: venv
 venv:
-	@pipenv shell
+	pipenv shell
+
+.PHONY: test
+test:
+	pytest
+
+.PHONY: docker-build
+docker-build:
+	docker build -t python_docker_local .
+
+.PHONY: docker-run
+docker-run:
+	docker run --rm python_docker_local
+
+# use to untrack all files and subsequently retrack all files, using up to date .gitignore
+.PHONY: git-reset
+git-reset:
+	git rm -r --cached .
+	git add .
+
+PHONY: git-rebase
+git-rebase:
+	@git checkout master
+	@git pull
+	@git checkout feature_integration
+	@git rebase master
+	@git push
 
 .PHONY: bump-patch
 bump-patch:
-	@./release_step.sh patch
-	@git push --follow-tags
+	@bump2version patch
+	@git push --tags
+	@git push
 
 .PHONY: bump-minor
 bump-minor:
-	@./release_step.sh minor
-	@git push --follow-tags
+	@bump2version minor
+	@git push --tags
+	@git push
+
 .PHONY: bump-major
 bump-major:
-	@./release_step.sh major
-	@git push --follow-tags
+	@bump2version major
+	@git push --tags
+	@git push
+
+.PHONY: start-mlflow-server
+start-mlflow-server:
+	@mlflow server --backend-store-uri sqlite:///mflow.db --default-artifact-root ./artifacts
+
