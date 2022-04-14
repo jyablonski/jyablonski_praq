@@ -4,9 +4,8 @@ from datetime import datetime, timezone, timedelta
 import numpy as np
 import pandas as pd
 
-# from urllib.error import URLError, HTTPError
-
-
+# the idea here is you can create ONE ECS task for a job, and then pass in this run_type variable via the network config file
+# so on dev you only bring in a small amount of records to test the pipeline and in prod you do the full workload.
 class RunTypeError(BaseException):
     pass
 
@@ -52,8 +51,14 @@ def get_contracts(run_type: str):
     return df
 
 
-contracts = get_contracts("prod")  # this will return 100% of records
 contracts = get_contracts(
-    "dev"
+    os.environ.get("contracts_run_type_dev")
+)  # this will return 100% of records
+
+contracts = get_contracts(
+    os.environ.get("contracts_run_type_prod")
 )  # this will return 0.5% of records to test integration.
-contracts = get_contracts("test_fail")  # test that the exception works.
+
+contracts = get_contracts(
+    os.environ.get("contracts_run_type_fail")
+)  # test that the exception works.
