@@ -19,6 +19,7 @@ gspread = "*"
 tweepy = "*"
 sentry-sdk = "*"
 flatterer = "*"
+pdftotext = "*"
 
 [dev-packages]
 
