@@ -20,6 +20,7 @@ tweepy = "*"
 sentry-sdk = "*"
 flatterer = "*"
 pdftotext = "*"
+elasticsearch = "*"
 
 [dev-packages]
 
