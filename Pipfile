@@ -21,6 +21,7 @@ sentry-sdk = "*"
 flatterer = "*"
 pdftotext = "*"
 elasticsearch = "*"
+discord = "*"
 
 [dev-packages]
 
