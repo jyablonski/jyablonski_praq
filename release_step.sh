@@ -17,3 +17,5 @@ new_version="$(python3 -m bumpversion $1 --dry-run --list | awk -F'=' '/new_vers
 sed -i 's/## \[Unreleased\]/## \[Unreleased\]\n\n\n## \['$new_version'\] - '$(date +%Y-%m-%d)'/g' CHANGELOG.md
 git commit -am "bump CHANGELOG to $new_version"
 python3 -m bumpversion $1 --verbose
+git push --tags
+git push
