@@ -39,7 +39,7 @@ git-rebase:
 
 .PHONY: bump-patch
 bump-patch:
-	@release.sh patch
+	./release.sh patch
 
 .PHONY: bump-minor
 bump-minor:
