@@ -8,7 +8,6 @@ pandas = "*"
 nest_asyncio = "*"
 twint = {git = "https://github.com/Museum-Barberini/twint.git"}
 nltk = "*"
-searchtweets = "*"
 python-twitter = "*"
 python-twitter-v2 = "*"
 boto3 = "*"
@@ -21,7 +20,7 @@ sentry-sdk = "*"
 flatterer = "*"
 pdftotext = "*"
 elasticsearch = "*"
-discord = "*"
+searchtweets-v2 = "*"
 
 [dev-packages]
 
