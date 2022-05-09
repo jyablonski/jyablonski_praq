@@ -54,3 +54,49 @@ Graphs can also link data that aren't typically associated with each other.
 Graph Models typically don't enforce a schema for the data they store, so it can easily adapt to changing business requirements.
 
 # Chapter 3 Storage and Retrieval
+Indexes are used to basically store a small amount of metadata about how to query the data you want.  They slow down writes, but improve query times.  So you usually shouldn't index everything.  Know your query patterns before hand.
+
+# Chapter 4 Encoding and Evolution
+Staged rollout - server side technique when you update a very large application base so only a few nodes at a time get the new version.  In client side apps this won't work, bc you can't really force the client to update.
+    * Old and new versions of code and releases might co-exist at the same time.
+    * Backwards Compatibility - Newer code can read data written by older code
+    * Forward Compatibility - Older code can read data written by newer code.
+
+Encoding - when you want to send data over a network, you have to encode it as some kind of self-contained sequence of bytes.  You can't use your personal PCs internal pointers anymore where the data sits in memory, which is why this sequence of bytes look different than what we're used to.
+    * Serialization - Turning in memory objects into a series of bytes to store it or transmit it somewhere.
+    * Deserialization - Turning an unreadable series of bytes into an object you can interact with in memory.
+      * Takes time for the CPU to deserialize the bytes.
+    * Python example - `pickle` library
+      * Stores in memory objects as a sequence of bytes.
+      * It becomes difficult to share these things across programming languages.
+
+File Types
+    * XML used to be used a lot but it's very verbose and complicated
+    * JSON used a lot bc it's natively supported by web browsers, can distinguish numbers and strings but precision (float values etc) can get fkd up.
+      * Uses a lot of space compared to binary formats.
+    * CSV used a lot but everything is represented as strings
+
+## Binary Encoding
+Protocol buffers are binary encoding libraries that require a schema for any data encoded.  Comes with a code generation tool in your respective programming language to create the classes + schemas for you.  Array / list fields - `repeated` object type.
+    * Lightweight and compact bc field names are ommitted from the encoded data.
+    * Schema is a valid form of documentation to see what the message is made up of.
+
+Avro is similar but different to protobufs, it has a schema and has 2 versions for humans to read and machines to read.
+
+Service Oriented Architecture - decomposing a large application into smaller services by area of functionality so they request things they need from each other.
+    * Goal is to make application easier to change and maintain by making each service independently deployable and evolvable.
+
+Web Service - when HTTP is the protocol for talking to a service.
+
+REST is a design philosophy to emphasize simple data formats, using URLs to identify resources, and using standard HTTP features for authentication and requests.
+    * Commonly use JSON.
+
+Remote Procedure Protocol (RPC) - make a request to a network service look the same as calling a function in a programming language
+    * Flawed bc networks are inherently unpredictable.  
+      * Can be unavailable, no internet, inconsistent response times, or timeout.
+
+Message Broker - messages get sent to a queue or topic, and the broker ensures the message is delivered to one or more consumers or subscribers to that topic.
+    * Rabbit MQ, Kafka etc.
+    * Pub / Sub architecture.
+
+# Chapter 5 Distributed Data
