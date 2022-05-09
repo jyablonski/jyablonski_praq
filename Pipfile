@@ -21,6 +21,7 @@ flatterer = "*"
 pdftotext = "*"
 elasticsearch = "*"
 searchtweets-v2 = "*"
+langdetect = "*"
 
 [dev-packages]
 
