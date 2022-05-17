@@ -11,7 +11,7 @@ The example I did in the script changes the same game of DAL @ GSW from 7:00p st
 
 
 You don't actually need the INDEX in sql. 
-````
+```
 select * from jacob_db.nba_source_dev.nba_schedule order by proper_date desc limit 100;
 
 select count(*) from jacob_db.nba_source_dev.nba_schedule;
@@ -22,3 +22,6 @@ SELECT EXISTS (
             WHERE table_schema = 'nba_source_dev' AND table_name = 'nba_schedule'
     );
 ```
+
+# The Tables for Project
+Should be used for Schedule, Transaction, Injury Scrapes bc I don't care if there were historical errors with these records, if there's new data then replace it and delete the error.
