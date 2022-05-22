@@ -99,4 +99,67 @@ Message Broker - messages get sent to a queue or topic, and the broker ensures t
     * Rabbit MQ, Kafka etc.
     * Pub / Sub architecture.
 
-# Chapter 5 Distributed Data
+# Chapter 5 Replication
+If your data doesn't change over time then replication is easy, you copy data to every node once and you're done.  The problem becomes when your data changes and you have to still be doing replication.  
+
+`Replicas` are nodes that store a copy of the database.  How do you ensure all of the data ends up on the replicas.  
+
+`Leader Based Replication` is the most common strategy to solve this.
+    * One of the replicas is designated to be the leader.  When clients want to write to the database, they send their request to the leader.
+    * The other replicas are followers, and when the leader writes new data to its local storage it sends out the data change to all of these followers via a replication log and they each make the change accordingly.  
+    * Writes are only accepted on the leader, however, reads can happen to either the leader or the follower.
+    * Distributed message brokers like Kafka and RabbitMQ also use this.
+
+## Asynchronous vs Synchronous Replication
+Synchronous - the leader waits til it has received a success message from the replica that the write was successful before completing the actual update and making it visible to other clients.
+    * Advantage is the follower is guaranteed to have an updated copy of the data consistent with the leader.  
+    * Disadvantage is if the follower is unavailable (crashed or network issue) then the write cannot happen until follower is available again.
+      * Any node that is down can cause the whole system can come to a halt.
+      * Possible to have 1 synchronous node and the others async.  if this synchronous one fails, one of the async ones becomes synchronous. - `semi-synchronous`.
+
+Asynchronous - the leader sends the data change but doesn't wait for a response from the follower.
+    * Most commonly used.
+    * leader can continue processing updates even if the followers fails.
+    * Problems if user requests data too quickly after making a write.
+    * `read-after-write consistency` is a guarantee that if the user reloads the page after a write, they will see the updates they submitted themselves.
+
+Followers can take a few minutes to recover if they just failed and are waiting to get new changes from the leader, or if there are network problems between nodes.
+
+New Followers - take a snapshot of leader's database, copy it to the new follower, and then the new follower reqeusts all new data changes that have happened since the snapshot.  Once it processes this backlog, the follwoer has caught up.
+
+System has to continue working when a node fails.  
+    * Follower - Each node knows the last trasnaction it processed before the fault occurred.
+    * Leader - Much trickier.  One of the followers needs to be promoted to the leader and the clients need to be reconfigured to send writes to the new leader.  This is called `failover`.
+      * Failover can happen manually or be triggered when the leader is known to have failed - crash, pwoer outage, network issue etc.  Most systems use a timeout process where if no message has responsed for 30+ seconds it's assumed to be dead.
+    * New leader - Election process where leader is chosen by a majority of remaining replicas, or appointed by a previously elected controller node.  The new leader typically is the one that has the most up to date changes from the old leader.
+    * Things get complicated if the old leader "comes back".  Also - if async replication, the new leader might not have gotten all the most recent changes before the last one went down.
+
+Leader writes all write requests to a statement log to its followers.  Every INSERT, UPDATE, or DELETE statement is forwarded to the followers.
+    * Nondeterministic stuff like now() or RAND() will not be the same value on every replica.
+    * Autoincrementing fields might get fkd up.
+    * stored procedures and UDFs might not be consistent.
+
+## Write-ahead log (WAL)
+An Append-only sequence of bytes containing all writes to the database.  Used in Postgres.  Tracks which bytes were changed in which disk blocks.  Different software versions between replicas can screw this up.
+
+## Logical (row-based) log replication
+An alternative where replication log is decoupled from the storage engine.  Sequence of records describing writes to a database where it has enough info to uniquely describe each row that was changed.  Easier to keep backwards compatible.  Easier for external systems to parse.
+
+## Trigger based replication
+Trigger lets you run custom application code when data changes occur in a database system.
+
+## Multi Leader Replication
+Typically used for massive scale operations with multiple datacenters.  One datacenter goes out -> you're still operational.  Internet goes out -> you're still operatinal.
+
+I skipped a ton after this.
+
+## Partitioning
+Partitions in databases are called shards in MongoDB and Elasticsearch, and vnodes in Cassandra.  All the same concept.
+
+Partitions are each piece of data belonging to one partition.  You want this for scalability, a large dataset can be distributed across multiple disks, and thus the query can be distributed across multiple processors.
+
+Each record belongs to exactly one partition, but may still be stored on several different nodes for fault tolerance.
+
+The goal is to evenly spread the data and query load.  However, if partitioning is unfair and skewed then this makes it a more inefficient process.  So you have to keep partitioning spread evenly, but you also want to distribute your data logically (putting similar stuff on the same partition so you only have to access 1/10 partitions for a specific query rather than loading all 10 in).
+
+pg. 202
