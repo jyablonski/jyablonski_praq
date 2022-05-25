@@ -1,1 +1,1 @@
-# Development Repo for Python / CI CD stuff
+# Personal Development Repo for Python / SQL / AWS / CI CD stuff
