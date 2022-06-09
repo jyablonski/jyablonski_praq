@@ -22,6 +22,8 @@ pdftotext = "*"
 elasticsearch = "*"
 searchtweets-v2 = "*"
 langdetect = "*"
+faker = "*"
+nba-bbref-webscrape = "*"
 
 [dev-packages]
 

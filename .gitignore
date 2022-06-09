@@ -142,3 +142,4 @@ classes.ipynb
 json_prac/
 s3/*.csv
 twitter/*.yaml
+**.xlsx
