@@ -24,6 +24,8 @@ searchtweets-v2 = "*"
 langdetect = "*"
 faker = "*"
 nba-bbref-webscrape = "*"
+pytest-mock = "*"
+moto = "*"
 
 [dev-packages]
 
