@@ -3,6 +3,14 @@ Kinesis allows you to collect and process large streams of records in real time.
 
 Firehose is a separate, optional feature that allows you to tap into a data stream and then write those records to some AWS specific source like S3, Redshift, or Opensearch.  It aggregates and batches the records automatically for you, so it waits every 60s to store all records in that timespan to the source so you're not making 1000s of storage calls for individual files.
 
+## Why Kinesis over SNS or SNS -> SQS ?
+Kinesis allows you to read the same message from several applications (1 publisher, 3 consumers), and it allows you to re-read messages if needed.  This same functionality can be done with multiple SQS Queues, there's just more overhead with managing that.
+
+Payload size for Kinesis is larger than SNS or SQS.
+
+At scale, Kinesis becomes more desirable.  It will be cheaper than going the SNS / SQS route and it can continue operating at scale (thousands of messages per second).  Can also deal with volume spikes better than SQS.  Firehose is also available as a built in feature to write this data to where you need it, whereas that functionality isn't built in with SQS or SNS.
+
+SNS by itself - if the consumer "fails" then you lose the message forever.  If you care about reliability then always use an SQS Queue subscribed to your SNS topic.
 
 ### Streaming into Snowflake
 [Article](https://towardsdatascience.com/streaming-real-time-data-into-snowflake-with-amazon-kinesis-firehose-74af6fe4409)

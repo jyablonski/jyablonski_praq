@@ -128,4 +128,34 @@ select
     player,
     date
 from stat
-inner join max_cte using (player, closest_value)
+inner join max_cte using (player, closest_value);
+
+select distinct name
+from cats
+union
+select distinct name
+from dogs;
+
+
+UPDATE enrollments set year = 2015 where ids between 20 and 100;
+
+
+with my_cte as (
+    SELECT
+        userId,
+        count(*) as num_records
+    from sessions
+    group by userId
+    having num_records > 1
+)
+
+SELECT
+    userId,
+    avg(duration) as avg_duration
+from sessions
+inner join my_cte using (userId)
+group by userId;
+
+
+select x, y from table1
+inner joins table2 on table1.x = table2.fk_x
