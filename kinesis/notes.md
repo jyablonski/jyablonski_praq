@@ -37,3 +37,24 @@ copy into twitter_stream.public.tweets
 from @twitter_stream.public.twitter_stage
 file_format = (type = 'JSON');
 ```
+
+
+`logical replication` uses a pub / sub model where producers  push data out w/ INSERT UPDATE DELETE transactions and consumers pull it.
+
+`physical replication` means it physically goes through block addresses byte-by-byte to perform the replication.
+```
+CREATE SCHEMA twitch;                 -- creates schema
+SET search_path TO twitch;            -- sets default schema to twitch
+
+ALTER SYSTEM SET wal_level = logical; -- sets the write ahead log level to logical, which adds some extra goodies
+ALTER ROLE postgres WITH REPLICATION; -- enables the postgres role to connect using replication mode.
+
+/* TABLES */
+
+CREATE TABLE xxx
+
+ALTER TABLE xxx REPLICA IDENTITY FULL; -- makes it so update and delete operations can be replicated so the subscriber knows to update or delete them.
+                                       -- full means use the entire row as a primary key bc we don't have one
+
+CREATE PUBLICATION mz_source FOR TABLE xxx;  -- this enables logical replication on this specific table.
+```

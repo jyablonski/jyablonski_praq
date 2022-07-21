@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 
 import nltk
@@ -8,6 +8,8 @@ import numpy as np
 import pandas as pd
 import tweepy
 from tweepy import OAuthHandler
+
+yesterday = datetime.now().date() - timedelta(days=1)
 
 
 def scrape_tweets(search_parameter: str, count: int, result_type: str) -> pd.DataFrame:
@@ -26,7 +28,11 @@ def scrape_tweets(search_parameter: str, count: int, result_type: str) -> pd.Dat
     df = pd.DataFrame()
     try:
         for tweet in tweepy.Cursor(  # result_type can be mixed, recent, or popular.
-            api.search_tweets, search_parameter, count=count, result_type=result_type
+            api.search_tweets,
+            search_parameter,
+            count=count,
+            result_type=result_type,
+            until=yesterday,
         ).items(count):
             # print(status)
             df = df.append(
