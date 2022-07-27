@@ -39,15 +39,21 @@ git-rebase:
 
 .PHONY: bump-patch
 bump-patch:
-	./release.sh patch
+	@bump2version patch
+	@git push --tags
+	@git push
 
 .PHONY: bump-minor
 bump-minor:
-	./release.sh minor
+	@bump2version minor
+	@git push --tags
+	@git push
 
 .PHONY: bump-major
 bump-major:
-	./release.sh major
+	@bump2version major
+	@git push --tags
+	@git push
 
 # 2022-04-29 DEPRECATING THESE 3 
 # .PHONY: bump-patch
