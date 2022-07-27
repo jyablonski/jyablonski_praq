@@ -34,7 +34,7 @@ git-rebase:
 	@git checkout jacob
 	@git pull
 	@git checkout feature_integration
-	@git rebase jacob
+	@git rebase --onto jacob
 	@git push
 
 .PHONY: bump-patch
