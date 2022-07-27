@@ -31,10 +31,10 @@ git-reset:
 
 PHONY: git-rebase
 git-rebase:
-	@git checkout master
+	@git checkout jacob
 	@git pull
 	@git checkout feature_integration
-	@git rebase master
+	@git rebase jacob
 	@git push
 
 .PHONY: bump-patch
