@@ -26,5 +26,30 @@ The use case is if you want to query dates.  1 year of data from Jan - Dec 2021 
 
 Snowflake data is always stored compressed.
 
+### Snowflake Stages / Integrations / Pipe
+A Storage Integration is a Snowflake object that stores a generated IAM user for S3 Cloud Storage, along with an optional set of allowed or blocked storage locations.  
+    * This user can be preconfigured to only read or write from certain buckets.
+    * This solution makes it so you don't have to pass in credentials when creating stages or loading data.
+    * A single storage integration can support multiple S3 Stages.
+
+```
+create stage mystage
+  url = 's3://mybucket/load/files'
+  storage_integration = my_storage_int;
+
+create pipe snowpipe_db.public.mypipe auto_ingest=true as
+  copy into snowpipe_db.public.mytable
+  from @snowpipe_db.public.mystage
+  file_format = (type = 'JSON');
+```
+
+Snowpipe is a Service that allows you to automatically ingest Files into Snowflake as they appear in an S3 Stage.
+    * Files Land in a Stage
+    * An S3 Event Notification for the new files is sent to an SQS Queue where Snowpipe subscribes to it.
+    * A Snowflake Provided Virtual Warehouse loads data from the queued files into the target table in Snowflake.
+    * `auto_ingest=true` basically means to read the event notifications in the SQS Queue automatically.
+    * Make sure you don't overlap your stages and pipes (`s3://mybucket/path1` and `s3://mybucket/path1/path2` would both copy files in `/path1`).
+    * To load historical data, 
+
 ### Data Clustering
 Data is normally stored or sorted along natural dimensions like time, or geographic regions (california etc).  Snowflake automatically collects clustering metadata as data is inserted or loaded into tables, then leverages that during querying to improve the performance.

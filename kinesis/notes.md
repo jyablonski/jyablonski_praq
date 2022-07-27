@@ -1,7 +1,7 @@
 # Kinesis Notes
 Kinesis allows you to collect and process large streams of records in real time.  Data Streams are what the actual streams are, and they cost $0.15 cents per hr even if 0 volume is coming through.
 
-Firehose is a separate, optional feature that allows you to tap into a data stream and then write those records to some AWS specific source like S3, Redshift, or Opensearch.  It aggregates and batches the records automatically for you, so it waits every 60s to store all records in that timespan to the source so you're not making 1000s of storage calls for individual files.
+Firehose is a separate, optional feature that allows you to tap into a data stream and then write those records to some AWS specific destination like S3, Redshift, or Elasticsearch.  It can buffer & aggregate the messages into batches automatically for you, so it waits every 60s or for every 1000 messages to store all records in that timespan to the source so you're not making 1000s of storage calls for individual files.
 
 ## Why Kinesis over SNS or SNS -> SQS ?
 Kinesis allows you to read the same message from several applications (1 publisher, 3 consumers), and it allows you to re-read messages if needed.  This same functionality can be done with multiple SQS Queues, there's just more overhead with managing that.
@@ -16,7 +16,7 @@ SNS by itself - if the consumer "fails" then you lose the message forever.  If y
 [Article](https://towardsdatascience.com/streaming-real-time-data-into-snowflake-with-amazon-kinesis-firehose-74af6fe4409)
 [Terraform Implementation](https://servian.dev/terraforming-an-auto-ingest-pipeline-from-s3-into-snowflake-using-snowpipe-part-2-ab2d07ad35c0)
 
-Write data to Firehose, set up a destination for Firehose to store messages to S3, then use Snowpipe to continuously read messages from that S3 bucket to load them into Snowflake.
+Write data to Firehose, set up a destination for Firehose to buffer & store messages to S3 in sizeable batches, then use Snowpipe to continuously read messages from that S3 bucket to load them into Snowflake.
     * It costs $ (0.06 credits per 1000 files), but it's less $ then using a warehouse using COPY statements.
     * In this scenario, I think you could have many messages batched by Firehose into 1 S3 file, and that only counts as 1 file when it gets loaded into Snowflake via Snowpipe.
 
