@@ -26,6 +26,8 @@ faker = "*"
 nba-bbref-webscrape = "*"
 pytest-mock = "*"
 moto = "*"
+psycopg2-binary = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 

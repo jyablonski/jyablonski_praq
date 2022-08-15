@@ -146,3 +146,4 @@ twitter/*.yaml
 **.json
 **.ndjson
 **.csv
+sql_transfer/

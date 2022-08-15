@@ -25,3 +25,8 @@ SELECT EXISTS (
 
 # The Tables for Project
 Should be used for Schedule, Transaction, Injury Scrapes bc I don't care if there were historical errors with these records, if there's new data then replace it and delete the error.
+
+# See Storage Usage for Postgres
+`SELECT datname as db_name, pg_size_pretty(pg_database_size(datname)) as db_usage FROM pg_database;`
+
+This command will show each database in your RDS Server and the storage (in MBs) that it's using.
