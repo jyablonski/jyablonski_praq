@@ -27,7 +27,7 @@ def get_contracts(run_type: str):
     df.columns = df.columns.str.lower()
     df = df.drop_duplicates()
     df = df.query(
-        'season_salary != "Salary" & season_salary != "2021-22"'
+        'season_salary != "Salary" & season_salary != "2022-23"'
     ).reset_index()
     df["season_salary"] = df["season_salary"].str.replace(",", "", regex=True)
     df["season_salary"] = df["season_salary"].str.replace("$", "", regex=True)
@@ -41,11 +41,11 @@ def get_contracts(run_type: str):
         .str.encode("ascii", errors="ignore")
         .str.decode("utf-8")
     )
+    df["player"] = df["player"].str.replace(" IV", "", regex=True)
+    df["player"] = df["player"].str.replace(" III", "", regex=True)
+    df["player"] = df["player"].str.replace(" II", "", regex=True)
     df["player"] = df["player"].str.replace(" Jr.", "", regex=True)
     df["player"] = df["player"].str.replace(" Sr.", "", regex=True)
-    df["player"] = df["player"].str.replace(" II", "", regex=True)
-    df["player"] = df["player"].str.replace(" III", "", regex=True)
-    df["player"] = df["player"].str.replace(" IV", "", regex=True)
     df = df.reset_index(drop=True)
     df = df.sample(frac=records_pct)
     return df
