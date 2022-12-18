@@ -5,31 +5,23 @@ name = "pypi"
 
 [packages]
 pandas = "*"
-nest_asyncio = "*"
-twint = {git = "https://github.com/Museum-Barberini/twint.git"}
 nltk = "*"
-python-twitter = "*"
-python-twitter-v2 = "*"
 boto3 = "*"
 awswrangler = "*"
 bump2version = "*"
-slack-sdk = "*"
 gspread = "*"
 tweepy = "*"
 sentry-sdk = "*"
-flatterer = "*"
-pdftotext = "*"
-elasticsearch = "*"
-searchtweets-v2 = "*"
-langdetect = "*"
 faker = "*"
-nba-bbref-webscrape = "*"
-pytest-mock = "*"
-moto = "*"
 psycopg2-binary = "*"
 sqlalchemy = "*"
+azure-storage-blob = "*"
 
 [dev-packages]
+pytest = "*"
+pytest-mock = "*"
+moto = "*"
+ipykernel = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"
