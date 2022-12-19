@@ -1,6 +1,7 @@
 # Microsoft Azure
 [PyPi](https://pypi.org/project/azure-storage-blob/)
 [Python Guide](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-python?tabs=managed-identity%2Croles-azure-portal%2Csign-in-azure-cli)
+[Moving from S3 to Azure Blob Storage](https://www.thomasmaurer.ch/2019/06/migrate-aws-s3-buckets-to-azure-blob-storage/)
 
 ## Blob Storage
 Azure equivalent of AWS S3.  BLOB technically stands for "binary large object" but in a cloud context, it means that you use S3 or Azure Blob Storage to store any kind of file.  Images, CSVs, Parquets, Videos, Logs etc.
