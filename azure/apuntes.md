@@ -30,3 +30,6 @@ Blobs are individual files stored in a Container.
 `https://jyablonski.blob.core.windows.net/jacobscontainer/jacobsblob`
 
 Can use Python or Azure Data Factory to move existing data to Blob Storage.
+
+
+## Access Tier
