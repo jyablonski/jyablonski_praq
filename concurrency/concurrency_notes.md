@@ -1,7 +1,9 @@
 [Article Link](https://realpython.com/python-concurrency/)
+[Stackoverflow](https://stackoverflow.com/questions/27435284/multiprocessing-vs-multithreading-vs-asyncio)
+[Informative Stackoverflow](https://stackoverflow.com/questions/60236745/is-it-true-that-in-multiprocessing-each-process-gets-its-own-gil-in-cpython-h)
 
 # Concurrency
-Concurrency means simultaneous occurrence.  Python can achieve this in multiple ways for different use cases.
+Concurrency means simultaneous occurrence.  Python can achieve this in multiple ways for different use cases.  Concurrency can mean starting 2 tasks at the same time, but this does not mean they're both running in parallel.
 
 Concurrency solves 2 main problems: CPU-bound and I/O-bound issues which slow down our programs.
     * I/O problems cause the program to slow down because you're waiting for IO from some external/remote resource.  Typically file system or network connections, you actually spend more time waiting for these than the time your program is executing its processing code.
@@ -10,7 +12,7 @@ Concurrency solves 2 main problems: CPU-bound and I/O-bound issues which slow do
       * Solution is typically multiprocessing.
 
 # Parallelism
-Using all of the CPU Cores available on your PC.
+Using multiple CPU Cores available on your PC to spawn multiple processes.
 
 ## Threading
 Runs on a single processor and only one at a time.  The OS knows about all of the threads and can interrupt it at any time to start doing something with another thread called `pre-emptive multitasking`.
@@ -27,7 +29,7 @@ In `threading_prac_async.py`, to turn a synchronous program into async you have 
 The downside to threading here is it can cause small, cumbersome bugs that are hard to track and debug.  You don't have direct control over the underlying processes. 
 
 ## Asyncio
-Runs on a single processor and only one at a time.  Uses `cooperative multitasking` with each task announcing when they are ready to be switched out.  You have to write code in a special way in order to accomodate this, but the benefit is that you're controlling that "switching out" process.
+Runs on a single processor and only one at a time, similar to threading.  Uses `cooperative multitasking` with each task announcing when they are ready to be switched out.  You have to write code in a special way in order to accomodate this, but the benefit is that you're controlling that "switching out" process.
 
 A single python object, the `event loop`, controls how and when each task gets run.  It knows the state each task is in.  The ready state is when a task has some work to do and is ready to be run, and the waiting state means the task is waiting for some external thing to finish like a network operation.  It picks the task that has been waiting the longest to run and then runs that.
 
