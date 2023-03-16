@@ -21,3 +21,5 @@ Kappa Architecture is fully event based and involves fully fledged event sourcin
     * Single source of truth.
 
 Things can get very complex when there are issues or hotfixes that need to be applied and you're forced to replay a large chunk of streaming events.  This is a lot more engineering and developer intensive work than the Lambda architecture.
+
+## Acks

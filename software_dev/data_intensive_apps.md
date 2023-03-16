@@ -22,9 +22,9 @@ Data Models - Relational vs Documents
 SQL is very popular for relational which is consisted of tables of columns and rows.  It has better support for joins and many-to-many and many-to-one relationships.
 
 NoSQL offers different benefits from the relational model.
-    * Offers greater scalability.
-    * Generally more open source than historically with company's like Oracle in the SQL space.
-    * Specialized query operations different rfom those with the relational model.
+    * Offers greater scalability (both distributed computing, and not having to be locked by ACID transactions).
+    * Generally more open source than historically with company's like Oracle and Snowflake in the SQL space.
+    * Specialized query operations different from those with the relational model.
     * Schemaless freedom that you don't get with relational model.
 
 SQL historically had issues with XML + JSON and the schemaless nature of these data formats, which made NoSQL formats more enticing.  Nowadays that's not the case, and both frameworks are moving closer to supporting the same features more or less.
