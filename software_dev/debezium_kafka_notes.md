@@ -21,6 +21,77 @@ The Example connects to 2 separate Tables, builds 2 separate Kafka Topics, and w
 [Original Debezium Repo](https://github.com/confluentinc/demo-scene/blob/master/livestreams/july-15/data/queries.sql)
 [Kafka Sink Repo](https://github.com/confluentinc/demo-scene/blob/master/kafka-to-s3/docker-compose.yml)
 
+
+## SQL Resources Needed
+
+### MySQL
+
+Reload - Enables use of the flush statement which refreshes the binary log.
+
+Replication Slave - Allows user to request updates made to database via binlog stuff.
+
+Replication Client - Enables use of show binary logs statements.
+
+`*.* TO 'debezium' IDENTIFIED BY 'dbz'` - User `debezium` password `dbz` which can login from anywhere `*.*`
+
+`GRANT ALL ON test.* TO 'test_user'@'localhost';` - Grant all on database `test` to user `test_user` only logged in from `localhost`.
+```
+GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'replicator' IDENTIFIED BY 'replpass';
+GRANT SELECT, RELOAD, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'debezium' IDENTIFIED BY 'dbz';
+CREATE DATABASE demo;
+GRANT ALL PRIVILEGES ON demo.* TO 'mysqluser'@'%';
+
+use demo;
+```
+
+### Postgres
+
+```
+CREATE SCHEMA dbz_schema;
+SET search_path TO dbz_schema;
+
+-- has to be set in AWS RDS Parameter Group
+-- rds.logical_replication=1
+ALTER SYSTEM SET wal_level = logical;
+ALTER ROLE postgres WITH REPLICATION;
+
+-- BEGIN TABLE movies
+DROP TABLE IF EXISTS movies;
+CREATE TABLE movies
+(
+    movie_id             int       PRIMARY KEY,
+    title                varchar  NOT NULL,
+    release_year         int       NOT NULL,
+    country              varchar  NOT NULL,
+    genres               varchar  NOT NULL,
+    actors               varchar  NOT NULL,
+    directors            varchar  NOT NULL,
+    composers            varchar  NOT NULL,
+    screenwriters        varchar  NOT NULL,
+    cinematographer      varchar  NOT NULL,
+    production_companies varchar  NOT NULL
+);
+
+DROP TABLE IF EXISTS second_movies;
+CREATE TABLE second_movies
+(
+    movie_id             int       PRIMARY KEY,
+    title                varchar  NOT NULL,
+    release_year         int       NOT NULL,
+    country              varchar  NOT NULL,
+    genres               varchar  NOT NULL,
+    actors               varchar NOT NULL,
+    directors            varchar  NOT NULL,
+    composers            varchar  NOT NULL,
+    screenwriters        varchar  NOT NULL,
+    cinematographer      varchar  NOT NULL,
+    production_companies varchar  NOT NULL
+);
+
+ALTER TABLE movies REPLICA IDENTITY FULL;
+ALTER TABLE second_movies REPLICA IDENTITY FULL;
+```
+
 ## S3 IAM User
 Create an IAM User and attach policy that looks like below, then create access/secret credentials and paste into aws_credentials
 
