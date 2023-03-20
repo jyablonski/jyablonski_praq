@@ -13,7 +13,6 @@ service = BlobServiceClient(
     credential=os.environ.get("azure_access_key"),
 )
 
-
 container_client = service.create_container(container_name)
 
 # Create a file in the local data directory to upload and download
