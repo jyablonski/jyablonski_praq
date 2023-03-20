@@ -1,3 +1,5 @@
+import numpy as np
+
 twitter_cols = [
     "created_at",
     "tweet_id",

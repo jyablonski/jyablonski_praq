@@ -25,7 +25,10 @@ def download_all_sites(sites):
 
 
 if __name__ == "__main__":
-    sites = ["https://www.jython.org", "http://olympus.realpython.org/dice",] * 80
+    sites = [
+        "https://www.jython.org",
+        "http://olympus.realpython.org/dice",
+    ] * 80
     start_time = time.time()
     download_all_sites(sites)
     duration = time.time() - start_time

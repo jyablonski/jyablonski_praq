@@ -1,18 +1,13 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import os
-import uuid
-from typing import List
 
-import awswrangler as wr
-import requests
-from bs4 import BeautifulSoup
 import pandas as pd
-import psycopg2
 from sqlalchemy import exc, create_engine
 
 # took like a minute and a half as of 2023-02-04
 date = datetime.now().date()
 print(f"Starting Export at {datetime.now()}")
+
 
 def write_to_sql(con, table_name: str, df: pd.DataFrame, table_type: str) -> None:
     """
@@ -41,6 +36,7 @@ def write_to_sql(con, table_name: str, df: pd.DataFrame, table_type: str) -> Non
     except BaseException as error:
         print(f"SQL Write Script Failed, {error}")
 
+
 def sql_connection(rds_schema: str):
     """
     SQL Connection function connecting to my postgres db with schema = nba_source where initial data in ELT lands.
@@ -65,10 +61,14 @@ def sql_connection(rds_schema: str):
     except exc.SQLAlchemyError as e:
         return e
 
-conn = sql_connection(rds_schema='nba_source')
+
+conn = sql_connection(rds_schema="nba_source")
 
 with conn.connect() as connection:
-    df = pd.read_sql("SELECT * FROM information_schema.tables where table_schema = 'nba_source';", connection)
+    df = pd.read_sql(
+        "SELECT * FROM information_schema.tables where table_schema = 'nba_source';",
+        connection,
+    )
 
     tables = df["table_name"]
 
@@ -81,9 +81,12 @@ with conn.connect() as connection:
 
 print(f"Finished nba_source at {datetime.now()}, starting ml_models")
 
-conn = sql_connection(rds_schema='ml_models')
+conn = sql_connection(rds_schema="ml_models")
 with conn.connect() as connection:
-    df = pd.read_sql("SELECT * FROM information_schema.tables where table_name = 'tonights_games_ml' and table_schema = 'ml_models';", connection)
+    df = pd.read_sql(
+        "SELECT * FROM information_schema.tables where table_name = 'tonights_games_ml' and table_schema = 'ml_models';",
+        connection,
+    )
 
     tables = df["table_name"]
 
