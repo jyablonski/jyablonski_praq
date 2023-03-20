@@ -7,7 +7,7 @@ my_large_number = 4343432424
 
 my_str = "hello world"
 my_large_str = """
-Furthermore, there's just a lot of other stuff to admire about the Xbox Series X. So read on for our fulldfffffffffffffffffffffffffffffffffffffffffffffulldfffffffffffffffffffffffffffffffffffffffffffffulldffffffffffffffffffffffffffffffffffffffffffff
+Furthermore, there's just a lot of other stuff to admire about the Xbox Series X. So read on for our full
  Xbox Series X review to see whether the new console has been worth the wait, and be sure to check out our guide to the best h
  idden Xbox Series X features(opens in new tab) to get the most out of this console."""
 
