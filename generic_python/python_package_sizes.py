@@ -1,6 +1,7 @@
 import os
 import pkg_resources
 
+
 # run python3 generic_python/python_package_sizes.py
 def calc_container(path):
     total_size = 0

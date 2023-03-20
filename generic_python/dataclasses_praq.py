@@ -34,6 +34,7 @@ teacher1 = Teacher(
     classes=["Math", "Science"],
 )
 
+
 # inheritance
 @dataclass
 class Student(Teacher):

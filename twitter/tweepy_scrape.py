@@ -88,6 +88,10 @@ def scrape_tweets_combo():
 twitter_tweets = scrape_tweets_combo()
 
 # upsert using tweet_id so if that tweet already exists in my database, just update the record values (likes, retweets etc).
-write_to_sql_upsert(
-    connection, "twitter_tweets", twitter_tweets, "upsert", ["tweet_id"],
-)
+# write_to_sql_upsert(
+#     connection,
+#     "twitter_tweets",
+#     twitter_tweets,
+#     "upsert",
+#     ["tweet_id"],
+# )

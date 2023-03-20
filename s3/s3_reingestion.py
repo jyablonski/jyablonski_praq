@@ -1,4 +1,3 @@
-from datetime import datetime
 import os
 
 import awswrangler as wr

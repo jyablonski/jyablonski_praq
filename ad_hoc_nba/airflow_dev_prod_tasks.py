@@ -1,8 +1,7 @@
 import os
-from datetime import datetime, timezone, timedelta
 
-import numpy as np
 import pandas as pd
+
 
 # the idea here is you can create ONE ECS task for a job, and then pass in this run_type variable via the network config file
 # so on dev you only bring in a small amount of records to test the pipeline and in prod you do the full workload.

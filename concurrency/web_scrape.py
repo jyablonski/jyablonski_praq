@@ -1,6 +1,7 @@
 import requests
 import time
 
+
 # this is a synchronous program that is easy to write and debug.  simple.
 def download_site(url, session):
     with session.get(url) as response:
@@ -14,7 +15,10 @@ def download_all_sites(sites):
 
 
 if __name__ == "__main__":
-    sites = ["https://www.jython.org", "http://olympus.realpython.org/dice",] * 80
+    sites = [
+        "https://www.jython.org",
+        "http://olympus.realpython.org/dice",
+    ] * 80
     start_time = time.time()
     download_all_sites(sites)
     duration = time.time() - start_time

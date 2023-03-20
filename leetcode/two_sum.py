@@ -2,6 +2,7 @@
 nums_list = [14, 21, 34, 44]
 target_int = 55
 
+
 # 2 sum trick is to iterate through the nums list and append values that you've traversed in a dictionary
 def solution(nums, target):
     dict1 = {}
@@ -16,5 +17,6 @@ def solution(nums, target):
 
         # else add the value we just traversed to the dictionary as a key, with the index as the value.
         dict1[v] = k
+
 
 solution(nums_list, target_int)
