@@ -15,7 +15,7 @@ service = BlobServiceClient(
 
 container_client = service.create_container(container_name)
 
-# Create a file in the local data directory to upload and download
+# Create a file in the local data directory to upload
 local_file_name = str(uuid.uuid4()) + ".txt"
 upload_file_path = os.path.join("./data", local_file_name)
 

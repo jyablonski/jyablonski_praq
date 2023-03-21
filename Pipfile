@@ -16,6 +16,7 @@ faker = "*"
 psycopg2-binary = "*"
 sqlalchemy = "*"
 azure-storage-blob = "*"
+polars = "*"
 
 [dev-packages]
 pytest = "*"
