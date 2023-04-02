@@ -39,8 +39,6 @@ file_format = (type = 'JSON');
 ```
 
 
-`logical replication` uses a pub / sub model where producers  push data out w/ INSERT UPDATE DELETE transactions and consumers pull it.
-
 `physical replication` means it physically goes through block addresses byte-by-byte to perform the replication.
 ```
 CREATE SCHEMA twitch;                 -- creates schema

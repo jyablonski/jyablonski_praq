@@ -18,6 +18,10 @@ PCIe (Peripheral Component Interconnect Express) - Interface on the Motherboard 
 - 4 for the first NVME Slot (M.2).
 - The other lanes have to go through a middleman to reach the CPU which means latency. 
 
+M2 Slots plug SSDs directly into the motherboard, rather than needing a cable.
+- M2 can either use a SATA interface or the faster PCIe interface w/ an NVME drive.
+- They fold down into the motherboard & are protected by covers, instead of sticking out like GPUs.
+
 Memory Channel (DDR4 or DDR5)
 
 BIOS Flashback - Optional feature used to reset BIOS to factory settings incase something fks up.
@@ -31,7 +35,7 @@ Size
 BIOS (Basic Input/Output System) - Everybody Motherboard Manufacturer offers their own BIOS (Asus ROG, Gigabyte Aorus etc).
 
 ## CPU
-CPUs often are labeled with a chipset (ex. LGA 1700).  This means it has 1700 pins that connect into a socket on a Motherboard.
+CPUs often are labeled with a chipset (ex. LGA 1700).  This means that the 1700 pins are on the Motherboard rather than the processor.
 
 CPUs are very small for a number of reasons
 - Speed.  If the CPU was larger there'd be more distance to cover to process the same operations.
