@@ -61,3 +61,43 @@ Option 2: Delete
     )
 }}
 ``` 
+
+
+# Incremental 
+
+When you mark a model as incremental, the entire model (not specific cte's) will be incremental. This means the final query will be built according to your incremental strategy (delete+insert, or merge).
+The is_incremental() macro allows you to (for example) filter your source data to reduce the number of rows that you will add to your final materialization.
+This means that if you have something like this
+```
+with cte1 as
+(
+SELECT * FROM my_source
+{% if is_incremental() %}
+
+WHERE my_col > (select max(my_col) from {{ this }})
+
+{% endif %}
+)
+, cte2 as 
+(
+SELECT col1 + col2 FROM cte1
+)
+select * from cte1, cte2
+For normal (not full-refresh) runs, your final query is going to create the first cte (cte1) with the where clause included, and your second cte (which references cte1) will only get rows that meet the criteria in the WHERE clause of cte1.
+I hope I explained this somewhat better :neutral_face:
+
+with cte1 as
+(
+SELECT * FROM my_source
+{% if is_incremental() %}
+
+WHERE my_col > (select max(my_col) from {{ this }})
+
+{% endif %}
+)
+, cte2 as 
+(
+SELECT col1 + col2 FROM cte1
+)
+select * from cte1, cte2
+```
