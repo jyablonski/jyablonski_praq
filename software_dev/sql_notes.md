@@ -55,3 +55,119 @@ select * from nba_source.reddit_test_partitioning where scrape_date <= '2023-01-
 ```
 
 ![image](https://user-images.githubusercontent.com/16946556/225410579-59569e37-011a-4a64-8ef8-726ff629345f.png)
+
+
+# Audit Triggers
+![image](https://user-images.githubusercontent.com/16946556/233234508-75fff4d9-0158-4320-b233-7fb26d9a021d.png)
+
+
+```
+CREATE TABLE IF NOT EXISTS public.orders (
+	id serial primary key,
+	item varchar not null,
+	price double precision not null, 
+);
+
+drop table public.orders;
+CREATE TABLE IF NOT EXISTS public.orders (
+	id serial primary key,
+	item varchar not null,
+	price double precision not null, 
+	created timestamp default current_timestamp
+);
+
+drop table public.orders_audit;
+CREATE TABLE IF NOT EXISTS public.orders_audit (
+	id serial primary key,
+	order_id integer not null,
+	item varchar not null,
+	price double precision not null, 
+	created timestamp default current_timestamp,
+	audit_type varchar not null,
+	created_audit timestamp default current_timestamp
+);
+
+CREATE OR REPLACE FUNCTION orders_audit_trigger_function()
+RETURNS trigger AS $body$
+BEGIN
+   if (TG_OP = 'INSERT') then
+       INSERT INTO orders_audit (
+		   order_id,
+           item,
+           price,
+           created,
+           audit_type,
+           created_audit
+       )
+       VALUES(
+		   NEW.id,
+           NEW.item,
+           NEW.price,
+           NEW.created,
+           'INSERT',
+           CURRENT_TIMESTAMP
+       );
+             
+       RETURN NEW;
+   elsif (TG_OP = 'UPDATE') then
+       INSERT INTO orders_audit (
+		   order_id,
+           item,
+           price,
+           created,
+           audit_type,
+           created_audit
+       )
+       VALUES(
+		   OLD.id,
+           NEW.item,
+           NEW.price,
+           OLD.created,
+           'UPDATE',
+           CURRENT_TIMESTAMP
+       );
+             
+       RETURN NEW;
+   elsif (TG_OP = 'DELETE') then
+       INSERT INTO orders_audit (
+		   order_id,
+           item,
+           price,
+           created,
+           audit_type,
+           created_audit
+       )
+       VALUES(
+		   OLD.id,
+           OLD.item,
+           OLD.price,
+		   OLD.created,
+           'DELETE',
+           CURRENT_TIMESTAMP
+       );
+        
+       RETURN OLD;
+   end if;
+     
+END;
+$body$
+LANGUAGE plpgsql;
+
+
+drop trigger if exists orders_audit_trigger on public.orders;
+create orders_audit_trigger
+after insert or update or delete on public.orders
+for each row execute function orders_audit_trigger_function();
+
+INSERT INTO public.orders(
+	item, price)
+	VALUES ('Nvidia RTX 4090', 1999.99);
+
+INSERT INTO public.orders(
+	item, price)
+	VALUES ('AMD 6900 XT', 999.99);
+	
+update public.orders set price = 1995.99 where item = 'Nvidia RTX 4090';
+
+delete from public.orders where id = 3;
+```
