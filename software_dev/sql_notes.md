@@ -60,6 +60,7 @@ select * from nba_source.reddit_test_partitioning where scrape_date <= '2023-01-
 # Audit Triggers
 ![image](https://user-images.githubusercontent.com/16946556/233234508-75fff4d9-0158-4320-b233-7fb26d9a021d.png)
 
+`select * from information_schema.triggers;`
 
 ```
 CREATE TABLE IF NOT EXISTS public.orders (

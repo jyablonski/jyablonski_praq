@@ -1,5 +1,6 @@
 # Debezium + Kafka Notes
 Copied from my [Repo](https://github.com/jyablonski/debezium-mysql-s3-demo/blob/master/README.md)
+[Article](https://dba.stackexchange.com/questions/102748/mysql-binlog-limitations)
 
 # Debezium
 Practice Repo with Debezium which spins up MySQL, Kafka, and a Debezium Client to tap into the Bin Log and perform CDC on all database changes, and writes them to S3 every 60 seconds.

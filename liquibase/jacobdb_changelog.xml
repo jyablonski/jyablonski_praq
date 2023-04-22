@@ -1,0 +1,504 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="jacob (generated)" id="1682191201229-1">
+        <createTable tableName="reddit_test_partitioning">
+            <column name="comment" type="TEXT"/>
+            <column name="score" type="BIGINT"/>
+            <column name="url" type="TEXT"/>
+            <column name="author" type="TEXT"/>
+            <column name="flair1" type="TEXT"/>
+            <column name="flair2" type="TEXT"/>
+            <column name="edited" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+            <column name="row_col" type="BIGINT"/>
+            <column name="md5_pk" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-2">
+        <createTable tableName="aws_boxscores_source">
+            <column name="player" type="TEXT"/>
+            <column name="team" type="TEXT"/>
+            <column name="location" type="TEXT"/>
+            <column name="opponent" type="TEXT"/>
+            <column name="outcome" type="TEXT"/>
+            <column name="mp" type="TEXT"/>
+            <column name="fgm" type="FLOAT8"/>
+            <column name="fga" type="FLOAT8"/>
+            <column name="fgpercent" type="FLOAT8"/>
+            <column name="threepfgmade" type="FLOAT8"/>
+            <column name="threepattempted" type="FLOAT8"/>
+            <column name="threepointpercent" type="FLOAT8"/>
+            <column name="ft" type="TEXT"/>
+            <column name="fta" type="TEXT"/>
+            <column name="ftpercent" type="TEXT"/>
+            <column name="oreb" type="FLOAT8"/>
+            <column name="dreb" type="FLOAT8"/>
+            <column name="trb" type="FLOAT8"/>
+            <column name="ast" type="FLOAT8"/>
+            <column name="stl" type="FLOAT8"/>
+            <column name="blk" type="FLOAT8"/>
+            <column name="tov" type="FLOAT8"/>
+            <column name="pf" type="FLOAT8"/>
+            <column name="pts" type="FLOAT8"/>
+            <column name="plusminus" type="FLOAT8"/>
+            <column name="gmsc" type="FLOAT8"/>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="type" type="TEXT"/>
+            <column name="season" type="BIGINT"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-3">
+        <createTable tableName="aws_injury_data_source">
+            <column name="player" type="TEXT"/>
+            <column name="team" type="TEXT"/>
+            <column name="description" type="TEXT"/>
+            <column name="date" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-4">
+        <createTable tableName="aws_odds_source">
+            <column name="team" type="TEXT"/>
+            <column name="spread" type="TEXT"/>
+            <column name="total" type="TEXT"/>
+            <column name="moneyline" type="FLOAT8"/>
+            <column name="date" type="date"/>
+            <column name="datetime1" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-5">
+        <createTable tableName="aws_opp_stats_source">
+            <column name="team" type="TEXT"/>
+            <column name="fg_percent_opp" type="FLOAT8"/>
+            <column name="threep_percent_opp" type="FLOAT8"/>
+            <column name="threep_made_opp" type="FLOAT8"/>
+            <column name="ppg_opp" type="FLOAT8"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-6">
+        <createTable tableName="aws_pbp_data_source">
+            <column name="timequarter" type="TEXT"/>
+            <column name="descriptionplayvisitor" type="TEXT"/>
+            <column name="awayscore" type="TEXT"/>
+            <column name="score" type="TEXT"/>
+            <column name="homescore" type="TEXT"/>
+            <column name="descriptionplayhome" type="TEXT"/>
+            <column name="numberperiod" type="TEXT"/>
+            <column name="hometeam" type="TEXT"/>
+            <column name="awayteam" type="TEXT"/>
+            <column name="scoreaway" type="FLOAT8"/>
+            <column name="scorehome" type="FLOAT8"/>
+            <column name="marginscore" type="FLOAT8"/>
+            <column name="date" type="date"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-7">
+        <createTable tableName="aws_reddit_comment_data_source">
+            <column name="comment" type="TEXT"/>
+            <column name="score" type="BIGINT"/>
+            <column name="url" type="TEXT"/>
+            <column name="author" type="TEXT"/>
+            <column name="flair1" type="TEXT"/>
+            <column name="flair2" type="TEXT"/>
+            <column name="edited" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+            <column name="row_col" type="BIGINT"/>
+            <column name="md5_pk" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-8">
+        <createTable tableName="aws_reddit_data_source">
+            <column name="title" type="TEXT"/>
+            <column name="score" type="BIGINT"/>
+            <column name="id" type="TEXT"/>
+            <column name="url" type="TEXT"/>
+            <column name="reddit_url" type="TEXT"/>
+            <column name="num_comments" type="BIGINT"/>
+            <column name="body" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-9">
+        <createTable tableName="aws_schedule_source">
+            <column name="start_time" type="TEXT"/>
+            <column name="away_team" type="TEXT"/>
+            <column name="home_team" type="TEXT"/>
+            <column name="date" type="TEXT"/>
+            <column name="proper_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-10">
+        <createTable tableName="aws_shooting_stats_source">
+            <column name="player" type="TEXT"/>
+            <column name="avg_shot_distance" type="TEXT"/>
+            <column name="pct_fga_2p" type="TEXT"/>
+            <column name="pct_fga_0_3" type="TEXT"/>
+            <column name="pct_fga_3_10" type="TEXT"/>
+            <column name="pct_fga_10_16" type="TEXT"/>
+            <column name="pct_fga_16_3p" type="TEXT"/>
+            <column name="pct_fga_3p" type="TEXT"/>
+            <column name="fg_pct_0_3" type="TEXT"/>
+            <column name="fg_pct_3_10" type="TEXT"/>
+            <column name="fg_pct_10_16" type="TEXT"/>
+            <column name="fg_pct_16_3p" type="TEXT"/>
+            <column name="pct_2pfg_ast" type="TEXT"/>
+            <column name="pct_3pfg_ast" type="TEXT"/>
+            <column name="dunk_pct_tot_fg" type="TEXT"/>
+            <column name="dunks" type="TEXT"/>
+            <column name="corner_3_ast_pct" type="TEXT"/>
+            <column name="corner_3pm_pct" type="TEXT"/>
+            <column name="heaves_att" type="TEXT"/>
+            <column name="heaves_makes" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-11">
+        <createTable tableName="aws_transactions_source">
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="transaction" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-12">
+        <createTable tableName="aws_twitter_tweepy_data_source">
+            <column name="tweet_id" type="TEXT"/>
+            <column name="created_at" type="TEXT"/>
+            <column name="username" type="TEXT"/>
+            <column name="user_id" type="FLOAT8"/>
+            <column name="tweet" type="TEXT"/>
+            <column name="likes" type="FLOAT8"/>
+            <column name="retweets" type="FLOAT8"/>
+            <column name="language" type="TEXT"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="profile_img" type="TEXT"/>
+            <column name="url" type="TEXT"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-13">
+        <createTable tableName="reddit_test_partitioning_2022">
+            <column name="comment" type="TEXT"/>
+            <column name="score" type="BIGINT"/>
+            <column name="url" type="TEXT"/>
+            <column name="author" type="TEXT"/>
+            <column name="flair1" type="TEXT"/>
+            <column name="flair2" type="TEXT"/>
+            <column name="edited" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+            <column name="row_col" type="BIGINT"/>
+            <column name="md5_pk" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-14">
+        <createTable tableName="reddit_test_partitioning_2023">
+            <column name="comment" type="TEXT"/>
+            <column name="score" type="BIGINT"/>
+            <column name="url" type="TEXT"/>
+            <column name="author" type="TEXT"/>
+            <column name="flair1" type="TEXT"/>
+            <column name="flair2" type="TEXT"/>
+            <column name="edited" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+            <column name="row_col" type="BIGINT"/>
+            <column name="md5_pk" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-15">
+        <addUniqueConstraint columnNames="player, date" constraintName="unique_constraint_for_upsert_boxscores" tableName="aws_boxscores_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-16">
+        <addUniqueConstraint columnNames="player, team, description" constraintName="unique_constraint_for_upsert_injury_data" tableName="aws_injury_data_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-17">
+        <addUniqueConstraint columnNames="team, date" constraintName="unique_constraint_for_upsert_odds" tableName="aws_odds_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-18">
+        <addUniqueConstraint columnNames="team" constraintName="unique_constraint_for_upsert_opp_stats" tableName="aws_opp_stats_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-19">
+        <addUniqueConstraint columnNames="hometeam, awayteam, date, timequarter, numberperiod, descriptionplayvisitor, descriptionplayhome" constraintName="unique_constraint_for_upsert_pbp_data" tableName="aws_pbp_data_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-20">
+        <addUniqueConstraint columnNames="md5_pk" constraintName="unique_constraint_for_upsert_reddit_comment_data" tableName="aws_reddit_comment_data_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-21">
+        <addUniqueConstraint columnNames="reddit_url" constraintName="unique_constraint_for_upsert_reddit_data" tableName="aws_reddit_data_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-22">
+        <addUniqueConstraint columnNames="away_team, home_team, proper_date" constraintName="unique_constraint_for_upsert_schedule" tableName="aws_schedule_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-23">
+        <addUniqueConstraint columnNames="player" constraintName="unique_constraint_for_upsert_shooting_stats" tableName="aws_shooting_stats_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-24">
+        <addUniqueConstraint columnNames="date, transaction" constraintName="unique_constraint_for_upsert_transactions" tableName="aws_transactions_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-25">
+        <addUniqueConstraint columnNames="tweet_id" constraintName="unique_constraint_for_upsert_twitter_tweepy_data" tableName="aws_twitter_tweepy_data_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-26">
+        <createTable tableName="aws_adv_stats_source">
+            <column name="index" type="BIGINT"/>
+            <column name="team" type="TEXT"/>
+            <column name="age" type="FLOAT8"/>
+            <column name="w" type="FLOAT8"/>
+            <column name="l" type="FLOAT8"/>
+            <column name="pw" type="FLOAT8"/>
+            <column name="pl" type="FLOAT8"/>
+            <column name="mov" type="FLOAT8"/>
+            <column name="sos" type="FLOAT8"/>
+            <column name="srs" type="FLOAT8"/>
+            <column name="ortg" type="FLOAT8"/>
+            <column name="drtg" type="FLOAT8"/>
+            <column name="nrtg" type="FLOAT8"/>
+            <column name="pace" type="FLOAT8"/>
+            <column name="ftr" type="FLOAT8"/>
+            <column name="3par" type="FLOAT8"/>
+            <column name="ts%" type="FLOAT8"/>
+            <column name="efg%" type="FLOAT8"/>
+            <column name="tov%" type="FLOAT8"/>
+            <column name="orb%" type="FLOAT8"/>
+            <column name="ft/fga" type="FLOAT8"/>
+            <column name="efg%_opp" type="FLOAT8"/>
+            <column name="tov%_opp" type="FLOAT8"/>
+            <column name="drb%_opp" type="FLOAT8"/>
+            <column name="ft/fga_opp" type="FLOAT8"/>
+            <column name="arena" type="TEXT"/>
+            <column name="attendance" type="FLOAT8"/>
+            <column name="att/game" type="FLOAT8"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-27">
+        <createTable tableName="aws_contracts_source">
+            <column name="index" type="BIGINT"/>
+            <column name="player" type="TEXT"/>
+            <column name="team" type="TEXT"/>
+            <column name="season_salary" type="FLOAT8"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-28">
+        <createTable tableName="aws_player_attributes_source">
+            <column name="player" type="TEXT"/>
+            <column name="is_rookie" type="BOOLEAN"/>
+            <column name="yrs_exp" type="BIGINT"/>
+            <column name="headshot" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-29">
+        <createTable tableName="aws_preseason_odds_source">
+            <column name="team" type="TEXT"/>
+            <column name="odds" type="BIGINT"/>
+            <column name="predicted" type="FLOAT8"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-30">
+        <createTable tableName="aws_stats_source">
+            <column name="player" type="TEXT"/>
+            <column name="pos" type="TEXT"/>
+            <column name="age" type="TEXT"/>
+            <column name="tm" type="TEXT"/>
+            <column name="g" type="TEXT"/>
+            <column name="gs" type="TEXT"/>
+            <column name="mp" type="TEXT"/>
+            <column name="fg" type="TEXT"/>
+            <column name="fga" type="TEXT"/>
+            <column name="fg%" type="TEXT"/>
+            <column name="3p" type="TEXT"/>
+            <column name="3pa" type="TEXT"/>
+            <column name="3p%" type="TEXT"/>
+            <column name="2p" type="TEXT"/>
+            <column name="2pa" type="TEXT"/>
+            <column name="2p%" type="TEXT"/>
+            <column name="efg%" type="TEXT"/>
+            <column name="ft" type="TEXT"/>
+            <column name="fta" type="TEXT"/>
+            <column name="ft%" type="TEXT"/>
+            <column name="orb" type="TEXT"/>
+            <column name="drb" type="TEXT"/>
+            <column name="trb" type="TEXT"/>
+            <column name="ast" type="TEXT"/>
+            <column name="stl" type="TEXT"/>
+            <column name="blk" type="TEXT"/>
+            <column name="tov" type="TEXT"/>
+            <column name="pf" type="TEXT"/>
+            <column name="pts" type="FLOAT8"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-31">
+        <createTable tableName="aws_stats_source2">
+            <column name="player" type="TEXT"/>
+            <column name="pos" type="TEXT"/>
+            <column name="age" type="TEXT"/>
+            <column name="tm" type="TEXT"/>
+            <column name="g" type="TEXT"/>
+            <column name="gs" type="TEXT"/>
+            <column name="mp" type="TEXT"/>
+            <column name="fg" type="TEXT"/>
+            <column name="fga" type="TEXT"/>
+            <column name="fg%" type="TEXT"/>
+            <column name="3p" type="TEXT"/>
+            <column name="3pa" type="TEXT"/>
+            <column name="3p%" type="TEXT"/>
+            <column name="2p" type="TEXT"/>
+            <column name="2pa" type="TEXT"/>
+            <column name="2p%" type="TEXT"/>
+            <column name="efg%" type="TEXT"/>
+            <column name="ft" type="TEXT"/>
+            <column name="fta" type="TEXT"/>
+            <column name="ft%" type="TEXT"/>
+            <column name="orb" type="TEXT"/>
+            <column name="drb" type="TEXT"/>
+            <column name="trb" type="TEXT"/>
+            <column name="ast" type="TEXT"/>
+            <column name="stl" type="TEXT"/>
+            <column name="blk" type="TEXT"/>
+            <column name="tov" type="TEXT"/>
+            <column name="pf" type="TEXT"/>
+            <column name="pts" type="FLOAT8"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-32">
+        <createTable tableName="aws_team_attributes_source">
+            <column name="team" type="TEXT"/>
+            <column name="team_acronym" type="TEXT"/>
+            <column name="conference" type="TEXT"/>
+            <column name="primary_color" type="TEXT"/>
+            <column name="secondary_color" type="TEXT"/>
+            <column name="third_color" type="TEXT"/>
+            <column name="previous_season_wins" type="BIGINT"/>
+            <column name="previous_season_rank" type="BIGINT"/>
+            <column name="team_logo" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-33">
+        <createTable tableName="aws_test_table3_source">
+            <column name="col1" type="BIGINT"/>
+            <column name="last_sync" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="last_sync2" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-34">
+        <createTable tableName="aws_twitter_data_source">
+            <column name="created_at" type="TEXT"/>
+            <column name="date" type="TEXT"/>
+            <column name="username" type="TEXT"/>
+            <column name="tweet" type="TEXT"/>
+            <column name="language" type="TEXT"/>
+            <column name="link" type="TEXT"/>
+            <column name="likes_count" type="BIGINT"/>
+            <column name="retweets_count" type="BIGINT"/>
+            <column name="replies_count" type="BIGINT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-35">
+        <createTable tableName="aws_twitter_tweets_source">
+            <column name="created_at" type="TEXT"/>
+            <column name="date" type="TEXT"/>
+            <column name="username" type="TEXT"/>
+            <column name="tweet" type="TEXT"/>
+            <column name="language" type="TEXT"/>
+            <column name="link" type="TEXT"/>
+            <column name="likes_count" type="BIGINT"/>
+            <column name="retweets_count" type="BIGINT"/>
+            <column name="replies_count" type="BIGINT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-36">
+        <createTable tableName="inactive_dates">
+            <column name="date" type="date"/>
+            <column name="is_inactive" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-37">
+        <createTable tableName="staging_seed_player_attributes">
+            <column name="player" type="TEXT"/>
+            <column name="is_rookie" type="BOOLEAN"/>
+            <column name="yrs_exp" type="INTEGER"/>
+            <column name="headshot" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-38">
+        <createTable tableName="staging_seed_team_attributes">
+            <column name="team" type="TEXT"/>
+            <column name="team_acronym" type="TEXT"/>
+            <column name="conference" type="TEXT"/>
+            <column name="primary_color" type="TEXT"/>
+            <column name="secondary_color" type="TEXT"/>
+            <column name="third_color" type="TEXT"/>
+            <column name="previous_season_wins" type="INTEGER"/>
+            <column name="previous_season_rank" type="INTEGER"/>
+            <column name="team_logo" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1682191201229-39">
+        <createTable tableName="staging_seed_top_players">
+            <column name="player" type="TEXT"/>
+            <column name="team" type="TEXT"/>
+            <column name="rank" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1" author="liquibase">
+    <createTable tableName="department_two" schemaName="public">
+            <column name="id" type="int">
+            <constraints primaryKey="true"/>
+            </column>
+            <column name="dept" type="varchar(200)">
+            <constraints nullable="false"/>
+            </column>
+            <column name="emp_id" type="int">
+            <constraints nullable="false"/>
+            </column>
+        </createTable>
+        </changeSet>
+    <includeAll path="changelog/"/> 
+</databaseChangeLog>

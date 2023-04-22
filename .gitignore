@@ -148,3 +148,4 @@ twitter/*.yaml
 **.csv
 sql_transfer/
 sql/tables/*
+liquibase/*.properties
