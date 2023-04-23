@@ -149,3 +149,4 @@ twitter/*.yaml
 sql_transfer/
 sql/tables/*
 liquibase/*.properties
+localstack/volume/
