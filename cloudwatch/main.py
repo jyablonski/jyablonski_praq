@@ -72,12 +72,84 @@ def get_rds_metrics(client, rds_server: str, period: int, start_time: datetime):
                     "Stat": "Average",
                 },
             },
+            {
+                "Id": "read_iops",
+                "MetricStat": {
+                    "Metric": {
+                        "Namespace": "AWS/RDS",
+                        "MetricName": "ReadIOPS",
+                        "Dimensions": [
+                            {"Name": "DBInstanceIdentifier", "Value": rds_server}
+                        ],
+                    },
+                    "Period": period,
+                    "Stat": "Average",
+                },
+            },
+            {
+                "Id": "deadlocks",
+                "MetricStat": {
+                    "Metric": {
+                        "Namespace": "AWS/RDS",
+                        "MetricName": "Deadlocks",
+                        "Dimensions": [
+                            {"Name": "DBInstanceIdentifier", "Value": rds_server}
+                        ],
+                    },
+                    "Period": period,
+                    "Stat": "Average",
+                },
+            },
+            {
+                "Id": "network_throughput",
+                "MetricStat": {
+                    "Metric": {
+                        "Namespace": "AWS/RDS",
+                        "MetricName": "NetworkThroughput",
+                        "Dimensions": [
+                            {"Name": "DBInstanceIdentifier", "Value": rds_server}
+                        ],
+                    },
+                    "Period": period,
+                    "Stat": "Average",
+                },
+            },
+            {
+                "Id": "read_latency",
+                "MetricStat": {
+                    "Metric": {
+                        "Namespace": "AWS/RDS",
+                        "MetricName": "ReadLatency",
+                        "Dimensions": [
+                            {"Name": "DBInstanceIdentifier", "Value": rds_server}
+                        ],
+                    },
+                    "Period": period,
+                    "Stat": "Average",
+                },
+            },
+            {
+                "Id": "write_latency",
+                "MetricStat": {
+                    "Metric": {
+                        "Namespace": "AWS/RDS",
+                        "MetricName": "WriteLatency",
+                        "Dimensions": [
+                            {"Name": "DBInstanceIdentifier", "Value": rds_server}
+                        ],
+                    },
+                    "Period": period,
+                    "Stat": "Average",
+                },
+            },
         ],
         StartTime=(start_time - timedelta(days=1)).timestamp(),
         EndTime=start_time.timestamp(),
     )
     df = pd.DataFrame(response["MetricDataResults"])
     df = df.explode(["Timestamps", "Values"]).reset_index()
+    df["database"] = rds_server
+    df = df.drop(["index", "Id", "StatusCode"], axis=1)
 
     print(f"Acquired {len(df)} Records, returning DataFrame")
     return df
