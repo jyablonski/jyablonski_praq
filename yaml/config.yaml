@@ -1,0 +1,15 @@
+project:
+  name: "REST_API_${env_type}"
+
+local:
+  host: localhost
+  user: postgres
+  pass: ${RDS_PW}
+  database: postgres
+  schema: public
+prod:
+  host: $IP
+  user: $RDS_USER
+  pass: $RDS_PW
+  database: $RDS_DB
+  schema: nba_prod
