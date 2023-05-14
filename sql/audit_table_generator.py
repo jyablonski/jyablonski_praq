@@ -3,7 +3,7 @@ import os
 
 import pandas as pd
 from sqlalchemy import exc, create_engine, text as sql_text
-from sqlalchemy.engine.base import Engine
+from sqlalchemy.engine.base import Connection, Engine
 
 
 def sql_connection(
@@ -45,7 +45,7 @@ table = "rest_api_users"
 def build_audit_table(
     table: str,
     schema: str,
-    connection,
+    connection: Connection,
 ):
     try:
         table_cols_df = pd.read_sql_query(
