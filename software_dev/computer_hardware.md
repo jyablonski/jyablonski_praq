@@ -119,3 +119,25 @@ Premade, closed loop liquid cooling system pack which comes with a Cooler that a
 - The liquid doesn't need to be changed (hence closed loop). 
 - Once connected it takes heat away from the CPU to the Radiator via the liquid loop where it's cooled, and then the cool liquid returns to the CPU to repeat the loop via a pump.
 - Typical Watercooling solutions you have to buy your own parts separately, add in your own tubing, your own liquid, and create your own loop.  AIO products do this all for you.
+
+### Intake vs Exhaust Radiators
+
+
+## Fans
+Intake Fan - brings (room temp) air from outside the case into the case.
+
+Exhaust Fan - transfers air from inside the case to outside of the case.
+
+Typically intake fans are on the front or bottom part of the case, and exhaust is on the top or rear part of the case.
+
+Mesh filters helps make sure smaller particles / excessive dust doesn't get brought in while the fans are running.
+
+### Positive Pressure
+- More air within the case than outside
+- More intake fans than exhaust fans
+- Less dust will get into the case and fk your shit up
+
+### Negative Pressure
+- Less air within the case than outside
+- More exhaust fans than intake fans
+- More dust will get into the case

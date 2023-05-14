@@ -14,9 +14,8 @@ def solution(nums, target):
 
         if diff in dict1:
             return [dict1[diff], k]
-
-        # else add the value we just traversed to the dictionary as a key, with the index as the value.
-        dict1[v] = k
+        else:
+            dict1[v] = k
 
 
 solution(nums_list, target_int)
