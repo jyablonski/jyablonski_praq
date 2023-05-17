@@ -101,7 +101,7 @@ def build_audit_table(
                     audit_created_at
                 )
                 VALUES(
-                    {table_cols_new}
+                    {table_cols_new},
                     'INSERT',
                     CURRENT_TIMESTAMP
                 );
@@ -151,6 +151,8 @@ def build_audit_table(
 
         print(f"Built Audit Trigger {table}_audit_trigger")
 
+        return audit_trigger_create_function
+
     except BaseException as e:
         raise e
 
@@ -159,4 +161,6 @@ engine = sql_connection("nba_prod")
 
 connection = engine.connect()
 
-build_audit_table(table="prod_feedback", schema="nba_prod", connection=connection)
+bb = build_audit_table(
+    table="user_predictions", schema="nba_prod", connection=connection
+)
