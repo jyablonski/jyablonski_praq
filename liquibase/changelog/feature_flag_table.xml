@@ -1,0 +1,19 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="jacob" id="202305201050-shiny">
+    <preConditions onFail="MARK_RAN">
+        <not>
+            <tableExists tableName="shiny_feature_flags" schemaName="nba_prod"/>
+        </not>
+        </preConditions>
+        <createTable tableName="shiny_feature_flags" schemaName="nba_prod">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="is_playoffs" type="boolean"/>
+        </createTable>
+    <rollback>
+        <dropTable tableName="shiny_feature_flags" schemaName="nba_prod"/>
+    </rollback>
+</changeSet>
+</databaseChangeLog>

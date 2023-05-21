@@ -14,7 +14,6 @@ def find_import_memory_usage():
     from typing import List, Optional
     import uuid
 
-    # import awswrangler as wr
     import boto3
     from bs4 import BeautifulSoup
     from botocore.exceptions import ClientError
@@ -29,6 +28,8 @@ def find_import_memory_usage():
     import sentry_sdk
     import tweepy
     from tweepy import OAuthHandler
+    import opensearch_logger
+    import awswrangler as wr
 
 
 print(f"hello world at {datetime.now()}")
