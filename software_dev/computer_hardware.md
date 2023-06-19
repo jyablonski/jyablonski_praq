@@ -77,6 +77,8 @@ AMD Stream Processors - AMD's equivalent of CUDA Cores.
 ## Memory
 All data is loaded into memory before being sent off to the CPU.  Similar to SSD Storage except it's very very fast, but not as much of it around to use (~32 GB instead of 2 TB in an HDD etc).  Most motherboards offer 2 lanes for RAM to communicate with the CPU.
 
+Memory normally comes in the form of 2 sticks which should go in the 2nd and 4th slots away from the CPU.  The Memory Manual normally will say this.  [Fancy Post](https://www.reddit.com/r/buildapc/comments/zfx0lg/i_understand_slot_2_4_is_ideal_for_dual_channel/#:~:text=You%20put%20the%20sticks%20in,the%20stability%20is%20the%20same.) on why the 1st and 3rd slots aren't used for dual channel sticks.
+
 DIMM (Dual In-Line Memory Module) - Typically the kind we use in Desktops
 
 SO-DIMM (Small Outline DIMM) - Typically used in Laptops.  Much smaller.
@@ -117,10 +119,35 @@ All In One Liquid Cooler.
 
 Premade, closed loop liquid cooling system pack which comes with a Cooler that attaches to the CPU, a pump, and a Radiator.  
 - The liquid doesn't need to be changed (hence closed loop). 
-- Once connected it takes heat away from the CPU to the Radiator via the liquid loop where it's cooled, and then the cool liquid returns to the CPU to repeat the loop via a pump.
+- Once connected it takes heat away from the attached component (CPU or GPU) to the Radiator via the liquid loop where it's cooled, and then the cool liquid returns to the CPU to repeat the loop via a pump.
 - Typical Watercooling solutions you have to buy your own parts separately, add in your own tubing, your own liquid, and create your own loop.  AIO products do this all for you.
+- [Air Bubbles](https://www.youtube.com/watch?v=DKwA7ygTJn0)
+  - Basically the Pump of the AIO which is attached to the CPU should be *LOWER* than the highest point of the radiator.  Otherwise, you can get air trapped in the AIO which will reduce efficiency over time.
 
-### Intake vs Exhaust Radiators
+Intake Radiators should be placed at the front or bottom of the case.  Fresh air from outside of the case will get brought in via the intake fans where that fresh air can cool down the radiator. 
+- This is the *best* solution for cooling the component attached to the radiator (CPU / GPU).
+- This will increase overall case temps, because that slightly cooled but still warm radiator air is getting blown through the case (although it's not that bad).
+
+
+Exhaust Radiators should be placed at the rear or the top of the case.  These radiators will get cooled through slightly warmer air from inside of the case, but the warm radiator air will get blown outside of the case.
+- This is not as good of a solution for cooling the component attached to the radiator (CPU / GPU).
+- This will decrease overall case temps, because that warm radiator air is being blown completely out of the case.
+
+CPUs can generally run a couple Celsius higher without it affecting that much.  CPU only really gets affected at the top end where it's hitting its temperature limits and starts getting severely throttled.
+
+GPU generally gets affected the entire time by temperature increases which could lead to incremental drops in FPS until the GPU becomes completed overheated.
+
+### Bad
+![image](https://github.com/jyablonski/python_aws/assets/16946556/e8b6dfae-1e97-4e35-b184-b1915cca6bdc)
+
+![image](https://github.com/jyablonski/python_aws/assets/16946556/acc4ca33-c9e2-4040-ba22-5eb0097be757)
+
+
+
+### Good
+![image](https://github.com/jyablonski/python_aws/assets/16946556/ef648c69-a264-4d17-8f17-bc573eb6c1ef)
+
+![image](https://github.com/jyablonski/python_aws/assets/16946556/28673c3f-360a-4ebc-adf1-e24282db1125)
 
 
 ## Fans

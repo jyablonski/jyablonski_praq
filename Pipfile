@@ -18,6 +18,8 @@ sqlalchemy = "*"
 azure-storage-blob = "*"
 polars = "*"
 duckdb = "*"
+jupyter-console = "*"
+jupyter = "*"
 
 [dev-packages]
 pytest = "*"

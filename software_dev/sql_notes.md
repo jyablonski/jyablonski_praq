@@ -1,4 +1,5 @@
 # Traditional OLTP Databases
+[Neat Cheatsheet of PostgreSQL commands](https://gist.github.com/rgreenjr/3637525)
 
 # SQL Query w/ no Index
 No indexes means the SQL DB has to do a `full table scan`.  This is the process of having all data sitting in disk objects called blocks. All columns of the data you request are then read INTO memory, and then each record is traversed in the entire dataset and only the ones you want filtered back to you are returned.

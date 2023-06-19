@@ -1,0 +1,2163 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="jacob (generated)" id="1687127086512-1">
+        <createTable tableName="reddit_test_partitioning">
+            <column name="comment" type="TEXT"/>
+            <column name="score" type="BIGINT"/>
+            <column name="url" type="TEXT"/>
+            <column name="author" type="TEXT"/>
+            <column name="flair1" type="TEXT"/>
+            <column name="flair2" type="TEXT"/>
+            <column name="edited" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+            <column name="row_col" type="BIGINT"/>
+            <column name="md5_pk" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-2">
+        <createTable tableName="data_monitoring_metrics">
+            <column name="id" type="VARCHAR(4096)"/>
+            <column name="full_table_name" type="VARCHAR(4096)"/>
+            <column name="column_name" type="VARCHAR(4096)"/>
+            <column name="metric_name" type="VARCHAR(4096)"/>
+            <column name="metric_value" type="FLOAT8"/>
+            <column name="source_value" type="VARCHAR(4096)"/>
+            <column name="bucket_start" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="bucket_end" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="bucket_duration_hours" type="INTEGER"/>
+            <column name="updated_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="dimension" type="VARCHAR(4096)"/>
+            <column name="dimension_value" type="VARCHAR(4096)"/>
+            <column name="metric_properties" type="VARCHAR(4096)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-3">
+        <createTable tableName="dbt_invocations">
+            <column name="invocation_id" type="TEXT"/>
+            <column name="job_id" type="TEXT"/>
+            <column name="job_name" type="TEXT"/>
+            <column name="job_run_id" type="TEXT"/>
+            <column name="run_started_at" type="VARCHAR(4096)"/>
+            <column name="run_completed_at" type="VARCHAR(4096)"/>
+            <column name="generated_at" type="VARCHAR(4096)"/>
+            <column name="command" type="VARCHAR(4096)"/>
+            <column name="dbt_version" type="VARCHAR(4096)"/>
+            <column name="elementary_version" type="VARCHAR(4096)"/>
+            <column name="full_refresh" type="BOOLEAN"/>
+            <column name="invocation_vars" type="TEXT"/>
+            <column name="vars" type="TEXT"/>
+            <column name="target_name" type="VARCHAR(4096)"/>
+            <column name="target_database" type="VARCHAR(4096)"/>
+            <column name="target_schema" type="VARCHAR(4096)"/>
+            <column name="target_profile_name" type="VARCHAR(4096)"/>
+            <column name="threads" type="INTEGER"/>
+            <column name="selected" type="TEXT"/>
+            <column name="yaml_selector" type="TEXT"/>
+            <column name="project_id" type="VARCHAR(4096)"/>
+            <column name="project_name" type="VARCHAR(4096)"/>
+            <column name="env" type="VARCHAR(4096)"/>
+            <column name="env_id" type="VARCHAR(4096)"/>
+            <column name="cause_category" type="VARCHAR(4096)"/>
+            <column name="cause" type="TEXT"/>
+            <column name="pull_request_id" type="VARCHAR(4096)"/>
+            <column name="git_sha" type="VARCHAR(4096)"/>
+            <column name="orchestrator" type="VARCHAR(4096)"/>
+            <column name="dbt_user" type="VARCHAR(4096)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-4">
+        <createTable tableName="dbt_models">
+            <column name="unique_id" type="VARCHAR(4096)"/>
+            <column name="alias" type="VARCHAR(4096)"/>
+            <column name="checksum" type="VARCHAR(4096)"/>
+            <column name="materialization" type="VARCHAR(4096)"/>
+            <column name="tags" type="TEXT"/>
+            <column name="meta" type="TEXT"/>
+            <column name="owner" type="VARCHAR(4096)"/>
+            <column name="database_name" type="VARCHAR(4096)"/>
+            <column name="schema_name" type="VARCHAR(4096)"/>
+            <column name="depends_on_macros" type="TEXT"/>
+            <column name="depends_on_nodes" type="TEXT"/>
+            <column name="description" type="TEXT"/>
+            <column name="name" type="VARCHAR(4096)"/>
+            <column name="package_name" type="VARCHAR(4096)"/>
+            <column name="original_path" type="TEXT"/>
+            <column name="path" type="VARCHAR(4096)"/>
+            <column name="generated_at" type="VARCHAR(4096)"/>
+            <column name="metadata_hash" type="VARCHAR(4096)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-5">
+        <createTable tableName="dbt_run_results">
+            <column name="model_execution_id" type="TEXT"/>
+            <column name="unique_id" type="TEXT"/>
+            <column name="invocation_id" type="VARCHAR(4096)"/>
+            <column name="generated_at" type="VARCHAR(4096)"/>
+            <column name="name" type="TEXT"/>
+            <column name="message" type="TEXT"/>
+            <column name="status" type="VARCHAR(4096)"/>
+            <column name="resource_type" type="VARCHAR(4096)"/>
+            <column name="execution_time" type="FLOAT8"/>
+            <column name="execute_started_at" type="VARCHAR(4096)"/>
+            <column name="execute_completed_at" type="VARCHAR(4096)"/>
+            <column name="compile_started_at" type="VARCHAR(4096)"/>
+            <column name="compile_completed_at" type="VARCHAR(4096)"/>
+            <column name="rows_affected" type="BIGINT"/>
+            <column name="full_refresh" type="BOOLEAN"/>
+            <column name="compiled_code" type="TEXT"/>
+            <column name="failures" type="BIGINT"/>
+            <column name="query_id" type="VARCHAR(4096)"/>
+            <column name="thread_id" type="VARCHAR(4096)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-6">
+        <createTable tableName="dbt_snapshots">
+            <column name="unique_id" type="VARCHAR(4096)"/>
+            <column name="alias" type="VARCHAR(4096)"/>
+            <column name="checksum" type="VARCHAR(4096)"/>
+            <column name="materialization" type="VARCHAR(4096)"/>
+            <column name="tags" type="TEXT"/>
+            <column name="meta" type="TEXT"/>
+            <column name="owner" type="VARCHAR(4096)"/>
+            <column name="database_name" type="VARCHAR(4096)"/>
+            <column name="schema_name" type="VARCHAR(4096)"/>
+            <column name="depends_on_macros" type="TEXT"/>
+            <column name="depends_on_nodes" type="TEXT"/>
+            <column name="description" type="TEXT"/>
+            <column name="name" type="VARCHAR(4096)"/>
+            <column name="package_name" type="VARCHAR(4096)"/>
+            <column name="original_path" type="TEXT"/>
+            <column name="path" type="VARCHAR(4096)"/>
+            <column name="generated_at" type="VARCHAR(4096)"/>
+            <column name="metadata_hash" type="VARCHAR(4096)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-7">
+        <createTable tableName="dbt_source_freshness_results">
+            <column name="source_freshness_execution_id" type="VARCHAR(4096)"/>
+            <column name="unique_id" type="VARCHAR(4096)"/>
+            <column name="max_loaded_at" type="VARCHAR(4096)"/>
+            <column name="snapshotted_at" type="VARCHAR(4096)"/>
+            <column name="generated_at" type="VARCHAR(4096)"/>
+            <column name="max_loaded_at_time_ago_in_s" type="FLOAT8"/>
+            <column name="status" type="VARCHAR(4096)"/>
+            <column name="error" type="VARCHAR(4096)"/>
+            <column name="compile_started_at" type="VARCHAR(4096)"/>
+            <column name="compile_completed_at" type="VARCHAR(4096)"/>
+            <column name="execute_started_at" type="VARCHAR(4096)"/>
+            <column name="execute_completed_at" type="VARCHAR(4096)"/>
+            <column name="invocation_id" type="VARCHAR(4096)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-8">
+        <createTable tableName="dbt_sources">
+            <column name="unique_id" type="VARCHAR(4096)"/>
+            <column name="database_name" type="VARCHAR(4096)"/>
+            <column name="schema_name" type="VARCHAR(4096)"/>
+            <column name="source_name" type="VARCHAR(4096)"/>
+            <column name="name" type="VARCHAR(4096)"/>
+            <column name="identifier" type="VARCHAR(4096)"/>
+            <column name="loaded_at_field" type="VARCHAR(4096)"/>
+            <column name="freshness_warn_after" type="VARCHAR(4096)"/>
+            <column name="freshness_error_after" type="VARCHAR(4096)"/>
+            <column name="freshness_filter" type="TEXT"/>
+            <column name="relation_name" type="VARCHAR(4096)"/>
+            <column name="tags" type="TEXT"/>
+            <column name="meta" type="TEXT"/>
+            <column name="owner" type="VARCHAR(4096)"/>
+            <column name="package_name" type="VARCHAR(4096)"/>
+            <column name="original_path" type="TEXT"/>
+            <column name="path" type="VARCHAR(4096)"/>
+            <column name="source_description" type="TEXT"/>
+            <column name="description" type="TEXT"/>
+            <column name="generated_at" type="VARCHAR(4096)"/>
+            <column name="metadata_hash" type="VARCHAR(4096)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-9">
+        <createTable tableName="dbt_seeds">
+            <column name="unique_id" type="VARCHAR(4096)"/>
+            <column name="alias" type="VARCHAR(4096)"/>
+            <column name="checksum" type="VARCHAR(4096)"/>
+            <column name="tags" type="TEXT"/>
+            <column name="meta" type="TEXT"/>
+            <column name="owner" type="VARCHAR(4096)"/>
+            <column name="database_name" type="VARCHAR(4096)"/>
+            <column name="schema_name" type="VARCHAR(4096)"/>
+            <column name="description" type="TEXT"/>
+            <column name="name" type="VARCHAR(4096)"/>
+            <column name="package_name" type="VARCHAR(4096)"/>
+            <column name="original_path" type="TEXT"/>
+            <column name="path" type="VARCHAR(4096)"/>
+            <column name="generated_at" type="VARCHAR(4096)"/>
+            <column name="metadata_hash" type="VARCHAR(4096)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-10">
+        <createTable tableName="dbt_exposures">
+            <column name="unique_id" type="VARCHAR(4096)"/>
+            <column name="name" type="VARCHAR(4096)"/>
+            <column name="maturity" type="VARCHAR(4096)"/>
+            <column name="type" type="VARCHAR(4096)"/>
+            <column name="owner_email" type="VARCHAR(4096)"/>
+            <column name="owner_name" type="VARCHAR(4096)"/>
+            <column name="url" type="TEXT"/>
+            <column name="depends_on_macros" type="TEXT"/>
+            <column name="depends_on_nodes" type="TEXT"/>
+            <column name="description" type="TEXT"/>
+            <column name="tags" type="TEXT"/>
+            <column name="meta" type="TEXT"/>
+            <column name="package_name" type="VARCHAR(4096)"/>
+            <column name="original_path" type="TEXT"/>
+            <column name="path" type="VARCHAR(4096)"/>
+            <column name="generated_at" type="VARCHAR(4096)"/>
+            <column name="metadata_hash" type="VARCHAR(4096)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-11">
+        <createTable tableName="dbt_metrics">
+            <column name="unique_id" type="VARCHAR(4096)"/>
+            <column name="name" type="VARCHAR(4096)"/>
+            <column name="label" type="VARCHAR(4096)"/>
+            <column name="model" type="VARCHAR(4096)"/>
+            <column name="type" type="VARCHAR(4096)"/>
+            <column name="sql" type="TEXT"/>
+            <column name="timestamp" type="VARCHAR(4096)"/>
+            <column name="filters" type="TEXT"/>
+            <column name="time_grains" type="TEXT"/>
+            <column name="dimensions" type="TEXT"/>
+            <column name="depends_on_macros" type="TEXT"/>
+            <column name="depends_on_nodes" type="TEXT"/>
+            <column name="description" type="TEXT"/>
+            <column name="tags" type="TEXT"/>
+            <column name="meta" type="TEXT"/>
+            <column name="package_name" type="VARCHAR(4096)"/>
+            <column name="original_path" type="TEXT"/>
+            <column name="path" type="VARCHAR(4096)"/>
+            <column name="generated_at" type="VARCHAR(4096)"/>
+            <column name="metadata_hash" type="VARCHAR(4096)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-12">
+        <createTable tableName="dbt_tests">
+            <column name="unique_id" type="VARCHAR(4096)"/>
+            <column name="database_name" type="VARCHAR(4096)"/>
+            <column name="schema_name" type="VARCHAR(4096)"/>
+            <column name="name" type="VARCHAR(4096)"/>
+            <column name="short_name" type="VARCHAR(4096)"/>
+            <column name="alias" type="VARCHAR(4096)"/>
+            <column name="test_column_name" type="VARCHAR(4096)"/>
+            <column name="severity" type="VARCHAR(4096)"/>
+            <column name="warn_if" type="VARCHAR(4096)"/>
+            <column name="error_if" type="VARCHAR(4096)"/>
+            <column name="test_params" type="TEXT"/>
+            <column name="test_namespace" type="VARCHAR(4096)"/>
+            <column name="tags" type="TEXT"/>
+            <column name="model_tags" type="TEXT"/>
+            <column name="model_owners" type="TEXT"/>
+            <column name="meta" type="TEXT"/>
+            <column name="depends_on_macros" type="TEXT"/>
+            <column name="depends_on_nodes" type="TEXT"/>
+            <column name="parent_model_unique_id" type="VARCHAR(4096)"/>
+            <column name="description" type="TEXT"/>
+            <column name="package_name" type="VARCHAR(4096)"/>
+            <column name="type" type="VARCHAR(4096)"/>
+            <column name="original_path" type="TEXT"/>
+            <column name="path" type="VARCHAR(4096)"/>
+            <column name="generated_at" type="VARCHAR(4096)"/>
+            <column name="metadata_hash" type="VARCHAR(4096)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-13">
+        <createTable tableName="elementary_test_results">
+            <column name="id" type="TEXT"/>
+            <column name="data_issue_id" type="VARCHAR(4096)"/>
+            <column name="test_execution_id" type="TEXT"/>
+            <column name="test_unique_id" type="TEXT"/>
+            <column name="model_unique_id" type="TEXT"/>
+            <column name="invocation_id" type="VARCHAR(4096)"/>
+            <column name="detected_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="database_name" type="VARCHAR(4096)"/>
+            <column name="schema_name" type="VARCHAR(4096)"/>
+            <column name="table_name" type="VARCHAR(4096)"/>
+            <column name="column_name" type="VARCHAR(4096)"/>
+            <column name="test_type" type="VARCHAR(4096)"/>
+            <column name="test_sub_type" type="VARCHAR(4096)"/>
+            <column name="test_results_description" type="TEXT"/>
+            <column name="owners" type="VARCHAR(4096)"/>
+            <column name="tags" type="VARCHAR(4096)"/>
+            <column name="test_results_query" type="TEXT"/>
+            <column name="other" type="VARCHAR(4096)"/>
+            <column name="test_name" type="TEXT"/>
+            <column name="test_params" type="TEXT"/>
+            <column name="severity" type="VARCHAR(4096)"/>
+            <column name="status" type="VARCHAR(4096)"/>
+            <column name="failures" type="BIGINT"/>
+            <column name="test_short_name" type="VARCHAR(4096)"/>
+            <column name="test_alias" type="VARCHAR(4096)"/>
+            <column name="result_rows" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-14">
+        <createTable tableName="aws_boxscores_source">
+            <column name="player" type="TEXT"/>
+            <column name="team" type="TEXT"/>
+            <column name="location" type="TEXT"/>
+            <column name="opponent" type="TEXT"/>
+            <column name="outcome" type="TEXT"/>
+            <column name="mp" type="TEXT"/>
+            <column name="fgm" type="FLOAT8"/>
+            <column name="fga" type="FLOAT8"/>
+            <column name="fgpercent" type="FLOAT8"/>
+            <column name="threepfgmade" type="FLOAT8"/>
+            <column name="threepattempted" type="FLOAT8"/>
+            <column name="threepointpercent" type="FLOAT8"/>
+            <column name="ft" type="TEXT"/>
+            <column name="fta" type="TEXT"/>
+            <column name="ftpercent" type="TEXT"/>
+            <column name="oreb" type="FLOAT8"/>
+            <column name="dreb" type="FLOAT8"/>
+            <column name="trb" type="FLOAT8"/>
+            <column name="ast" type="FLOAT8"/>
+            <column name="stl" type="FLOAT8"/>
+            <column name="blk" type="FLOAT8"/>
+            <column name="tov" type="FLOAT8"/>
+            <column name="pf" type="FLOAT8"/>
+            <column name="pts" type="FLOAT8"/>
+            <column name="plusminus" type="FLOAT8"/>
+            <column name="gmsc" type="FLOAT8"/>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="type" type="TEXT"/>
+            <column name="season" type="BIGINT"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-15">
+        <createTable tableName="aws_injury_data_source">
+            <column name="player" type="TEXT"/>
+            <column name="team" type="TEXT"/>
+            <column name="description" type="TEXT"/>
+            <column name="date" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-16">
+        <createTable tableName="aws_odds_source">
+            <column name="team" type="TEXT"/>
+            <column name="spread" type="TEXT"/>
+            <column name="total" type="TEXT"/>
+            <column name="moneyline" type="FLOAT8"/>
+            <column name="date" type="date"/>
+            <column name="datetime1" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-17">
+        <createTable tableName="aws_opp_stats_source">
+            <column name="team" type="TEXT"/>
+            <column name="fg_percent_opp" type="FLOAT8"/>
+            <column name="threep_percent_opp" type="FLOAT8"/>
+            <column name="threep_made_opp" type="FLOAT8"/>
+            <column name="ppg_opp" type="FLOAT8"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-18">
+        <createTable tableName="aws_pbp_data_source">
+            <column name="timequarter" type="TEXT"/>
+            <column name="descriptionplayvisitor" type="TEXT"/>
+            <column name="awayscore" type="TEXT"/>
+            <column name="score" type="TEXT"/>
+            <column name="homescore" type="TEXT"/>
+            <column name="descriptionplayhome" type="TEXT"/>
+            <column name="numberperiod" type="TEXT"/>
+            <column name="hometeam" type="TEXT"/>
+            <column name="awayteam" type="TEXT"/>
+            <column name="scoreaway" type="FLOAT8"/>
+            <column name="scorehome" type="FLOAT8"/>
+            <column name="marginscore" type="FLOAT8"/>
+            <column name="date" type="date"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-19">
+        <createTable tableName="aws_reddit_comment_data_source">
+            <column name="comment" type="TEXT"/>
+            <column name="score" type="BIGINT"/>
+            <column name="url" type="TEXT"/>
+            <column name="author" type="TEXT"/>
+            <column name="flair1" type="TEXT"/>
+            <column name="flair2" type="TEXT"/>
+            <column name="edited" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+            <column name="row_col" type="BIGINT"/>
+            <column name="md5_pk" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-20">
+        <createTable tableName="aws_reddit_data_source">
+            <column name="title" type="TEXT"/>
+            <column name="score" type="BIGINT"/>
+            <column name="id" type="TEXT"/>
+            <column name="url" type="TEXT"/>
+            <column name="reddit_url" type="TEXT"/>
+            <column name="num_comments" type="BIGINT"/>
+            <column name="body" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-21">
+        <createTable tableName="aws_schedule_source">
+            <column name="start_time" type="TEXT"/>
+            <column name="away_team" type="TEXT"/>
+            <column name="home_team" type="TEXT"/>
+            <column name="date" type="TEXT"/>
+            <column name="proper_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-22">
+        <createTable tableName="aws_shooting_stats_source">
+            <column name="player" type="TEXT"/>
+            <column name="avg_shot_distance" type="TEXT"/>
+            <column name="pct_fga_2p" type="TEXT"/>
+            <column name="pct_fga_0_3" type="TEXT"/>
+            <column name="pct_fga_3_10" type="TEXT"/>
+            <column name="pct_fga_10_16" type="TEXT"/>
+            <column name="pct_fga_16_3p" type="TEXT"/>
+            <column name="pct_fga_3p" type="TEXT"/>
+            <column name="fg_pct_0_3" type="TEXT"/>
+            <column name="fg_pct_3_10" type="TEXT"/>
+            <column name="fg_pct_10_16" type="TEXT"/>
+            <column name="fg_pct_16_3p" type="TEXT"/>
+            <column name="pct_2pfg_ast" type="TEXT"/>
+            <column name="pct_3pfg_ast" type="TEXT"/>
+            <column name="dunk_pct_tot_fg" type="TEXT"/>
+            <column name="dunks" type="TEXT"/>
+            <column name="corner_3_ast_pct" type="TEXT"/>
+            <column name="corner_3pm_pct" type="TEXT"/>
+            <column name="heaves_att" type="TEXT"/>
+            <column name="heaves_makes" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-23">
+        <createTable tableName="aws_transactions_source">
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="transaction" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-24">
+        <createTable tableName="aws_twitter_tweepy_data_source">
+            <column name="tweet_id" type="TEXT"/>
+            <column name="created_at" type="TEXT"/>
+            <column name="username" type="TEXT"/>
+            <column name="user_id" type="FLOAT8"/>
+            <column name="tweet" type="TEXT"/>
+            <column name="likes" type="FLOAT8"/>
+            <column name="retweets" type="FLOAT8"/>
+            <column name="language" type="TEXT"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="profile_img" type="TEXT"/>
+            <column name="url" type="TEXT"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-25">
+        <createTable tableName="orders">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="orders_pkey"/>
+            </column>
+            <column name="item" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-26">
+        <createTable tableName="orders_audit">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="orders_audit_pkey"/>
+            </column>
+            <column name="order_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="audit_type" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_audit" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-27">
+        <createTable tableName="rest_api_users">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="rest_api_users_pkey"/>
+            </column>
+            <column name="username" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="TEXT"/>
+            <column defaultValueComputed="now()" name="created_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-28">
+        <createTable tableName="user_predictions">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_predictions_pkey"/>
+            </column>
+            <column name="username" type="TEXT"/>
+            <column name="game_date" type="date"/>
+            <column name="home_team" type="TEXT"/>
+            <column name="home_team_predicted_win_pct" type="FLOAT8"/>
+            <column name="away_team" type="TEXT"/>
+            <column name="away_team_predicted_win_pct" type="FLOAT8"/>
+            <column name="selected_winner" type="TEXT"/>
+            <column defaultValueComputed="now()" name="created_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-29">
+        <createTable tableName="test_table2">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR"/>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="audit_type" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_audit" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-30">
+        <createTable tableName="day_test">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="day_test_pkey"/>
+            </column>
+            <column name="user_text" type="TEXT"/>
+            <column name="start_date" type="date"/>
+            <column name="end_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-31">
+        <createTable tableName="feedback2">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="feedback2_pkey"/>
+            </column>
+            <column name="feedback" type="VARCHAR"/>
+            <column name="time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-32">
+        <createTable tableName="department">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="department_pkey"/>
+            </column>
+            <column name="dept" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="emp_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="now()" name="created_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-33">
+        <createTable tableName="department_audit">
+            <column autoIncrement="true" name="audit_id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="department_audit_pkey"/>
+            </column>
+            <column name="id" type="INTEGER"/>
+            <column name="dept" type="VARCHAR"/>
+            <column name="emp_id" type="INTEGER"/>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="audit_type" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="audit_created_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-34">
+        <createTable tableName="reddit_test_partitioning_2022">
+            <column name="comment" type="TEXT"/>
+            <column name="score" type="BIGINT"/>
+            <column name="url" type="TEXT"/>
+            <column name="author" type="TEXT"/>
+            <column name="flair1" type="TEXT"/>
+            <column name="flair2" type="TEXT"/>
+            <column name="edited" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+            <column name="row_col" type="BIGINT"/>
+            <column name="md5_pk" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-35">
+        <createTable tableName="reddit_test_partitioning_2023">
+            <column name="comment" type="TEXT"/>
+            <column name="score" type="BIGINT"/>
+            <column name="url" type="TEXT"/>
+            <column name="author" type="TEXT"/>
+            <column name="flair1" type="TEXT"/>
+            <column name="flair2" type="TEXT"/>
+            <column name="edited" type="TEXT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+            <column name="row_col" type="BIGINT"/>
+            <column name="md5_pk" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-36">
+        <createView fullDefinition="false" viewName="metrics_anomaly_score">WITH data_monitoring_metrics AS (
+         SELECT data_monitoring_metrics.id,
+            data_monitoring_metrics.full_table_name,
+            data_monitoring_metrics.column_name,
+            data_monitoring_metrics.metric_name,
+            data_monitoring_metrics.metric_value,
+            data_monitoring_metrics.source_value,
+            data_monitoring_metrics.bucket_start,
+            data_monitoring_metrics.bucket_end,
+            data_monitoring_metrics.bucket_duration_hours,
+            data_monitoring_metrics.updated_at,
+            data_monitoring_metrics.dimension,
+            data_monitoring_metrics.dimension_value,
+            data_monitoring_metrics.metric_properties
+           FROM nba_source.data_monitoring_metrics
+        ), time_window_aggregation AS (
+         SELECT data_monitoring_metrics.id,
+            data_monitoring_metrics.full_table_name,
+            data_monitoring_metrics.column_name,
+            data_monitoring_metrics.dimension,
+            data_monitoring_metrics.dimension_value,
+            data_monitoring_metrics.metric_name,
+            data_monitoring_metrics.metric_value,
+            data_monitoring_metrics.source_value,
+            data_monitoring_metrics.bucket_start,
+            data_monitoring_metrics.bucket_end,
+            data_monitoring_metrics.bucket_duration_hours,
+            data_monitoring_metrics.updated_at,
+            avg(data_monitoring_metrics.metric_value) OVER (PARTITION BY data_monitoring_metrics.metric_name, data_monitoring_metrics.full_table_name, data_monitoring_metrics.column_name ORDER BY data_monitoring_metrics.bucket_start ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS training_avg,
+            stddev(data_monitoring_metrics.metric_value) OVER (PARTITION BY data_monitoring_metrics.metric_name, data_monitoring_metrics.full_table_name, data_monitoring_metrics.column_name ORDER BY data_monitoring_metrics.bucket_start ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS training_stddev,
+            count(data_monitoring_metrics.metric_value) OVER (PARTITION BY data_monitoring_metrics.metric_name, data_monitoring_metrics.full_table_name, data_monitoring_metrics.column_name ORDER BY data_monitoring_metrics.bucket_start ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS training_set_size,
+            last_value(data_monitoring_metrics.bucket_end) OVER (PARTITION BY data_monitoring_metrics.metric_name, data_monitoring_metrics.full_table_name, data_monitoring_metrics.column_name ORDER BY data_monitoring_metrics.bucket_start ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS training_end,
+            first_value(data_monitoring_metrics.bucket_end) OVER (PARTITION BY data_monitoring_metrics.metric_name, data_monitoring_metrics.full_table_name, data_monitoring_metrics.column_name ORDER BY data_monitoring_metrics.bucket_start ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS training_start
+           FROM data_monitoring_metrics
+          GROUP BY data_monitoring_metrics.id, data_monitoring_metrics.full_table_name, data_monitoring_metrics.column_name, data_monitoring_metrics.dimension, data_monitoring_metrics.dimension_value, data_monitoring_metrics.metric_name, data_monitoring_metrics.metric_value, data_monitoring_metrics.source_value, data_monitoring_metrics.bucket_start, data_monitoring_metrics.bucket_end, data_monitoring_metrics.bucket_duration_hours, data_monitoring_metrics.updated_at
+        ), metrics_anomaly_score AS (
+         SELECT time_window_aggregation.id,
+            time_window_aggregation.full_table_name,
+            time_window_aggregation.column_name,
+            time_window_aggregation.dimension,
+            time_window_aggregation.dimension_value,
+            time_window_aggregation.metric_name,
+                CASE
+                    WHEN (time_window_aggregation.training_stddev IS NULL) THEN NULL::double precision
+                    WHEN (time_window_aggregation.training_stddev = (0)::double precision) THEN (0)::double precision
+                    ELSE ((time_window_aggregation.metric_value - time_window_aggregation.training_avg) / time_window_aggregation.training_stddev)
+                END AS anomaly_score,
+            time_window_aggregation.metric_value AS latest_metric_value,
+            time_window_aggregation.bucket_start,
+            time_window_aggregation.bucket_end,
+            time_window_aggregation.training_avg,
+            time_window_aggregation.training_stddev,
+            time_window_aggregation.training_start,
+            time_window_aggregation.training_end,
+            time_window_aggregation.training_set_size,
+            max(time_window_aggregation.updated_at) AS updated_at
+           FROM time_window_aggregation
+          WHERE ((time_window_aggregation.metric_value IS NOT NULL) AND (time_window_aggregation.training_avg IS NOT NULL) AND (time_window_aggregation.training_set_size &gt;= 14) AND (time_window_aggregation.bucket_end &gt;= (date_trunc('day'::text, (CURRENT_TIMESTAMP)::timestamp without time zone) + (('-7'::integer)::double precision * '1 day'::interval))))
+          GROUP BY time_window_aggregation.id, time_window_aggregation.full_table_name, time_window_aggregation.column_name, time_window_aggregation.dimension, time_window_aggregation.dimension_value, time_window_aggregation.metric_name,
+                CASE
+                    WHEN (time_window_aggregation.training_stddev IS NULL) THEN NULL::double precision
+                    WHEN (time_window_aggregation.training_stddev = (0)::double precision) THEN (0)::double precision
+                    ELSE ((time_window_aggregation.metric_value - time_window_aggregation.training_avg) / time_window_aggregation.training_stddev)
+                END, time_window_aggregation.metric_value, time_window_aggregation.bucket_start, time_window_aggregation.bucket_end, time_window_aggregation.training_avg, time_window_aggregation.training_stddev, time_window_aggregation.training_start, time_window_aggregation.training_end, time_window_aggregation.training_set_size
+          ORDER BY time_window_aggregation.bucket_end DESC
+        ), final AS (
+         SELECT metrics_anomaly_score.id,
+            metrics_anomaly_score.full_table_name,
+            metrics_anomaly_score.column_name,
+            metrics_anomaly_score.dimension,
+            metrics_anomaly_score.dimension_value,
+            metrics_anomaly_score.metric_name,
+            metrics_anomaly_score.anomaly_score,
+            metrics_anomaly_score.latest_metric_value,
+            metrics_anomaly_score.bucket_start,
+            metrics_anomaly_score.bucket_end,
+            metrics_anomaly_score.training_avg,
+            metrics_anomaly_score.training_stddev,
+            metrics_anomaly_score.training_start,
+            metrics_anomaly_score.training_end,
+            metrics_anomaly_score.training_set_size,
+            metrics_anomaly_score.updated_at,
+                CASE
+                    WHEN (abs(metrics_anomaly_score.anomaly_score) &gt; (3)::double precision) THEN true
+                    ELSE false
+                END AS is_anomaly
+           FROM metrics_anomaly_score
+        )
+ SELECT final.id,
+    final.full_table_name,
+    final.column_name,
+    final.dimension,
+    final.dimension_value,
+    final.metric_name,
+    final.anomaly_score,
+    final.latest_metric_value,
+    final.bucket_start,
+    final.bucket_end,
+    final.training_avg,
+    final.training_stddev,
+    final.training_start,
+    final.training_end,
+    final.training_set_size,
+    final.updated_at,
+    final.is_anomaly
+   FROM final;</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-37">
+        <createView fullDefinition="false" viewName="monitors_runs">WITH data_monitoring_metrics AS (
+         SELECT data_monitoring_metrics.id,
+            data_monitoring_metrics.full_table_name,
+            data_monitoring_metrics.column_name,
+            data_monitoring_metrics.metric_name,
+            data_monitoring_metrics.metric_value,
+            data_monitoring_metrics.source_value,
+            data_monitoring_metrics.bucket_start,
+            data_monitoring_metrics.bucket_end,
+            data_monitoring_metrics.bucket_duration_hours,
+            data_monitoring_metrics.updated_at,
+            data_monitoring_metrics.dimension,
+            data_monitoring_metrics.dimension_value,
+            data_monitoring_metrics.metric_properties
+           FROM nba_source.data_monitoring_metrics
+        ), max_bucket_end AS (
+         SELECT data_monitoring_metrics.full_table_name,
+            data_monitoring_metrics.column_name,
+            data_monitoring_metrics.metric_name,
+            data_monitoring_metrics.metric_properties,
+            max(data_monitoring_metrics.bucket_end) AS last_bucket_end,
+            min(data_monitoring_metrics.bucket_end) AS first_bucket_end
+           FROM data_monitoring_metrics
+          GROUP BY data_monitoring_metrics.full_table_name, data_monitoring_metrics.column_name, data_monitoring_metrics.metric_name, data_monitoring_metrics.metric_properties
+        )
+ SELECT max_bucket_end.full_table_name,
+    max_bucket_end.column_name,
+    max_bucket_end.metric_name,
+    max_bucket_end.metric_properties,
+    max_bucket_end.last_bucket_end,
+    max_bucket_end.first_bucket_end
+   FROM max_bucket_end;</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-38">
+        <createView fullDefinition="false" viewName="job_run_results">WITH jobs AS (
+         SELECT dbt_invocations.job_name,
+            dbt_invocations.job_id,
+            dbt_invocations.job_run_id,
+            min((dbt_invocations.run_started_at)::timestamp without time zone) AS job_run_started_at,
+            max((dbt_invocations.run_completed_at)::timestamp without time zone) AS job_run_completed_at,
+            ((((((((((((max((dbt_invocations.run_completed_at)::timestamp without time zone))::date - (min((dbt_invocations.run_started_at)::timestamp without time zone))::date) * 24))::double precision + date_part('hour'::text, max((dbt_invocations.run_completed_at)::timestamp without time zone))) - date_part('hour'::text, min((dbt_invocations.run_started_at)::timestamp without time zone))) * (60)::double precision) + date_part('minute'::text, max((dbt_invocations.run_completed_at)::timestamp without time zone))) - date_part('minute'::text, min((dbt_invocations.run_started_at)::timestamp without time zone))) * (60)::double precision) + floor(date_part('second'::text, max((dbt_invocations.run_completed_at)::timestamp without time zone)))) - floor(date_part('second'::text, min((dbt_invocations.run_started_at)::timestamp without time zone)))) AS job_run_execution_time
+           FROM dbt_invocations
+          WHERE (dbt_invocations.job_id IS NOT NULL)
+          GROUP BY dbt_invocations.job_name, dbt_invocations.job_id, dbt_invocations.job_run_id
+        )
+ SELECT jobs.job_name AS name,
+    jobs.job_id AS id,
+    jobs.job_run_id AS run_id,
+    jobs.job_run_started_at AS run_started_at,
+    jobs.job_run_completed_at AS run_completed_at,
+    jobs.job_run_execution_time AS run_execution_time
+   FROM jobs;</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-39">
+        <createView fullDefinition="false" viewName="model_run_results">WITH dbt_run_results AS (
+         SELECT dbt_run_results.model_execution_id,
+            dbt_run_results.unique_id,
+            dbt_run_results.invocation_id,
+            dbt_run_results.generated_at,
+            dbt_run_results.name,
+            dbt_run_results.message,
+            dbt_run_results.status,
+            dbt_run_results.resource_type,
+            dbt_run_results.execution_time,
+            dbt_run_results.execute_started_at,
+            dbt_run_results.execute_completed_at,
+            dbt_run_results.compile_started_at,
+            dbt_run_results.compile_completed_at,
+            dbt_run_results.rows_affected,
+            dbt_run_results.full_refresh,
+            dbt_run_results.compiled_code,
+            dbt_run_results.failures,
+            dbt_run_results.query_id,
+            dbt_run_results.thread_id
+           FROM nba_source.dbt_run_results
+        ), dbt_models AS (
+         SELECT dbt_models.unique_id,
+            dbt_models.alias,
+            dbt_models.checksum,
+            dbt_models.materialization,
+            dbt_models.tags,
+            dbt_models.meta,
+            dbt_models.owner,
+            dbt_models.database_name,
+            dbt_models.schema_name,
+            dbt_models.depends_on_macros,
+            dbt_models.depends_on_nodes,
+            dbt_models.description,
+            dbt_models.name,
+            dbt_models.package_name,
+            dbt_models.original_path,
+            dbt_models.path,
+            dbt_models.generated_at,
+            dbt_models.metadata_hash
+           FROM nba_source.dbt_models
+        )
+ SELECT run_results.model_execution_id,
+    run_results.unique_id,
+    run_results.invocation_id,
+    run_results.query_id,
+    run_results.name,
+    run_results.generated_at,
+    run_results.status,
+    run_results.full_refresh,
+    run_results.message,
+    run_results.execution_time,
+    run_results.execute_started_at,
+    run_results.execute_completed_at,
+    run_results.compile_started_at,
+    run_results.compile_completed_at,
+    run_results.compiled_code,
+    run_results.thread_id,
+    models.database_name,
+    models.schema_name,
+    models.materialization,
+    models.tags,
+    models.package_name,
+    models.path,
+    models.original_path,
+    models.owner,
+    models.alias,
+    row_number() OVER (PARTITION BY run_results.unique_id ORDER BY run_results.generated_at DESC) AS model_invocation_reverse_index,
+        CASE
+            WHEN ((first_value(run_results.invocation_id) OVER (PARTITION BY (date_trunc('day'::text, (run_results.generated_at)::timestamp without time zone)) ORDER BY run_results.generated_at ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))::text = (run_results.invocation_id)::text) THEN true
+            ELSE false
+        END AS is_the_first_invocation_of_the_day,
+        CASE
+            WHEN ((last_value(run_results.invocation_id) OVER (PARTITION BY (date_trunc('day'::text, (run_results.generated_at)::timestamp without time zone)) ORDER BY run_results.generated_at ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING))::text = (run_results.invocation_id)::text) THEN true
+            ELSE false
+        END AS is_the_last_invocation_of_the_day
+   FROM (dbt_run_results run_results
+     JOIN dbt_models models ON ((run_results.unique_id = (models.unique_id)::text)));</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-40">
+        <createView fullDefinition="false" viewName="dbt_columns">WITH dbt_models_data AS (
+         SELECT dbt_models.database_name,
+            dbt_models.schema_name,
+            dbt_models.alias AS table_name
+           FROM dbt_models
+        ), dbt_snapshots_data AS (
+         SELECT dbt_snapshots.database_name,
+            dbt_snapshots.schema_name,
+            dbt_snapshots.alias AS table_name
+           FROM dbt_snapshots
+        ), dbt_sources_data AS (
+         SELECT dbt_sources.database_name,
+            dbt_sources.schema_name,
+            dbt_sources.name AS table_name
+           FROM dbt_sources
+        ), dbt_seeds_data AS (
+         SELECT dbt_seeds.database_name,
+            dbt_seeds.schema_name,
+            dbt_seeds.name AS table_name
+           FROM dbt_seeds
+        ), tables_information AS (
+         SELECT dbt_models_data.database_name,
+            dbt_models_data.schema_name,
+            dbt_models_data.table_name
+           FROM dbt_models_data
+        UNION ALL
+         SELECT dbt_sources_data.database_name,
+            dbt_sources_data.schema_name,
+            dbt_sources_data.table_name
+           FROM dbt_sources_data
+        UNION ALL
+         SELECT dbt_snapshots_data.database_name,
+            dbt_snapshots_data.schema_name,
+            dbt_snapshots_data.table_name
+           FROM dbt_snapshots_data
+        UNION ALL
+         SELECT dbt_seeds_data.database_name,
+            dbt_seeds_data.schema_name,
+            dbt_seeds_data.table_name
+           FROM dbt_seeds_data
+        ), columns_information AS (
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('nba_source'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('ml_models'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('nba_prod'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('nba_staging'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('operations'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('ad_hoc_analytics'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('nba_prep'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('snapshots'::text))
+        ), dbt_columns AS (
+         SELECT col_info.full_table_name,
+            col_info.database_name,
+            col_info.schema_name,
+            col_info.table_name,
+            col_info.column_name,
+            col_info.data_type
+           FROM (tables_information tbl_info
+             JOIN columns_information col_info ON (((lower((tbl_info.database_name)::text) = lower(col_info.database_name)) AND (lower((tbl_info.schema_name)::text) = lower(col_info.schema_name)) AND (lower((tbl_info.table_name)::text) = lower(col_info.table_name)))))
+        )
+ SELECT dbt_columns.full_table_name,
+    dbt_columns.database_name,
+    dbt_columns.schema_name,
+    dbt_columns.table_name,
+    dbt_columns.column_name,
+    dbt_columns.data_type
+   FROM dbt_columns;</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-41">
+        <createView fullDefinition="false" viewName="dbt_artifacts_hashes">SELECT 'dbt_models'::text AS artifacts_model,
+    dbt_models.metadata_hash
+   FROM dbt_models
+UNION ALL
+ SELECT 'dbt_tests'::text AS artifacts_model,
+    dbt_tests.metadata_hash
+   FROM dbt_tests
+UNION ALL
+ SELECT 'dbt_sources'::text AS artifacts_model,
+    dbt_sources.metadata_hash
+   FROM dbt_sources
+UNION ALL
+ SELECT 'dbt_snapshots'::text AS artifacts_model,
+    dbt_snapshots.metadata_hash
+   FROM dbt_snapshots
+UNION ALL
+ SELECT 'dbt_metrics'::text AS artifacts_model,
+    dbt_metrics.metadata_hash
+   FROM dbt_metrics
+UNION ALL
+ SELECT 'dbt_exposures'::text AS artifacts_model,
+    dbt_exposures.metadata_hash
+   FROM dbt_exposures
+UNION ALL
+ SELECT 'dbt_seeds'::text AS artifacts_model,
+    dbt_seeds.metadata_hash
+   FROM dbt_seeds
+  ORDER BY 2;</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-42">
+        <createView fullDefinition="false" viewName="snapshot_run_results">WITH dbt_run_results AS (
+         SELECT dbt_run_results.model_execution_id,
+            dbt_run_results.unique_id,
+            dbt_run_results.invocation_id,
+            dbt_run_results.generated_at,
+            dbt_run_results.name,
+            dbt_run_results.message,
+            dbt_run_results.status,
+            dbt_run_results.resource_type,
+            dbt_run_results.execution_time,
+            dbt_run_results.execute_started_at,
+            dbt_run_results.execute_completed_at,
+            dbt_run_results.compile_started_at,
+            dbt_run_results.compile_completed_at,
+            dbt_run_results.rows_affected,
+            dbt_run_results.full_refresh,
+            dbt_run_results.compiled_code,
+            dbt_run_results.failures,
+            dbt_run_results.query_id,
+            dbt_run_results.thread_id
+           FROM nba_source.dbt_run_results
+        ), dbt_snapshots AS (
+         SELECT dbt_snapshots.unique_id,
+            dbt_snapshots.alias,
+            dbt_snapshots.checksum,
+            dbt_snapshots.materialization,
+            dbt_snapshots.tags,
+            dbt_snapshots.meta,
+            dbt_snapshots.owner,
+            dbt_snapshots.database_name,
+            dbt_snapshots.schema_name,
+            dbt_snapshots.depends_on_macros,
+            dbt_snapshots.depends_on_nodes,
+            dbt_snapshots.description,
+            dbt_snapshots.name,
+            dbt_snapshots.package_name,
+            dbt_snapshots.original_path,
+            dbt_snapshots.path,
+            dbt_snapshots.generated_at,
+            dbt_snapshots.metadata_hash
+           FROM nba_source.dbt_snapshots
+        )
+ SELECT run_results.model_execution_id,
+    run_results.unique_id,
+    run_results.invocation_id,
+    run_results.query_id,
+    run_results.name,
+    run_results.generated_at,
+    run_results.status,
+    run_results.full_refresh,
+    run_results.message,
+    run_results.execution_time,
+    run_results.execute_started_at,
+    run_results.execute_completed_at,
+    run_results.compile_started_at,
+    run_results.compile_completed_at,
+    run_results.compiled_code,
+    run_results.thread_id,
+    snapshots.database_name,
+    snapshots.schema_name,
+    snapshots.materialization,
+    snapshots.tags,
+    snapshots.package_name,
+    snapshots.path,
+    snapshots.original_path,
+    snapshots.owner,
+    snapshots.alias
+   FROM (dbt_run_results run_results
+     JOIN dbt_snapshots snapshots ON ((run_results.unique_id = (snapshots.unique_id)::text)));</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-43">
+        <createView fullDefinition="false" viewName="alerts_dbt_source_freshness">WITH results AS (
+         SELECT dbt_source_freshness_results.source_freshness_execution_id,
+            dbt_source_freshness_results.unique_id,
+            dbt_source_freshness_results.max_loaded_at,
+            dbt_source_freshness_results.snapshotted_at,
+            dbt_source_freshness_results.generated_at,
+            dbt_source_freshness_results.max_loaded_at_time_ago_in_s,
+            dbt_source_freshness_results.status,
+            dbt_source_freshness_results.error,
+            dbt_source_freshness_results.compile_started_at,
+            dbt_source_freshness_results.compile_completed_at,
+            dbt_source_freshness_results.execute_started_at,
+            dbt_source_freshness_results.execute_completed_at,
+            dbt_source_freshness_results.invocation_id
+           FROM dbt_source_freshness_results
+        ), sources AS (
+         SELECT dbt_sources.unique_id,
+            dbt_sources.database_name,
+            dbt_sources.schema_name,
+            dbt_sources.source_name,
+            dbt_sources.name,
+            dbt_sources.identifier,
+            dbt_sources.loaded_at_field,
+            dbt_sources.freshness_warn_after,
+            dbt_sources.freshness_error_after,
+            dbt_sources.freshness_filter,
+            dbt_sources.relation_name,
+            dbt_sources.tags,
+            dbt_sources.meta,
+            dbt_sources.owner,
+            dbt_sources.package_name,
+            dbt_sources.original_path,
+            dbt_sources.path,
+            dbt_sources.source_description,
+            dbt_sources.description,
+            dbt_sources.generated_at,
+            dbt_sources.metadata_hash
+           FROM dbt_sources
+        )
+ SELECT results.source_freshness_execution_id AS alert_id,
+    results.max_loaded_at,
+    results.snapshotted_at,
+    results.generated_at AS detected_at,
+    results.max_loaded_at_time_ago_in_s,
+    results.status,
+    results.error,
+    sources.unique_id,
+    sources.database_name,
+    sources.schema_name,
+    sources.source_name,
+    sources.identifier,
+    sources.freshness_error_after,
+    sources.freshness_warn_after,
+    sources.freshness_filter,
+    sources.tags,
+    sources.meta,
+    sources.owner,
+    sources.package_name,
+    sources.path
+   FROM (results
+     JOIN sources ON (((results.unique_id)::text = (sources.unique_id)::text)))
+  WHERE (true AND (lower((results.status)::text) &lt;&gt; 'pass'::text));</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-44">
+        <createView fullDefinition="false" viewName="alerts_anomaly_detection">WITH elementary_test_results AS (
+         SELECT elementary_test_results.id,
+            elementary_test_results.data_issue_id,
+            elementary_test_results.test_execution_id,
+            elementary_test_results.test_unique_id,
+            elementary_test_results.model_unique_id,
+            elementary_test_results.invocation_id,
+            elementary_test_results.detected_at,
+            elementary_test_results.database_name,
+            elementary_test_results.schema_name,
+            elementary_test_results.table_name,
+            elementary_test_results.column_name,
+            elementary_test_results.test_type,
+            elementary_test_results.test_sub_type,
+            elementary_test_results.test_results_description,
+            elementary_test_results.owners,
+            elementary_test_results.tags,
+            elementary_test_results.test_results_query,
+            elementary_test_results.other,
+            elementary_test_results.test_name,
+            elementary_test_results.test_params,
+            elementary_test_results.severity,
+            elementary_test_results.status,
+            elementary_test_results.failures,
+            elementary_test_results.test_short_name,
+            elementary_test_results.test_alias,
+            elementary_test_results.result_rows
+           FROM nba_source.elementary_test_results
+        ), alerts_anomaly_detection AS (
+         SELECT elementary_test_results.id AS alert_id,
+            elementary_test_results.data_issue_id,
+            elementary_test_results.test_execution_id,
+            elementary_test_results.test_unique_id,
+            elementary_test_results.model_unique_id,
+            elementary_test_results.detected_at,
+            elementary_test_results.database_name,
+            elementary_test_results.schema_name,
+            elementary_test_results.table_name,
+            elementary_test_results.column_name,
+            elementary_test_results.test_type AS alert_type,
+            elementary_test_results.test_sub_type AS sub_type,
+            elementary_test_results.test_results_description AS alert_description,
+            elementary_test_results.owners,
+            elementary_test_results.tags,
+            elementary_test_results.test_results_query AS alert_results_query,
+            elementary_test_results.other,
+            elementary_test_results.test_name,
+            elementary_test_results.test_short_name,
+            elementary_test_results.test_params,
+            elementary_test_results.severity,
+            elementary_test_results.status,
+            elementary_test_results.result_rows
+           FROM elementary_test_results
+          WHERE (true AND (lower((elementary_test_results.status)::text) &lt;&gt; 'pass'::text) AND (lower((elementary_test_results.status)::text) &lt;&gt; 'skipped'::text) AND ((elementary_test_results.test_type)::text = 'anomaly_detection'::text))
+        )
+ SELECT alerts_anomaly_detection.alert_id,
+    alerts_anomaly_detection.data_issue_id,
+    alerts_anomaly_detection.test_execution_id,
+    alerts_anomaly_detection.test_unique_id,
+    alerts_anomaly_detection.model_unique_id,
+    alerts_anomaly_detection.detected_at,
+    alerts_anomaly_detection.database_name,
+    alerts_anomaly_detection.schema_name,
+    alerts_anomaly_detection.table_name,
+    alerts_anomaly_detection.column_name,
+    alerts_anomaly_detection.alert_type,
+    alerts_anomaly_detection.sub_type,
+    alerts_anomaly_detection.alert_description,
+    alerts_anomaly_detection.owners,
+    alerts_anomaly_detection.tags,
+    alerts_anomaly_detection.alert_results_query,
+    alerts_anomaly_detection.other,
+    alerts_anomaly_detection.test_name,
+    alerts_anomaly_detection.test_short_name,
+    alerts_anomaly_detection.test_params,
+    alerts_anomaly_detection.severity,
+    alerts_anomaly_detection.status,
+    alerts_anomaly_detection.result_rows
+   FROM alerts_anomaly_detection;</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-45">
+        <createView fullDefinition="false" viewName="alerts_dbt_tests">WITH elementary_test_results AS (
+         SELECT elementary_test_results.id,
+            elementary_test_results.data_issue_id,
+            elementary_test_results.test_execution_id,
+            elementary_test_results.test_unique_id,
+            elementary_test_results.model_unique_id,
+            elementary_test_results.invocation_id,
+            elementary_test_results.detected_at,
+            elementary_test_results.database_name,
+            elementary_test_results.schema_name,
+            elementary_test_results.table_name,
+            elementary_test_results.column_name,
+            elementary_test_results.test_type,
+            elementary_test_results.test_sub_type,
+            elementary_test_results.test_results_description,
+            elementary_test_results.owners,
+            elementary_test_results.tags,
+            elementary_test_results.test_results_query,
+            elementary_test_results.other,
+            elementary_test_results.test_name,
+            elementary_test_results.test_params,
+            elementary_test_results.severity,
+            elementary_test_results.status,
+            elementary_test_results.failures,
+            elementary_test_results.test_short_name,
+            elementary_test_results.test_alias,
+            elementary_test_results.result_rows
+           FROM nba_source.elementary_test_results
+        ), alerts_dbt_tests AS (
+         SELECT elementary_test_results.id AS alert_id,
+            elementary_test_results.data_issue_id,
+            elementary_test_results.test_execution_id,
+            elementary_test_results.test_unique_id,
+            elementary_test_results.model_unique_id,
+            elementary_test_results.detected_at,
+            elementary_test_results.database_name,
+            elementary_test_results.schema_name,
+            elementary_test_results.table_name,
+            elementary_test_results.column_name,
+            elementary_test_results.test_type AS alert_type,
+            elementary_test_results.test_sub_type AS sub_type,
+            elementary_test_results.test_results_description AS alert_description,
+            elementary_test_results.owners,
+            elementary_test_results.tags,
+            elementary_test_results.test_results_query AS alert_results_query,
+            elementary_test_results.other,
+            elementary_test_results.test_name,
+            elementary_test_results.test_short_name,
+            elementary_test_results.test_params,
+            elementary_test_results.severity,
+            elementary_test_results.status,
+            elementary_test_results.result_rows
+           FROM elementary_test_results
+          WHERE (true AND (lower((elementary_test_results.status)::text) &lt;&gt; 'pass'::text) AND (lower((elementary_test_results.status)::text) &lt;&gt; 'skipped'::text) AND ((elementary_test_results.test_type)::text = 'dbt_test'::text))
+        )
+ SELECT alerts_dbt_tests.alert_id,
+    alerts_dbt_tests.data_issue_id,
+    alerts_dbt_tests.test_execution_id,
+    alerts_dbt_tests.test_unique_id,
+    alerts_dbt_tests.model_unique_id,
+    alerts_dbt_tests.detected_at,
+    alerts_dbt_tests.database_name,
+    alerts_dbt_tests.schema_name,
+    alerts_dbt_tests.table_name,
+    alerts_dbt_tests.column_name,
+    alerts_dbt_tests.alert_type,
+    alerts_dbt_tests.sub_type,
+    alerts_dbt_tests.alert_description,
+    alerts_dbt_tests.owners,
+    alerts_dbt_tests.tags,
+    alerts_dbt_tests.alert_results_query,
+    alerts_dbt_tests.other,
+    alerts_dbt_tests.test_name,
+    alerts_dbt_tests.test_short_name,
+    alerts_dbt_tests.test_params,
+    alerts_dbt_tests.severity,
+    alerts_dbt_tests.status,
+    alerts_dbt_tests.result_rows
+   FROM alerts_dbt_tests;</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-46">
+        <createView fullDefinition="false" viewName="alerts_schema_changes">WITH elementary_test_results AS (
+         SELECT elementary_test_results.id,
+            elementary_test_results.data_issue_id,
+            elementary_test_results.test_execution_id,
+            elementary_test_results.test_unique_id,
+            elementary_test_results.model_unique_id,
+            elementary_test_results.invocation_id,
+            elementary_test_results.detected_at,
+            elementary_test_results.database_name,
+            elementary_test_results.schema_name,
+            elementary_test_results.table_name,
+            elementary_test_results.column_name,
+            elementary_test_results.test_type,
+            elementary_test_results.test_sub_type,
+            elementary_test_results.test_results_description,
+            elementary_test_results.owners,
+            elementary_test_results.tags,
+            elementary_test_results.test_results_query,
+            elementary_test_results.other,
+            elementary_test_results.test_name,
+            elementary_test_results.test_params,
+            elementary_test_results.severity,
+            elementary_test_results.status,
+            elementary_test_results.failures,
+            elementary_test_results.test_short_name,
+            elementary_test_results.test_alias,
+            elementary_test_results.result_rows
+           FROM nba_source.elementary_test_results
+        ), alerts_schema_changes AS (
+         SELECT elementary_test_results.id AS alert_id,
+            elementary_test_results.data_issue_id,
+            elementary_test_results.test_execution_id,
+            elementary_test_results.test_unique_id,
+            elementary_test_results.model_unique_id,
+            elementary_test_results.detected_at,
+            elementary_test_results.database_name,
+            elementary_test_results.schema_name,
+            elementary_test_results.table_name,
+            elementary_test_results.column_name,
+            elementary_test_results.test_type AS alert_type,
+            elementary_test_results.test_sub_type AS sub_type,
+            elementary_test_results.test_results_description AS alert_description,
+            elementary_test_results.owners,
+            elementary_test_results.tags,
+            elementary_test_results.test_results_query AS alert_results_query,
+            elementary_test_results.other,
+            elementary_test_results.test_name,
+            elementary_test_results.test_short_name,
+            elementary_test_results.test_params,
+            elementary_test_results.severity,
+            elementary_test_results.status,
+            elementary_test_results.result_rows
+           FROM elementary_test_results
+          WHERE (true AND (lower((elementary_test_results.status)::text) &lt;&gt; 'pass'::text) AND (lower((elementary_test_results.status)::text) &lt;&gt; 'skipped'::text) AND ((elementary_test_results.test_type)::text = 'schema_change'::text))
+        )
+ SELECT alerts_schema_changes.alert_id,
+    alerts_schema_changes.data_issue_id,
+    alerts_schema_changes.test_execution_id,
+    alerts_schema_changes.test_unique_id,
+    alerts_schema_changes.model_unique_id,
+    alerts_schema_changes.detected_at,
+    alerts_schema_changes.database_name,
+    alerts_schema_changes.schema_name,
+    alerts_schema_changes.table_name,
+    alerts_schema_changes.column_name,
+    alerts_schema_changes.alert_type,
+    alerts_schema_changes.sub_type,
+    alerts_schema_changes.alert_description,
+    alerts_schema_changes.owners,
+    alerts_schema_changes.tags,
+    alerts_schema_changes.alert_results_query,
+    alerts_schema_changes.other,
+    alerts_schema_changes.test_name,
+    alerts_schema_changes.test_short_name,
+    alerts_schema_changes.test_params,
+    alerts_schema_changes.severity,
+    alerts_schema_changes.status,
+    alerts_schema_changes.result_rows
+   FROM alerts_schema_changes;</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-47">
+        <addUniqueConstraint columnNames="player, date" constraintName="unique_constraint_for_upsert_boxscores" tableName="aws_boxscores_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-48">
+        <addUniqueConstraint columnNames="player, team, description" constraintName="unique_constraint_for_upsert_injury_data" tableName="aws_injury_data_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-49">
+        <addUniqueConstraint columnNames="team, date" constraintName="unique_constraint_for_upsert_odds" tableName="aws_odds_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-50">
+        <addUniqueConstraint columnNames="team" constraintName="unique_constraint_for_upsert_opp_stats" tableName="aws_opp_stats_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-51">
+        <addUniqueConstraint columnNames="hometeam, awayteam, date, timequarter, numberperiod, descriptionplayvisitor, descriptionplayhome" constraintName="unique_constraint_for_upsert_pbp_data" tableName="aws_pbp_data_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-52">
+        <addUniqueConstraint columnNames="md5_pk" constraintName="unique_constraint_for_upsert_reddit_comment_data" tableName="aws_reddit_comment_data_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-53">
+        <addUniqueConstraint columnNames="reddit_url" constraintName="unique_constraint_for_upsert_reddit_data" tableName="aws_reddit_data_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-54">
+        <addUniqueConstraint columnNames="away_team, home_team, proper_date" constraintName="unique_constraint_for_upsert_schedule" tableName="aws_schedule_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-55">
+        <addUniqueConstraint columnNames="player" constraintName="unique_constraint_for_upsert_shooting_stats" tableName="aws_shooting_stats_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-56">
+        <addUniqueConstraint columnNames="date, transaction" constraintName="unique_constraint_for_upsert_transactions" tableName="aws_transactions_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-57">
+        <addUniqueConstraint columnNames="tweet_id" constraintName="unique_constraint_for_upsert_twitter_tweepy_data" tableName="aws_twitter_tweepy_data_source"/>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-58">
+        <createView fullDefinition="false" viewName="anomaly_threshold_sensitivity">WITH metrics_anomaly_score AS (
+         SELECT metrics_anomaly_score.id,
+            metrics_anomaly_score.full_table_name,
+            metrics_anomaly_score.column_name,
+            metrics_anomaly_score.dimension,
+            metrics_anomaly_score.dimension_value,
+            metrics_anomaly_score.metric_name,
+            metrics_anomaly_score.anomaly_score,
+            metrics_anomaly_score.latest_metric_value,
+            metrics_anomaly_score.bucket_start,
+            metrics_anomaly_score.bucket_end,
+            metrics_anomaly_score.training_avg,
+            metrics_anomaly_score.training_stddev,
+            metrics_anomaly_score.training_start,
+            metrics_anomaly_score.training_end,
+            metrics_anomaly_score.training_set_size,
+            metrics_anomaly_score.updated_at,
+            metrics_anomaly_score.is_anomaly
+           FROM nba_source.metrics_anomaly_score
+        ), score_sensitivity AS (
+         SELECT metrics_anomaly_score.full_table_name,
+            metrics_anomaly_score.column_name,
+            metrics_anomaly_score.metric_name,
+            metrics_anomaly_score.latest_metric_value,
+            metrics_anomaly_score.training_avg AS metric_avg,
+            metrics_anomaly_score.training_stddev AS metric_stddev,
+            metrics_anomaly_score.anomaly_score,
+                CASE
+                    WHEN (abs(metrics_anomaly_score.anomaly_score) &gt;= (1.5)::double precision) THEN true
+                    ELSE false
+                END AS is_anomaly_1_5,
+                CASE
+                    WHEN (abs(metrics_anomaly_score.anomaly_score) &gt;= (2)::double precision) THEN true
+                    ELSE false
+                END AS is_anomaly_2,
+                CASE
+                    WHEN (abs(metrics_anomaly_score.anomaly_score) &gt;= (2.5)::double precision) THEN true
+                    ELSE false
+                END AS is_anomaly_2_5,
+                CASE
+                    WHEN (abs(metrics_anomaly_score.anomaly_score) &gt;= (3)::double precision) THEN true
+                    ELSE false
+                END AS is_anomaly_3,
+                CASE
+                    WHEN (abs(metrics_anomaly_score.anomaly_score) &gt;= (3.5)::double precision) THEN true
+                    ELSE false
+                END AS is_anomaly_3_5,
+                CASE
+                    WHEN (abs(metrics_anomaly_score.anomaly_score) &gt;= (4)::double precision) THEN true
+                    ELSE false
+                END AS is_anomaly_4,
+                CASE
+                    WHEN (abs(metrics_anomaly_score.anomaly_score) &gt;= (4.5)::double precision) THEN true
+                    ELSE false
+                END AS is_anomaly_4_5
+           FROM metrics_anomaly_score
+          WHERE (abs(metrics_anomaly_score.anomaly_score) &gt;= (1.5)::double precision)
+        )
+ SELECT score_sensitivity.full_table_name,
+    score_sensitivity.column_name,
+    score_sensitivity.metric_name,
+    score_sensitivity.latest_metric_value,
+    score_sensitivity.metric_avg,
+    score_sensitivity.metric_stddev,
+    score_sensitivity.anomaly_score,
+    score_sensitivity.is_anomaly_1_5,
+    score_sensitivity.is_anomaly_2,
+    score_sensitivity.is_anomaly_2_5,
+    score_sensitivity.is_anomaly_3,
+    score_sensitivity.is_anomaly_3_5,
+    score_sensitivity.is_anomaly_4,
+    score_sensitivity.is_anomaly_4_5
+   FROM score_sensitivity;</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-59">
+        <createView fullDefinition="false" viewName="alerts_dbt_models">WITH error_models AS (
+         SELECT model_run_results.model_execution_id,
+            model_run_results.unique_id,
+            model_run_results.invocation_id,
+            model_run_results.name,
+            model_run_results.generated_at,
+            model_run_results.status,
+            model_run_results.full_refresh,
+            model_run_results.message,
+            model_run_results.execution_time,
+            model_run_results.execute_started_at,
+            model_run_results.execute_completed_at,
+            model_run_results.compile_started_at,
+            model_run_results.compile_completed_at,
+            model_run_results.compiled_code,
+            model_run_results.database_name,
+            model_run_results.schema_name,
+            model_run_results.materialization,
+            model_run_results.tags,
+            model_run_results.package_name,
+            model_run_results.path,
+            model_run_results.original_path,
+            model_run_results.owner,
+            model_run_results.alias
+           FROM model_run_results
+        UNION ALL
+         SELECT snapshot_run_results.model_execution_id,
+            snapshot_run_results.unique_id,
+            snapshot_run_results.invocation_id,
+            snapshot_run_results.name,
+            snapshot_run_results.generated_at,
+            snapshot_run_results.status,
+            snapshot_run_results.full_refresh,
+            snapshot_run_results.message,
+            snapshot_run_results.execution_time,
+            snapshot_run_results.execute_started_at,
+            snapshot_run_results.execute_completed_at,
+            snapshot_run_results.compile_started_at,
+            snapshot_run_results.compile_completed_at,
+            snapshot_run_results.compiled_code,
+            snapshot_run_results.database_name,
+            snapshot_run_results.schema_name,
+            snapshot_run_results.materialization,
+            snapshot_run_results.tags,
+            snapshot_run_results.package_name,
+            snapshot_run_results.path,
+            snapshot_run_results.original_path,
+            snapshot_run_results.owner,
+            snapshot_run_results.alias
+           FROM snapshot_run_results
+        )
+ SELECT error_models.model_execution_id AS alert_id,
+    error_models.unique_id,
+    error_models.generated_at AS detected_at,
+    error_models.database_name,
+    error_models.materialization,
+    error_models.path,
+    error_models.original_path,
+    error_models.schema_name,
+    error_models.message,
+    error_models.owner AS owners,
+    error_models.tags,
+    error_models.alias,
+    error_models.status,
+    error_models.full_refresh
+   FROM error_models
+  WHERE (true AND (lower((error_models.status)::text) &lt;&gt; 'success'::text) AND (lower((error_models.status)::text) &lt;&gt; 'skipped'::text));</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-60">
+        <createTable tableName="aws_adv_stats_source">
+            <column name="index" type="BIGINT"/>
+            <column name="team" type="TEXT"/>
+            <column name="age" type="FLOAT8"/>
+            <column name="w" type="FLOAT8"/>
+            <column name="l" type="FLOAT8"/>
+            <column name="pw" type="FLOAT8"/>
+            <column name="pl" type="FLOAT8"/>
+            <column name="mov" type="FLOAT8"/>
+            <column name="sos" type="FLOAT8"/>
+            <column name="srs" type="FLOAT8"/>
+            <column name="ortg" type="FLOAT8"/>
+            <column name="drtg" type="FLOAT8"/>
+            <column name="nrtg" type="FLOAT8"/>
+            <column name="pace" type="FLOAT8"/>
+            <column name="ftr" type="FLOAT8"/>
+            <column name="3par" type="FLOAT8"/>
+            <column name="ts%" type="FLOAT8"/>
+            <column name="efg%" type="FLOAT8"/>
+            <column name="tov%" type="FLOAT8"/>
+            <column name="orb%" type="FLOAT8"/>
+            <column name="ft/fga" type="FLOAT8"/>
+            <column name="efg%_opp" type="FLOAT8"/>
+            <column name="tov%_opp" type="FLOAT8"/>
+            <column name="drb%_opp" type="FLOAT8"/>
+            <column name="ft/fga_opp" type="FLOAT8"/>
+            <column name="arena" type="TEXT"/>
+            <column name="attendance" type="FLOAT8"/>
+            <column name="att/game" type="FLOAT8"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-61">
+        <createTable tableName="aws_cloudwatch_metrics">
+            <column name="Label" type="TEXT"/>
+            <column name="Timestamps" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="Values" type="FLOAT8"/>
+            <column name="database" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-62">
+        <createTable tableName="aws_contracts_source">
+            <column name="index" type="BIGINT"/>
+            <column name="player" type="TEXT"/>
+            <column name="team" type="TEXT"/>
+            <column name="season_salary" type="FLOAT8"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-63">
+        <createTable tableName="aws_player_attributes_source">
+            <column name="player" type="TEXT"/>
+            <column name="is_rookie" type="BOOLEAN"/>
+            <column name="yrs_exp" type="BIGINT"/>
+            <column name="headshot" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-64">
+        <createTable tableName="aws_preseason_odds_source">
+            <column name="team" type="TEXT"/>
+            <column name="odds" type="BIGINT"/>
+            <column name="predicted" type="FLOAT8"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-65">
+        <createTable tableName="aws_stats_source">
+            <column name="player" type="TEXT"/>
+            <column name="pos" type="TEXT"/>
+            <column name="age" type="TEXT"/>
+            <column name="tm" type="TEXT"/>
+            <column name="g" type="TEXT"/>
+            <column name="gs" type="TEXT"/>
+            <column name="mp" type="TEXT"/>
+            <column name="fg" type="TEXT"/>
+            <column name="fga" type="TEXT"/>
+            <column name="fg%" type="TEXT"/>
+            <column name="3p" type="TEXT"/>
+            <column name="3pa" type="TEXT"/>
+            <column name="3p%" type="TEXT"/>
+            <column name="2p" type="TEXT"/>
+            <column name="2pa" type="TEXT"/>
+            <column name="2p%" type="TEXT"/>
+            <column name="efg%" type="TEXT"/>
+            <column name="ft" type="TEXT"/>
+            <column name="fta" type="TEXT"/>
+            <column name="ft%" type="TEXT"/>
+            <column name="orb" type="TEXT"/>
+            <column name="drb" type="TEXT"/>
+            <column name="trb" type="TEXT"/>
+            <column name="ast" type="TEXT"/>
+            <column name="stl" type="TEXT"/>
+            <column name="blk" type="TEXT"/>
+            <column name="tov" type="TEXT"/>
+            <column name="pf" type="TEXT"/>
+            <column name="pts" type="FLOAT8"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-66">
+        <createTable tableName="aws_stats_source2">
+            <column name="player" type="TEXT"/>
+            <column name="pos" type="TEXT"/>
+            <column name="age" type="TEXT"/>
+            <column name="tm" type="TEXT"/>
+            <column name="g" type="TEXT"/>
+            <column name="gs" type="TEXT"/>
+            <column name="mp" type="TEXT"/>
+            <column name="fg" type="TEXT"/>
+            <column name="fga" type="TEXT"/>
+            <column name="fg%" type="TEXT"/>
+            <column name="3p" type="TEXT"/>
+            <column name="3pa" type="TEXT"/>
+            <column name="3p%" type="TEXT"/>
+            <column name="2p" type="TEXT"/>
+            <column name="2pa" type="TEXT"/>
+            <column name="2p%" type="TEXT"/>
+            <column name="efg%" type="TEXT"/>
+            <column name="ft" type="TEXT"/>
+            <column name="fta" type="TEXT"/>
+            <column name="ft%" type="TEXT"/>
+            <column name="orb" type="TEXT"/>
+            <column name="drb" type="TEXT"/>
+            <column name="trb" type="TEXT"/>
+            <column name="ast" type="TEXT"/>
+            <column name="stl" type="TEXT"/>
+            <column name="blk" type="TEXT"/>
+            <column name="tov" type="TEXT"/>
+            <column name="pf" type="TEXT"/>
+            <column name="pts" type="FLOAT8"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-67">
+        <createTable tableName="aws_team_attributes_source">
+            <column name="team" type="TEXT"/>
+            <column name="team_acronym" type="TEXT"/>
+            <column name="conference" type="TEXT"/>
+            <column name="primary_color" type="TEXT"/>
+            <column name="secondary_color" type="TEXT"/>
+            <column name="third_color" type="TEXT"/>
+            <column name="previous_season_wins" type="BIGINT"/>
+            <column name="previous_season_rank" type="BIGINT"/>
+            <column name="team_logo" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-68">
+        <createTable tableName="aws_test_table3_source">
+            <column name="col1" type="BIGINT"/>
+            <column name="last_sync" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="last_sync2" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-69">
+        <createTable tableName="aws_twitter_data_source">
+            <column name="created_at" type="TEXT"/>
+            <column name="date" type="TEXT"/>
+            <column name="username" type="TEXT"/>
+            <column name="tweet" type="TEXT"/>
+            <column name="language" type="TEXT"/>
+            <column name="link" type="TEXT"/>
+            <column name="likes_count" type="BIGINT"/>
+            <column name="retweets_count" type="BIGINT"/>
+            <column name="replies_count" type="BIGINT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-70">
+        <createTable tableName="aws_twitter_tweets_source">
+            <column name="created_at" type="TEXT"/>
+            <column name="date" type="TEXT"/>
+            <column name="username" type="TEXT"/>
+            <column name="tweet" type="TEXT"/>
+            <column name="language" type="TEXT"/>
+            <column name="link" type="TEXT"/>
+            <column name="likes_count" type="BIGINT"/>
+            <column name="retweets_count" type="BIGINT"/>
+            <column name="replies_count" type="BIGINT"/>
+            <column name="scrape_date" type="date"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="compound" type="FLOAT8"/>
+            <column name="neg" type="FLOAT8"/>
+            <column name="neu" type="FLOAT8"/>
+            <column name="pos" type="FLOAT8"/>
+            <column name="sentiment" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-71">
+        <createTable tableName="inactive_dates">
+            <column name="date" type="date"/>
+            <column name="is_inactive" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-72">
+        <createTable tableName="metadata">
+            <column name="dbt_pkg_version" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-73">
+        <createTable tableName="schema_columns_snapshot">
+            <column name="column_state_id" type="VARCHAR(4096)"/>
+            <column name="full_column_name" type="VARCHAR(4096)"/>
+            <column name="full_table_name" type="VARCHAR(4096)"/>
+            <column name="column_name" type="VARCHAR(4096)"/>
+            <column name="data_type" type="VARCHAR(4096)"/>
+            <column name="is_new" type="BOOLEAN"/>
+            <column name="detected_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-74">
+        <createTable tableName="shiny_feature_flags_test">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_playoffs" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-75">
+        <createTable tableName="staging_seed_player_attributes">
+            <column name="player" type="TEXT"/>
+            <column name="is_rookie" type="BOOLEAN"/>
+            <column name="yrs_exp" type="INTEGER"/>
+            <column name="headshot" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-76">
+        <createTable tableName="staging_seed_team_attributes">
+            <column name="team" type="TEXT"/>
+            <column name="team_acronym" type="TEXT"/>
+            <column name="conference" type="TEXT"/>
+            <column name="primary_color" type="TEXT"/>
+            <column name="secondary_color" type="TEXT"/>
+            <column name="third_color" type="TEXT"/>
+            <column name="previous_season_wins" type="INTEGER"/>
+            <column name="previous_season_rank" type="INTEGER"/>
+            <column name="team_logo" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-77">
+        <createTable tableName="staging_seed_top_players">
+            <column name="player" type="TEXT"/>
+            <column name="team" type="TEXT"/>
+            <column name="rank" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-78">
+        <createTable tableName="test_result_rows">
+            <column name="elementary_test_results_id" type="TEXT"/>
+            <column name="result_row" type="TEXT"/>
+            <column name="detected_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-79">
+        <createTable tableName="dash_app_data">
+            <column name="usd" type="BIGINT"/>
+            <column name="usd_market_cap" type="FLOAT8"/>
+            <column name="usd_24h_vol" type="FLOAT8"/>
+            <column name="usd_24h_change" type="FLOAT8"/>
+            <column name="last_updated_at" type="BIGINT"/>
+            <column name="scrape_ts" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-80">
+        <createTable tableName="department_three">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="department_three_pkey"/>
+            </column>
+            <column name="dept" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="emp_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-81">
+        <createTable tableName="department_two">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="department_two_pkey"/>
+            </column>
+            <column name="dept" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="emp_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-82">
+        <createTable tableName="name_scramble">
+            <column name="player" type="TEXT"/>
+            <column name="team" type="TEXT"/>
+            <column name="location" type="TEXT"/>
+            <column name="opponent" type="TEXT"/>
+            <column name="outcome" type="TEXT"/>
+            <column name="mp" type="TEXT"/>
+            <column name="fgm" type="FLOAT8"/>
+            <column name="fga" type="FLOAT8"/>
+            <column name="fgpercent" type="FLOAT8"/>
+            <column name="threepfgmade" type="FLOAT8"/>
+            <column name="threepattempted" type="FLOAT8"/>
+            <column name="threepointpercent" type="FLOAT8"/>
+            <column name="ft" type="TEXT"/>
+            <column name="fta" type="TEXT"/>
+            <column name="ftpercent" type="TEXT"/>
+            <column name="oreb" type="FLOAT8"/>
+            <column name="dreb" type="FLOAT8"/>
+            <column name="trb" type="FLOAT8"/>
+            <column name="ast" type="FLOAT8"/>
+            <column name="stl" type="FLOAT8"/>
+            <column name="blk" type="FLOAT8"/>
+            <column name="tov" type="FLOAT8"/>
+            <column name="pf" type="FLOAT8"/>
+            <column name="pts" type="FLOAT8"/>
+            <column name="plusminus" type="FLOAT8"/>
+            <column name="gmsc" type="FLOAT8"/>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="type" type="TEXT"/>
+            <column name="season" type="BIGINT"/>
+            <column name="scrape_date" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-83">
+        <createTable tableName="user_predictions2">
+            <column name="id" type="INTEGER"/>
+            <column name="username" type="TEXT"/>
+            <column name="game_date" type="date"/>
+            <column name="home_team" type="TEXT"/>
+            <column name="home_team_odds" type="INTEGER"/>
+            <column name="home_team_predicted_win_pct" type="FLOAT8"/>
+            <column name="away_team" type="TEXT"/>
+            <column name="away_team_odds" type="INTEGER"/>
+            <column name="away_team_predicted_win_pct" type="FLOAT8"/>
+            <column name="selected_winner" type="TEXT"/>
+            <column name="bet_amount" type="INTEGER"/>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-84">
+        <createView fullDefinition="false" viewName="filtered_information_schema_columns">WITH filtered_information_schema_columns AS (
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('nba_source'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('ml_models'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('nba_prod'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('nba_staging'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('operations'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('ad_hoc_analytics'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('nba_prep'::text))
+        UNION ALL
+         SELECT upper((((((columns.table_catalog)::text || '.'::text) || (columns.table_schema)::text) || '.'::text) || (columns.table_name)::text)) AS full_table_name,
+            upper((columns.table_catalog)::text) AS database_name,
+            upper((columns.table_schema)::text) AS schema_name,
+            upper((columns.table_name)::text) AS table_name,
+            upper((columns.column_name)::text) AS column_name,
+            columns.data_type
+           FROM information_schema.columns
+          WHERE (upper((columns.table_schema)::text) = upper('snapshots'::text))
+        )
+ SELECT filtered_information_schema_columns.full_table_name,
+    filtered_information_schema_columns.database_name,
+    filtered_information_schema_columns.schema_name,
+    filtered_information_schema_columns.table_name,
+    filtered_information_schema_columns.column_name,
+    filtered_information_schema_columns.data_type
+   FROM filtered_information_schema_columns
+  WHERE (filtered_information_schema_columns.full_table_name IS NOT NULL);</createView>
+    </changeSet>
+    <changeSet author="jacob (generated)" id="1687127086512-85">
+        <createView fullDefinition="false" viewName="filtered_information_schema_tables">WITH filtered_information_schema_tables AS (
+        ( WITH information_schema_tables AS (
+                 SELECT upper((tables.table_catalog)::text) AS database_name,
+                    upper((tables.table_schema)::text) AS schema_name,
+                    upper((tables.table_name)::text) AS table_name
+                   FROM information_schema.tables
+                  WHERE ((upper((tables.table_schema)::text) = upper('nba_source'::text)) AND (upper((tables.table_catalog)::text) = upper('jacob_db'::text)))
+                )
+         SELECT upper(((((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name) || '.'::text) || information_schema_tables.table_name)) AS full_table_name,
+            upper(((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name)) AS full_schema_name,
+            information_schema_tables.database_name,
+            information_schema_tables.schema_name,
+            information_schema_tables.table_name
+           FROM information_schema_tables)
+        UNION ALL
+        ( WITH information_schema_tables AS (
+                 SELECT upper((tables.table_catalog)::text) AS database_name,
+                    upper((tables.table_schema)::text) AS schema_name,
+                    upper((tables.table_name)::text) AS table_name
+                   FROM information_schema.tables
+                  WHERE ((upper((tables.table_schema)::text) = upper('ml_models'::text)) AND (upper((tables.table_catalog)::text) = upper('jacob_db'::text)))
+                )
+         SELECT upper(((((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name) || '.'::text) || information_schema_tables.table_name)) AS full_table_name,
+            upper(((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name)) AS full_schema_name,
+            information_schema_tables.database_name,
+            information_schema_tables.schema_name,
+            information_schema_tables.table_name
+           FROM information_schema_tables)
+        UNION ALL
+        ( WITH information_schema_tables AS (
+                 SELECT upper((tables.table_catalog)::text) AS database_name,
+                    upper((tables.table_schema)::text) AS schema_name,
+                    upper((tables.table_name)::text) AS table_name
+                   FROM information_schema.tables
+                  WHERE ((upper((tables.table_schema)::text) = upper('nba_prod'::text)) AND (upper((tables.table_catalog)::text) = upper('jacob_db'::text)))
+                )
+         SELECT upper(((((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name) || '.'::text) || information_schema_tables.table_name)) AS full_table_name,
+            upper(((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name)) AS full_schema_name,
+            information_schema_tables.database_name,
+            information_schema_tables.schema_name,
+            information_schema_tables.table_name
+           FROM information_schema_tables)
+        UNION ALL
+        ( WITH information_schema_tables AS (
+                 SELECT upper((tables.table_catalog)::text) AS database_name,
+                    upper((tables.table_schema)::text) AS schema_name,
+                    upper((tables.table_name)::text) AS table_name
+                   FROM information_schema.tables
+                  WHERE ((upper((tables.table_schema)::text) = upper('nba_staging'::text)) AND (upper((tables.table_catalog)::text) = upper('jacob_db'::text)))
+                )
+         SELECT upper(((((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name) || '.'::text) || information_schema_tables.table_name)) AS full_table_name,
+            upper(((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name)) AS full_schema_name,
+            information_schema_tables.database_name,
+            information_schema_tables.schema_name,
+            information_schema_tables.table_name
+           FROM information_schema_tables)
+        UNION ALL
+        ( WITH information_schema_tables AS (
+                 SELECT upper((tables.table_catalog)::text) AS database_name,
+                    upper((tables.table_schema)::text) AS schema_name,
+                    upper((tables.table_name)::text) AS table_name
+                   FROM information_schema.tables
+                  WHERE ((upper((tables.table_schema)::text) = upper('operations'::text)) AND (upper((tables.table_catalog)::text) = upper('jacob_db'::text)))
+                )
+         SELECT upper(((((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name) || '.'::text) || information_schema_tables.table_name)) AS full_table_name,
+            upper(((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name)) AS full_schema_name,
+            information_schema_tables.database_name,
+            information_schema_tables.schema_name,
+            information_schema_tables.table_name
+           FROM information_schema_tables)
+        UNION ALL
+        ( WITH information_schema_tables AS (
+                 SELECT upper((tables.table_catalog)::text) AS database_name,
+                    upper((tables.table_schema)::text) AS schema_name,
+                    upper((tables.table_name)::text) AS table_name
+                   FROM information_schema.tables
+                  WHERE ((upper((tables.table_schema)::text) = upper('ad_hoc_analytics'::text)) AND (upper((tables.table_catalog)::text) = upper('jacob_db'::text)))
+                )
+         SELECT upper(((((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name) || '.'::text) || information_schema_tables.table_name)) AS full_table_name,
+            upper(((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name)) AS full_schema_name,
+            information_schema_tables.database_name,
+            information_schema_tables.schema_name,
+            information_schema_tables.table_name
+           FROM information_schema_tables)
+        UNION ALL
+        ( WITH information_schema_tables AS (
+                 SELECT upper((tables.table_catalog)::text) AS database_name,
+                    upper((tables.table_schema)::text) AS schema_name,
+                    upper((tables.table_name)::text) AS table_name
+                   FROM information_schema.tables
+                  WHERE ((upper((tables.table_schema)::text) = upper('nba_prep'::text)) AND (upper((tables.table_catalog)::text) = upper('jacob_db'::text)))
+                )
+         SELECT upper(((((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name) || '.'::text) || information_schema_tables.table_name)) AS full_table_name,
+            upper(((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name)) AS full_schema_name,
+            information_schema_tables.database_name,
+            information_schema_tables.schema_name,
+            information_schema_tables.table_name
+           FROM information_schema_tables)
+        UNION ALL
+        ( WITH information_schema_tables AS (
+                 SELECT upper((tables.table_catalog)::text) AS database_name,
+                    upper((tables.table_schema)::text) AS schema_name,
+                    upper((tables.table_name)::text) AS table_name
+                   FROM information_schema.tables
+                  WHERE ((upper((tables.table_schema)::text) = upper('snapshots'::text)) AND (upper((tables.table_catalog)::text) = upper('jacob_db'::text)))
+                )
+         SELECT upper(((((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name) || '.'::text) || information_schema_tables.table_name)) AS full_table_name,
+            upper(((information_schema_tables.database_name || '.'::text) || information_schema_tables.schema_name)) AS full_schema_name,
+            information_schema_tables.database_name,
+            information_schema_tables.schema_name,
+            information_schema_tables.table_name
+           FROM information_schema_tables)
+        )
+ SELECT filtered_information_schema_tables.full_table_name,
+    filtered_information_schema_tables.full_schema_name,
+    filtered_information_schema_tables.database_name,
+    filtered_information_schema_tables.schema_name,
+    filtered_information_schema_tables.table_name
+   FROM filtered_information_schema_tables
+  WHERE (filtered_information_schema_tables.schema_name IS NOT NULL);</createView>
+    </changeSet>
+</databaseChangeLog>
