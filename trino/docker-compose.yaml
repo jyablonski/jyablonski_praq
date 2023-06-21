@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  trino:
+    hostname: trino
+    image: 'trinodb/trino:latest'
+    ports:
+      - '8080:8080'
+
+networks:
+  trino-network:
+    driver: bridge
