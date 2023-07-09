@@ -173,3 +173,8 @@ update public.orders set price = 1995.99 where item = 'Nvidia RTX 4090';
 
 delete from public.orders where id = 3;
 ```
+
+# One to Many & Many to Many relationships
+[Stackoverflow]
+
+![image](https://github.com/jyablonski/python_aws/assets/16946556/affac983-849d-4e09-8fc9-127e3088fb71)

@@ -1,5 +1,9 @@
 from typing import Dict
 
+from jyablonski_common_modules.general import get_leading_zeroes
+
+b = 5
+b2 = get_leading_zeroes(b)
 
 # using this in actual code is honestly so fucking stupid so grats lmfao
 x = False

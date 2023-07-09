@@ -161,7 +161,7 @@ engine = sql_connection("nba_prod")
 
 connection = engine.connect()
 
-bb = build_audit_table(table="feature_flags", schema="nba_prod", connection=connection)
+bb = build_audit_table(table="incidents", schema="nba_prod", connection=connection)
 
 
 text_file = open("audit.txt", "w")

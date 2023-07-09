@@ -20,6 +20,8 @@ polars = "*"
 duckdb = "*"
 jupyter-console = "*"
 jupyter = "*"
+jyablonski-common-modules = {extras = ["es_logging"], version = "*"}
+opensearch-logger = "*"
 
 [dev-packages]
 pytest = "*"

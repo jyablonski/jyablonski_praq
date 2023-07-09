@@ -12,7 +12,7 @@ def create_logger():
         datefmt="%Y-%m-%d %I:%M:%S %p",
     )
     handler = OpenSearchHandler(
-        index_name="python-aws-logs",
+        index_name="python-aws-logs-big-tester",
         hosts=[f"{os.environ.get('OPENSEARCH_ENDPOINT')}:443"],
         # http_auth=("admin", "admin"),
         http_compress=True,
