@@ -137,6 +137,7 @@ CPUs can generally run a couple Celsius higher without it affecting that much.  
 
 GPU generally gets affected the entire time by temperature increases which could lead to incremental drops in FPS until the GPU becomes completed overheated.
 
+Some AIOs will come with Washers for the Fans.  In general, a washer is used when the material you're fastening is softer than the material you're fastening with... Eg a metal bolt on the wooden leg of a table, and its purpose is to spread the pressure of the bolt across a broader area, so you can tighten more without the bolt just sinking into the soft wood.
 ### Bad
 ![image](https://github.com/jyablonski/python_aws/assets/16946556/e8b6dfae-1e97-4e35-b184-b1915cca6bdc)
 

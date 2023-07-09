@@ -151,3 +151,4 @@ sql/tables/*
 liquibase/*.properties
 localstack/volume/
 sql/audit.txt
+*duck*
