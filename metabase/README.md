@@ -1,0 +1,2 @@
+# 
+metabase uses the postgres container to keep a persistent state of all logged activity on the metabase server, such as users, queries, dashboards etc.  without it all progress is lost on the metabase container.
