@@ -83,3 +83,11 @@ start-postgres:
 .PHONY: stop-postgres
 stop-postgres:
 	@docker-compose -f docker/docker-compose-postgres.yml down
+
+.PHONY: metabase-up
+metabase-up:
+	@docker-compose -f metabase/docker-compose.yml up -d
+
+.PHONY: metabase-down
+metabase-down:
+	@docker-compose -f metabase/docker-compose.yml down
