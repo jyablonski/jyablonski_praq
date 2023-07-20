@@ -5,6 +5,6 @@ Apps require all different kinds of services, configurations, and settings.  Hel
 
 Bundles YAML files and stores them in public or private Helm Repositories.  Some application developers create their own Helm charts for others to use their software.
 
-Helm is also a templating engine that uses Jinja `{{ .values }}` in the `values.yaml` file.
+Helm is also a templating engine that uses Jinja `{{ .values }}` in the `values.yaml` file, so you can template most of the important bits out based on the deploy & the environment (maybe prod needs 3x more resources than staging etc).
 
 Can deploy same Application across different Kubernetes Clusters (Dev, Staging, or Prod).
