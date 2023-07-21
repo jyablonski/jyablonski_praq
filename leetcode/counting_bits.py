@@ -19,3 +19,5 @@ def solution(n: int):
 
 
 solution(n=n_test)
+
+raise SystemExit()

@@ -153,3 +153,4 @@ localstack/volume/
 sql/audit.txt
 *duck*
 metabase/metabase/*
+*secret.json*
