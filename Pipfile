@@ -10,18 +10,18 @@ boto3 = "*"
 awswrangler = "*"
 bump2version = "*"
 gspread = "*"
-tweepy = "*"
 sentry-sdk = "*"
 faker = "*"
 psycopg2-binary = "*"
 sqlalchemy = "*"
-azure-storage-blob = "*"
 polars = "*"
 duckdb = "*"
 jupyter-console = "*"
 jupyter = "*"
 jyablonski-common-modules = {extras = ["es_logging"], version = "*"}
 opensearch-logger = "*"
+thefuzz = "*"
+better-profanity = "==0.6.1"
 
 [dev-packages]
 pytest = "*"
@@ -30,4 +30,4 @@ moto = "*"
 ipykernel = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.11"

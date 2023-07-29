@@ -178,3 +178,6 @@ delete from public.orders where id = 3;
 [Stackoverflow]
 
 ![image](https://github.com/jyablonski/python_aws/assets/16946556/affac983-849d-4e09-8fc9-127e3088fb71)
+
+### SCDs
+[Article](https://github.com/dbt-labs/dbt-core/issues/3878)
