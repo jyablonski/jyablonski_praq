@@ -15,3 +15,5 @@
 `liquibase --output-file=snapshot_2023-06-18.json snapshot --snapshot-format=json`
 
 `liquibase generate-changelog --changelog-file=changelog_2023-06-18.xml`
+
+`liquibase --output-file=mySnapshot.json snapshot --snapshot-format=json`
