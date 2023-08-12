@@ -35,6 +35,7 @@ NBA ELT Project must be reset once a year to swap to a new AWS Account to exploi
 
 
 Process took 5 hours in August 2023 - ran into the following issues:
+- AWS changed default S3 Permissions between August 2022 and August 2023.  A lot of my buckets didnt work in August 2023 when i tried to create them, something related to ACLs.  This took probably 2 extra hours of bs to figure out and finally get it working.
 - Various S3 Buckets in old account didnt get deleted before I deactivated the account; had to rename these buckets in the new account.
 - Backfilling the `id` serial tables that the REST API uses was a bitch without liquibase
 - Like half the Repos still had Access/Secret Key Auth for CI CD instead of the IAM Role so this took like an extra hour to build that on the fly so it's doing it the right way
