@@ -4,4 +4,3 @@ Client has been around longer, can access all AWS services, but harder to use.  
 
 Resource is easier to use and more practical, you don't have to worry about as many underlying details.  Doesn't have 100% coverage that client has.
 `s3 = boto3.resource("s3")`
-

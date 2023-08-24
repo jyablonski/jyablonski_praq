@@ -13,25 +13,27 @@ NBA ELT Project must be reset once a year to swap to a new AWS Account to exploi
 4. Make new `jyablonski_aws_x@gmail.com` email
 5. Make new AWS Account w/ new email
 6. Add Root MFA onto new AWS Account
-7. Create jacob sign-in user
-8. Add MFA onto jacob sign-in user
-9.  Create Access / Secret Keys for jacob user
-10. Create `jacobs-terraform-user` and grant `AdministratorAccess` Policy
-11. Create Access / Secret Keys for Terraform User
-12. Update Keys in Terraform Repo & Terraform Cloud
-13. Run `terraform apply` to build Infra in New Account
-14. Update `jyablonski.dev` Route53 Record to point to provided Google Domain DNS Endpoints
-15. Use the `sql/sql_refresh.py` Script to load all necessary source data
-16. Update all of the tables to reset the id sequence otherwise all the REST API actions will fail
+7. Go to `Account` and enable IAM Policy for Billing Acces
+8. Create jacob sign-in IAM User and grant it `AdministratorAccess` and `Billing` IAM Policies
+9. Add MFA onto jacob sign-in user
+10. Create Access / Secret Keys for jacob user
+11. Create `jacobs-terraform-user` and grant `AdministratorAccess` Policy
+12. Create Access / Secret Keys for Terraform User
+13. Update Keys in Terraform Repo & Terraform Cloud
+14. Run `terraform apply` to build Infra in New Account
+15. Update `jyablonski.dev` Route53 Record to point to provided Google Domain DNS Endpoints
+16. Add `jyablonski9@gmail.com` Email Verified Identity in SES
+17. Use the `sql/sql_refresh.py` Script to load all necessary source data
+18. Update all of the tables to reset the id sequence otherwise all the REST API actions will fail
     1.  NEXT YEAR figure out proper liquibase shit for this part
-17. Update GitHub Actions Secrets on the following Repos:
+19. Update GitHub Actions Secrets on the following Repos:
     1.  [python_docker](https://github.com/jyablonski/python_docker)
     2.  [aws_terraform](https://github.com/jyablonski/aws_terraform)
     3.  [nba_elt_dbt](https://github.com/jyablonski/nba_elt_dbt)
     4.  [nba_elt_rest_api](https://github.com/jyablonski/nba_elt_rest_api)
     5.  [nba_elt_mlflow](https://github.com/jyablonski/nba_elt_mlflow)
     6.  [jyablonski_liquibase](https://github.com/jyablonski/jyablonski_liquibase)
-18. Re-run CD Pipelines on the 6 Repos to update shit on new infra.
+20. Re-run CD Pipelines on the 6 Repos to update shit on new infra.
 
 
 Process took 5 hours in August 2023 - ran into the following issues:
