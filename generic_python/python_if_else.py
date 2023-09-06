@@ -66,3 +66,9 @@ for index, row in df.iterrows():
         print(f"less than {len_limit}")
 
 print(df)
+
+
+ids = [1, 3, 5]
+
+
+df_filtered = df.query(f"id.isin({ids})")
