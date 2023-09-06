@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  superset:
+    image: apache/superset
+    environment:
+      - SUPERSET_SECRET_KEY=bababooiee
+    container_name: superset
+    restart: unless-stopped
+    ports:
+      - "8088:8088"
+#     volumes: *superset-volumes
+
+#   postgres:
+#     image: postgres:15
+#     container_name: postgres
+#     restart: unless-stopped
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - db_home:/var/lib/postgresql/data
+#       - ./docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+# volumes:
+#   superset_home:
+#     external: false
+#   db_home:
+#     external: false
+#   redis:
+#     external: false
