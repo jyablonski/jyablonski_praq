@@ -1,5 +1,5 @@
 # Git Strategies
-2 flows
+There are 2 main strategies for structuring Repositories w/ Git
 
 ## Trunk Based Development
 Trunk Based Development revolves around 1 long-lived branch: `master`.
