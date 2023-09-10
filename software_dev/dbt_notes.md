@@ -101,3 +101,6 @@ SELECT col1 + col2 FROM cte1
 )
 select * from cte1, cte2
 ```
+
+## Source Freshness
+[Article](https://www.datafold.com/blog/dbt-source-freshness)
