@@ -11,4 +11,6 @@ asdf uses shims to re-direct applications to use different versions of the same 
    1. See all available versions with `asdf list all python`
 5. Set your default version globally with `asdf global python latest` or locally in that specific direcotry with `asdf local python latest`
 
-Pipenv for Python will automatically detect & use the appropriate Python version from the ones installed on your machine.
+Pipenv & Poetry for Python will automatically detect & use the appropriate Python version from the ones installed on your machine.
+
+[Article](https://stackoverflow.com/questions/68784920/python-upgrading-leads-to-terminal-not-opening)
