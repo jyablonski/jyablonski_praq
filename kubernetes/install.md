@@ -52,4 +52,22 @@ kubectl exec -it nginx-depl-6b7698588c-6vxjb bash
 kubectl get deployment
 
 kubectl delete deployment nginx-depl
+
+kubectl get secret
+
+kubectl top
+
+kubectl apply -f mongo-secret.yaml
+kubectl apply -f mongo-configmap.yaml
+kubectl apply -f mongo-express.yaml
+
+kubectl describe service mongo-express-service
+
+kubectl get pod -o wide
+
+kubectl delete service mongo-express-service
+
+kubectl delete pods --all --all-namespaces
+
+kubectl delete deployment mongo-express
 ```
