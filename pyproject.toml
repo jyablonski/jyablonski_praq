@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "jyablonski-praq"
+version = "2.8.12"
+description = "Practice Repo"
+authors = ["jyablonski9 <jyablonski9@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "2.0.3"
+gspread = "^5.11.2"
+boto3 = "^1.28.57"
+jyablonski-common-modules = "^0.0.3"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.25.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
