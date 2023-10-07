@@ -34,6 +34,7 @@ def send_sqs_message(
         )
 
         pass
+
     except BaseException as e:
         print(f"Error Occurred while writing to {sqs_queue}, {e}")
         raise e
