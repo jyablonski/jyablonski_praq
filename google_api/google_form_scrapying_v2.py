@@ -1,10 +1,7 @@
-import gspread
-import pandas as pd
-
 from datetime import datetime, timedelta
 import uuid
 
-import mysql.connector
+import gspread
 import pandas as pd
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine.base import Connection

@@ -9,6 +9,7 @@ import numpy as np
 from faker import Faker
 
 from dynamodb_prac.new_proj import *
+from tests.utils import jacobs_http_function
 
 
 def test_write_to_dynamodb(moto_dynamodb, faker):

@@ -13,6 +13,7 @@ client = boto3.client("sqs")
 faker = Faker()
 
 
+# check this
 def send_sqs_message(
     client: botocore.client,
     sqs_queue: str,
@@ -33,6 +34,7 @@ def send_sqs_message(
         )
 
         pass
+
     except BaseException as e:
         print(f"Error Occurred while writing to {sqs_queue}, {e}")
         raise e
