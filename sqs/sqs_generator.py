@@ -13,6 +13,7 @@ client = boto3.client("sqs")
 faker = Faker()
 
 
+# check this
 def send_sqs_message(
     client: botocore.client,
     sqs_queue: str,
