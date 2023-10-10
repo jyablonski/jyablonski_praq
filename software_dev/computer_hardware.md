@@ -49,7 +49,12 @@ Cores - Individual processing component physically on the CPU.
 Threads - Software term used to describe how we execute work on the physical CPU Cores.
 
 Cache - Used by the CPU to reduce average time & energy needed to access data from memory.  It's a smaller & faster memory located very close to the processor cores.
-- L1, L2, L3, and even L4 Level caches with varying levels of performance.  L1 is the fastest, L2 has more capacity but less performance.
+- L1, L2, L3, and even L4 Level caches with varying levels of performance.
+  - Fetching instructions from a cache is generally faster than fetching from RAM
+  - Every CPU Core has its own L1 Cache which is the fastest but also the smallest.  Holds most frequently accessed data and instructions
+  - Every CPU Core has its own L2 Cache which is slower but has a larger capacity.  Holds data + instructions that are accessed less frequently.
+  - The L3 Cache is shared amongst all CPU Cores.
+  - The L4 Cache is a generic term for the highlest level of cache in a system, which can be the L3 Cache or its own L4 Cache.  Depends on CPU Model
 
 ## GPU
 

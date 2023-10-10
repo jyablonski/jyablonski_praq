@@ -1,26 +1,29 @@
 # Given an integer x, return true if x is a palindrome, and false otherwise.
 # a palindrome is a number like 121 or 323
 
+
+def solution(s: int):
+    s = str(s)
+    new_str = ""
+
+    for char in s:
+        if char.isalnum():
+            new_str += char.lower()
+
+    print(new_str)
+
+    if new_str == new_str[::-1]:
+        return True
+    else:
+        return False
+
+
 x = 123
 y = 323
 
 # problem 57 palindromes.
 pas = "r&a@@C!!ec..ar"
 pas2 = "racecar3"
-
-
-def solution(s: str):
-    s = str(s)
-    new_str = ""
-
-    for c in s:  # for every character in the input string
-        if c.isalnum():  # if its alphanumerical, removing any non letters or numbers.
-            new_str += (
-                c.lower()
-            )  # lowercase it and add it to new_str which is the clean variable we created.
-
-    print(f"new str is {new_str}")
-    return new_str == new_str[::-1]  # this completely reverses the string in python
 
 
 solution(x)
