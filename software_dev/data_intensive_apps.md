@@ -56,6 +56,23 @@ Graph Models typically don't enforce a schema for the data they store, so it can
 # Chapter 3 Storage and Retrieval
 Indexes are used to basically store a small amount of metadata about how to query the data you want.  They slow down writes, but improve query times.  So you usually shouldn't index everything.  Know your query patterns before hand.
 
+RAM is generally orders of magnitude faster and more performant for reading data from than reading from disk.  This is why caches are so fast & used so often.
+
+In-memory Databases are fast not only because they read from RAM, but because most of them are designed to never have to write to disk in the first place and they have the luxury of removing all of that overhead out of data structures used in the Application or Tool.
+
+Advantages of storing data on disk vs RAM:
+- Disk is more durable (data contents are not lost if power is turned off)
+- Disk is a lower cost per GB than RAM
+
+As RAM becomes cheaper, the cost per GB argument slowly erodes.
+
+Data Warehouses use column-oriented storage where the data isn't stored in rows together, but instead the data is stored where all of the values from each column are stored together.  This allows much faster analytical queries so long as you avoid `select *`.
+
+It doesn't matter which columns are stored in which order when working in column-oriented storage.
+
+Column-oriented storage also benefits from compressing the data.  Instead of storing the data as-is someplace, it compresses the data into a lower level format to save on storage space.  The data is for all purposes still "correct", it's just stored in a different format.
+- This leads to performance benefits during query execution.  When data is pulled in a compressed format and sent over to the CPU for processing, there are efficiency gains because more data can fit in memory and be sent to the CPU, making use of more efficient CPU cycles.
+
 # Chapter 4 Encoding and Evolution
 Staged rollout - server side technique when you update a very large application base so only a few nodes at a time get the new version.  In client side apps this won't work, bc you can't really force the client to update.
     * Old and new versions of code and releases might co-exist at the same time.
@@ -162,4 +179,13 @@ Each record belongs to exactly one partition, but may still be stored on several
 
 The goal is to evenly spread the data and query load.  However, if partitioning is unfair and skewed then this makes it a more inefficient process.  So you have to keep partitioning spread evenly, but you also want to distribute your data logically (putting similar stuff on the same partition so you only have to access 1/10 partitions for a specific query rather than loading all 10 in).
 
-pg. 202
+
+## Hot Spots
+Consider you have a social media site, where 99.9% of users have less than x amount of followers and engagements.  But then think about how you would handle somebody like Taylor Swift, who has hundreds of millions of followers and who's posts generate orders of magnitude of more engagements than normal users.
+- This scenario relates to a problem called Hot Spots
+- These events can lead to a large number of writes or reads to the same key (user id of the celebrity) which leads to a skewed workload.
+- Just have to find a way to horizontally scale the problem to multiple machines.
+- As of 2023, there is no way data systems do this automatically.  Every Application is different; hot spots are an unusual but common problem and while challenging, there are ways of solving the problem.
+
+
+# Chapter 7 Transactions
