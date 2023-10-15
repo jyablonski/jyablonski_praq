@@ -78,11 +78,11 @@ start-mlflow-server:
 
 .PHONY: start-postgres
 start-postgres:
-	@docker-compose -f docker/docker-compose-postgres.yml up -d
+	@docker compose -f docker/docker-compose-postgres.yml up -d
 
 .PHONY: stop-postgres
 stop-postgres:
-	@docker-compose -f docker/docker-compose-postgres.yml down
+	@docker compose -f docker/docker-compose-postgres.yml down
 
 .PHONY: metabase-up
 metabase-up:
