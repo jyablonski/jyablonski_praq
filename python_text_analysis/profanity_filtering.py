@@ -14,10 +14,6 @@ profanity.load_censor_words()
 text = "You p1ec3 of sHit."
 censored_text = profanity.censor(text)
 
-# You p1ec3 of ****.
-print(censored_text)
-
-current_timestamp = datetime.now()
 reviews = pd.DataFrame(
     data={
         "id": [
@@ -27,17 +23,39 @@ reviews = pd.DataFrame(
             4,
             5,
             6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
         ],
         "raw_review_text": [
             "This product really fucking sucked tbh",
             "Piece of shit broke on me",
-            "Screw you dude does this get filtered???",
+            "Screw you dude does this get filtered???",  # this turns into **** you which kinda looks worse after lol
             "son of a b!tch",  # only this one doesnt get filtered
+            "son of a b*tch",
             "bababayboooybie",
             "she's a bi_tch",
+            "what about the p0rn",
+            "what an ass",
+            "he's buttcheeks",
+            "sh it ahahaha",
+            "sh_it hahahah",
+            "shiit hahaha",
+            "shiiit hahaha",
+            "mothertrucker",
         ],
     }
 )
-reviews["created_at"] = current_timestamp
-
-reviews["filtered_reviews"] = [profanity.censor(x) for x in reviews["raw_review_text"]]
+reviews["is_profanity"] = [
+    profanity.contains_profanity(review) for review in reviews["raw_review_text"]
+]
+reviews["filtered_reviews"] = [
+    profanity.censor(review) for review in reviews["raw_review_text"]
+]
+reviews["created_at"] = datetime.now()

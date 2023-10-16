@@ -6,8 +6,11 @@
 def bubble_sort(input_list: list[int]):
     n = len(input_list)
 
+    # when we get to the last element we've finished the sort, so skip that one
     for i in range(n - 1):
-        print(f"current list is {input_list}; time for a new loop")
+        print(
+            f"current list is {input_list}; time for a new loop starting at {input_list[i]}"
+        )
 
         for j in range(n - 1):
             # if the left element (that we're on) is > the right element, we have to swap them

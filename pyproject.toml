@@ -11,6 +11,8 @@ pandas = "2.0.3"
 gspread = "^5.11.2"
 boto3 = "^1.28.57"
 jyablonski-common-modules = "^0.0.3"
+thefuzz = "^0.20.0"
+better-profanity = "^0.7.0"
 
 
 [tool.poetry.group.dev.dependencies]
