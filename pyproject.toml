@@ -13,6 +13,7 @@ boto3 = "^1.28.57"
 jyablonski-common-modules = "^0.0.3"
 thefuzz = "^0.20.0"
 better-profanity = "^0.7.0"
+lxml = "^4.9.3"
 
 
 [tool.poetry.group.dev.dependencies]
