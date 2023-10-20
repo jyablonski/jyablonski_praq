@@ -14,6 +14,7 @@ jyablonski-common-modules = "^0.0.3"
 thefuzz = "^0.20.0"
 better-profanity = "^0.7.0"
 lxml = "^4.9.3"
+pyarrow = "^13.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
