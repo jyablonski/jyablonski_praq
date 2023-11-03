@@ -126,11 +126,7 @@ venv.bak/
 dmypy.json
 
 # Pyre type checker
-<<<<<<< HEAD
 .pyre/
-=======
-.pyre/
->>>>>>> 1d5f792 (1st commit)
 
 # my stuff
 key
@@ -155,3 +151,4 @@ sql/audit.txt
 metabase/metabase/*
 *secret.json*
 project/*.sql
+software_dev/nba_project.md
