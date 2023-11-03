@@ -1066,6 +1066,22 @@ files = [
 ]
 
 [[package]]
+name = "nba-api"
+version = "1.3.1"
+description = "An API Client package to access the APIs for NBA.com"
+optional = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "nba_api-1.3.1-py3-none-any.whl", hash = "sha256:7120d2a77fd3a87fd1f70910dfbe970bffc3c708c626aec8ce52012963f61801"},
+    {file = "nba_api-1.3.1.tar.gz", hash = "sha256:9222cf7e1cfbf5db1c6821dcdcae3d79df8d86ac5832a2169525c67d6b932cd5"},
+]
+
+[package.dependencies]
+certifi = ">=2022.12.7,<2024.0.0"
+numpy = ">=1.22.2,<2.0.0"
+requests = ">=2.31,<3.0"
+
+[[package]]
 name = "nest-asyncio"
 version = "1.5.8"
 description = "Patch asyncio to allow nested event loops"
@@ -2101,4 +2117,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "2acc5fd67cf91c5b40a5f61ae1488bc1c1b5719dbc2b16b6cc55c6b2dcbc5954"
+content-hash = "82bf24c88f357ce167120ecf9b3b9b3fc1360b627ce1afef1a84ebcf1ed53187"
