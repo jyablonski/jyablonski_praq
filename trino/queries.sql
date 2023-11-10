@@ -39,3 +39,14 @@ select max(acctbal) from tpch.sf100000.supplier limit 1;
 
 
 select count(*) from tpch.sf300.supplier limit 1;
+
+
+
+
+/* APACHE ICEBURGER QUERIES */
+show tables in iceberg.nba_elt_iceberg;
+
+
+select *
+from iceberg.nba_elt_iceberg.pbp_data
+limit 10;

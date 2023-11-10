@@ -6,6 +6,8 @@ services:
     image: 'trinodb/trino:latest'
     ports:
       - '8080:8080'
+    volumes:
+      - $PWD/etc:/etc/trino
 
 networks:
   trino-network:

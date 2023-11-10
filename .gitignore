@@ -152,3 +152,5 @@ metabase/metabase/*
 *secret.json*
 project/*.sql
 software_dev/nba_project.md
+trino/config.properties
+trino/etc/

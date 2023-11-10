@@ -91,3 +91,11 @@ metabase-up:
 .PHONY: metabase-down
 metabase-down:
 	@docker-compose -f metabase/docker-compose.yml down
+
+.PHONY: trino-up
+metabase-up:
+	@docker-compose -f trino/docker-compose.yml up -d
+
+.PHONY: trino-down
+metabase-down:
+	@docker-compose -f trinoss/docker-compose.yml down
