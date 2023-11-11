@@ -50,3 +50,20 @@ show tables in iceberg.nba_elt_iceberg;
 select *
 from iceberg.nba_elt_iceberg.pbp_data
 limit 10;
+
+select *
+from iceberg.nba_elt_iceberg.reddit_comment_data
+where scrape_ts >= CURRENT_DATE - INTERVAL '7' day;
+
+-- creates the table in s3 bucket, adds it to the glue data catalog
+create table if not exists iceberg.nba_elt_iceberg.reddit_comment_test as
+select
+	author,
+	comment,
+	score,
+	url,
+	scrape_ts
+from iceberg.nba_elt_iceberg.reddit_comment_data
+where scrape_ts >= CURRENT_DATE - INTERVAL '7' day;
+
+drop table if exists iceberg.nba_elt_iceberg.reddit_comment_test;

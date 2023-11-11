@@ -7,7 +7,7 @@ services:
     ports:
       - '8080:8080'
     volumes:
-      - $PWD/etc:/etc/trino
+      - $PWD/etc/catalog:/etc/trino/catalog
 
 networks:
   trino-network:

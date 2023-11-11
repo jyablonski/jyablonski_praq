@@ -153,4 +153,4 @@ metabase/metabase/*
 project/*.sql
 software_dev/nba_project.md
 trino/config.properties
-trino/etc/
+trino/etc/catalog/iceberg.properties
