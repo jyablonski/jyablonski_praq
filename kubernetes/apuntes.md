@@ -87,7 +87,32 @@ External configuration for your application
 - Connect the Config Map to your Pod so your Service can use these configuration parameters that are set in this file.
 - Credentials do **NOT** go into the Config Map
 - Config Map is used for non-sensitive configuration data
-- Values are stored in plaintext
+- Everything is in YAML
+
+Example
+
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tcb-trino-catalog
+  labels:
+    app: trino
+    chart: trino-0.3.0
+    release: tcb
+    heritage: Helm
+    role: catalogs
+data:
+  tpch.properties: |
+    connector.name=tpch
+    tpch.splits-per-node=4
+  tpcds.properties: |
+    connector.name=tpcds
+    tpcds.splits-per-node=4
+```
+- This actually creates 2 Files:
+  - `tpch.properties`
+  - `tpcds.properties`
 
 ## Secret
 Just like Config Map except it's used to store Sensitive Information such as Credentials, Keys, Certificates etc.

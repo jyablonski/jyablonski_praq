@@ -154,3 +154,4 @@ project/*.sql
 software_dev/nba_project.md
 trino/config.properties
 trino/etc/catalog/iceberg.properties
+trino/etc/catalog/postgres.properties

@@ -1,5 +1,6 @@
 # Trino
 [Guide](https://github.com/trinodb/trino/tree/master/core/docker)
+[AWS K8s Trino Guide](https://trino.io/episodes/31.html)
 
 ## How It Works
 Trino is a distributed SQL query engine designed for querying and analyzing large volumes of data across multiple data sources. It provides a unified interface for querying data stored in various sources, such as data lakes, relational databases, and more. Trino's basic layout consists of several key components:
@@ -40,7 +41,7 @@ In summary, the basic layout of Trino includes a Coordinator Node that manages q
 [Link2](https://tabular.io/blog/docker-spark-and-iceberg/)
 [Link3](https://github.com/myfjdthink/starrocks-iceberg-docker)
 
-Dont fucking exec and run the trino CLI in a terminal lmfao, get a dedicated db management tool like datagrip or dbeaver
+Dont fucking exec and run the trino CLI in a terminal lmfao, use a dedicated db management tool like datagrip or dbeaver
 ``` sh
 docker exec -it trino-trino-1 trino
 
@@ -66,3 +67,53 @@ hive.s3.aws-access-key=zzz
 hive.s3.aws-secret-key=aaa
 ```
 
+
+
+## K8s Example
+[Guide](https://www.youtube.com/watch?v=v9-mf69xMa0&t=4940s)
+
+[eksctl Install](https://eksctl.io/installation/)
+
+eksctl is the CLI Tool for creating & managing EKS Clusters.  When you create EKS Clusters using it, it autumatically adds an entry to your `~/.kube/config` file so that if `kubectl` is in your PATH, you will be able to use kubectl commands with the EKS Cluster.
+
+From there you can just add a Helm Repo and run a `helm install` to boot up those resources on the new EKS Cluster.
+
+This specific example then port forwards our own Port 8080 to the Coordinator Pod so that we can talk to that Pod and connect, make queries etc.  The normal way to do this is provision a dedicated Load Balancer Endpoint so you can connect that way instead.
+
+This command boots up an EKS Cluster w/ 2 Worker Nodes ran in EC2.  At this point they aren't running anything yet or considered "Pods" yet, because we haven't told EKS to go run any applications yet.
+``` sh
+eksctl create cluster \
+ --name tcb-cluster \
+ --version 1.28 \
+ --region us-east-1 \
+ --nodegroup-name k8s-tcb-cluster \
+ --node-type t2.large \
+ --nodes 2
+
+# wait for it to come up
+# you'll see the 2 ec2 instances
+# eksctl does some cool shit for u m8
+kubectl get nodes
+
+helm repo add trino https://trinodb.github.io/charts
+helm install example-trino-cluster trino/trino
+
+export POD_NAME=$(kubectl get pods --namespace default -l "app=trino,release=tcb,component=coordinator" -o jsonpath="{.items[0].metadata.name}")
+echo $POD_NAME
+# example-trino-cluster-coordinator-78976565-k8d5z
+kubectl port-forward $POD_NAME 8080:8080
+
+kubectl get deployments
+
+kubectl delete service --all
+kubectl delete deployment --all
+kubectl delete configmap --all
+
+eksctl delete cluster --name test-cluster --region us-east-1
+```
+
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/ee47cc03-2310-4739-a083-abe84195121c)
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/83818f96-5b66-4eaa-b34f-87056f5c401c)
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/de07fb11-09d3-46e2-a4bb-c6d68a03b76d)
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/6d2ed064-ad24-4b07-8d81-04900c8740e9)
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/d8cf1e29-a677-4c29-976b-6ce3643bbfb4)
