@@ -158,3 +158,4 @@ Argo CD is a popular choice for organizations adopting GitOps practices to strea
 ## Resources
 [Article 1](https://opensource.com/article/20/5/helm-charts)
 [Examples Repo](https://github.com/argoproj/argocd-example-apps/tree/master)
+[Example Repo v2](https://github.com/ghik/kubernetes-the-harder-way)

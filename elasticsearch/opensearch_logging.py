@@ -29,6 +29,7 @@ def create_logger():
     return logger
 
 
+# d = "https://search-jacobs-opensearch-cluster-cgil6crrqtd4ldap22kcf7htxu.us-east-1.es.amazonaws.com"
 logger = create_logger()
 
 logger.info("STARTING SCRIPT")
