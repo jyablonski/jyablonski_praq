@@ -21,6 +21,8 @@ polars = "^0.19.12"
 s3fs = "^2023.10.0"
 mypy = "^1.6.1"
 opensearch-logger = "^1.2.3"
+faker = "^20.0.3"
+awswrangler = "^3.4.2"
 
 
 [tool.poetry.group.dev.dependencies]

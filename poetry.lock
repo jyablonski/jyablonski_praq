@@ -212,6 +212,43 @@ tests = ["attrs[tests-no-zope]", "zope-interface"]
 tests-no-zope = ["cloudpickle", "hypothesis", "mypy (>=1.1.1)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
 
 [[package]]
+name = "awswrangler"
+version = "3.4.2"
+description = "Pandas on AWS."
+optional = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "awswrangler-3.4.2-py3-none-any.whl", hash = "sha256:d9a80d0d00556e5341d8ec40765b8e5ad332c98621ff633415f764612f27a3f2"},
+    {file = "awswrangler-3.4.2.tar.gz", hash = "sha256:b680040c4541b9cf45f6ef02c4e6b1ae5f895559dfc57c9b521f6c9726e2738e"},
+]
+
+[package.dependencies]
+boto3 = ">=1.20.32,<2.0.0"
+botocore = ">=1.23.32,<2.0.0"
+numpy = ">=1.18,<2.0"
+packaging = ">=21.1,<24.0"
+pandas = ">=1.2.0,<3.0.0"
+pyarrow = ">=7.0.0"
+typing-extensions = ">=4.4.0,<5.0.0"
+
+[package.extras]
+deltalake = ["deltalake (>=0.6.4,<0.11.0)"]
+geopandas = ["geopandas (>=0.13.2,<0.14.0)"]
+gremlin = ["gremlinpython (>=3.6.2,<4.0.0)", "requests (>=2.0.0,<3.0.0)"]
+modin = ["modin (>=0.23.0,<0.24.0)"]
+mysql = ["pymysql (>=1.0.0,<2.0.0)"]
+opencypher = ["requests (>=2.0.0,<3.0.0)"]
+openpyxl = ["openpyxl (>=3.0.0,<4.0.0)"]
+opensearch = ["jsonpath-ng (>=1.5.3,<2.0.0)", "opensearch-py (>=2.0.0,<3.0.0)", "requests-aws4auth (>=1.1.1,<2.0.0)"]
+oracle = ["oracledb (>=1.0.0,<2.0.0)"]
+postgres = ["pg8000 (>=1.29.0,<2.0.0)"]
+progressbar = ["progressbar2 (>=4.0.0,<5.0.0)"]
+ray = ["ray[data,default] (>=2.0.0,<2.7.0)"]
+redshift = ["redshift-connector (>=2.0.0,<3.0.0)"]
+sparql = ["SPARQLWrapper (>=2.0.0,<3.0.0)", "requests (>=2.0.0,<3.0.0)"]
+sqlserver = ["pyodbc (>=4.0.0,<5.0.0)"]
+
+[[package]]
 name = "backcall"
 version = "0.2.0"
 description = "Specifications for callback functions passed in to an API"
@@ -522,6 +559,20 @@ files = [
 
 [package.extras]
 tests = ["asttokens", "littleutils", "pytest", "rich"]
+
+[[package]]
+name = "faker"
+version = "20.0.3"
+description = "Faker is a Python package that generates fake data for you."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "Faker-20.0.3-py3-none-any.whl", hash = "sha256:88316cfa7c8be892433bb10b2f1c2a7ce97246e18712680547e2fb1c4bd03912"},
+    {file = "Faker-20.0.3.tar.gz", hash = "sha256:f9af61c9223e1a3fd01ee2a48265352432f40a4fb21feb274d9d1d97b4943d75"},
+]
+
+[package.dependencies]
+python-dateutil = ">=2.4"
 
 [[package]]
 name = "frozenlist"
@@ -2432,4 +2483,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "da0f99abafc50f9fcfd59910ae39db06ec685dfd7fbb6664f8ed5c3887a8e31b"
+content-hash = "c2000a05cdea06deff09b086bb553ddcdb75976943574dfbd06e16491c5ff1e4"
