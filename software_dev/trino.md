@@ -27,3 +27,4 @@ Used my multiple companies such as Netflix, Amazon (AWS Athena is built off of P
 
 ## Resources
 [GitHub Repo](https://github.com/starburstdata/dbt-trino)
+[Trino at Scale](https://www.youtube.com/watch?v=Q03DzL_fm-I)
