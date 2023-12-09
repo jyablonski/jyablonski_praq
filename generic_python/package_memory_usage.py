@@ -21,6 +21,7 @@ def find_import_memory_usage():
     from nltk.sentiment import SentimentIntensityAnalyzer
     import numpy as np
     import pandas as pd
+    import polars as pl
     import praw
     import requests
     from sqlalchemy import exc, create_engine
