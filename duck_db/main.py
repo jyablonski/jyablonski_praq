@@ -1,8 +1,10 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import boto3
 import duckdb
 import pandas as pd
+
+date = (datetime.now() - timedelta(days=1)).date()
 
 # reads from ~/.aws/credentials by default
 session = boto3.Session()
@@ -10,7 +12,7 @@ s3_key = session.get_credentials().access_key
 s3_secret = session.get_credentials().secret_key
 
 # in memory db
-# con = duckdb.connect(database=":memory:", read_only=False)
+con = duckdb.connect(database=":memory:", read_only=False)
 
 # persistent db
 con = duckdb.connect(database="nba_duck_db", read_only=False)
@@ -28,7 +30,7 @@ con.execute(
 )
 
 df = con.execute(
-    f"SELECT * FROM parquet_scan('s3://nba-elt-prod/boxscores/validated/year=2023/month=03/boxscores-2023-03-21.parquet');"
+    f"SELECT * FROM parquet_scan('s3://jyablonski-nba-elt-prod/boxscores/validated/year=2023/month=12/boxscores-2023-12-31.parquet');"
 ).fetchdf()
 
 con.execute(f"drop schema if exists {schema} cascade;")
@@ -70,10 +72,10 @@ create_duckdb_table(
     df=df,
 )
 
-con.execute(f"delete from nba_prod.boxscores_2 where team = 'GSW';")
+con.execute(f"delete from nba_prod.boxscores2 where team = 'GSW';")
 
 missing_query = f"""
-delete from nba_prod.boxscores_2 where team = 'GSW';
+delete from nba_prod.boxscores2 where team = 'GSW';
 
 with new_table as (
 	select *
@@ -82,7 +84,7 @@ with new_table as (
 
 old_table as (
 	select *
-	from nba_prod.boxscores_2
+	from nba_prod.boxscores2
 )
 
 -- find the missing records in the new_table that aren't in the old_table
