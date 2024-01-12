@@ -27,4 +27,9 @@ These concepts help prevent data races by enforcing strict rules over shared res
 ``` rs
 rustc hello_world.rs
 ./hello_world
+
+// format code like for black
+rustup component add rustfmt
+cargo fmt
+rustfmt hello_world.rs
 ```
