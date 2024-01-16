@@ -1,4 +1,45 @@
-# Processes
+# CPU
+A Central Processing Unit (CPU) is the primary component of a computer responsible for executing instructions and performing calculations. The process by which a CPU works involves several key steps, including instruction fetch, decode, execute, and write back. Here's a simplified overview of how a CPU operates:
+
+1. **Instruction Fetch (IF):**
+   - The CPU fetches the next instruction from the computer's memory. The instruction is located at a memory address specified by the program counter (PC), which keeps track of the address of the next instruction to be executed.
+
+2. **Instruction Decode (ID):**
+   - The fetched instruction is decoded to determine what operation needs to be performed and the operands involved. The control unit of the CPU interprets the instruction, breaking it down into microoperations.
+
+3. **Operand Fetch (Optional):**
+   - If the instruction involves data stored in memory or registers, the CPU fetches the required operands. These operands are the data on which the operation specified by the instruction will be performed.
+
+4. **Execution (EX):**
+   - The CPU performs the actual operation specified by the instruction. This operation could be arithmetic (e.g., addition or subtraction), logical (e.g., AND, OR), or a data transfer operation. The ALU (Arithmetic Logic Unit) is responsible for carrying out these operations.
+
+5. **Memory Access (Optional):**
+   - If the instruction involves reading from or writing to memory, the CPU performs the necessary memory access. This step is skipped for instructions that only involve register operations.
+
+6. **Write Back (WB):**
+   - The result of the execution is written back to the destination, which could be a register or memory location. If the result is intended for further use, it is stored appropriately.
+
+7. **Update Program Counter (PC):**
+   - The program counter is updated to point to the next instruction in memory, allowing the CPU to fetch and execute the next instruction in the program.
+
+8. **Repeat:**
+   - The cycle repeats, with the CPU fetching, decoding, and executing instructions sequentially until the program is completed or interrupted.
+
+Key Components of a CPU:
+
+- **Control Unit (CU):** Manages the overall operation of the CPU, including instruction fetching, decoding, and execution.
+  
+- **Arithmetic Logic Unit (ALU):** Performs arithmetic and logical operations.
+  
+- **Registers:** Small, fast storage locations within the CPU used for temporary data storage and for holding intermediate results during processing.
+
+- **Clock:** The CPU's operations are synchronized by a clock signal, which regulates the timing of instruction execution.
+
+- **Cache:** High-speed memory that stores frequently accessed instructions and data, providing faster access than the main memory.
+
+It's important to note that modern CPUs are highly complex and often feature multiple cores, pipelines, and advanced architectures to enhance performance and efficiency. The principles described here provide a basic understanding of CPU operation, but the details can vary significantly between different CPU architectures.
+
+## Processes
 CPU processes, also known as tasks or threads, are the individual programs or parts of programs that are running on a computer's central processing unit (CPU) at any given time. The CPU is responsible for executing instructions and performing computations for these processes.
 
 **Process Priority:**
