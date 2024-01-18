@@ -54,14 +54,12 @@ C++ has one of the steepest learning curves and requires manual data management 
 
 Rust may not be as bleeding-edge performant as C++, but it is a bit more easy to use and a tad more flexbile while being more maintainable over time.  Use Python when you can, but when you run into problems that require high performance then Rust can be a good option.
 
-### Tooling
-Python needs multiple Tools such as MyPy, Pip, venv, and pytest to help enable you to do all sorts of different things to get a solid software development environment going.
-
-With Rust, you'll use Cargo which is Rust's Package Manager and Build Tool.  It comes bundled with Rust by default.  It has the ability to automatically build and link native libraries which is a complex task in other programming languages.  The one downside is you can sometimes get long compile times.
-
 ### Building Rust Code
 ``` rs
+// this manually compiles the rust program
 rustc hello_world.rs
+
+// the above command generates this binary executable file
 ./hello_world
 
 // format code like for black
@@ -74,4 +72,23 @@ rustup update
 
 rustc --version
 cargo --version
+```
+
+### Tooling
+Python needs multiple Tools such as MyPy, Pip, venv, and pytest to help enable you to do all sorts of different things to get a solid software development environment going.
+
+With Rust, you'll use Cargo which is Rust's Package Manager and Build Tool.  It comes bundled with Rust by default.  It has the ability to automatically build and link native libraries which is a complex task in other programming languages.  The one downside is you can sometimes get long compile times.
+
+### Cargo
+Cargo is a Tool that automates compiling code, managing dependencies, and generating documentation.  It simplifies the process of building and sharing Rust Programs.  It can also run Tests.
+
+``` sh
+# creates a new direcetory with a `Cargo.toml` file and a `src/` directory.
+cargo new data-with-rust
+
+# cargo is using rustc behind the scenes.
+cargo build
+
+./target/debug/data-with-rust
+
 ```
