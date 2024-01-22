@@ -1,0 +1,25 @@
+version: 1
+default_environment: dev
+project_id: 9e0365dc-1f73-4117-9366-e3a07ab225f8
+environments:
+- name: dev
+- name: staging
+- name: prod
+plugins:
+  extractors:
+  - name: tap-github
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/tap-github.git
+    config:
+      repositories:
+      - jyablonski/jyablonski_praq
+    repositories: jyablonski/jyablonski_praq
+  loaders:
+  - name: target-postgres
+    variant: meltanolabs
+    pip_url: meltanolabs-target-postgres
+    config:
+      user: meltano
+      database: postgres
+      add_record_metadata: true
+      host: localhost
