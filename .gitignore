@@ -156,3 +156,4 @@ trino/config.properties
 trino/etc/catalog/iceberg.properties
 trino/etc/catalog/postgres.properties
 software_dev/star_talking_points.md
+software_dev/investing.md
