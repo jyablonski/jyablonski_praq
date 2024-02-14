@@ -174,3 +174,75 @@ If you take a truly random sample of 100,000 rows from a dataset of 1,000,000,00
 7. Model Complexity: The model's complexity and capacity should be chosen accordingly to avoid overfitting, especially when using a smaller sample. Simpler models might generalize better with limited data.
 
 In summary, random sampling from a large dataset is a valid and common approach to handle computational constraints when training machine learning models. When appropriately done, the model's behavior on the sample is likely to be similar to its behavior on the entire dataset, allowing for efficient model training and generalization. However, careful consideration of sampling methods, validation, and model complexity is essential to ensure the best results.
+
+## Example
+Certainly! Let's walk through a hands-on example to illustrate how each metric is calculated and how they can provide insights into model performance, especially when there are significant issues predicting one group over the other.
+
+**Example Scenario:**
+Suppose we have a binary classification problem where we want to predict whether customers will subscribe to a service based on their demographic information. We have a dataset with 100 instances: 90 instances belong to Group A (e.g., males) and 10 instances belong to Group B (e.g., females). We'll evaluate a model's predictions on this dataset.
+
+Let's assume the following scenario:
+
+- Out of 90 instances in Group A, the model correctly predicts 89 instances as positive (true positives) and misclassifies 1 instance as negative (false negative).
+- Out of 10 instances in Group B, the model misclassifies 9 instances as negative (false negatives) and correctly predicts 1 instance as positive (true positive).
+
+Now, let's calculate each metric:
+
+1. **Accuracy**:
+\[ \text{Accuracy} = \frac{\text{Number of correct predictions}}{\text{Total number of predictions}} = \frac{89 + 1}{100} = 0.9 \]
+
+2. **Precision**:
+\[ \text{Precision} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Positives}} = \frac{1}{1 + 0} = 1.0 \]
+
+3. **Recall (Sensitivity)**:
+\[ \text{Recall} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}} = \frac{1}{1 + 9} = 0.1 \]
+
+4. **F1-Score**:
+\[ \text{F1-Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}} = 2 \times \frac{1.0 \times 0.1}{1.0 + 0.1} = \frac{0.2}{1.1} \approx 0.182 \]
+
+5. **Specificity (True Negative Rate)**:
+\[ \text{Specificity} = \frac{\text{True Negatives}}{\text{True Negatives} + \text{False Positives}} = \frac{89}{89 + 0} = 1.0 \]
+
+6. **False Positive Rate (FPR)**:
+\[ \text{FPR} = \frac{\text{False Positives}}{\text{False Positives} + \text{True Negatives}} = \frac{0}{0 + 89} = 0 \]
+
+7. **False Negative Rate (FNR)**:
+\[ \text{FNR} = \frac{\text{False Negatives}}{\text{False Negatives} + \text{True Positives}} = \frac{9}{9 + 1} = 0.9 \]
+
+In this example, accuracy appears high at 90%, but upon examining other metrics, we see significant issues in predicting Group B (females). The model has perfect precision (1.0) but extremely low recall (0.1), indicating that it's correctly predicting very few positive instances in Group B. The F1-score, which balances precision and recall, is also low (0.182), reflecting the overall poor performance of the model in predicting Group B. Additionally, the specificity is perfect (1.0), but the false negative rate (FNR) is high at 0.9, indicating that the model is failing to identify most positive instances in Group B.
+
+These additional metrics provide a more nuanced understanding of the model's performance, especially when there are significant differences in performance across different groups or classes in the dataset.
+
+### False Positives, True Negatives
+**Imagine we're playing a game with colored balls:**
+
+1. **True Positives (TP):**
+   - These are situations where we correctly identify something as what it is.
+   - Imagine we're playing with red and blue balls, and we're trying to find all the red balls.
+   - If we say "This is a red ball!" and it really is red, that's a true positive.
+
+2. **True Negatives (TN):**
+   - These are situations where we correctly identify something as not being what it's not.
+   - Continuing our game, let's say we also have some green balls mixed in, but we're only looking for red balls.
+   - If we say "This is not a red ball!" and it's actually a green or blue ball, that's a true negative.
+
+3. **False Positives (FP):**
+   - These are situations where we mistakenly identify something as what it's not.
+   - Back to our game, if we say "This is a red ball!" but it's actually a blue or green ball, that's a false positive.
+   - It's like when someone says they found a treasure (a red ball), but it's actually just a shiny rock (a blue or green ball).
+
+4. **False Negatives (FN):**
+   - These are situations where we mistakenly identify something as not being what it is.
+   - In our game, if we miss spotting a red ball and say "This is not a red ball!" when it actually is, that's a false negative.
+   - It's like when someone hides a treasure (a red ball), and we don't find it, so we wrongly say there's no treasure there.
+
+**Now, let's summarize these scenarios with an example:**
+
+Imagine we have a bag with red and blue balls, and we're trying to find all the red balls. Here's how our scenarios play out:
+
+- **True Positive (TP):** We correctly identify a red ball as red.
+- **True Negative (TN):** We correctly identify a blue ball as not being red.
+- **False Positive (FP):** We mistakenly identify a blue ball as red.
+- **False Negative (FN):** We mistakenly identify a red ball as not being red.
+
+In the context of a game or a real-life situation, understanding these scenarios helps us see when we're correct in our guesses (true positives and true negatives) and when we make mistakes (false positives and false negatives). These concepts help us evaluate how good we are at finding what we're looking for, whether it's colored balls or something else, like predicting outcomes in a game or solving a puzzle!
