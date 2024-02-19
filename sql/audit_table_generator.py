@@ -38,10 +38,6 @@ def sql_connection(
         return e
 
 
-schema = "nba_prod"
-table = "rest_api_users"
-
-
 def build_audit_table(
     table: str,
     schema: str,
@@ -161,9 +157,7 @@ engine = sql_connection("nba_prod")
 
 connection = engine.connect()
 
-bb = build_audit_table(
-    table="user_predictions", schema="nba_prod", connection=connection
-)
+bb = build_audit_table(table="rest_api_users", schema="nba_prod", connection=connection)
 
 
 text_file = open("audit.txt", "w")
