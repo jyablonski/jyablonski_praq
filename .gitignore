@@ -147,7 +147,7 @@ sql/tables/*
 liquibase/*.properties
 localstack/volume/
 sql/audit.txt
-*duck*
+duck_db/nba_duck_db
 metabase/metabase/*
 *secret.json*
 project/*.sql
@@ -157,3 +157,5 @@ trino/etc/catalog/iceberg.properties
 trino/etc/catalog/postgres.properties
 software_dev/star_talking_points.md
 software_dev/investing.md
+duck_db/*.wal
+duck_db/data_extraction
