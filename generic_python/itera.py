@@ -45,3 +45,18 @@ def how_many_vowels_chars(string: str) -> int:
 
 
 how_many_vowels_chars(str1)
+
+
+def print_word_pairs(string: str) -> None:
+    words = string.split(" ")
+    word_after = 1
+
+    for word in words:
+        try:
+            print(word, words[word_after])
+            word_after += 1
+        except IndexError:
+            return None
+
+
+print_word_pairs(string=str1)
