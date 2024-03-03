@@ -9,6 +9,8 @@ Trino is *not* a replacement for PostgreSQL or MySQL.  It's not supposed to be u
 
 Similar to Apache Spark, they're both distributed computing frameworks for big data processing.  Trino is SQL-only though, while Spark has multiple APIs it can run in besides just SQL.
 
+Trino acts as a Federated Query Engine which allows you to combine data from multiple different data sources (Postgres, S3, Data Warehouse etc) within a single SQL Query.
+
 ## Internal Components
 1. The Coordinator
    1. Responsible for parsing, analyzing, planning, optimizing, and scheduling a query submitted by a client.
@@ -28,3 +30,4 @@ Used my multiple companies such as Netflix, Amazon (AWS Athena is built off of P
 ## Resources
 [GitHub Repo](https://github.com/starburstdata/dbt-trino)
 [Trino at Scale](https://www.youtube.com/watch?v=Q03DzL_fm-I)
+[Performance Breakdown Article](https://medium.com/datamindedbe/head-to-head-comparison-of-dbt-sql-engines-497d71535881)
