@@ -42,7 +42,7 @@ print(grouped_df)
 df_for_joins = pl.DataFrame(
     {
         "id": [1, 2, 3, 4, 5],
-        "origin": ["US", "US", "Mexico", "Canada", "France"],
+        "origin": ["US", "US", "Mexico", "Canada", None],
     }
 )
 
@@ -50,4 +50,8 @@ df_for_joins = pl.DataFrame(
 df_joined = df.join(df_for_joins, on="id", how="inner")
 df_joined = df.join(df_for_joins, on="id", how="outer")
 
-print(df_joined)
+df_joinedv2 = df_joined.with_columns(
+    pl.col("origin").fill_null("Missing Origin"), new_col=pl.lit("hello world")
+)
+
+print(df_joinedv2)
