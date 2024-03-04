@@ -163,3 +163,125 @@ bb = build_audit_table(table="rest_api_users", schema="nba_prod", connection=con
 text_file = open("audit.txt", "w")
 n = text_file.write(bb)
 text_file.close()
+
+
+# didnt finish this mfer
+def build_audit_table_mysql(
+    table: str,
+    schema: str,
+    connection: Connection,
+) -> tuple[str, str]:
+    try:
+        cursor = connection.cursor()
+
+        # Get column names and data types
+        cursor.execute(
+            f"""
+            SELECT COLUMN_NAME, DATA_TYPE
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_SCHEMA = '{schema}' AND TABLE_NAME = '{table}'
+            """
+        )
+        table_cols = cursor.fetchall()
+
+        # Construct CREATE TABLE statement
+        # col_statements = [
+        #     f"{col_name} {data_type}" for col_name, data_type in table_cols
+        # ]
+        # table_cols_create_statement = ", ".join(col_statements)
+
+        # cursor.execute(
+        #     f"""
+        #     CREATE TABLE IF NOT EXISTS {schema}.{table}_audit (
+        #         audit_id INT AUTO_INCREMENT PRIMARY KEY,
+        #         {table_cols_create_statement},
+        #         audit_type VARCHAR(10) NOT NULL,
+        #         audit_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        #     )
+        #     """
+        # )
+        # print(f"Built Table {schema}.{table}_audit")
+
+        # Construct trigger function
+        table_cols_str = ", ".join([col_name for col_name, _ in table_cols])
+        table_cols_new = ", ".join([f"NEW.{col_name}" for col_name, _ in table_cols])
+        table_cols_old = ", ".join([f"OLD.{col_name}" for col_name, _ in table_cols])
+
+        audit_trigger_create_function = f"""
+            drop trigger if exists {table}_audit_insert_trigger;
+            
+            create trigger {table}_audit_insert_trigger
+            after insert
+            on {table}
+            for each row
+            insert into {table}_Audit (
+                {table_cols_str},
+                audit_type,
+                audit_created_at
+            )
+            values (
+                {table_cols_new},
+                'INSERT',
+                CURRENT_TIMESTAMP
+            );
+
+            """
+        cursor.execute(audit_trigger_create_function)
+        print(f"Created Trigger {table}_audit_insert_trigger")
+
+        audit_trigger_update_function = f"""
+            drop trigger if exists {table}_audit_update_trigger;
+            
+            create trigger {table}_audit_update_trigger
+            after update
+            on {table}
+            for each row
+            insert into {table}_Audit (
+                {table_cols_str},
+                audit_type,
+                audit_created_at
+            )
+            values (
+                {table_cols_new},
+                'UPDATE',
+                CURRENT_TIMESTAMP
+            );
+
+            """
+        cursor.execute(audit_trigger_update_function)
+        print(f"Created Trigger Function {table}_audit_trigger_function")
+
+        audit_trigger_delete_function = f"""
+            drop trigger if exists {table}_audit_delete_trigger;
+            
+            create trigger {table}_audit_delete_trigger
+            after delete
+            on {table}
+            for each row
+            insert into {table}_Audit (
+                {table_cols_str},
+                audit_type,
+                audit_created_at
+            )
+            values (
+                {table_cols_old},
+                'DELETE',
+                CURRENT_TIMESTAMP
+            );
+
+            """
+        cursor.execute(audit_trigger_delete_function)
+        print(f"Created Trigger Function {table}_audit_trigger_function")
+
+        connection.commit()
+        cursor.close()
+
+        return (
+            audit_trigger_create_function,
+            audit_trigger_update_function,
+            audit_trigger_delete_function,
+        )
+
+    except Exception as e:
+        connection.rollback()
+        raise e
