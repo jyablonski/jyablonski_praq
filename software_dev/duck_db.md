@@ -1,6 +1,7 @@
 # Duck DB
 [Article](https://boilingdata.medium.com/lightning-fast-aggregations-by-distributing-duckdb-across-aws-lambda-functions-e4775931ab04)
 [Article](https://marclamberti.com/blog/duckdb-getting-started-for-beginners/#:~:text=Under%20the%20hood%2C%20DuckDB%20uses,partitions%2C%20JSON%2C%20and%20more.)
+[Article](https://duckdb.org/2024/01/26/multi-database-support-in-duckdb.html)
 
 DuckDB is an embedded Database Management System to handle complex queries on large volumes of data.  It's known for its high performance and compatability with SQL.  It's basically a OLAP focused version of SQLite hosted on 1 machine.
 

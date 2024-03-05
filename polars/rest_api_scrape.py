@@ -1,4 +1,7 @@
 from datetime import datetime, timezone
+import hashlib
+
+# d = hashlib.md5("jacob".encode("utf-8")).hexdigest()
 
 import polars as pl
 import requests
@@ -17,9 +20,10 @@ game_types_filtered = (
         pl.col("n").sum().alias("total_count"),
     )
     .with_columns(
+        game_type_hash=pl.col("game_type").hash(),
         created_at_utc=datetime.now(timezone.utc),
         created_at=datetime.now(),
         created_at_utcnow=datetime.utcnow(),
     )
 )
-game_types_filtered
+game_types_filtered.dtypes
