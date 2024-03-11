@@ -23,23 +23,22 @@ Asymptotic analysis helps in classifying algorithms into broad categories based 
 For example, an algorithm with O(n^2) time complexity may be efficient for small input sizes but inefficient for large input sizes, making it necessary to explore more efficient alternatives for scalability.
 
 ## Algorithmic Performance
-1. O(1)
-2. O(log(n))
-3. O(n)
-4. O(n log(n))
-5. n^2
-6. n^3
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/5b791fab-57fa-45e2-9f51-daeea71514a7)
 
-
-## Sorting Algorithms
-n^2 Sorting
-1. Selection Sort
-2. Bubble Sort
-3. Insertion Sort
-   
-n log(n) Sorting 
-1. Merge Sort
-2. 
+1. O(1) Constant Time
+   1. Accessing an element from an Array by Index
+   2. Appending an Item to an Array
+   3. Accessing a value in a Dictionary by Key
+2. O(log(n)) Logarithmic Time
+   1. Binary Search
+3. O(n) Linear Time
+   1. Traversing through every element in an Array
+4. O(n log(n)) Linearithmic Time
+   1. Merge Sort
+5. O(n^2) Quadratic Time
+   1. Bubble Sort
+   2. Selection Sort
+   3. Insertion Sort
 
 ## Data Structures
 
