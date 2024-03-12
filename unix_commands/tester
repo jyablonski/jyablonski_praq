@@ -1,0 +1,3 @@
+echo hello world
+X=1
+echo $X
