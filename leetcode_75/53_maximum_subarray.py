@@ -1,6 +1,11 @@
 # given integer list nums, find continuous ubarray which has the largest sum and return it
 
 
+# initialize max sub to the first element just to set it to something
+# set current sum to 0
+# iterate through every item in the array
+# if the current sum from previous loop is negative then set it back to 0
+# then add the current value to current sum, and then recalculate max sub using that
 def maximum_subarray(nums: list[int]) -> int:
     # initialize our max sub with the first value
     # because these values can be < 0, we cant use 0 here.

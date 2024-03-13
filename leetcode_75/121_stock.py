@@ -3,6 +3,10 @@
 # to find max profit, and you cannot sell a stock before you buy one.
 
 
+# use 2 pointers
+# iterate through entire input list using a while loop and the pointers
+# right pointer is incremented to the right by 1 every iteration
+# only move the left pointer once we find a value that's < the value at the current right index
 def solution(nums: list[int]) -> int:
     left = 0
     right = 1

@@ -43,6 +43,16 @@ for i in nums:
         print(i * j)
 ```
 
+3. Modulo Operator
+
+``` py
+my_value = 15
+
+my_value % 3 # remainder is 0
+my_value % 2 # remainder is 1
+
+```
+
 ## Max
 
 ```py
