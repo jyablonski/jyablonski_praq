@@ -5,6 +5,7 @@ import time
 import random
 
 
+# set number of repliacs to 0 after this iscreateds
 def create_logger():
     logging.basicConfig(
         level=logging.INFO,
