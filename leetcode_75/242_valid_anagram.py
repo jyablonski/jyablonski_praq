@@ -15,3 +15,4 @@ t = "margana"
 anagram(s=s, t=t)
 anagram(s="rat", t="car")
 anagram(s="car", t="rac")
+anagram(s="racecar", t="racecar")
