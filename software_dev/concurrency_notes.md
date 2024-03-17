@@ -30,6 +30,11 @@ In `threading_prac_async.py`, to turn a synchronous program into async you have 
 The downside to threading here is it can cause small, cumbersome bugs that are hard to track and debug.  You don't have direct control over the underlying processes. 
 
 ## Asyncio
+The `asyncio` module in Python provides coroutine-based concurrency, non-blocking I/O, and asynchronous programming.
+- Introduced in Python 3.4, `await` and `async` keywords added in Python 3.5
+
+A coroutine is a function that can be suspended and resumed.  They can be entered, exited, and resumed at many different points.
+
 Asyncio enables concurrency within a single thread.  You control the nature of the task and free up the Thread to do other work while waiting on I/O bound tasks such as a network or database response.
 
 Runs on a single thread at a time.  Uses `cooperative multitasking` with each task announcing when they are ready to be switched out.  You have to write code in a special way in order to accomodate this, but the benefit is that you're controlling that "switching out" process.
