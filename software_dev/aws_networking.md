@@ -5,6 +5,8 @@ A Virtual Private Cloud (VPC) is a logically isolated section of the AWS cloud w
 
 Example VPC CIDR: `10.0.0.0/16`
 - Represents the range of IP Addresses assigned to this vpc
+- Multiple different AWS Accounts can specify this same CIDR Range
+- AWS will only allow 1 IP Address to be used at 1 time
 
 
 ## Subnets
@@ -110,6 +112,38 @@ Route Propagation: Route propagation enables automatic route table updates for t
 
 
 ### CIDR Blocks
+CIDR blocks, also known as CIDR notation or CIDR prefixes, are a way of representing IP address ranges using a combination of an IP address and a prefix length. CIDR stands for Classless Inter-Domain Routing, and it allows for more efficient allocation and routing of IP addresses on the internet.
+
+In CIDR notation, an IP address range is represented by the combination of an IP address and a prefix length separated by a forward slash (/). Here's how it works:
+
+1. **IP Address**: The IP address specifies the starting address of the range. It can be any valid IPv4 or IPv6 address.
+
+2. **Prefix Length**: The prefix length specifies the number of bits in the network portion of the address. It determines the size of the address range and how many addresses are included in it. A larger prefix length corresponds to a smaller address range with fewer addresses, while a smaller prefix length corresponds to a larger address range with more addresses.
+
+For example, in IPv4 CIDR notation:
+
+- `192.168.1.0/24` represents the range of IP addresses from `192.168.1.0` to `192.168.1.255`, with the first 24 bits (or the first three octets) representing the network portion and the last 8 bits representing the host portion.
+
+- `10.0.0.0/8` represents the range of IP addresses from `10.0.0.0` to `10.255.255.255`, with the first 8 bits representing the network portion and the remaining bits representing the host portion.
+
+CIDR blocks are commonly used in networking for purposes such as IP address allocation, subnetting, routing, and firewall configuration. They provide a flexible and efficient way of representing IP address ranges and are widely used in internet routing protocols such as BGP (Border Gateway Protocol).
+
+Here are examples of some of the most common sets of bits typically used in subnet masks, along with the corresponding CIDR notation and number of possible IP addresses:
+
+1. **/24 (255.255.255.0)**:
+   - This is a common subnet mask used for small to medium-sized networks.
+   - Number of possible IP addresses: 256 (2^8)
+
+2. **/16 (255.255.0.0)**:
+   - This is a common subnet mask used for large networks or organizations.
+   - Number of possible IP addresses: 65,536 (2^16)
+
+3. **/8 (255.0.0.0)**:
+   - This is a common subnet mask used for very large networks or Internet Service Providers (ISPs).
+   - Number of possible IP addresses: 16,777,216 (2^24)
+
+These are some of the most commonly used subnet masks, representing different sizes of networks. The larger the subnet mask (the fewer bits available for host addresses), the fewer possible IP addresses within the network. Conversely, smaller subnet masks allow for more host addresses but cover smaller ranges of IP addresses.
+
 VPC CIDR Block `10.0.0.0/16`
 - IP Address: 10.0.0.0
   - This is the starting IP address of the range.
