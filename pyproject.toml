@@ -35,6 +35,7 @@ matplotlib = "^3.8.2"
 connectorx = "^0.3.2"
 pyiceberg = "^0.6.0"
 redis = "^5.0.3"
+rapidfuzz = "^3.6.2"
 
 
 [tool.poetry.group.dev.dependencies]
