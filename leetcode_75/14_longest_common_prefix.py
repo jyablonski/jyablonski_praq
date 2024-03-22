@@ -24,8 +24,10 @@ def solution(strs: list[str]) -> str:
 
 strs1 = ["flower", "flow", "flight"]
 strs2 = ["dog", "racecar", "car"]
+strs3 = ["flower", "flower", "flower"]
 solution(strs1)
 solution(strs2)
+solution(strs3)
 
 for i in range(3):
     print(i)

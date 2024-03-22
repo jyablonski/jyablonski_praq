@@ -1,4 +1,5 @@
 # Notes
+[Bytecode Article](https://opensource.com/article/18/4/introduction-python-bytecode)
 
 ## Python vs Java
 [Article](https://ggbaker.ca/prog-langs/content/lang-types.html)
