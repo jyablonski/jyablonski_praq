@@ -1,6 +1,21 @@
 # Advanced Databases 
 [Youtube Link](https://www.youtube.com/watch?v=lGRAq98ejWs)
 
+## Storage
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/1b5c6628-1308-4887-a9a9-30ee040b101b)
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/9fcb96ad-9038-4a98-adc3-23401f383438)
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/b6a7ac6a-6c1c-467d-97a7-feb8a5772484)
+- Volatile Data will be lost when you power the machine off
+- Non-Volatile Data means it will be persistent if we turn the machine off & on
+- Can't let OS manage virtual memory; it works fine for read-only but bunch of problems pop up when multiple writes.
+  - `mmap` - take contents of file on disk and map it into virtual memory of your process, and now the process can jump around to the file's contents.  os manages all of it
+  - Transaction Safety & ordering is a problem
+  - The OS is not your friend for a lot of things.  DBMS should do all the storage handling, process scheduling etc.
+
+DBMS want to maximize sequential access, it's much faster than random acces.  Data wants to be stored in contiguous blocks.
+
+Reading & Writing to disk is expensive, must be carefully managed to avoid large stalls or performance degration.  
+
 ## Columnar Databases - PAX
 "PAX" stands for Partition Attributes Across (X) and is a technique used for organizing and storing data within a columnar database system.  Most Columnar Stores use this.
 
