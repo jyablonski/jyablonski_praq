@@ -5,7 +5,8 @@
 ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/1b5c6628-1308-4887-a9a9-30ee040b101b)
 ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/9fcb96ad-9038-4a98-adc3-23401f383438)
 ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/b6a7ac6a-6c1c-467d-97a7-feb8a5772484)
-![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/06dcb5ce-cb82-438f-bbc6-90d513da5ac2)
+
+
 - Volatile Data will be lost when you power the machine off
 - Non-Volatile Data means it will be persistent if we turn the machine off & on
 - Can't let OS manage virtual memory; it works fine for read-only but bunch of problems pop up when multiple writes.
@@ -28,6 +29,7 @@ A Page is fixed-size block of data
 - Each page has an identifier and the DBMS has ways of mapping those IDs to physical locations
 - The DBMS maintains special pages which track the location of all other data pages in the database files.
 - Also records metadata about available space like free slots per page, or list of free / empty pages
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/06dcb5ce-cb82-438f-bbc6-90d513da5ac2)
 - Every Page contains a Header of metadata about the page's contents such as:
   - Page Size
   - Checksum (to make sure nothings changed or is corrupted)
@@ -36,6 +38,44 @@ A Page is fixed-size block of data
   - Schema info
   - Data Summary Stats
 - Most common strategy for pages is to use slotted pages.  The slot array maps "slots" to the tuples' starting offset positions
+
+Tuple Oriented Storage
+- To insert a new tuple - check page dsirectory to find a page with a free slot, retrieve the page from disk, and check slot array to find empty spcae in page that will fit
+- To update an existing tuple using its record id - check page directory to find location of page, retrieve page from disk, find offset in page using slot array, if new data fits then overwrite.  otherwise, mark existing tuple as deleted and insert new record version in different page.
+  - Can lead to page fragmentation (pages arent fully utilized, empty slots)
+  - DBMS must fetch entire page to update one tuple
+  - Worst case - you have to update a bunch of tuples in random pages which is bad news bears for performance
+
+Log Structured Storage
+- Instead of storing tuples in pages, the DBMS maintains a log that records changes to tuples
+- Each log entry represents a tuple put/delete operation
+- The DBMS appends new log entries to an in-memory buffer and then writes out the changes sequentially to disk
+- Each log record must contain the tuple's unique identifier
+- As app makes changes to database, the DBMS appends log records to end of file without checking the previous log records
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/5b3a5ab6-933e-4d8f-9dd5-29cef31a967b)
+- When the page gets full, the DBMS writes it out to disk and starts filling up the next page with records.
+- All disk writes are sequential and on-disk pages are immutable
+- DBMS may also flush partially full pages for transactions but more to come on this
+- Writes are much faster than tuple storage
+- Reads are a little slower than tuple storage
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/8b219a6a-8b96-4c49-9958-a098cbc4cbde)
+- DBMS periodically compacts pages to reduce wasted space (Log Structured Compaction)
+- After compacting a page, the DBMS does not need to maintain a temporal ordering of records within the page
+- The DBMS instead sorts the page based on id to improve efficiency of future lookups (Sorted String Tables)
+- 2 kinds of compaction methods:
+  - ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/c77cdb06-c780-46aa-a079-62c822fc25be)
+  - Universal compaction - compacting adjacent log files together
+  - Level compaction - cascading down and creating larger and larger log files
+  - Analogous to driving on bad/low oil in your car.  it can work, but best-practice wise you should change your oil (and in DBMS case - compact your log files)
+
+Index Organized Storage
+- DBMS stores a table's tuples as the value of an index data structure, still uses a page layout that looks like slotted page
+- Tuples are typically sroted in page based on key
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/1d98addc-82d4-4727-a7d2-d7d70ff2e151)
+- Word aligned tuples - all attributes in a tuple must be word aligned to allow the CPU to access it without any unexpected behavior or additional work
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/d496207e-c418-42e6-b76e-31763cf7b82b)
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/038db2be-a734-4892-9afa-879142115ade)
+
 
 
 Different page concepts though:
