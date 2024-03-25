@@ -31,3 +31,12 @@ def robber(nums: list[int]) -> int:
 
 nums = [1, 2, 3, 1, 5, 7, 10, 3, 5, 1]
 robber(nums=nums)
+
+
+current_max = 0
+prev_max = 0
+
+for value in nums:
+    new_max = max(value + prev_max, current_max)
+    prev_max = current_max
+    current_max = new_max

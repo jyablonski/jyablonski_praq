@@ -77,6 +77,40 @@ Index Organized Storage
 - ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/038db2be-a734-4892-9afa-879142115ade)
 
 
+Data Types
+1. **Floating Point/Real Data Types**:
+   - These data types are designed to represent approximate numeric values.
+   - They are used when the precision of the value is not critical or when the value can have a wide range of magnitudes.
+   - Examples of floating point/real data types include FLOAT and REAL.
+   - Floating point numbers are stored in a binary representation, typically using the IEEE 754 standard.
+   - Floating point numbers have limited precision, which means that operations involving them can result in rounding errors.
+
+2. **Fixed Precision/Decimal Data Types**:
+   - These data types are designed to represent exact numeric values with a fixed precision and scale.
+   - They are suitable for representing values where precision is crucial, such as monetary amounts or exact measurements.
+   - Examples of fixed precision/decimal data types include DECIMAL, NUMERIC, and MONEY.
+   - Decimal numbers are stored in a binary-coded decimal (BCD) format, which allows for precise representation of decimal numbers without the rounding errors associated with floating point numbers.
+   - Decimal data types store both the precision (total number of digits) and scale (number of digits to the right of the decimal point) explicitly, providing control over the exact representation of numeric values.
+
+Nulls
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/a859db5f-5617-44e7-aca4-845c320b80e9)
+
+Large Values
+- Most DBMS wont allow a tuple to exceed the size of a single page
+- All pages have the same size
+- To store larger values then, the DBMS uses separate overflow storage pages
+  - Postgres: TOST (> 2 KB)
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/5f15fbe1-5111-4fd6-bf6c-6fad682e7960)
+- Overflow Pages can have pointers to the next overflow page if required
+
+External Value Storage
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/8536a506-da8e-40c0-bdde-dcc2a76311c3)
+
+
+Storage Models
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/b2e6a760-0e8b-418c-82a5-8d8a5e18c625)
+- OLTP are typically N-ary Storage Model (NSM) - DBMS stores all attributes for a single tuple contigously in a single page aka row store.  Ideal for OLTP workloads where queries are likely to acces individual entities and execute write-heavy workloads
+- OLAP are PAX
 
 Different page concepts though:
 - Hardware Page (4 kb)
