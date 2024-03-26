@@ -4,15 +4,26 @@
 
 2. Using `range()` in Loops will give you the index
 ```py
-nums = [10, 20, 30, 40]
+nums = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
 # gives you the value
-for i in nums:
+for value in nums:
     print(i)
 
-# gives you the index
-for i in range(len(nums)):
+# starts from 0, goes to 9
+for i in range(10):
     print(i)
+
+# starts from 1, goes to 10
+for i in range(1, 11):
+    print(i)
+
+l = 0
+r = 1
+
+for i in range(0, 9):
+    l += 1
+    r += 1
 
 # gives you both the index and value at once
 for key, value in enumerate(nums):

@@ -112,6 +112,20 @@ Storage Models
 - OLTP are typically N-ary Storage Model (NSM) - DBMS stores all attributes for a single tuple contigously in a single page aka row store.  Ideal for OLTP workloads where queries are likely to acces individual entities and execute write-heavy workloads
 - OLAP are PAX
 
+PAX
+- Tuples for columns are all stored close together, even though they're in the same file.
+- Larger page sizes
+- I/O is the main bottleneck if the DBMS has to fetch data from disk during query execution
+- DBMS can compress pages to increase utility of the data moved during I/O operation
+- I'm willing to spend more CPU compute to compress/decompress data because now it'll reduce IOPS accumulating from fetching things in
+
+Compression
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/77601504-3975-4d8e-9c4e-4725f06603d9)
+- Audio and .jpg Files for example are lossy compression where some bits of data might get lost.
+- For Data, we must have lossless compression algorithms.
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/31e9abb2-8e7a-453d-a3a1-0b4e5a355cd2)
+- Multiple columnar compression algorithms - Dictionary Encoding the most common
+
 Different page concepts though:
 - Hardware Page (4 kb)
 - OS Page (usually 4 kb, can be x64 2 mb / 1 gb)
