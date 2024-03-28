@@ -159,3 +159,4 @@ software_dev/star_talking_points.md
 software_dev/investing.md
 duck_db/*.wal
 duck_db/data_extraction
+duck_db/nba_v2

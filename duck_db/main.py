@@ -4,6 +4,8 @@ import boto3
 import duckdb
 import pandas as pd
 
+from utils import setup_tpch
+
 date = (datetime.now() - timedelta(days=1)).date()
 
 # reads from ~/.aws/credentials by default
@@ -15,7 +17,7 @@ s3_secret = session.get_credentials().secret_key
 con = duckdb.connect(database=":memory:", read_only=False)
 
 # persistent db
-con = duckdb.connect(database="nba_duck_db", read_only=False)
+con = duckdb.connect(database="nba_v2", read_only=False)
 schema = "nba_prod"
 
 # httpfs is used to connect directly w/ s3
@@ -41,21 +43,26 @@ def create_duckdb_table(
     conn: duckdb.DuckDBPyConnection,
     schema: str,
     table: str,
-    df: pd.DataFrame,
-):
+    s3_file: str | None = None,
+    df: pd.DataFrame | None = None,
+) -> None:
     # register the df in the database so it can be queried
     try:
-        # doesn't create the table, but creates a pointer for the database to reference the existing dataframe in memory.
-        conn.register("df", df)
+        if df:
+            # doesn't create the table, but creates a pointer for the database to reference the existing dataframe in memory.
+            conn.register("df", df)
+            query = f"create or replace table {schema}.{table} as select * from df"
+        else:
+            query = f"create or replace table {schema}.{table} as select * from parquet_scan('{s3_file}')"
 
         print(f"Creating table {schema}.{table} in duckdb")
-        query = f"create or replace table {schema}.{table} as select * from df"
         conn.execute(f"{query}")
 
         print(f"Finished creating table")
-        pass
+        return None
     except BaseException as e:
         print(f"Error occurred while creating table {table} with df {df}, {e}")
+        raise e
 
 
 create_duckdb_table(
@@ -71,6 +78,17 @@ create_duckdb_table(
     table="boxscores2",
     df=df,
 )
+
+create_duckdb_table(
+    conn=con,
+    schema=schema,
+    table="boxscores2",
+    s3_file="s3://jyablonski-nba-elt-prod/reddit_comment_data/validated/year=2024/month=03/reddit_comment_data-2024-03-02.parquet",
+)
+
+# https://duckdb.org/docs/extensions/tpch.html
+setup_tpch(conn=con)
+con.execute("call dbgen(sf = 2);")
 
 con.execute(f"delete from nba_prod.boxscores2 where team = 'GSW';")
 
@@ -95,5 +113,10 @@ select *
 from old_table;"""
 
 df = con.execute(missing_query).fetchdf()
+
+
+# https://duckdb.org/docs/extensions/tpch.html
+setup_tpch(conn=con)
+con.execute("CALL dbgen(sf = 1);")
 
 con.close()

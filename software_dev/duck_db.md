@@ -2,6 +2,7 @@
 [Article](https://boilingdata.medium.com/lightning-fast-aggregations-by-distributing-duckdb-across-aws-lambda-functions-e4775931ab04)
 [Article](https://marclamberti.com/blog/duckdb-getting-started-for-beginners/#:~:text=Under%20the%20hood%2C%20DuckDB%20uses,partitions%2C%20JSON%2C%20and%20more.)
 [Article](https://duckdb.org/2024/01/26/multi-database-support-in-duckdb.html)
+[Author Talk](https://www.youtube.com/watch?v=bZOvAKGkzpQ)
 
 DuckDB is an embedded Database Management System to handle complex queries on large volumes of data.  It's known for its high performance and compatability with SQL.  It's basically a OLAP focused version of SQLite hosted on 1 machine.
 
@@ -61,3 +62,9 @@ Some other explicitly loadable extensions include:
 Runs on 1 machine.  If you have thousands of GBs of data to process, you could run into OOM issues.
 
 Doesn't scale well to share across a team & organization as it only runs either locally or on 1 machine in the Cloud.
+
+## Internals
+DuckDB stores all data as Vectors which are like a slice of a single column
+- Vectors hold data of a single type
+- Enables pushing compressed data into the engine
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/ccd25dee-c091-4737-ae56-f7f80a592e2a)

@@ -137,6 +137,30 @@ DBMS want to maximize sequential access, it's much faster than random acces.  Da
 
 Reading & Writing to disk is expensive, must be carefully managed to avoid large stalls or performance degration.  
 
+## Query Execution
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/d8123c0c-af8c-452d-87f7-34bd3b6ac907)
+
+Optimization Goals:
+- Reduce Instruction Count
+- Reduce Cycles per Instruction
+- Parallelize Execution
+
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/c6f9d00a-bb84-40a0-8136-a7e33933cb35)
+
+
+## SIMD
+A class of CPU instructions to allow the processor to perform the same operation on multiple data points simultaneously.  All major CPUs support SIMD operations.
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/d715e542-76f9-4277-b194-ee559d3a4b36)
+
+Approach 1 - perform operation on all elements together within a single vector
+
+Approach 2 - Perform operation in an elementwise manner on all elements of each vector
+- This is what Databases tend to prefer
+
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/a4fe287f-6d70-47f6-ac80-6ccd76ff8817)
+- Also comparison instructions, shuffle instructions to move data between SIMD registers
+
+
 ## Columnar Databases - PAX
 "PAX" stands for Partition Attributes Across (X) and is a technique used for organizing and storing data within a columnar database system.  Most Columnar Stores use this.
 
