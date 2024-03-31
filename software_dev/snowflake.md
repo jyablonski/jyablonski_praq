@@ -65,3 +65,30 @@ alter table my_table cluster by (substring(column_to_cluster_by, 5, 15));
 
 ## Query Profile
 [Article](https://select.dev/posts/snowflake-query-profile)
+
+## Internals
+Managed OLAP DBMS written in C++.
+- Shared-disk Architecture with aggressive compute-side local caching
+- Entirely written from scratch
+- Custom SQL Dialect
+- Push-based Vectorized Query Processing
+- Precompiled primitives
+- No Buffer Pool
+- PAX Columnar Storage
+- Sort Merge(?) + Hash Joins
+
+Flexible Compute
+- When there's a large query, Snowflake will temporarily run portions of your query plan on additional worker nodes to accelerate performance.
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/33482546-9a86-4a1d-a9d4-6b3ab076d965)
+- The professor seems to imply that it might be using "other customer's" idle Worker Nodes to do stuff like this
+- I can see the benefit.  You're basically overcharging customers a bit, but the performance and reliability is so good that they're kinda fine with it
+
+S3 is slower than local disk, and each I/O has higher CPU overhead because of HTTPS API calls.  But it supports fetching offsets from files, which enalbes DBMS to fetch headers and determine what portions of each file it needs.  Snowflake decided to invest heavily in its own caching layer to hide the costs of doing all these lookups to S3.
+- Faster Query Performance, less calls to S3, win win for everybody
+
+Snowflake Storage Format
+- All data is stored in a proprietary data format - micropartion files.
+- Immutable Files using PAX Storage Format, similar to Parquet
+- Typically ~ 50-500 MB but ends up around 16 MB per File.
+- Automatically re-clusers and re-arranges micropartitions based on query access patterns.  This is the Snowflake Cluster Key.  It presorts the data so you can figure out exactly what data you want to bring in for each query.
+- You pay a little more to do this reclustering, but the reads can become much improved performance wise.

@@ -147,6 +147,7 @@ Optimization Goals:
 
 ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/c6f9d00a-bb84-40a0-8136-a7e33933cb35)
 
+CPUs organize instructions into pipeline stages with the goal to keeps all parts of the processor busy.  A clever optimization that gets implemented is they try to "peak ahead" and execute instructions out-of-order, but this has downsides once it fails and it has to fall back.  So the CPU is basically trying to predict what path we're trying to go down to increase performance.
 
 ## SIMD
 A class of CPU instructions to allow the processor to perform the same operation on multiple data points simultaneously.  All major CPUs support SIMD operations.
