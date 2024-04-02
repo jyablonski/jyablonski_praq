@@ -161,6 +161,23 @@ Approach 2 - Perform operation in an elementwise manner on all elements of each 
 ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/a4fe287f-6d70-47f6-ac80-6ccd76ff8817)
 - Also comparison instructions, shuffle instructions to move data between SIMD registers
 
+## Hashing
+Hash Tables are used in Databases for fast data retrieval.
+
+Want something really fast and has a low collision rate.  Don't need to use cryptographic hash function like SHA-256 because nobody will ever see these data structures outside of the DBMS, so it'll run much faster if we just dont use one of these.
+
+Chaining is a technique used to handle collisions when multiple keys hash to the same index in the hash table.  This stores the key value pairs at the same index using a linked list to maintain the collection of entries.
+
+## B+ Tree
+B+ Tree is a self balancing, ordered tree data structure that allows searches, sequential access, insertions, and deletions in O(log(n)) time.
+- Optimized for systems that read and writes large blocks of data
+- Perfectly balanced (every leaf node is at same depth in the tree)
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/85e31b0c-4444-475d-a20b-d61095b606d8)
+- Each level of ndoes has sibling pointers
+- Every node is comprised of an array of key / value pairs.  Keys are derived from attribute(s) that the index is based on
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/997f1e75-0d59-4aba-a0ef-89018ab77cc9)
+- A B+ Tree only stores values in leaf nodes.  Inner nodes only guide the search process
+ 
 
 ## Columnar Databases - PAX
 "PAX" stands for Partition Attributes Across (X) and is a technique used for organizing and storing data within a columnar database system.  Most Columnar Stores use this.
