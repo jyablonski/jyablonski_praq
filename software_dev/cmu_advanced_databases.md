@@ -178,6 +178,16 @@ B+ Tree is a self balancing, ordered tree data structure that allows searches, s
 - ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/997f1e75-0d59-4aba-a0ef-89018ab77cc9)
 - A B+ Tree only stores values in leaf nodes.  Inner nodes only guide the search process
  
+## Concurrency Control
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/5f391763-8704-4562-9a16-11689cd1b403)
+Database Locks protect the database's logical contents from other transactions.  They're held for the transaction's duration, and need to be able to rollback the changes.
+- This is expensive
+
+Databases latches protect the critical sections of the DBMS's internal data structure from other workers (aka threads).  They're held for the operation duration, and do not need to be able to rollback the changes.
+- Have Read + Write Modes.
+- Multiple threads can read the same object at the same time
+- During Write Mode, only 1 thread can access the object
+
 
 ## Columnar Databases - PAX
 "PAX" stands for Partition Attributes Across (X) and is a technique used for organizing and storing data within a columnar database system.  Most Columnar Stores use this.

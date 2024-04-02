@@ -1,4 +1,5 @@
 # Internet Protocols
+![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/cbffb8f7-23b2-4822-be5c-cd9354b726e5)
 
 ## TCP
 Transmission Control Protocol.  Commonly refered to as TCP/IP.  Connection based,  Request-response oriented protocol.
