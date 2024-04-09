@@ -58,7 +58,7 @@ def generate_fake_data(faker: Faker):
     return payload
 
 
-queue = f"jacobs-first-sqs"
+queue = f"jacobs-graphql-agent-sqs"
 message = generate_fake_data(faker)
 # message_str = str(message)
 

@@ -1,7 +1,4 @@
-from datetime import datetime, timedelta
 import json
-import os
-from typing import List
 
 import boto3
 import botocore
@@ -12,7 +9,7 @@ client = boto3.client("sqs")
 def get_messages_from_queue(
     client: botocore.client,
     queue_url: str,
-) -> List[dict]:
+) -> list[dict]:
     df = []
     messages = []
 
@@ -56,5 +53,5 @@ def get_messages_from_queue(
     return df
 
 
-queue_url = f"jacobs-first-sqs"
+queue_url = f"jacobs-graphql-agent-sqs"
 df = get_messages_from_queue(client, queue_url)
