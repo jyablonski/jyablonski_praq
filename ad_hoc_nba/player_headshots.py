@@ -40,8 +40,11 @@ df["headshot"] = df["id"].apply(
 )
 
 df = df.rename(columns={"full_name": "player", "id": "player_id"})
-df = df[["player_id", "player", "headshot"]]
+df = df[["player", "headshot"]]
 df = clean_player_names(df)
+df["yrs_exp"] = 0
+df["is_rookie"] = False
+
 
 engine = sql_connection(
     database=os.environ.get("RDS_DB"),
@@ -51,4 +54,4 @@ engine = sql_connection(
     host=os.environ.get("IP"),
 )
 
-df.to_sql("player_attributes", con=engine, if_exists="append", index=False)
+df.to_sql("aws_player_attributes_source", con=engine, if_exists="append", index=False)
