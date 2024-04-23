@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func main() {
+func read_db() {
 	// Replace with your PostgreSQL connection information
 	connStr := "user=myuser dbname=mydb sslmode=disable"
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 func main() {
@@ -46,4 +47,8 @@ func main() {
 
 	fmt.Print("Hello ")
 	fmt.Print("World \n")
+
+	// lowercase the string
+	input_str := strings.ToLower(ReturnString("JAaaacob"))
+	fmt.Println("Returned string times2:", input_str)
 }

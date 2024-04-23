@@ -5,7 +5,7 @@ package main
 // net/http needed for http requests
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -28,7 +28,7 @@ func main() {
 	}
 
 	// Read the response body
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 
 	// if there is an error, it will be stored in err
 	// if there is no error, then err = nil
