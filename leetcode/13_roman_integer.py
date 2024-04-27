@@ -7,7 +7,7 @@ def solution(s: str) -> int:
 
     for i in range(str_len):
         if (
-            i + 1 < str_len  # this is the check to make sure
+            i + 1 < str_len  # this is the check to make sure we dont go out of bounds
             and mapping[s[i]] < mapping[s[i + 1]]
         ):
             print(f"subtracting {mapping[s[i]]} from {int_sum}")

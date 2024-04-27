@@ -7,9 +7,9 @@
 # return the maximum amount of money you can rob tonight without alerting the police.
 
 # initialize prev_max and current_max to integer values of 0
-# loop through nums and calculate new_max which is the greater of current_house_value + prev_max and current_max
-# then set prev_max to the current_max
-# then set current_max to new_max
+# loop through nums and calculate new_max FIRST which is the greater of (current_house_value + prev_max) and (current_max)
+# then set prev_max to the current_max to set the previous value
+# then set current_max to new_max to set the new current max because it doesnt need to hold the old value anymore
 
 
 def robber(nums: list[int]) -> int:
