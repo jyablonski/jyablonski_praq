@@ -17,7 +17,98 @@ Alongside the data in disk there is a `b-tree` table with only the column you've
 
 
 ## Partitioning
-Partitioning in OLTP Databases is a feature used to speed up select queries.  Indexing is commonly used for this purpose as well to avoid full table scans, but typically is used on much more granular columns. 
+[Podcast Resource](https://postgres.fm/episodes/partitioning)
+[Article](https://rasiksuhail.medium.com/guide-to-postgresql-table-partitioning-c0814b0fbd9b)
+Partitioning splits up what's logically one table into smaller physical pieces so that if a query comes in it only needs to access the relevant partitions to grab its data and return results. The goal is primarily to improve data management for large tables, with other added benefits such as improved data loading, enhanced query performance, and more efficient indexes since they only need to cover a smaller amount of data. 
+
+It's typically implemented when you have very large (100 GB+) tables and have to regularly delete large amounts of rows; it's much faster to truncate partitions for old data that's no longer needed than to run deletes on a large table.
+
+Partitioning Types
+- Range - Data divided into partitions based on range of values on a column, such as a date.  Useful on any time series data or data with a natural order (sales, orders etc)
+``` sql
+CREATE TABLE sales (
+    sale_id SERIAL PRIMARY KEY,
+    sale_date DATE,
+    product_id INT,
+    quantity INT,
+    amount NUMERIC
+) partition by range (sale_date);
+
+CREATE TABLE sales_january PARTITION OF sales
+    FOR VALUES FROM ('2023-01-01') TO ('2023-02-01');
+
+CREATE TABLE sales_february PARTITION OF sales
+    FOR VALUES FROM ('2023-02-01') TO ('2023-03-01');
+
+CREATE TABLE sales_march PARTITION OF sales
+    FOR VALUES FROM ('2023-03-01') TO ('2023-04-01');
+
+-- Retrieve sales data for January
+SELECT * FROM sales WHERE sale_date >= '2023-01-01' AND sale_date < '2023-02-01';
+
+-- Retrieve sales data for February
+SELECT * FROM sales WHERE sale_date >= '2023-02-01' AND sale_date < '2023-03-01';
+
+-- Retrieve sales data for March
+SELECT * FROM sales WHERE sale_date >= '2023-03-01' AND sale_date < '2023-04-01';
+```
+- List - Data is divided into partitions based on specific values of a column.  This allows you to define the specific values for each partition, very useful when the data is categorized into distinct non-overlapping sets.
+
+``` sql
+CREATE TABLE products (
+    product_id SERIAL PRIMARY KEY,
+    category TEXT,
+    product_name TEXT,
+    price NUMERIC
+) partition by list(category);
+
+CREATE TABLE electronics PARTITION OF products
+    FOR VALUES IN ('Electronics');
+
+CREATE TABLE clothing PARTITION OF products
+    FOR VALUES IN ('Clothing');
+
+CREATE TABLE furniture PARTITION OF products
+    FOR VALUES IN ('Furniture');
+
+-- Retrieve electronics products
+SELECT * FROM products WHERE category = 'Electronics';
+
+-- Retrieve clothing products
+SELECT * FROM products WHERE category = 'Clothing';|
+
+-- Retrieve furniture products
+SELECT * FROM products WHERE category = 'Furniture';
+```
+
+- Hash - Data is divided into partitions based on the hash value of a specified column.  Uses a hash function to distribute data uniformly across partitions, useful when you want to evenly distribute data across partitions.
+
+``` sql
+CREATE TABLE orders (
+    order_id SERIAL PRIMARY KEY,
+    order_date DATE,
+    customer_id INT,
+    total_amount NUMERIC
+) partition by hash(customer_id);
+
+CREATE TABLE orders_1 PARTITION OF orders
+    FOR VALUES WITH (MODULUS 3, REMAINDER 0);
+
+CREATE TABLE orders_2 PARTITION OF orders
+    FOR VALUES WITH (MODULUS 3, REMAINDER 1);
+
+CREATE TABLE orders_3 PARTITION OF orders
+    FOR VALUES WITH (MODULUS 3, REMAINDER 2);
+
+-- Retrieve orders for customer_id 101
+SELECT * FROM orders WHERE customer_id = 101;
+
+-- Retrieve orders for customer_id 102
+SELECT * FROM orders WHERE customer_id = 102;
+
+-- Retrieve orders for customer_id 103
+SELECT * FROM orders WHERE customer_id = 103;
+```
 
 Partitioning physically splits the data up into queryable chunks.  If your table is commonly queried upon using date filters then partitioning can be a good strategy to boost performance.
 
@@ -57,6 +148,11 @@ select * from nba_source.reddit_test_partitioning where scrape_date <= '2023-01-
 ```
 
 ![image](https://user-images.githubusercontent.com/16946556/225410579-59569e37-011a-4a64-8ef8-726ff629345f.png)
+
+When to **NOT** use partioning:
+- You have small tables
+- Uniform data access patterns
+- Frequent full scans (no WHERE clause filters)
 
 
 # Audit Triggers

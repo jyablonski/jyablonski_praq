@@ -3,7 +3,7 @@
 
 
 def solution(n: int) -> int:
-    if n in [0, 1]:
+    if n in (0, 1):
         return 1
 
     # initialize a list to store the number of ways to reach each step
