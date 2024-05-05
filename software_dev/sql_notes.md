@@ -278,3 +278,18 @@ delete from public.orders where id = 3;
 
 ### SCDs
 [Article](https://github.com/dbt-labs/dbt-core/issues/3878)
+
+## Materialized View
+A Materialized View is a database object that stores the results of a query in a precomputed and materialized form for users to retrieve. This allows fast data retrieval for users because that data doesn't have to be recalculated everytime the view is queried. This can end up saving you a bunch of time and resources if the query is typically re-ran many times over.
+
+Some databases can refresh the materialized view automatically when the base table changes, others require a user to run the refresh command.
+
+The primary difference between this and a regular table created by a query is the table can't then be refreshed to update the data
+
+``` sql
+CREATE MATERIALIZED VIEW mymatview AS SELECT * FROM mytab;
+REFRESH MATERIALIZED VIEW mymatview;
+
+CREATE TABLE mymatview AS SELECT * FROM mytab;
+
+```
