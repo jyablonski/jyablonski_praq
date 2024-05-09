@@ -2,6 +2,9 @@
 [Neat Cheatsheet of PostgreSQL commands](https://gist.github.com/rgreenjr/3637525)
 [Blog Post of RDS Postgres Upgrade](https://www.freshworks.com/saas/eng-blogs/zero-downtime-postgresql-upgrade-blog/s)
 
+Transactional databases are designed to sustain an organization’s operations, not to support columnar aggregations and analytical queries. Moreover, analytical queries on live production databases compete with transactional queries for resources, jeopardizing the critical operations the database supports. Analytical databases like data warehouses and governed data lakes are designed specifically to accommodate calculations across large numbers of records.
+
+
 # SQL Query w/ no Index
 No indexes means the SQL DB has to do a `full table scan`.  This is the process of having all data sitting in disk objects called blocks. All columns of the data you request are then read INTO memory, and then each record is traversed in the entire dataset and only the ones you want filtered back to you are returned.
     * This is a costly operation, not only because of having to read the whole dataset but because of the disk -> memory transfer.
@@ -293,3 +296,4 @@ REFRESH MATERIALIZED VIEW mymatview;
 CREATE TABLE mymatview AS SELECT * FROM mytab;
 
 ```
+
