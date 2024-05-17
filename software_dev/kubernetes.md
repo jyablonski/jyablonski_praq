@@ -1,4 +1,5 @@
 # Kubernetes
+
 Kubernetes, often abbreviated as K8s, is an open-source container orchestration platform. It automates the deployment, scaling, and management of containerized applications. Kubernetes provides a robust framework for deploying and managing containers at scale in production environments.
 
 Kubernetes abstracts away the underlying infrastructure and allows you to define how your applications should run, scale, and self-heal through declarative configuration (using YAML files).
@@ -10,6 +11,7 @@ It provides features like load balancing, service discovery, rolling updates, an
 Kubernetes can work with any container runtime, not just Docker. Other container runtimes like containerd and CRI-O are also compatible with Kubernetes.
 
 ## K8s Components
+
 Kubernetes is a powerful container orchestration platform used to deploy, manage, and scale containerized applications. It consists of various components that work together to provide a robust and scalable container management environment. Let's walk through the different components of Kubernetes:
 
 1. **Master Node Components:**
@@ -46,8 +48,8 @@ Kubernetes is a powerful container orchestration platform used to deploy, manage
 
 These are the key components of a typical Kubernetes cluster. Understanding their roles and interactions is essential for effectively managing and operating containerized applications in a Kubernetes environment.
 
-
 ## Helm
+
 Helm is a package manager for Kubernetes applications. It provides a way to define, install, and upgrade even the most complex Kubernetes applications.  Helm uses what are called Helm Charts which are `.yml` based files used to declaritively state every part about how to deploy the Kubernetes application.  Helm charts are used to simplify and standardize the deployment of Kubernetes applications by encapsulating all the necessary Kubernetes resources and configurations into a single, reusable package.
 
 Here's a breakdown of what Helm charts are for in the Kubernetes world:
@@ -71,11 +73,13 @@ Here's a breakdown of what Helm charts are for in the Kubernetes world:
 In summary, Helm charts are a critical tool in the Kubernetes ecosystem for simplifying application deployment, configuration management, and version control. They help streamline the process of managing complex applications in Kubernetes and are widely used in Kubernetes deployments to promote consistency and repeatability.
 
 ## How to Use Helm
+
 1. `helm create nba-elt-rest-api`
 2. Edit the `values.yml` File
 
 `values.yml`
-```
+
+``` yaml
 image:
   repository: your-docker-registry/nba_elt_rest_api
   tag: latest
@@ -84,7 +88,8 @@ service:
 ```
 
 `templates/deployment.yml`
-```
+
+``` yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -110,6 +115,7 @@ spec:
 ```
 
 ## eksctl
+
 `eksctl` is a command-line tool used for creating, managing, and interacting with Amazon Elastic Kubernetes Service (Amazon EKS) clusters. Amazon EKS is a managed Kubernetes service provided by Amazon Web Services (AWS) that simplifies the process of running Kubernetes clusters on AWS infrastructure. `eksctl` is a separate open-source tool developed by Weaveworks and is designed to make it easier to work with Amazon EKS.
 
 Key features and capabilities of `eksctl` include:
@@ -133,6 +139,7 @@ Key features and capabilities of `eksctl` include:
 By using `eksctl`, developers and administrators can accelerate the setup and management of EKS clusters, making it easier to run containerized applications on AWS with Kubernetes. It abstracts much of the underlying AWS infrastructure complexity, allowing users to focus on their applications and workloads.
 
 ## Argo CD
+
 Argo CD is an open-source, declarative, GitOps continuous delivery tool for Kubernetes. It is designed to automate the deployment and management of applications on Kubernetes clusters by leveraging Git repositories as the source of truth for defining the desired state of your applications and environments.
 
 Key features and concepts of Argo CD include:
@@ -155,7 +162,32 @@ Key features and concepts of Argo CD include:
 
 Argo CD is a popular choice for organizations adopting GitOps practices to streamline Kubernetes application delivery. It simplifies the deployment process, enforces version control for configurations, and provides visibility into the state of your applications, making it easier to maintain a reliable and automated deployment pipeline.
 
+## K8s Files
+
+1. `deployment.yaml` - Config files used to define and manage deployments.  You typically specify a container image to run, give it a name, how many replicas it should have, and what port it will run on
+
+2. `service.yaml` - Config files used to specify what ports should be exposed on the pods running your application
+
+3. `ingress.yaml` - Config files used to define rules for routing eternal HTTP(S) traffic to your pods
+
+- ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/568cfab1-2b6f-44d5-8c1d-ab9a8024ac35)
+
+1. `secrets.yaml` - Config file used to define sensitive data such as passwords, API Tokens, SSH keys etc in key value pairs to be used in your applications running in K8s via environment variables.
+
+2. `config_map.yaml` - Config file used to define non-sensitive data in key value pairs to be used in your applications running in K8s via environment variables.
+
+## Required Fields in K8s Files
+
+1. `apiVersion` - The Version of the Kubernetes API to create the object
+
+2. `kind` - The kind of Object to create `Deployment`, `Service` etc
+
+3. `metadata` - Data to uniquely identify the object like a `name`, `namespace` etc
+
+4. `spec` - The desired state for the object
+
 ## Resources
+
 [Article 1](https://opensource.com/article/20/5/helm-charts)
 [Examples Repo](https://github.com/argoproj/argocd-example-apps/tree/master)
 [Example Repo v2](https://github.com/ghik/kubernetes-the-harder-way)
