@@ -24,7 +24,9 @@ def solution(n: int) -> int:
 
 
 test1 = 1
-test2 = 30
+test2 = 14
+test3 = 30
 
-solution1 = solution(n=test2)
+solution1 = solution(n=test1)
 solution2 = solution(n=test2)
+solution3 = solution(n=test3)
