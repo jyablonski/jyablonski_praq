@@ -186,8 +186,214 @@ Argo CD is a popular choice for organizations adopting GitOps practices to strea
 
 4. `spec` - The desired state for the object
 
+## Service Accounts vs Worker Node Permissioning
+
+[Article](https://shipit.dev/posts/setting-up-eks-with-irsa-using-terraform.html)
+
+Service Accounts are a type of Kubernetes resource used to provide an identity for pods running within the cluster. They are particularly useful for granting specific permissions to pods that need to interact with the Kubernetes API or other AWS services securely.
+
+IAM Role for Service Accounts (IRSA) is a mechanism to allow EKS Pods to assume an IAM Role for various AWS Permissions.  The idea here is you might have multiple different pods running on a worker node in EKS; if you assigned an IAM Role at the worker node level then all pods would be forced to use the same IAM Role which may or may not be ideal.  Service Accounts enable a finer grain of detail and allow you to separate out the IAM Role being used by Pod / Deployment.
+
+
+``` yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-service-account
+  namespace: default
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::YOUR_ACCOUNT_ID:role/YOUR_IAM_ROLE_NAME
+```
+
+``` yaml
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: my-pod
+spec:
+  serviceAccountName: my-service-account
+  containers:
+  - name: my-container
+    image: my-image
+```
+
+## Managing EKS Cluster Access
+
+Managing access to an EKS cluster involves a combination of several strategies to ensure security, appropriate access levels, and efficient operations. Here are the primary methods to control access to an EKS cluster:
+
+### 1. **Kubernetes Role-Based Access Control (RBAC)**
+Kubernetes RBAC allows you to define roles and bind them to users or groups, controlling what actions they can perform within the cluster.
+
+- **Roles and ClusterRoles**: Define sets of permissions. Roles are namespace-scoped, while ClusterRoles are cluster-scoped.
+- **RoleBindings and ClusterRoleBindings**: Bind roles to users, groups, or service accounts.
+
+Example Role and RoleBinding:
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+- kind: User
+  name: "example-user" # Username or group from your identity provider
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+### 2. **AWS Identity and Access Management (IAM)**
+IAM roles and policies control who can perform actions on AWS resources, including EKS clusters.
+
+- **Cluster Creation IAM Role**: When creating an EKS cluster, you specify an IAM role that EKS uses to manage AWS resources.
+- **IAM Users and Roles for Kubernetes API Access**: Configure IAM users and roles to have permissions to interact with the Kubernetes API.
+
+To map IAM roles and users to Kubernetes RBAC, use the `aws-auth` ConfigMap in the `kube-system` namespace:
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::ACCOUNT_ID:role/EKSAdminRole
+      username: eks-admin
+      groups:
+        - system:masters
+  mapUsers: |
+    - userarn: arn:aws:iam::ACCOUNT_ID:user/admin
+      username: admin
+      groups:
+        - system:masters
+```
+
+### 3. **Amazon EKS Managed Policies**
+EKS provides managed IAM policies that you can attach to IAM roles to grant necessary permissions for interacting with the cluster.
+
+- **AmazonEKSClusterPolicy**: Grants permissions needed by EKS to manage the cluster.
+- **AmazonEKSServicePolicy**: Grants permissions needed by EKS managed services.
+- **AmazonEKSCNIPolicy**: Grants permissions for the Amazon VPC CNI plugin to modify network interfaces.
+
+### 4. **Network Access Control**
+Control network access to the EKS cluster using security groups and network policies.
+
+- **Security Groups**: Control inbound and outbound traffic to the worker nodes and the control plane.
+- **Network Policies**: Use Kubernetes Network Policies to control traffic between pods within the cluster.
+
+Example Network Policy:
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-nginx
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: client
+    ports:
+    - protocol: TCP
+      port: 80
+```
+
+### 5. **Private Endpoint Access**
+Restrict access to the EKS cluster API endpoint to specific CIDR blocks or make it private so that it can only be accessed from within the VPC.
+
+- **Public Access**: The API server endpoint is accessible from the internet. You can restrict it by specifying allowed IP CIDR blocks.
+- **Private Access**: The API server endpoint is accessible only from within the VPC.
+
+Configure endpoint access when creating the cluster or update it later using the AWS Management Console, CLI, or API.
+
+### 6. **AWS Single Sign-On (SSO)**
+Integrate AWS SSO with EKS to manage user access through your identity provider.
+
+- **Configure AWS SSO**: Set up SSO and link it with your directory (e.g., Active Directory, Google Workspace).
+- **IAM Identity Provider**: Configure EKS to recognize users authenticated via AWS SSO.
+
+## Scaling
+
+The Kubernetes Horizontal Pod Autoscaler (HPA) is the Kubernetes Resource that defines how pods should be horizontally scaled in a Deployment. When the conditions are met the HPA will create new Pods, and when the load decreases and the # of pods is < the configured minimum, the HPA scales the pods back down.
+
+- **NOTE** that if some of the Pod's containers do not have the relevant resource request set, CPU utilization for the Pod will not be defined and the autoscaler will not take any action for that metric
+
+Below is an example where we're defining a Deployment and setting some CPU + Memory Limits
+
+``` yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: my-image
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+```
+
+```
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: my-deployment-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-deployment
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 65
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 75
+```
+
 ## Resources
 
 [Article 1](https://opensource.com/article/20/5/helm-charts)
+
 [Examples Repo](https://github.com/argoproj/argocd-example-apps/tree/master)
+
 [Example Repo v2](https://github.com/ghik/kubernetes-the-harder-way)

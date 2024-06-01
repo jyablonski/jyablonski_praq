@@ -32,17 +32,3 @@ nums = [2, 2, 1, 5, 3]
 target = 6
 
 value = solution(nums=nums, target=target)
-
-
-passed_values = {}
-passed_values[2] = 0
-
-for key, value in enumerate(nums):
-    diff = target - value
-
-    if diff in passed_values:
-        return [passed_values[diff], key]
-    else:
-        passed_values[value] = key
-
-return None
