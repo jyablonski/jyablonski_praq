@@ -3,7 +3,7 @@
 # to find max profit, and you cannot sell a stock before you buy one.
 
 
-# use 2 pointers
+# the buy and sell prompt should be a clue for 2 pters
 # iterate through entire input list using a while loop and the pointers
 # right pointer is incremented to the right by 1 every iteration
 # only move the left pointer once we find a value that's < the value at the current right index
@@ -26,5 +26,6 @@ def solution(nums: list[int]) -> int:
 
 # buy on day 2, sell on day 5 is the most efficient
 nums = [7, 1, 5, 3, 6, 4]
+nums2 = [16, 15, 14, 13, 11, 5, 3, 1]
 
-solution(nums=nums)
+solution(nums=nums2)
