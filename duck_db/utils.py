@@ -48,3 +48,15 @@ def setup_tpch(
     """
     )
     return None
+
+
+def setup_iceberg(
+    conn: duckdb.DuckDBPyConnection,
+) -> None:
+    conn.execute(
+        f"""
+        INSTALL iceberg;
+        LOAD iceberg;
+    """
+    )
+    return None

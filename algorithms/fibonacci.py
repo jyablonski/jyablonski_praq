@@ -17,4 +17,4 @@ def fibonacci(n: int) -> int:
         return b
 
 
-fibonacci(-1)
+fibonacci(11)

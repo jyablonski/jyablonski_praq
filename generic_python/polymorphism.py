@@ -20,6 +20,8 @@ d = Product("Apple", 5.1)
 d._print_attrs()
 
 
+# The super().__init__() call is needed when you are subclassing and want to ensure
+# that the parent class (or superclass) is properly initialized.
 class Candle(Product):
     def __init__(self, product_name: str, price: float, is_scented: bool):
         super().__init__(product_name, price)

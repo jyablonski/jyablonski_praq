@@ -14,3 +14,17 @@ def factorial(n: int) -> int:
 
 
 number = factorial(8)
+
+
+def add_1_until_n(n: int) -> int:
+    int_sum = 1
+    int_count = 1
+
+    while int_count <= n:
+        int_sum += int_count
+        int_count += 1
+
+    return int_sum
+
+
+add_1_until_n(n=120)
