@@ -31,3 +31,11 @@ print(solution_false)
 
 solution = contains_duplicate(nums)
 print(solution_false)
+
+
+def solution2(nums: list[int]) -> bool:
+    return len(nums) != len(set(nums))
+
+
+solution2(nums_false)
+solution2(nums_true)
