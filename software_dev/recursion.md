@@ -60,7 +60,7 @@ for i in range(10):
 ## Factorial Example
 
 ``` py
-def factorial(n: int) -> int5:
+def factorial(n: int) -> int:
     # Base case: factorial of 0 or 1 is 1
     if n == 0 or n == 1:
         return 1

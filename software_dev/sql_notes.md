@@ -297,3 +297,78 @@ CREATE TABLE mymatview AS SELECT * FROM mytab;
 
 ```
 
+
+
+## 0 Downtime OLTP Data Migrations
+
+[Article](https://engineering.silverfin.com/pg-zero-downtime-bigint-migration/)
+
+
+``` sql
+-- classic use case -> converting int into bigint on a large table
+-- if you do it in 1 go you'll lock the table for hours on end
+-- this method has 0 customer downtime
+
+-- create new bigint column
+-- give it a default value
+ALTER TABLE "table" ADD "new_id" bigint DEFAULT 0 NOT NULL;
+
+-- create trigger to insert any new rows on the old int column into the new bigint column
+CREATE OR REPLACE FUNCTION mirror_table_id_to_new_id()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+  NEW.new_id = NEW.id;
+
+  RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;;
+
+CREATE TRIGGER table_new_id_trigger
+  BEFORE INSERT
+  ON table
+  FOR EACH ROW
+  EXECUTE PROCEDURE mirror_table_id_to_new_id();
+
+
+-- backfill the new column
+
+-- this would take too long
+UPDATE table SET new_id = id WHERE new_id = 0;
+
+-- batch them up
+WITH cte AS (
+    SELECT id
+    FROM your_table
+    LIMIT 1000
+)
+UPDATE your_table
+SET new_id = id
+FROM cte
+WHERE your_table.new_id = 0;
+
+-- create 
+CREATE UNIQUE INDEX CONCURRENTLY table_bigint_pkey ON table(new_id).
+
+-- handle foreign keys in the same way
+
+
+-- final steps when ready for cutover
+DROP TRIGGER table_new_id_trigger ON table;
+DROP FUNCTION mirror_table_id_to_new_id();
+
+ALTER TABLE your_table RENAME COLUMN id TO old_id;
+ALTER TABLE your_table RENAME COLUMN new_id TO id;
+
+-- update primary key sequence
+ALTER SEQUENCE table_id_seq OWNED BY table.id;
+ALTER TABLE table ALTER COLUMN old_id DROP DEFAULT;
+
+ALTER TABLE table
+  DROP CONSTRAINT table_pkey,
+  ADD CONSTRAINT table_pkey PRIMARY KEY USING INDEX table_bigint_pkey,
+  ALTER COLUMN id SET DEFAULT nextval('table_id_seq'::regclass);
+
+-- can keep old_id around for a bit, and delete it later on
+```
