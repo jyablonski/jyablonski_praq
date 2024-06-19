@@ -11,11 +11,12 @@ To "trick" gh-ost, you can tell it to just add a new dummy column.  Then, right 
 Once the new partitioning scheme is applied, you can un-throttle the migration and set the chunk size to a higher number like 1000 and continue the gh-ost migration as normal. From here, everything proceeds like a normal gh-ost migration.
 
 1. Start gh-ost Migration with a chunk-size of 1
-2. After starting the migration and creating the gh-ost table, immediately run the throttle command to temporarily pause it
+2. After starting the migration and creating the gh-ost table with the `dummy_ghost_column`, immediately run the throttle command to temporarily pause it
 3. *OPTIONAL* Run Drop Primary Key, add new Primary Key Statement if needed
 4. Run the Alter Table Statement to add partitioning to the gh-ost table
-5. Run the un-throttle command to begin the gh-ost migration again
-6. Run the chunk size command to set the chunk-size to a higher number
+5. Run the Alter Table Statement to drop the `dummy_ghost_column`
+6. Run the un-throttle command to begin the gh-ost migration again
+7. Run the chunk size command to set the chunk-size to a higher number
 
 
 
