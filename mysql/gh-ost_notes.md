@@ -4,9 +4,9 @@
 
 Story - I want to add Partitioning to a Large MySQL Table. If you just run `alter table partition by xxx` it will lock the table for literal days. This is why we want to use 0 downtime migrations, which involves creating a new table with the changes we want, backfilling it, and then performing a quick naming swap for the new table we just created to become the "real" table, and we rename the old table to `sales_old` or something.
 
-I've used Gh-ost in the past for other 0 downtime migrations like this, but for some reason does not enable you to partition tables natively. We want to still use this tool because it copies the data for us over to a new table cleanly, and it reads from the binlog to capture any new data changes.  This is 100x easier than setting up manual triggers to perform this work yourself to ensure 0 data loss.
+I've used Gh-ost in the past for other 0 downtime migrations like this, but if the Column you're partitioning by isn't included in the Primary Key Index on the table then you cannot add partitioning to it. Updating a Primary Key Index is not a cheap operation, and gh-ost can't run both migrations at once for you. We want to still use this tool because it copies the data for us over to a new table cleanly, and it reads from the binlog to capture any new data changes.  This is 100x easier than setting up manual triggers to perform this work yourself to ensure 0 data loss.
 
-To "trick" gh-ost, you can tell it to just add a new dummy column.  Then, right after we trigger the migration I'm immediately stopping it from running after it starts & creates the new table. From there, we manually add the partitioning to the new table while it has very few rows so the operation completes quick. Afterwards, as we backfill the table the rows will automatically fall into their appropriate partition.
+To "trick" gh-ost in this scenario, you can tell it to just add a new dummy column.  Then, right after we trigger the migration I'm immediately stopping it from running after it starts & creates the new table. From there, we manually add the partitioning to the new table while it has very few rows so the operation completes quick. Afterwards, as we backfill the table the rows will automatically fall into their appropriate partition.
 
 Once the new partitioning scheme is applied, you can un-throttle the migration and set the chunk size to a higher number like 1000 and continue the gh-ost migration as normal. From here, everything proceeds like a normal gh-ost migration.
 
@@ -294,4 +294,36 @@ FLUSH PRIVILEGES;
 GRANT SUPER, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'root'@'%';
 show slave status;
 show replica status;
+```
+
+
+```
+gh-ost \
+--user="ghost_user" \
+--password="password" \
+--host=localhost \
+--database="test" \
+--table="users" \
+--verbose \
+--alter="PARTITION BY LIST (store_id) (
+  PARTITION p0 VALUES IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+  PARTITION p1 VALUES IN (11, 12, 13, 14, 15, 16, 17, 18, 19, 20),
+  PARTITION p2 VALUES IN (21, 22, 23, 24, 25, 26, 27, 28, 29, 30),
+  PARTITION p3 VALUES IN (31, 32, 33, 34, 35, 36, 37, 38, 39, 40),
+  PARTITION p4 VALUES IN (41, 42, 43, 44, 45, 46, 47, 48, 49, 50),
+  PARTITION p5 VALUES IN (51, 52, 53, 54, 55, 56, 57, 58, 59, 60),
+  PARTITION p6 VALUES IN (61, 62, 63, 64, 65, 66, 67, 68, 69, 70),
+  PARTITION p7 VALUES IN (71, 72, 73, 74, 75, 76, 77, 78, 79, 80),
+  PARTITION p8 VALUES IN (81, 82, 83, 84, 85, 86, 87, 88, 89, 90),
+  PARTITION p9 VALUES IN (91, 92, 93, 94, 95, 96, 97, 98, 99, 100)
+)" \
+--switch-to-rbr \
+--allow-on-master \
+--cut-over=default \
+--exact-rowcount \
+--initially-drop-ghost-table \
+--panic-flag-file=/tmp/ghost.panic.flag \
+--postpone-cut-over-flag-file=ghost.postpone.flag \
+--chunk-size=1 \
+--execute
 ```
