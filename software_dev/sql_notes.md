@@ -372,3 +372,19 @@ ALTER TABLE table
 
 -- can keep old_id around for a bit, and delete it later on
 ```
+
+### Window Functions
+
+Lag + Lead
+``` sql
+select 
+    player,
+    team,
+    game_date,
+    pts,
+    round(avg(pts) over (partition by player ORDER BY game_date), 1) AS cumulative_avg_pts,
+    sum(pts) over (partition by player ORDER BY game_date) AS cumulative_sum_pts,
+    lag(pts, 1) OVER (partition by player ORDER BY game_date) AS prev_pts,
+    lead(pts, 1) OVER (partition by player ORDER BY game_date) AS next_pts
+from fact.boxscores;
+```
