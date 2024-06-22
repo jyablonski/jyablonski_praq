@@ -6,7 +6,7 @@ authors = ["jyablonski9 <jyablonski9@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.11,<3.12" # needed for snowpark package?  fk off dude
 pandas = "2.0.3"
 gspread = "^5.11.2"
 boto3 = "^1.28.57"
@@ -46,6 +46,8 @@ mysql-connector-python = "^8.4.0"
 ipykernel = "^6.25.2"
 ruff = "^0.4.4"
 moto = {extras = ["all"], version = "^5.0.9"}
+pytest-mock = "^3.14.0"
+snowflake-snowpark-python = {extras = ["localtest"], version = "^1.18.0"}
 
 [build-system]
 requires = ["poetry-core"]

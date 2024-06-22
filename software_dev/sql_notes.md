@@ -301,7 +301,9 @@ CREATE TABLE mymatview AS SELECT * FROM mytab;
 
 ## 0 Downtime OLTP Data Migrations
 
+[Article](https://zemanta.github.io/2021/08/25/column-migration-from-int-to-bigint-in-postgresql/)
 [Article](https://engineering.silverfin.com/pg-zero-downtime-bigint-migration/)
+[Article](https://www.crunchydata.com/blog/the-integer-at-the-end-of-the-universe-integer-overflow-in-postgres)
 
 
 ``` sql
@@ -387,4 +389,50 @@ select
     lag(pts, 1) OVER (partition by player ORDER BY game_date) AS prev_pts,
     lead(pts, 1) OVER (partition by player ORDER BY game_date) AS next_pts
 from fact.boxscores;
+```
+
+## Postgres Concurrently
+
+Normally, when you create an index in PostgreSQL without CONCURRENTLY, it acquires a SHARE lock on the table. This lock mode allows concurrent reads (SELECT queries) but blocks data changes (INSERT, UPDATE, DELETE) until the index creation is complete.
+
+With CONCURRENTLY, PostgreSQL acquires a SHARE UPDATE EXCLUSIVE lock instead. This lock mode allows concurrent reads and data changes during the index creation process. While this is less restrictive than a full SHARE lock, it does require more time and resources to build the index due to the concurrent nature.
+
+Index creation with CONCURRENTLY may take longer than without, as PostgreSQL needs to manage concurrent data modifications while building the index structure.
+
+Resource Intensiveness: Requires more system resources (CPU, memory, disk I/O) due to the overhead of managing concurrent operations.
+
+
+## Postgres Data Types
+
+PostgreSQL provides a boolean data type specifically designed to store true/false values. It occupies 1 byte of storage.
+
+Integer and smallint types occupy more storage compared to boolean (4 bytes for integer, 2 bytes for smallint).
+
+When storing boolean values in PostgreSQL, using the boolean data type is recommended for its clarity, efficiency (in terms of storage), and adherence to data semantics.
+
+Performance Impact: While using integer or smallint for boolean values is technically feasible and might not drastically affect performance, it's generally advisable to use boolean unless you have specific reasons (such as legacy data compatibility) to use integers.
+
+``` sql
+CREATE TABLE events (
+    event_id SERIAL PRIMARY KEY,
+    is_active boolean,
+    is_active_int smallint,
+    event_timestamp TIMESTAMPTZ
+);
+
+-- Inserting sample data with local timezone (e.g., 'America/New_York')
+INSERT INTO events (event_timestamp, is_active, is_active_int) VALUES 
+    ('2024-06-22 15:00:00-04', True, 1),
+    ('2024-06-23 09:30:00-07', False, 0);
+
+
+-- Query to convert local timezone to UTC
+SELECT 
+    event_id,
+    is_active,
+    is_active_int,
+    event_timestamp AS local_time,
+    event_timestamp AT TIME ZONE 'UTC' AS utc_time
+FROM events
+where is_active_int = 1;
 ```
