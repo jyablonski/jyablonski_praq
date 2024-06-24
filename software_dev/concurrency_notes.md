@@ -12,6 +12,7 @@ Concurrency solves 2 main problems: CPU-bound and I/O-bound issues which slow do
     * CPU-bound problems are where the speed of your program is limited by the speed of your CPU.
       * Solution is typically writing more efficient code, or rewriting portions of your Python code in C via Cython.
 
+
 # Parallelism
 Using multiple CPU Cores available on your PC to spawn multiple processes.
 
