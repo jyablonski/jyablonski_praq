@@ -16,7 +16,7 @@ def solution(n: int) -> int:
     # calculate the number of ways for each step up to n using the recursive relation
     # this is like a fibonacci sequence adding the previous to values to get the next one
     for i in range(2, n + 1):
-        print(f"dp[i] = {dp[i - 1]} + {dp[i - 2]}")
+        print(f"dp[{i}] = {dp[i - 1]} + {dp[i - 2]}")
         dp[i] = dp[i - 1] + dp[i - 2]
 
     # return the number of ways to reach the top of the staircase

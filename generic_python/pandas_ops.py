@@ -12,14 +12,14 @@ response = requests.get(api)
 df = pd.DataFrame(response.json())
 
 # new agg column grouping by 1 column
-df["games_avg"] = df.groupby(["type"])["n"].transform("sum")
+df["games_avg"] = df.groupby(["season_type"])["n"].transform("sum")
 
 # new agg column grouping by 2 columns
-df["games_avg_2"] = df.groupby(["type", "game_type"])["n"].transform("sum")
+df["games_avg_2"] = df.groupby(["season_type", "game_type"])["n"].transform("sum")
 
 # create new column
 
-df_filtered = df.query("games_avg_2 == 24")
+df_filtered = df.query("n >= 35")
 
 df["fake_col"] = df["n"] + 35
 
@@ -28,7 +28,7 @@ df_selected = df[["explanation", "fake_col"]]
 
 # create new agg df - with multiple aggs from same `.agg` function
 df_aggs = (
-    df.groupby(["type", "game_type"])
+    df.groupby(["season_type", "game_type"])
     .agg({"n": "sum", "n": "avg", "n": "min", "n": "max"})
     .reset_index()
 )
