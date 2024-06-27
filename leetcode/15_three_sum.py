@@ -9,19 +9,16 @@
 
 def solution(nums: list[int]) -> list[list[int]]:
     result = []
-    nums.sort()
+    nums.sort()  # Sort the array to use two-pointer technique
 
     for key, value in enumerate(nums):
-        # skip first iteration because we'll never have a dupe yet
-        # and bc we sorted we can skip the current iteration
-        # if the current value is ever == the previous value
+        # Skip duplicates for the current value
         if key > 0 and value == nums[key - 1]:
             continue
 
-        # create new pointers to iterate through the remaining array
+        # Two-pointer approach to find the other two numbers
         l = key + 1
         r = len(nums) - 1
-
         while l < r:
             three_sum = value + nums[l] + nums[r]
 
@@ -30,10 +27,15 @@ def solution(nums: list[int]) -> list[list[int]]:
             elif three_sum < 0:
                 l += 1
             else:
-                result.append([key, nums[l], nums[r]])
+                result.append([value, nums[l], nums[r]])
                 l += 1
-                while nums[l] == nums[l - 1] and l < r:
+                r -= 1
+                # Skip duplicates for the second number
+                while l < r and nums[l] == nums[l - 1]:
                     l += 1
+                # Skip duplicates for the third number
+                while l < r and nums[r] == nums[r + 1]:
+                    r -= 1
 
     return result
 
