@@ -50,3 +50,9 @@ def fizz_buzz_no_n():
 
 
 fizz_buzz_no_n()
+
+# the list comprehension way, but meehhhhh
+fizzbuzz = [
+    "FizzBuzz" if i % 15 == 0 else "Fizz" if i % 3 == 0 else "Buzz" if i % 5 == 0 else i
+    for i in range(1, 101)
+]

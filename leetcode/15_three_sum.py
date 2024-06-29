@@ -22,10 +22,15 @@ def solution(nums: list[int]) -> list[list[int]]:
         while l < r:
             three_sum = value + nums[l] + nums[r]
 
+            # if the value is > 0 then our three_sum is too large, decrement the right pter
             if three_sum > 0:
                 r -= 1
+
+            # if the value is < 0 then our three_sum is too small, increment the left pter
             elif three_sum < 0:
                 l += 1
+
+            # else: we found our three_sum.  add the triplet to result and continue on
             else:
                 result.append([value, nums[l], nums[r]])
                 l += 1

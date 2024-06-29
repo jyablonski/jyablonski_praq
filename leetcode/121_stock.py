@@ -8,17 +8,25 @@
 # right pointer is incremented to the right by 1 every iteration
 # only move the left pointer once we find a value that's < the value at the current right index
 def solution(nums: list[int]) -> int:
+    # left always points to a potential buying day,
+    # right alwaysd points to a potential selling day
     left = 0
     right = 1
     max_profit = 0
 
     while right < len(nums):
+        # if we find a scenario where we can buy on day x and sell on day x + y,
+        # then calculate the profit and see if it's the max profit we've recorded so far
         if nums[left] < nums[right]:
             profit = nums[right] - nums[left]
             max_profit = max(max_profit, profit)
         else:
+            # else if there's no profit available, then
+            # move the left pter over to the position of the right one
+            # because we cannot make money in this scenario
             left = right
 
+        # always increment the right pointer
         right += 1
 
     return max_profit

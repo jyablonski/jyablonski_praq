@@ -41,6 +41,7 @@ Fn = Fn - 1 + Fn - 2
 6. Time: T(n) = T(n - 1) + T(n - 2) + 1 (addition time) > Fn (grows exponentially, bad news bears)
 
 ``` py
+#  the sequence begins: 0, 1, 1, 2, 3, 5, 8, 13, 21, and so on.
 def fibonacci(n: int) -> int:
     # Base cases: fibonacci(0) = 0, fibonacci(1) = 1
     if n == 0:
@@ -60,6 +61,7 @@ for i in range(10):
 ## Factorial Example
 
 ``` py
+# 4! = 4 * 3 * 2 * 1 = 24
 def factorial(n: int) -> int:
     # Base case: factorial of 0 or 1 is 1
     if n == 0 or n == 1:
@@ -70,4 +72,35 @@ def factorial(n: int) -> int:
 
 # Example usage:
 print(factorial(5))  # Output: 120 (5! = 5 * 4 * 3 * 2 * 1 = 120)
+```
+
+
+## Dice Roll Example
+
+
+``` py
+def dice_roll_ways_memo(n, m, memo=None):
+    if memo is None:
+        memo = {}
+    
+    if (n, m) in memo:
+        return memo[(n, m)]
+    
+    if n == 0:
+        return 1 if m == 0 else 0
+    
+    if m <= 0 or n <= 0:
+        return 0
+
+    ways = 0
+    for i in range(1, 7):
+        ways += dice_roll_ways_memo(n - 1, m - i, memo)
+    
+    memo[(n, m)] = ways
+    return ways
+
+# Example usage:
+n = 3
+m = 8
+print(dice_roll_ways_memo(n, m))  # Output the number of ways
 ```

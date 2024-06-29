@@ -20,14 +20,15 @@ def solution(length: int, width: int, height: int, mass: int) -> str:
 
     vol_limit = 1000000000
     dim_limit = 10000
+    mass_limit = 100
 
     any_over_104 = any(dim >= dim_limit for dim in dims)
 
-    if mass >= 100 and (volume >= vol_limit or any_over_104):
+    if mass >= mass_limit and (volume >= vol_limit or any_over_104):
         return "Both"
-    elif mass >= 100 and not (volume >= vol_limit or any_over_104):
+    elif mass >= mass_limit and not (volume >= vol_limit or any_over_104):
         return "Heavy"
-    elif mass < 100 and (volume >= vol_limit or any_over_104):
+    elif mass < mass_limit and (volume >= vol_limit or any_over_104):
         return "Bulky"
     else:
         return "Neither"

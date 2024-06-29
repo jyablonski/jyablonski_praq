@@ -1,51 +1,43 @@
 # given a string, find length of the longest contiguous substring without
 # any repeating characters
 
-str1 = "abcbcbsadfadfadfsadagfdhgyrtjredb"
 
-
-def solution(input_str: str) -> int:
-    # set because we're working with duplicates
-    char_set = set()
+# sliding window technique
+def solution(s: str) -> int:
+    # initialize some variables:
+    # values we've passed over in current iteration
+    # left pter
+    # result for len of longest substring found
+    chars = set()
     l = 0
     result = 0
 
-    for r in range(len(input_str)):
-        print(r)
-
-        # if there's a duplicate
-        # and there can be multiple, so you cant use an if statement
-        while input_str[r] in char_set:
-            print(f"{input_str[r]} is in {char_set}")
-            char_set.remove(input_str[l])
+    # iterate through the string
+    for key, value in enumerate(s):
+        # hardest part of this code
+        # if the value we're on is found to be already in chars, then
+        # we have to update the sliding window 1 record at a time
+        # so we remove the value at the left pter and then increment the left pter
+        # by 1 and check again if we have any dupes.
+        # repeat this until we have no more dupes
+        while value in chars:
+            chars.remove(s[l])
             l += 1
-        char_set.add(input_str[r])
-        print(f"result is {result}")
-        result = max(result, r - l + 1)
+
+        # add current value to the chars set
+        chars.add(value)
+
+        # update result if the current window is larger than the previous longest one
+        # this is the length of all characters in between the current key and the left pter, inclsuive
+        # so if key is index 4, and left pter is index 2, there's 3 total values there.
+        result = max(result, key - l + 1)
 
     return result
 
-
-solution(str1)
 
 str1 = "abcbcbsadfadfadfsadagfdhgyrtjredb"
 str2 = "abcyfew"
 
 
-def s(str1):
-    char_set = set()
-    l = 0
-    result = 0
-
-    for r in range(len(str1)):
-        while str1[r] in char_set:
-            char_set.remove(str1[l])
-            l += 1
-
-        char_set.add(str1[r])
-        result = max(result, r - l + 1)
-
-    return result
-
-
-s(str1)
+solution(s=str1)
+solution(s=str2)
