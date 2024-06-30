@@ -56,3 +56,10 @@ fizzbuzz = [
     "FizzBuzz" if i % 15 == 0 else "Fizz" if i % 3 == 0 else "Buzz" if i % 5 == 0 else i
     for i in range(1, 101)
 ]
+
+
+def fizz_buzz(n: int) -> list[str]:
+    return [
+        ("Fizz" * (i % 3 == 0) + "Buzz" * (i % 5 == 0) or str(i))
+        for i in range(1, n + 1)
+    ]
