@@ -91,7 +91,8 @@ def merge(left, right):
             result.append(right[j])
             j += 1
 
-    #
+    # append the remaining elements of the left and right arrays (or lists) to
+    # the result list after the main merge process is complete.
     result.extend(left[i:])
     result.extend(right[j:])
 

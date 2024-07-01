@@ -8,7 +8,7 @@
 # worst case is n ^ 2 in the event the partitioning is highly unbalanced (you picked a bad pivot)
 def quick_sort(arr: list[int]) -> list[int]:
     length = len(arr)
-    # nothing to sort
+    # base case - if the array has 0 or 1 elements then it's already sorted so just return it
     if length <= 1:
         return arr
 

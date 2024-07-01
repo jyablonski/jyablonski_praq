@@ -13,14 +13,11 @@ def is_valid_palindrome(s: str) -> bool:
         if char.isalnum():
             clean_string += char
 
-    if clean_string == clean_string[::-1]:
-        return True
-    else:
-        return False
+    return clean_string == clean_string[::-1]
 
 
 str1 = "hello!!as132"
-str2 = "racecar"
+str2 = "racecaR"
 str3 = "racecar."
 
 is_valid_palindrome(s=str1)

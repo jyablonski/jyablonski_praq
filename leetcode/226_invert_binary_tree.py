@@ -1,3 +1,7 @@
+# Given the root of a binary tree, invert the tree, and return its root.
+
+
+# we're provided this class
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val

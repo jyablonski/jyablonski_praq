@@ -14,19 +14,15 @@ def maximum_subarray(nums: list[int]) -> int:
 
     # loop through every value in nums
     for value in nums:
-        print("----------")
-        print(f"iterating through value {value}")
         if current_sum < 0:
             current_sum = 0
 
         # add current value to current sum
         current_sum += value
-        print(f"current sum is {current_sum}")
 
-        # at the end of that,
+        # calculate new potential max subarray val
         max_sub = max(max_sub, current_sum)
-        print(f"max sub is {max_sub}")
-        print("----------")
+
     return max_sub
 
 

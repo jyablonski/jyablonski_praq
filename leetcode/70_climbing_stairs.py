@@ -2,6 +2,7 @@
 # each time you can either climb 1 or 2 steps.  how many distinct ways can you climb to the top.
 
 
+# time complexity is o(n) because we just have to iterate through every value in the array
 def solution(n: int) -> int:
     if n in (0, 1):
         return 1

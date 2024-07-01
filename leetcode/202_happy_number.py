@@ -12,12 +12,16 @@
 # the trick is to use a set to keep track of the numbers you've iterated over
 # if you ever hit the same number twice and you havent gotten a solution yet then you know you'll just end in an endless loop
 # so terminate.
-# we either get an n == 1 and we return n == 1 which returns true, or
+# we either get n to == 1 and we return true, or we hit a value we've already passed in `seen` so we exit the loop
+# at whatever value n is at that's != 1, and we return False
 def solution(n: int) -> bool:
     seen = set()
 
     while n != 1 and n not in seen:
         seen.add(n)
+        print(
+            f"adding {n} to {seen}, calculating new n to be {sum(int(digit) ** 2 for digit in str(n))}"
+        )
         n = sum(int(digit) ** 2 for digit in str(n))
 
     return n == 1
