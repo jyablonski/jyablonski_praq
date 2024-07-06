@@ -189,3 +189,53 @@ Consider you have a social media site, where 99.9% of users have less than x amo
 
 
 # Chapter 7 Transactions
+
+Lots of things can go wrong in data systems:
+
+- Database software or hardware might fail
+- App might crash
+- Network interruptions
+- Race conditions between clients
+
+This is why they have to be fault tolerant, which is hard to implement properly.
+
+Transactions have been used for decades to address these problems. They're a way of grouping reads and writes toether into a logical unit that are executed as one operation that either succeeds (commit) or fails (rollback). They come be default in many Relational SQL Databases nowadays.
+
+NoSQL databases gained popularity in the late 2000s by incorporating replication and partitioning by default, but also abandoned transactions or offered a much weaker set of guarantees for them. They did this because for the sake of scalability they believed they needed to drop transactions.
+
+The safety guarantees provided by transactions are often described the ACID.
+
+- Atomic - All operations in the transaction successfully commit, or none of them do.
+- Consistent - The database will always remain in a valid state before and after transactions. Constraints like primary keys and not null checks will always be checked
+- Isolated - Transactions are executed independently frm one another and their intermediate states are not visible to each other. This prevents concurrency issues and maintains data consistency even as transactions are being processed simultaneously.
+- Durable - Once transactions are committed, they will stay in the database even if there is a hardware fault or database crash.
+
+Multi object transactions are ones that involve multiple statements inside 1 transaction. Typically only relational databases offer this
+
+``` sql
+BEGIN TRANSACTION;
+UPDATE Accounts SET Balance = Balance - 100 WHERE AccountID = 1;
+UPDATE Accounts SET Balance = Balance + 100 WHERE AccountID = 2;
+COMMIT;
+```
+
+A lot of these concepts simply aren't implemented this way in other non-relational databases, so watch out. A lot of leader-based replication sharding solutions follow a best effort basis which basically means "the database will do what it can, and if it runs into an error then it wont do something that's already been done", leaving it to the application to recover from errors.
+
+If two transactions don’t touch the same data, they can safely be run in parallel, because neither depends on the other. Concurrency or race condition issues only happen when one transaction is reading data that is being modfiied by another, or when they're both trying to modify the same data. These can be tricky bugs as they are difficult to reproduce.
+
+Read committed data means that you only read data that has been committed to the database. When writing to the database, you will only overwrite data that has been committed.
+
+- A dirty read is one where the data you're reading hasn't been committed to the database yet. That means there's a separate transaction that wrote data to the database, but hasn't committed or aborted the transaction yet. These scenarios must be prevented by the database.
+- A dirty write is where the data being written is overwriting an uncommited value. Example: Alice books a reservation that is saved to the database but not committed, but then Bob swoops in and books the same reservation and it's saved to the database. The Application might have told both Alice and Bob that their reservation was successful, but only 1 record for Bob for it exists.
+
+To counter these issues, Database often use row-level locks which mean to write that data, it must first acquire the row-level lock on that object, and hold that lock until the transaction is committed or aborted. If another transaction wants to come write to that same object, it must wait for the first trnasaction to give up the lock.
+
+That's only for writes though. Reads shouldn't use the same row-level lock, because what if you have 1 long-running write transaction hogging up the resources ? This hurts response time for consumers. While the write transaction is ongoing, any other transactions that read the object are simply given the old value.
+
+Snapshot Isolation means that every transaction reads from a consistent snapshot of the database where it sees all data that was committed in the database at the start of the transaction. Even if data is subsequently changed by another transaction, it will only see the old data at that particular point in time. This is used for heavy analytical queries and backups.
+
+Readers never block writers, and writers never block readers. This allows databases to handle long running read queries at the same time they allow writes.
+
+At the start of a transaction, the databases makes a list of all other transactions in progress so it can ignore them. Any writes made afterward are ignored, and any transactions with a later transaction id are ignored.
+
+Left off page 242

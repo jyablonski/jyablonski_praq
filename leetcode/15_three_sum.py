@@ -35,9 +35,11 @@ def solution(nums: list[int]) -> list[list[int]]:
                 result.append([value, nums[l], nums[r]])
                 l += 1
                 r -= 1
+
                 # Skip duplicates for the second number
                 while l < r and nums[l] == nums[l - 1]:
                     l += 1
+
                 # Skip duplicates for the third number
                 while l < r and nums[r] == nums[r + 1]:
                     r -= 1

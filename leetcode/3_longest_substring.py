@@ -43,19 +43,3 @@ str2 = "abcycfew"
 
 solution(s=str1)
 solution(s=str2)
-
-
-chars = set()
-l = 0
-res = 0
-
-for value in s:
-    while value in chars:
-        chars.remove(s[l])
-        l += 1
-
-    chars.add(value)
-
-    res = max(res, len(chars))
-
-return res

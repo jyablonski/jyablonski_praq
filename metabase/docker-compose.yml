@@ -1,26 +1,24 @@
----
-version: '2'
 services:
   postgres:
-    image: postgres:14-alpine
+    image: postgres:16-alpine
     container_name: postgres
     ports:
-     - 5432:5432
+      - 5432:5432
     environment:
-     - POSTGRES_USER=postgres
-     - POSTGRES_PASSWORD=postgres
-     - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
     volumes:
       - ./metabase/pg:/var/lib/postgresql/data
-    networks: 
+    networks:
       - metabase_network
   metabase:
     image: metabase/metabase
     container_name: metabase
     ports:
-     - 3000:3000
-    volumes:
-      - /home/app/metabase-data:/metabase-data
+      - 3000:3000
+    # volumes:
+    #   - /home/app/metabase-data_v2:/metabase-data
     environment:
       MB_DB_TYPE: postgres
       MB_DB_DBNAME: postgres
@@ -30,7 +28,7 @@ services:
       MB_DB_HOST: postgres
     depends_on:
       - postgres
-    networks: 
+    networks:
       - metabase_network
     links:
       - postgres:postgres
