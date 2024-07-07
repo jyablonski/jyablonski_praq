@@ -48,6 +48,7 @@ ruff = "^0.4.4"
 moto = {extras = ["all"], version = "^5.0.9"}
 pytest-mock = "^3.14.0"
 snowflake-snowpark-python = {extras = ["localtest"], version = "^1.18.0"}
+pytest-cov = "^5.0.0"
 
 [build-system]
 requires = ["poetry-core"]
