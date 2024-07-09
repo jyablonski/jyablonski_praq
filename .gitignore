@@ -163,3 +163,4 @@ duck_db/nba_v2
 interviews/
 data/*.parquet
 data/*.csv
+software_dev/move.md

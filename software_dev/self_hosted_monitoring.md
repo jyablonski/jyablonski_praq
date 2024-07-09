@@ -1,5 +1,17 @@
 # Self Hosted Monitoring
 
+## The Full Picture
+
+Observability can be broken down into 3 main components: logs, traces, and aggregated server metrics, which when used together will provide a comprehensive view of your Service Application's health, performance, and behavior.
+
+Logs are what happened, traces are how they happened.
+
+- **Logging**: Integrate logging frameworks to capture structured logs efficiently. Consider log aggregation tools (Elasticsearch, Splunk) for centralized storage and analysis.
+  
+- **Tracing**: Implement distributed tracing with tools like OpenTelemetry or Jaeger to capture request flows across your API services. Configure instrumentation to propagate trace context between services.
+  
+- **Metrics**: Configure Prometheus to scrape metrics exposed by your API server and infrastructure components. Use Grafana for visualization and creating dashboards that combine metrics from Prometheus with logs and trace data for comprehensive monitoring.
+
 1. **Prometheus -> Thanos:**
    - **Prometheus** is a monitoring and alerting toolkit originally developed by SoundCloud, now a part of the Cloud Native Computing Foundation (CNCF). It collects metrics from monitored targets by scraping HTTP endpoints.
    - **Thanos** is an open-source project that adds long-term storage capabilities to Prometheus. It allows for seamless querying of historical data across multiple Prometheus servers and provides downsampling and retention policies.
@@ -63,3 +75,116 @@ This architecture allows for a self-hosted, scalable, and customizable observabi
 - **Ecosystem Integration:** OpenTelemetry integrates well with existing observability components like Prometheus, Jaeger, and Grafana, enhancing the overall observability of your system.
 
 By incorporating OpenTelemetry into your observability stack, you enhance the granularity and depth of your monitoring and tracing capabilities, facilitating better insights into the performance and behavior of your applications and infrastructure.
+
+
+## Tooling
+
+
+### Thanos
+
+Thanos is an open source project that extends Prometheus and providing durable long-term storage and a global view of Prometheus metrics across multiple clusters. It addresses some of the limitations of Prometheus in large-scale deployments.
+
+- It replicates data across multiple Prometheus instances, enabling high availability. If one instance goes down, the data is still available from another instance.
+- It provides long term storage capabilities by offloading older data to cloud storage solutions like AWS S3 or Google Blob Storage.
+- It allows querying data from multiple Prometheus instances across a single query endpoint.
+- It supports downsampling of metrics, which reduces the resolution of older data to save storage space
+
+Thanos runs as a sidecar to a Prometheus server. It uploads Prometheus data to object storage at regular intervals and allows other Thanos components to query Prometheus in real time.
+
+The Thanos Store retrieves historical data from object storage and makes it available for querying.
+
+The Thanos compactor periodically compacts and downsamples the data in object storage, to save storage costs and improve query efficiency. This is enabled by Downsampling, which is the process of reducing the resolution of time-series data by aggregating multiple data points into fewer data points. This method is still sufficient to perform long-term trend analysis and observe patterns.
+
+``` yaml
+services:
+  thanos-compactor:
+    image: quay.io/thanos/thanos:v0.24.0
+    command:
+      - compact
+      - --data-dir=/data
+      - --objstore.config-file=/etc/thanos/objstore.yml
+      - --retention.resolution-raw=30d
+      - --retention.resolution-5m=180d
+      - --retention.resolution-1h=365d
+    volumes:
+      - ./objstore.yml:/etc/thanos/objstore.yml
+    ports:
+      - "10903:10903"
+```
+
+### Jaeger
+
+Jaeger is an oipen source end-to-end distributed tracing tool developed by Uber. It's designed to help you monitor and troubleshoot the performance of microservice-based systems. It allows you to track the flow of requests from your system and provide insights into latency, bottlenecks, and dependencies.
+
+- It can track requests as they propogate through multiple services, preserving the context of the request
+- It collects spans, which are the building blocks of a trace. A span represents a single unit of work within a trace, such as an HTTP request or a database query
+- It provides a web-based UI to visualize traces, and see the path of a request through various services.
+- It can help you execute root cause analyze of performance issues by providing detailed traces and span information
+- To manage the volume of data, Jaeger supports adaptive sampling, which dynamically adjusts the sampling rate based on traffic patterns.
+
+To use Jaeger, Client libraries are integrated into your application code to instrument it for tracing. These libraries create and propagate spans.
+
+A Jaeger Agent is a network daemon that listens for the spans over UDP from the application. It batches the spans and forwards them to the Jaeger collector.
+
+The Jaeger Collector receives spans from Agents and processes them. It does things like validation, transformation, and storage of spans.
+
+Jaeger queries are allowed through a REST API for retrieving traces from the storage backend. This powers the UI.
+
+Jaeger supports multiple storage backends for storing traces, including Elasticsearch, Cassandra, and Kafka.
+
+
+For development and testing, Jaeger provides an all-in-one Docker container that includes the agent, collector, query, and UI components.
+
+For production, Jaeger components are often deployed as separate services to ensure scalability and resilience. 
+
+``` yaml
+services:
+  jaeger-agent:
+    image: jaegertracing/jaeger-agent:1.24
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+    command: ["--reporter.grpc.host-port=jaeger-collector:14250"]
+
+  jaeger-collector:
+    image: jaegertracing/jaeger-collector:1.24
+    ports:
+      - "14250:14250"
+      - "14268:14268"
+    environment:
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - ES_SERVER_URLS=http://elasticsearch:9200
+
+  jaeger-query:
+    image: jaegertracing/jaeger-query:1.24
+    ports:
+      - "16686:16686"
+    environment:
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - ES_SERVER_URLS=http://elasticsearch:9200
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+```
+
+You can also implement OpenTelemetry to instrument your app and generate traces, and then export them to Jaeger to store them and allow you to query the data via its UI.
+
+### Vector
+
+Vector is a high performance observability data pipline that allows you to route your logs, metrics, and traces to any destination source such as S3, Elasticsearch, Kafka etc. 
+
+## Conclusion
+
+Prometheus and OpenTelemetry serve distinct roles in the observability and monitoring landscape. You can use both in a complementary manner: Prometheus for time-series metrics monitoring and alerting, and OpenTelemetry for comprehensive observability with tracing and flexible telemetry data export capabilities.
+
+OpenTelemetry can export metrics to Prometheus for storage, querying, and alerting purposes. This setup leverages Prometheus’ strength in time-series data handling while using OpenTelemetry for data generation.
+
+Thanos can then be added on to your Prometheus setup to allow you to extend its capabilities for long-term storage, high availability, and efficient querying of Prometheus metrics data. 
+
+Integrating Grafana with OpenTelemetry, Prometheus, and Thanos allows you to leverage Grafana’s powerful visualization capabilities to monitor, analyze, and troubleshoot your distributed systems effectively. 
