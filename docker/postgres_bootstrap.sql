@@ -10,7 +10,8 @@ CREATE TABLE customers (
     customer_id serial PRIMARY KEY,
     customer_name VARCHAR(100),
     customer_email VARCHAR(100),
-    created_at timestamp default current_timestamp
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
 );
 
 CREATE TABLE products (
@@ -18,7 +19,8 @@ CREATE TABLE products (
     product_name VARCHAR(100),
     product_category VARCHAR(50),
     product_price DECIMAL(10, 2),
-    created_at timestamp default current_timestamp
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
 );
 
 CREATE TABLE sales (
@@ -28,7 +30,8 @@ CREATE TABLE sales (
     product_id INT,
     quantity INT,
     total_amount DECIMAL(10, 2),
-    created_at timestamp default current_timestamp
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
 );
 
 CREATE TABLE invoices (
@@ -36,7 +39,8 @@ CREATE TABLE invoices (
     customer_id integer,
     sale_id integer,
     is_voided boolean default FALSE,
-    created_at timestamp default current_timestamp
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
 
 );
 
@@ -70,11 +74,11 @@ CREATE TABLE orders (
 );
 
 -- Insert some dummy data
-INSERT INTO customers (customer_name, customer_email)
+INSERT INTO customers (customer_name, customer_email, created_at, updated_at)
 VALUES
-    ('Johnny Allstar', 'customer1@example.com'),
-    ('Aubrey Plaza', 'customer2@example.com'),
-    ('John Wick', 'customer3@example.com');
+    ('Johnny Allstar', 'customer1@example.com', '2023-01-01 01:00:00', '2023-01-01 01:00:00'),
+    ('Aubrey Plaza', 'customer2@example.com', '2023-01-01 01:00:00', '2023-01-01 01:00:00'),
+    ('John Wick', 'customer3@example.com', '2023-01-01 01:00:00', '2023-01-01 01:00:00');
 
 INSERT INTO products (product_name, product_category, product_price)
 VALUES
