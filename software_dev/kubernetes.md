@@ -114,6 +114,31 @@ spec:
               containerPort: {{ .Values.service.port }}
 ```
 
+commands
+
+``` sh
+helm repo add trino https://trinodb.github.io/charts
+helm install example-trino-cluster trino/trino
+
+helm create <chart_name>
+helm install <release_name> <chart>
+
+helm upgrade <release_name> <chart>
+helm rollback <release_name> <revision_number>
+
+helm ls
+
+helm uninstall <release_name>
+
+helm repo add <repo_name> <repo_url>
+
+helm repo update
+
+helm show chart <chart>
+
+helm --help
+```
+
 ## eksctl
 
 `eksctl` is a command-line tool used for creating, managing, and interacting with Amazon Elastic Kubernetes Service (Amazon EKS) clusters. Amazon EKS is a managed Kubernetes service provided by Amazon Web Services (AWS) that simplifies the process of running Kubernetes clusters on AWS infrastructure. `eksctl` is a separate open-source tool developed by Weaveworks and is designed to make it easier to work with Amazon EKS.
@@ -142,26 +167,47 @@ By using `eksctl`, developers and administrators can accelerate the setup and ma
 
 Argo CD is an open-source, declarative, GitOps continuous delivery tool for Kubernetes. It is designed to automate the deployment and management of applications on Kubernetes clusters by leveraging Git repositories as the source of truth for defining the desired state of your applications and environments.
 
-Key features and concepts of Argo CD include:
+In a traditional CI CD Pipeline to K8s without Argo CD, you have to update a Docker Image for your App, update the K8s Deployment File to point to the new Image, and run `kubectl apply` to apply the changes. But, your GitHub Actions or Jenkins tool running the CD really has no idea what happens to the App after that, whether it's in a functional state or if it's failing, and all that. At scale across many microservices, this doesn't scale well.
 
-1. **Declarative Configuration:** With Argo CD, you define the desired state of your applications and environments using declarative configuration files, which are typically stored in a Git repository. This approach makes it easy to version, audit, and manage your application configurations.
+Argo CD is a part of your K8s Cluster. An Argo CD agent pulls changes from the Git Repository where it's hooked up to look for changes. Any changes will force Argo CD to pull those changes and apply them.
 
-2. **GitOps:** Argo CD follows the GitOps operational model, where the Git repository serves as the single source of truth for your application configurations. Changes in the Git repository trigger automated deployment and synchronization of the desired state to your Kubernetes clusters.
+- Your App CD Pipeline might now push a new Docker Image for the codebase, adn update the K8s Manifest File in that Repo. Then, Argo CD will pull those changes on the manifest file and apply them in your K8s Cluster.
+- Argo CD is essentially de-coupled here
+- Best Practice to have separate repos for Application Source Code and Application Configuration Code (K8s manifest files) which can be changed independently of source code
+- If you want to change 1 of these, the other 1 shouldnt have to be affected.
 
-3. **Multi-Cluster Support:** Argo CD can manage multiple Kubernetes clusters, making it suitable for multi-environment or multi-region deployments. It allows you to define applications once and deploy them consistently across various clusters.
+Argo CD has support for Kubernetes YAML Files, Helm Charts, or Kustomize Files. It also guaratnees that the K8s Manifests from the Git Repo remain the source of truth so people cant make manual direct changes.
 
-4. **Application Definitions:** In Argo CD, applications are defined using a Kubernetes Custom Resource called `Application`. You specify the source repository, target cluster, and other configuration details in an `Application` resource.
+If a new version fails to start, Argo CD can immediately rollback to the previous working version. It can also re-create 100% of resources in a new EKS Cluster if you swap regions or the existing K8s Cluster goes down, it can do this because everything about the cluster is defined in Git through code.
 
-5. **Health Status and Rollbacks:** Argo CD continuously monitors the health and synchronization status of applications. If a deviation from the desired state is detected, it provides insights into what went wrong and allows for easy rollbacks to previous configurations.
+Example Argo CD File
 
-6. **Extensibility:** Argo CD can be extended through plugins and hooks, allowing you to integrate with external tools and services, customize workflows, and automate various tasks within your deployment pipeline.
+``` yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-argo-application
+  namespace: argocd
+spec:
+  project: default
 
-7. **Secure and Access Control:** Argo CD provides features for securing access to your Git repositories and Kubernetes clusters. It integrates with Kubernetes RBAC for fine-grained access control.
+  source:
+    repoURL: https://gitlab.com/nanuchi/argocd-app-config.git
+    targetRevision: HEAD
+    path: dev
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: myapp
 
-8. **Web UI and CLI:** Argo CD offers both a user-friendly web-based interface and a command-line interface (CLI) for managing applications, monitoring deployments, and reviewing synchronization status.
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
 
-Argo CD is a popular choice for organizations adopting GitOps practices to streamline Kubernetes application delivery. It simplifies the deployment process, enforces version control for configurations, and provides visibility into the state of your applications, making it easier to maintain a reliable and automated deployment pipeline.
+    automated:
+      selfHeal: true
+      prune: true
 
+```
 ## K8s Files
 
 1. `deployment.yaml` - Config files used to define and manage deployments.  You typically specify a container image to run, give it a name, how many replicas it should have, and what port it will run on

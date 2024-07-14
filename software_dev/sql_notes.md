@@ -436,3 +436,18 @@ SELECT
 FROM events
 where is_active_int = 1;
 ```
+
+
+## Scaling an OLTP Database
+
+1. Vertical Scaling (upgrading the Hardware on the existing Database Instance for more RAM or CPU)
+2. Horizontal Scaling (in the form of Read Replicas)
+   1. In this case, you could offload various read-only portions of your app to the Read Replica which could indirectly improve the performance of your writer instance, since it wouldn't have to be taking all of those read-only requests
+3. Caching
+   1. Using an in-memory Database like Redis which could cache recent requests so that subsequent requests can be read from Redis instead of the OLTP Database
+4. Optimizing Database Design
+   1. Utilize indexes where appropriate
+   2. Use Normalization to reduce data redundancy and improve data integrity
+   3. Write more efficient SQL queries to reduce unnecessary load on the OLTP Database
+5. Split the App + Database up into Microservices and Database-per-Microservice Architecture
+   1. This isolates load and improves fault tolerance so if there's a failure it only affects that single microservice and database and not the entire app.
