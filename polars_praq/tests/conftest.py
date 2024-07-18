@@ -6,6 +6,8 @@ from moto import mock_aws
 import polars as pl
 import pytest
 
+from .mock_aio import mock_aio_aws
+
 
 @pytest.fixture(autouse=True)
 def pl_df_color_fixture():
@@ -34,3 +36,9 @@ def aws_credentials():
     os.environ["AWS_SECRET_ACCESS_KEY"] = "testing"
     os.environ["AWS_SECURITY_TOKEN"] = "testing"
     os.environ["AWS_SESSION_TOKEN"] = "testing"
+
+
+@pytest.fixture()
+def mock_aws(monkeypatch):
+    with mock_aio_aws(monkeypatch):
+        yield

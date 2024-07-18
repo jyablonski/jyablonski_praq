@@ -1,3 +1,6 @@
+import os
+import tempfile
+
 import polars as pl
 import s3fs
 
@@ -13,9 +16,6 @@ def write_pl_df_to_s3(
 
     if file_type not in ("csv", "parquet"):
         raise ValueError("Please select 'csv' or 'parquet' for `file_type`")
-
-    if not isinstance(df, pl.DataFrame):
-        raise TypeError("Input `df` must be a Polars DataFrame (`pl.DataFrame`)")
 
     if aws_creds and not all(
         key in aws_creds for key in ["access_key", "secret_key", "access_token"]
@@ -36,13 +36,26 @@ def write_pl_df_to_s3(
 
     destination = f"s3://{s3_bucket}/{s3_path}.{file_type}"
 
-    with fs.open(destination, mode="wb") as f:
-        print(f"Writing DataFrame to {destination}")
+    # creating a local temp file for polars to write the file to
+    # before it sends it off to s3. without this, it returns a
+    # warnign to you?
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        temp_file_path = temp_file.name
+        print(f"Temporary file path: {temp_file_path}")
 
-        if file_type == "parquet":
-            df.write_parquet(file=f)
-        elif file_type == "csv":
-            df.write_csv(file=f)
+        try:
+            if file_type == "parquet":
+                df.write_parquet(temp_file_path)
+            elif file_type == "csv":
+                df.write_csv(temp_file_path)
+
+            # Now upload the file to S3
+            with open(temp_file_path, "rb") as local_file:
+                with fs.open(destination, mode="wb") as s3_file:
+                    s3_file.write(local_file.read())
+
+        finally:
+            os.remove(temp_file_path)  # Clean up the temporary file
 
     return None
 

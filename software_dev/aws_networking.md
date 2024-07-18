@@ -159,3 +159,26 @@ Subnet CIDR Block `10.0.1.0/24`
 - Network Address `10.0.1.0`
 - Usable IP Addresses: `10.0.1.1` to `10.0.1.254`
 - Broadcast Address: `10.0.1.255`
+
+
+## Load Balancers
+
+Load Balancers distribute network traffic across multiple servers. They ensure no single server becomes overwhelmed, and help de-couple some responsibiltiies from a single-server setup.
+
+1. They perform SSL Termination, which means client requests come over the internet to the Load Balancer encrypted under HTTPS, then the Load Balancer can decrypt them and send them off some destination server as HTTP for the request to get processed. The EC2 Server then sends the response back to the Load Balancer where it can encrypt it again before sending the response back to the client
+2. They route traffic to various EC2 Servers and perform load balancing to ensure maximum performance and to not overload any 1 Server Instance hosting the App.
+3. They regularly check the health of the backend servers to make sure they don't send traffic to a dead or unavailable server.
+
+There are different Load Balancing Algorithms available:
+
+- Round Robin - Requests are evenly distributed in a sequential manner
+- Least Connections - Traffic is directed to server with fewest active connections
+- Least Response Time - Traffic is directed to server with least average response time
+- Weighted Round Robin - Different servers have different weights to help direct traffic to higher-capacity servers
+
+Different AWS Load Balancer Types:
+- Application Load Balancer (ALB): Best for HTTP/HTTPS traffic and web applications.
+- Network Load Balancer (NLB): Best for TCP/UDP traffic requiring high performance.
+- Classic Load Balancer (CLB): Legacy load balancer supporting HTTP/HTTPS and TCP.
+
+AWS Certificate Manager can be used to manage SSL/TLS Certificates for HTTPS Listeners.
