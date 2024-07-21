@@ -1,5 +1,7 @@
 # Snowflake
 
+[SSO Login](https://community.snowflake.com/s/article/configuring-g-suite-as-an-identity-provider)
+
 ## Micropartitions
 [Article](https://select.dev/posts/introduction-to-snowflake-micro-partitions)
 

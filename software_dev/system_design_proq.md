@@ -49,7 +49,7 @@ How do you go about testing this pipeline?
 [Video](https://www.youtube.com/watch?v=lsKU38RKQSo)
 [Guide](https://www.hellointerview.com/learn/system-design/answer-keys/uber)
 
-Goal of System Design is to move quickly and build out the core features of the system. Be able to identify what are core features and what are 
+Goal of System Design is to move quickly and build out the core features of the system. Be able to identify what are core features and what are nice-to-haves that you probably don't need to dive in detail during a system design interview
 
 - When Uber was built, they obviously didn't offer all the features that they now offer in 2024.
 
@@ -156,6 +156,96 @@ Deep Dive
   - It might feel bad from the customer perspective to wait x minutes to be served by a driver, but ultimately if you don't have enough available drivers then a queue is just about as good as you can do in this situation.
   - First in, first out queue. Partitioned by location (heavy traffic in Atlanta, no traffic in the boonies etc).
 
+
+## Design Ticketmaster
+
+[Video](https://www.youtube.com/watch?v=fhdPyoO6aXI&t=3056s)
+[Guide](https://www.hellointerview.com/learn/system-design/answer-keys/ticketmaster)
+![image](https://github.com/user-attachments/assets/6fed1e04-87e4-410c-8c04-6667b084ac22)
+
+
+Core Requirements
+
+- App should provide Events that Users can view and book tickets for.
+- Users should be able to book tickets for a particular Event
+- Users should be able to search for events
+
+Non-functional Requirements
+
+- Booking tickets should be highly consistent (don't book 2 customers the same seat etc)
+- Want high availability for search and viewing events
+  - Different components in any system prefer consistency or availability for various reasons, it's not some general "ticketmaster should prioritize consistency"
+- App should be able to handle surges of high traffic
+- Lot more search events than booking or buying events
+- Booking is actually a 2-phase process. When you click your seat, it's reserved for a short time while you go through the checkout process. So you first reserve a seat and it's temporarily locked to you for a small time window, and then once you pay it's actually confirmed and locked in.
+
+Core Entities
+
+- Event
+- Ticket
+- Performer
+- Venue
+
+Important not to map out the schema at this point. You may not know all of the fields yet, and it may evolve as you get into the high level design. Put the schema in the high level design when you map out the database. And that way you can add onto it as you build out that architecture.
+
+Also don't implement any napkin math if you don't have a purpose for it yet. Do it only if your napkin math estimations will have a direct influence on how you'll design or architect your solution.
+
+API
+
+- `GET /event/:eventId -> Event & Venue & Performer & Ticket[]`
+- `GET /search?term={term}&location={location}&type={type}&date={date} ...` -> Partial<Event>[]
+  - term - generic search term
+  - location - location for the event. could be city, could be lat / long. depends
+  - type - sporting event, concert etc
+  - date - date of the event
+  - `Partial<Event>[]` - return a limited amount of info for the event to show the search results
+- `POST /booking/reserve`
+  - Header: JWT | SessionToken
+  - Body: {ticketId}
+- `POST /booking/confirm`
+  - Header: JWT | SessionToken
+  - Body: {ticketId, paymentDetails (Stripe)}
+
+High Level Design (that satisifes the Functional Requirements)
+
+- Users will make requests from their client (Mobile Device, Web Browser) to an API Gateway which will forward along their request to the appropriate service
+  - The Gateway enables Load Balancing, Routing, Authentication, SSL Termination, and Rate Limiting
+- Event CRUD Service which will take requests and read + write to some OLTP Database
+  - Database will store all the Core Entities that were mentioned previously
+  - One-to-many relationship between event and tickets.
+  - Because of these relationships, OLTP is typically fine
+- Search Service which will take search requests and return list of results based on user search
+  - Initially, start out by just having it query the OLTP Database for search. This will be super slow and is not gonna cut it, but for now just finish mapping out the rest of the architecture and come back to it.
+- Booking Service which will handle the 2-phase booking process.
+  - On Reserve, it will update the `status` column in the `ticket`  table to `reserved`.
+    - Issue with this is after ~10 minute temporary hold, it will stay reserved forever.
+    - Could use a CRON job to run updates to these that run every minute or something. But this introduces a delta time where a seat would become available again, but the CRON job just hasnt ran again. This is valuable time that a ticket could have been booked but isnt available to users. 
+    - Could also add additional `reserve_timestamp` column to track that. But this adds a ton of complexity
+    - Can use Redis to implement a Ticket Temporary Lock where it will keep track of it via a TTL. After 10 mins where the user reserved the ticket but didn't purchase, then it will be removed from Redis and new searches will immediately show the seat available again.
+      - This changes the Event CRUD Service, which will now have to query Postgres and Redis now to check that it's not reserving the same seat to 2 users.
+      - Separated out into its own Service because the Booking Service might have 50+ servers running in parallel; they all need access to the same information. Can't keep this in the Booking Service Worker memory.
+  - On Confirm, it will take in some payment details so you can make API Calls to Stripe to take the user's payment info and charge them.
+    - If successful payment, it will update the `status` column to `booked`
+    - If failed payment, it will
+
+Deep Dives (to handle edge cases, critical performance implications, improvements to the system that can be made)
+
+- Find 1-3 places where you can significantly improve the system and solve the non-functional requirements.
+- Search can be improved, use a CDC Solution to move data from Postgres to Elasticsearch so it has all the recent data available, but offers a much faster low-latency search solution for users.
+- How to deal with Hot data (taylor swift concerts) - implement caching. This would work really well because the experience is the exact same user-to-user, we're not implementing any user-specific recommendations or anything that might change and not be great for cache.
+  - Opensearch has node query caching which caches the top queries
+  - Could add another Redis database here to cache the search term <-> search results
+  - CDN can cache API calls for search, so can utilize that as well. Super fast, great for popular events. But less useful if you have a ton of different search queries with a lot of parameters.
+- Could improve Seat Map process to update in real time.
+  - Implement Long Polling where for 30-60 seconds it keeps an open connection and continually updates
+  - If they sit on this page for >= 10 mins, this isnt a great solution.
+  - Websockets are an option.
+  - This is above my paygrade, im tapping out on this one
+- For Superbowl or Taylor swift, you need to introduce a Queue service to the booking flow.
+  - Virtual Waiting Queue could be only enabled for really popular events.
+  - Instead of seeing the Event Page, they're entered into a Queue and they have to wait for their turn to view seats and book a ticket.
+  - Queue could be Redis sorted set, could be random etc. Depends.
+  - Event driven logic to allow chunks of 100 people in at a time or something.
 
 # Common Elements
 

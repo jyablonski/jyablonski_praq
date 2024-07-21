@@ -451,3 +451,91 @@ where is_active_int = 1;
    3. Write more efficient SQL queries to reduce unnecessary load on the OLTP Database
 5. Split the App + Database up into Microservices and Database-per-Microservice Architecture
    1. This isolates load and improves fault tolerance so if there's a failure it only affects that single microservice and database and not the entire app.
+
+## Sharding an OLTP Database
+
+[Citus Docs](https://docs.citusdata.com/en/stable/get_started/what_is_citus.html#when-to-use-citus)
+
+Sharding involves splitting your database into more manageable pieces called shards. These shards contain a subset of the data, and queries are distributed across these shards based on some sharding key. Typically you do this to enable horizontal sharding, which is where you split your database across multiple nodes instead of being limited to 1 Writer Database.
+
+You specify a Table to shard, and a column (or sharding key) to shard by. The Sharding Key is used to partition the data across the multiple nodes you have in your cluster.
+
+- The Sharding key helps evenly distribute the data across shards to ensure no shard becomes a bottleneck, and that each one contains a roughly equal portion of data.
+- The Sharding Key also allows the system to determine which shard to query for a particular piece of data, which reduces data scanned and improves performance.
+- This is where the horizontal scaling comes from. Adding more shards allows you to handle larger datasets
+
+Partition Types:
+
+- Hashing - the Shard Key is hashed to determine the shards. This ensures an even distribution of data, but may scatter data across multiple shards.
+- Range Partitioning - This divides the shard key into ranges. For a `user_id` column, this might look like 0-999, 1000-1999 etc. This can keep related data together, but might lead to an uneven distribution of data if these `user_id`s are not uniformially distributed.
+
+When queries come into a table that's been sharded, the system uses the shard key to figure out which shard it needs to query to grab the data and return the response to the client.
+
+Citus is an open source extension to Postgres that you can attach to turn Postgres into a Sharded Database. This gives you the benefits of sharding and horizontal scalability while allowing you to still operate in your Postgres Database. When you add the Citus extension to your PostgreSQL database, your primary (or writer) instance becomes the Citus coordinator node.
+
+The coordinator node is the central node in a Citus cluster. It handles:
+
+- Query parsing and planning.
+- Routing queries to the appropriate worker nodes.
+- Aggregating results from worker nodes.
+- Managing metadata about the distributed tables and their shards.
+
+- Unsharded Tables: All unsharded tables reside entirely on the coordinator node. Queries against these tables are handled just like a regular PostgreSQL database.
+- Sharded Tables: For tables that are distributed (sharded) using Citus, the coordinator node does not store the actual data. Instead, it keeps metadata and routes queries to the appropriate worker nodes.
+
+Worker nodes store the actual data for sharded tables. Each shard of a distributed table is stored on a worker node. They execute queries on the shards they store and return the results to the coordinator node.
+
+When you use Citus to shard specific tables in your PostgreSQL database, only those tables are sharded, while the other tables remain unsharded and behave as they normally would in a standard PostgreSQL setup. 
+
+- Queries targeting only unsharded tables are handled normally by Postgres .
+- Queries that involve both sharded and unsharded tables are managed by Citus. The extension handles the necessary routing, execution, and result aggregation transparently.
+
+
+``` sql
+
+CREATE TABLE companies (
+    id bigint NOT NULL,
+    name text NOT NULL,
+    image_url text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+CREATE TABLE campaigns (
+    id bigint NOT NULL,
+    company_id bigint NOT NULL,
+    name text NOT NULL,
+    cost_model text NOT NULL,
+    state text NOT NULL,
+    monthly_budget bigint,
+    blacklisted_site_urls text[],
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+CREATE TABLE ads (
+    id bigint NOT NULL,
+    company_id bigint NOT NULL,
+    campaign_id bigint NOT NULL,
+    name text NOT NULL,
+    image_url text,
+    target_url text,
+    impressions_count bigint DEFAULT 0,
+    clicks_count bigint DEFAULT 0,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+ALTER TABLE companies ADD PRIMARY KEY (id);
+ALTER TABLE campaigns ADD PRIMARY KEY (id, company_id);
+ALTER TABLE ads ADD PRIMARY KEY (id, company_id);
+
+-- the citus bits
+SELECT create_distributed_table('companies', 'id');
+SELECT create_distributed_table('campaigns', 'company_id');
+SELECT create_distributed_table('ads', 'company_id');
+
+```
+
+- `create_distributed_table` tells Citus to distribute the tables across different nodes in the cluster. You specify the table to shard, and the column you want to shard on.
+- Sharding all tables on the `company_id` together allows Citus to colocate the tables together and allows for features like primary keys, foreign keys, and complex joins across your cluster.
