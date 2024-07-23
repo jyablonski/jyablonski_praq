@@ -28,3 +28,24 @@ def add_1_until_n(n: int) -> int:
 
 
 add_1_until_n(n=120)
+
+
+def fact(x: int) -> int:
+    # base case
+    if x == 1:
+        return 1
+    else:
+        return x * fact(x - 1)
+
+
+fact(4)
+
+
+def add_1(x: int) -> int:
+    if x == 1:
+        return 1
+    else:
+        return x + add_1(x - 1)
+
+
+add_1(5)
