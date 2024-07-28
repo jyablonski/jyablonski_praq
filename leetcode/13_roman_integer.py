@@ -5,16 +5,17 @@ def solution(s: str) -> int:
     int_sum = 0
     str_len = len(s)
 
-    for i in range(str_len):
-        if (
-            i + 1 < str_len  # this is the check to make sure we dont go out of bounds
-            and mapping[s[i]] < mapping[s[i + 1]]
-        ):
-            print(f"subtracting {mapping[s[i]]} from {int_sum}")
-            int_sum -= mapping[s[i]]
+    for current_index in range(str_len):
+        next_index = current_index + 1
+
+        # this is the check to make sure we dont go out of bounds
+        if next_index < str_len and mapping[s[current_index]] < mapping[s[next_index]]:
+            print(f"subtracting {mapping[s[current_index]]} from {int_sum}")
+            int_sum -= mapping[s[current_index]]
+
         else:
-            print(f"adding {mapping[s[i]]} to {int_sum}")
-            int_sum += mapping[s[i]]
+            print(f"adding {mapping[s[current_index]]} to {int_sum}")
+            int_sum += mapping[s[current_index]]
 
     return int_sum
 
