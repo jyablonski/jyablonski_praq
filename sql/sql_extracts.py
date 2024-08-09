@@ -67,7 +67,7 @@ def store_sql_table(connection, table: str, schema: str):
         df = pd.read_sql(f"select * from {schema}.{table};", con=connection)
         print(f"Queried {len(df)} Records from {schema}.{table}")
 
-        df.to_parquet(f"tables/{schema}/{table}-{todays_date}.parquet")
+        df.to_parquet(f"sql/tables/{schema}/{table}-{todays_date}.parquet")
         print(
             f"Wrote {schema}.{table} to tables/{schema}/{table}-{todays_date}.parquet"
         )
@@ -75,6 +75,7 @@ def store_sql_table(connection, table: str, schema: str):
         pass
     except BaseException as e:
         print(f"Error Occurred while Reading {schema}.{table}, {e}")
+        raise e
 
 
 with engine.connect() as connection:
@@ -88,4 +89,4 @@ with engine.connect() as connection:
         store_sql_table(connection=connection, table=table, schema="nba_source")
 
     for table in public_tables:
-        store_sql_table(connection=connection, table=table, schema="public")
+        store_sql_table(connection=connection, table=table, schema="nba_prod")
