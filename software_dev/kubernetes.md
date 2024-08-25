@@ -436,6 +436,24 @@ spec:
         averageUtilization: 75
 ```
 
+## Simple Definitions
+
+- ConfigMap: Storage for simple key-value data
+- Container: Process Isolation
+- CronJob: Run Jobs on a schedule
+- DaemonSet: Run a Pod on every node
+- Deployment: Smoothly making changes to a set of Pods
+- Docker Image: Delivery of programs and files
+- HorizontalPodAutoscaler: Use metrics data to scale up or down a Deployment
+- Ingress: Network traffic entry point
+- Job: Run a Pod until exit
+- PersistentVolumeClaim: Disk
+- Pod: Runable, one or more containers and configuration
+- ReplicaSet: Scales up and down a set of Pods
+- Secret: Storage for complex key-value data
+- Service: DNS name and load balancer
+- StatefulSet: Run `n` Pods with consistent names
+
 ## Resources
 
 [Article 1](https://opensource.com/article/20/5/helm-charts)
