@@ -539,3 +539,21 @@ SELECT create_distributed_table('ads', 'company_id');
 
 - `create_distributed_table` tells Citus to distribute the tables across different nodes in the cluster. You specify the table to shard, and the column you want to shard on.
 - Sharding all tables on the `company_id` together allows Citus to colocate the tables together and allows for features like primary keys, foreign keys, and complex joins across your cluster.
+
+
+## Warehouse Autoincrementing IDs
+
+[dbt Article](https://docs.getdbt.com/blog/managing-surrogate-keys)
+
+In Data Warehouses and dbt projects, you can use sequences to help build out autoincrementing integer ID columns for things like a Primary Key on a dbt Table.
+
+- A unique Sequence would have to be built out for every table that you want to use this on.
+- dbt Macros can be used to make sure the sequences are created and reset every time when you do `dbt build` or `dbt build --full-refresh`, but this can introduce some inconsistence IDs run-to-run unless you also put `order by` everywhere, which hurts performance
+- Not usable for views because the sequence would be incrementing and changing every time the view is queried
+- It's possible to do this so you can build out Integer Primary Keys in your dbt Transformations, but it's a pretty clunky process that's prone to bad data if you have to re-run your models at any point
+
+Given all of the issues above that arise from going that route, hashed surrogate keys are often used instead. These use a cryptographic hash function to derive a surrogate key from the values of the data itself. These values are deterministic, meaning they make the transformations idempotent.
+
+- The downside here are joins on strings can have worse performance than joins on integers like the autoincrementing IDs.
+- Storing these 32-character hashes is a bit larger on storage than storing an integer, but cost of storage is low now anyways.
+- Collisions can still happen at large data volume
