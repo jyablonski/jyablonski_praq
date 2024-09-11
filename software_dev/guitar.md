@@ -51,12 +51,12 @@ When pressing down on a fret to play a note, you should press the string just be
 
 ``` lua
 Fretboard
-|---|---|---|---|---|
-|---|---|---|---|---|
-|---|---|---|---|---|
-|---|---|---|---|---|
-|---|---|---|---|---|
-|---| 1 | 2 | 3 | 4 |
+| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
+| --- | 1   | 2   | 3   | 4   |
      ^
    Press here (just behind the metal fret wire)
 ```
@@ -133,7 +133,7 @@ B Flat (Bb) means the note is played one half step lower than B. This is an enha
 
 ## Notes
 
-In Western music, there are 12 unique notes within an octave. These notes are:
+In Western music, there are 12 unique notes within an octave. Each of them are a half step (semitone) apart. These notes are:
 
 1. A
 2. A# (A sharp) / Bb (B flat)
@@ -148,8 +148,47 @@ In Western music, there are 12 unique notes within an octave. These notes are:
 11. G
 12. G# (G sharp) / Ab (A flat)
 
+There's no real reason E & B have no E# or B# respectively. E# is technically just F.
+
 ### Explanation:
 - **Natural Notes**: A, B, C, D, E, F, G
 - **Sharp/Flat Notes**: Notes that have two names (enharmonic equivalents), such as A# and Bb, which represent the same pitch.
   
 These 12 notes repeat in higher or lower octaves. For example, after G#, the next note would be A, but an octave higher.
+
+
+## Drop B Tuning
+
+1. Buy appropriate strings
+   1. .10 - .46 strings that ship default with most guitars aren't thick enough to handle lower tuning. These strings get very floppy and it's not ideal to play
+   2. .12 - .60 or .11 - .56 strings are ideal for Drop B. They're heavier strings to account for the lower tuning. But, the rest of your guitar isn't setup out of the box for these heavier strings
+2. File down String Nuts (at the headstock) to accommodate the new strings
+   1. These strings will probably not fit into the small slots available like with the .10 - .46 strings
+   2. Without doing this, as you play the strings will constantly slip out of place there and your guitar will go out of tune much faster
+   3. Use a nut file to widen the slots, but don't over-file. 
+3. Tune Truss Rod
+   1. Heavier strings put more tension on the neck, which could cause it to bow.
+      1. The truss rod helps balance that tension to maintain proper neck relief
+      2. Neck relief refers to the slight forward bow or concave curve in the guitar neck that allows for smooth playing without buzzing or dead spots.
+      3. When you switch to heavier strings, the increased tension may cause the neck to bow too much, making the action (string height) higher than desired.
+   2. Hold the low B string (or any string) down at the 1st fret and at the fret where the neck meets the body (usually the 15th-17th fret).
+   3. Look at the gap between the string and the frets around the 7th-9th frets.
+      1. If there is too much gap (more than the thickness of a business card), the neck has too much relief (bowed forward).
+      2. If there is no gap, the neck is either too straight or back-bowed.
+   4. Adjust the truss rod in small increments (1/4 turn at a time) and give it time to settle after each adjustment
+      1. You will need a truss rod wrench or Allen key that fits your guitar.
+      2. Righty-tighty, lefty-loosey: Turning the truss rod clockwise tightens it (reduces neck relief), while turning it counterclockwise loosens it (increases neck relief).
+      3. Since heavier strings cause the neck to bow forward, you will want to loosen the truss rod slightly by turning it counterclockwise.
+      4. Let the neck settle: After each adjustment, give the neck some time to settle (several minutes or even a day). It takes time for the wood to adjust to the new tension.
+      5. After making a small adjustment, retune the guitar to Drop B.
+      6. Repeat the process of checking the neck relief by holding down the string at the 1st and last frets to check the gap.
+   5. Proper adjustment - There should be a slight gap between the string and the 7th-9th frets when fretting the string at the 1st and last frets. The guitar should feel comfortable to play, with no excessive fret buzz or overly high action.
+   6. Improper adjustments can damage the guitar
+4. Tune String Saddle to adjust for inotation
+   1. After tuning to drop B, the guitar may sound out of tune higher up in the fretboard. This is an intonation issue
+   2. Use a Tuner to compare the harmonic and fretted notes at the 12th fret
+   3. Adjust the saddle position to ensure the fretted note at the 12th fret matches the harmonic **
+   4. Repeat process for each string until the guitar is intonated
+5. Adjust string height
+   1. Can turn the saddle screws to bring it up or down as needed. This will mainly affect playability, not necessarily how it sounds.
+6. Tune to Drop B
