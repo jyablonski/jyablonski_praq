@@ -77,14 +77,48 @@ Fretting - using your left hand to press down on the strings at different frets 
 
 Strumming and picking - use your right hand to strum the strings with a pick or your fingers. Different strumming patterns produce different sounds.
 
-Chords - a combination of 3 or more notes played simultaneously. Fundamenetal building block in music
+Chords - a combination of 2 or more notes played simultaneously. Fundamenetal building block in music
+
+- Each chord has a specific quality or character, such as major, minor, diminished, etc., depending on the intervals (the distance between the notes).
+- Root note: The base note that the chord is built on. It gives the chord its name (e.g., C in a C major chord).
+- Intervals: The distance between notes in a chord. Common intervals in chords are:
+  - 3rd: Defines whether the chord is major or minor.
+  - 5th: Provides stability to the chord.
+- A triad, the most basic type of chord, consists of three notes:
+  - Root
+  - 3rd (major or minor)
+  - 5th (perfect)
+- Major Chords:
+  - A major chord has a root, a major 3rd, and a perfect 5th.
+  - The major 3rd interval gives the chord a happy, bright sound.
+  - Example: A C major chord (C) consists of the notes C (root), E (major 3rd), and G (perfect 5th).
+- Minor Chords:
+  - A minor chord has a root, a minor 3rd, and a perfect 5th.
+  - The minor 3rd interval gives the chord a sad, darker sound.
+  - Example: A C minor chord (Cm) consists of the notes C (root), E♭ (minor 3rd), and G (perfect 5th).
+- Diminished Chords:
+  - A diminished chord has a root, a minor 3rd, and a diminished 5th (lowered 5th).
+  - This chord has a tense, unstable sound.
+  - Example: A C diminished chord (Cdim) consists of C (root), E♭ (minor 3rd), and G♭ (diminished 5th).
+- On guitar, chords are often played by strumming several strings at once, with each finger pressing down on specific frets to form the notes of the chord.
+- Major chords sound bright and happy.
+- Minor chords sound sad or melancholic.
+- Diminished chords sound tense.
+- Augmented chords sound bright but dissonant.
+
 
 Pedals effect distortion, reverb, and elay between the guitar and the amplifier to change the sound.
 
 An octave is a musical interval that spans eight notes in a diatonic scale, where the first and eighth notes have the same name and the higher note has double the frequency of the lower note.
 
+- An octave is the interval between one note and another note that is double or half its frequency. When you go up or down one octave, the note name stays the same, but it sounds higher or lower in pitch.
+
 - Open Low E String (E2): The open sixth string.
 - 12th Fret of the Low E String (E3): Playing the 12th fret on the low E string produces the E note one octave higher than the open string.
+
+Power Chords are 2-note chords
+
+- Power chords are a staple in rock and metal because of their simplicity and their full, powerful sound when played with distortion.
 
 ## Tuning
 
@@ -150,12 +184,34 @@ In Western music, there are 12 unique notes within an octave. Each of them are a
 
 There's no real reason E & B have no E# or B# respectively. E# is technically just F.
 
+## Playing Notes
+
+If you play the low E string open (no frets pressed), this is an E note
+
+- If you play the low E string while pressing down on the 1st fret, this goes up a half step (semitone) to an F note
+- If you play the low E string while pressing down on the 2nd fret, this goes up a whole step (1 step) to an F# (equivalent to G flat) note
+- If you play the low E string while pressing down on the 3rd fret, this goes up a 1.5 steps to a G note
+
+To take the last bullet as an example, you just played the low E String w/ the 3rd fret pressed down and played a G note. This is 2 octaves higher than if you were to play the same note on the open G string.
+
+- The low E string, when fretted at the 3rd fret, gives a deeper, bassier G sound due to its thicker string gauge.
+- The open G string will sound brighter and sharper because it's a thinner string and higher in pitch.
+
+
+Each fret on the guitar represents a half step (or semitone) on the musical scale. There are 12 semitones in an octave, so if you go up 12 frets (12 half steps), you reach the same note, but one octave higher.
+
 ### Explanation:
 - **Natural Notes**: A, B, C, D, E, F, G
 - **Sharp/Flat Notes**: Notes that have two names (enharmonic equivalents), such as A# and Bb, which represent the same pitch.
   
 These 12 notes repeat in higher or lower octaves. For example, after G#, the next note would be A, but an octave higher.
 
+## Scales
+
+Root Note
+
+- A Major Scale - Root note is A
+- E Major Scale - Root note is E
 
 ## Drop B Tuning
 
