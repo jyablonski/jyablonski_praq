@@ -1,10 +1,13 @@
 # have to be able to check the current value you are on and the following value
 # also need a running total int to keep track of the value we want to return
 def solution(s: str) -> int:
+    # initialize some starter variables. dictionary for the mapping
     mapping = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
     int_sum = 0
     str_len = len(s)
 
+    # trick here is to just use this simple loop and use `next_index` to clean it up
+    # the next index ensures we dont
     for current_index in range(str_len):
         next_index = current_index + 1
 
