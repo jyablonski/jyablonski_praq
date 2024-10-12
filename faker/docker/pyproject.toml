@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "faker-docker"
+version = "0.0.1"
+description = ""
+authors = ["jyablonski9 <jyablonski9@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "^2.2.3"
+awswrangler = "^3.9.1"
+Faker = "^30.3.0"
+awslambdaric = "^2.2.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
