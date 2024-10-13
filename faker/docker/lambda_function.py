@@ -88,6 +88,8 @@ def lambda_handler(event, context):
     """AWS Lambda handler function."""
     logging.info("Beginning Execution")
     num_rows = int(event.get("num_rows", 100))
+    file_path = event.get("file_path", None)
+
     custom_schema = {
         "name": "name",
         "email": "email",
@@ -102,9 +104,8 @@ def lambda_handler(event, context):
     fake_data = make_fake_data(num=num_rows, schema=custom_schema)
     logging.info("Generated Data, continuing w/ S3 Write")
 
-    s3_path = os.environ.get(
-        "S3_PATH", "s3://jyablonski-nba-elt-prod/fake_data/test.parquet"
-    )
+    if file_path:
+        s3_path = f"s3://jyablonski-nba-elt-prod/fake_data/{file_path}.parquet"
 
     wr.s3.to_parquet(df=fake_data, path=s3_path, index=False)
 
