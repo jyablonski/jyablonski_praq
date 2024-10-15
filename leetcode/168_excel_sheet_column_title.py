@@ -19,6 +19,7 @@ def solution(column_number: int) -> str:
 
     while column_number > 0:
         # decrement by 1 to make it 0-indexed so we're picking characters properly
+        # without this, chr(26 % 26 + ord("A")) would return A instead of Z
         column_number -= 1
 
         # chr turns ints into characters. adding ord("A") gives us a baseline to add
