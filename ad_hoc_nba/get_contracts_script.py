@@ -1,7 +1,49 @@
 import os
 
 import pandas as pd
-from jyablonski_common_modules.sql import sql_connection
+from sqlalchemy.engine import create_engine, Engine
+
+
+def sql_connection(
+    database: str,
+    schema: str,
+    user: str,
+    pw: str,
+    host: str,
+    port: int,
+) -> Engine:
+    """
+    SQL Engine function to define the SQL Driver + connection variables needed to connect to the DB.
+    This doesn't actually make the connection, use conn.connect() in a context manager to create 1 re-usable connection
+
+    Args:
+        database(str): The Database to connect to
+
+        schema (str): The Schema to connect to
+
+        user (str): The User for the connection
+
+        pw (str): The Password for the connection
+
+        host (str): The Host Endpoint of the Database
+
+        port (int): Database Port
+
+    Returns:
+        SQL Engine variable to a specified schema in my PostgreSQL DB
+    """
+    connection = create_engine(
+        f"postgresql+psycopg2://{user}:{pw}@{host}:{port}/{database}",
+        # pool_size=0,
+        # max_overflow=20,
+        connect_args={
+            "options": f"-csearch_path={schema}",
+        },
+        # defining schema to connect to
+        echo=False,
+    )
+    print(f"SQL Engine for schema: {schema} Successful")
+    return connection
 
 
 def get_contracts():
@@ -45,6 +87,7 @@ engine = sql_connection(
     user=os.environ.get("RDS_USER"),
     pw=os.environ.get("RDS_PW"),
     host=os.environ.get("IP"),
+    port=17841,
 )
 
 contracts.to_sql("aws_contracts_source", con=engine, if_exists="append", index=False)
