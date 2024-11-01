@@ -26,6 +26,5 @@ def solution(s: str) -> int:
 s1 = "leetcode"
 s2 = "loveleetcode"
 
-
 solution(s=s1)
 solution(s=s2)
