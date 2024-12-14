@@ -45,6 +45,7 @@ dvc = {extras = ["s3"], version = "^3.54.0"}
 s3fs = "^2024.6.1"
 bertopic = "^0.16.3"
 click = "^8.1.7"
+structlog = "^24.4.0"
 
 
 [tool.poetry.group.dev.dependencies]
