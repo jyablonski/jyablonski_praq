@@ -1,6 +1,5 @@
 # importing the modules
 import numpy as np
-import timeit
 
 # numpy arrays only hold 1 data type for the whole array; normal python lists can allow any data type and thus are less efficient during math operations.
 # pandas series are built off of numpy arrays.

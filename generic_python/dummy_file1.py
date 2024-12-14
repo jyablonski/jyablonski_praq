@@ -84,7 +84,7 @@ except BaseException as e:
 try:
     my_pairs["hello"]
     my_pairs["store1"]
-except KeyError as e:
+except KeyError:
     print("that didnt do anything")
 except BaseException as e:
     raise e("oof")

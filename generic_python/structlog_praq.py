@@ -66,5 +66,5 @@ def user_login(username: str) -> None:
 
 try:
     user_login(username=my_username)
-except Exception as e:
+except Exception:
     logger.error("An exception occurred", username=my_username, exc_info=True)

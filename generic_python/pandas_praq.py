@@ -1,8 +1,4 @@
-from datetime import datetime
-import os
-
 from faker import Faker
-from faker.providers import internet
 import numpy as np
 import pandas as pd
 

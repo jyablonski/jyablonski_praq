@@ -1,11 +1,8 @@
-from datetime import datetime
-import os
-
 import pandas as pd
 import requests
 
 # pandas equivalent of https://github.com/jyablonski/pyspark_prac/blob/master/local_files/rest_api_scraping.py
-api = f"https://api.jyablonski.dev/game_types"
+api = "https://api.jyablonski.dev/game_types"
 
 response = requests.get(api)
 

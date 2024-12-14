@@ -1,5 +1,4 @@
 import requests
-import numpy as np
 
 # need to convert pyton datetime objects to strings
 # and need to fill all missing values with something, otherwise

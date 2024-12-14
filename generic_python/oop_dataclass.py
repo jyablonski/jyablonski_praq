@@ -42,10 +42,10 @@ class Animal:
     # you need self otherwise shit broke m8
     # you can call both this method and the
     def _internal_method(self):
-        print(f"yea shoreman")
+        print("yea shoreman")
 
     def public_method(self):
-        print(f"see dude look")
+        print("see dude look")
 
     def combo_method(self):
         self._internal_method()

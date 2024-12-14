@@ -125,7 +125,7 @@ def my_decorator(func):
 
 @my_decorator
 def tester():
-    print(f"hello world")
+    print("hello world")
 
 
 tester()

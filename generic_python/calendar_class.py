@@ -10,7 +10,7 @@ class Calendar:
 
     def add_event(self, event: str | date) -> None:
         if not isinstance(event, (str, date)):
-            raise ValueError(f"Event needs to be a String or Date Object!")
+            raise ValueError("Event needs to be a String or Date Object!")
         else:
             self.events.append(event)
             self._total_events += 1

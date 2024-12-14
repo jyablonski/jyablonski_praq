@@ -5,7 +5,7 @@ while a < 10:
     if a == 4:
         print(f"a is {a}, writing to xyz ...")
     if a == 8:
-        print(f"Oooh shit dude")
+        print("Oooh shit dude")
         break
     a += 1
 
