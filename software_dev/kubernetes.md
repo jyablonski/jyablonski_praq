@@ -163,6 +163,14 @@ Key features and capabilities of `eksctl` include:
 
 By using `eksctl`, developers and administrators can accelerate the setup and management of EKS clusters, making it easier to run containerized applications on AWS with Kubernetes. It abstracts much of the underlying AWS infrastructure complexity, allowing users to focus on their applications and workloads.
 
+
+``` sh
+eksctl create cluster --name dev-cluster --version 1.31 --region us-east-1 --nodegroup-name standard-workers --node-type t3.micro --nodes 3 --nodes-min 1 --nodes-max 4 --managed
+
+aws eks update-kubeconfig --name dev-cluster --region us-east-1
+# > Added new context arn:aws:eks:us-east-1:680048507123:cluster/dev-cluster to /home/jacob/.kube/config
+```
+
 ## Argo CD
 
 Argo CD is an open-source, declarative, GitOps continuous delivery tool for Kubernetes. It is designed to automate the deployment and management of applications on Kubernetes clusters by leveraging Git repositories as the source of truth for defining the desired state of your applications and environments.

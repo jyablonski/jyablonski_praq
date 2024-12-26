@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    env: dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      env: dev
+  template:
+    metadata:
+      labels:
+        env: dev
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 100m  # Request 100 millicores of CPU
+            memory: 200Mi # Request 200 Megabytes of memory
+          limits:
+            cpu: 200m  # Limit CPU usage to 200 millicores
+            memory: 400Mi # Limit memory usage to 400 Megabytes

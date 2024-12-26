@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: my-python-cronjob
+spec:
+  schedule: "*/5 * * * *" # Run every 5 minutes (see schedule syntax below)
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: my-python-container
+            image: hello-world # Replace with your image
+            imagePullPolicy: IfNotPresent # Or Always if you want to always pull the latest
+            resources: # Optional resource requests and limits
+              requests:
+                cpu: 100m
+                memory: 200Mi
+              limits:
+                cpu: 200m
+                memory: 400Mi
+          restartPolicy: OnFailure # Important: Restart only on failure
