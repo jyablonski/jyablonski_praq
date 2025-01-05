@@ -62,6 +62,11 @@ GPUs are Graphical Processing Units that are like their own individual computer.
 
 Bus - How the GPU connects to the Motherboard.  Uses the PCIe Lane.
 
+Ensure your GPU is running at the maximum supported PCIe speed (e.g., PCIe 4.0 x16 or PCIe 3.0 x16). You can check this in your GPU monitoring software or through your motherboard BIOS.
+
+- If the GPU is running at x8 or lower speeds, it may be due to lane-sharing with the M.2 SSD.
+- `PCIe v4.0 x16 (16.0 GT/s) @ x8 (16.0 GT/s)` actaully means it's running at 8 lanes instead of 16 
+
 GPU Clock - Core Clock speed.  The speed at which the GPU's processor operates.
 - A GPU with a core clock speed of 1.5 GHz can execute 1.5 billion instructions per second.
 
