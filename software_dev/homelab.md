@@ -14,7 +14,27 @@ You need bare metal machines to host K8s Master node and the Worker Nodes to run
 - In production or for more fault-tolerant setups, you would typically run at least 3 control plane nodes with etcd replication across the nodes to prevent downtime in case of failures. 
 
 
-## Longhorn
+## Software
+
+### Home Assistant
+
+Home Assistant is an open source platform for managing smart home devices and automating tasks. It acts as the hub for all the devices to connect to, and enables you to manage all of them via 1 app + interface.
+
+It integrates with:
+
+- Lights
+- Thermostats
+- Cameras
+- Sensors
+- Speakers
+
+You can create advanced automation scripts and workflows to trigger based on things like time of day, device states, or user presence
+
+- Example: Turn off all lights when no one is home, or adjust the thermostat based on outdoor weather conditions.
+
+Also features a customizable dashboard for monitoring and controlling devices.
+
+### Longhorn
 
 Longhorn is a distributed storage solution for K8s Clusters. It provides persistent storage for containerized workloads.
 
@@ -22,7 +42,7 @@ Longhorn is a distributed storage solution for K8s Clusters. It provides persist
 - Each volume is backed by multiple replicas spread across different nodes, ensuring high availability and resilience to node failures.
 
 
-## MetalLB
+### MetalLB
 
 MetalLB is a load balancer for Kubernetes clusters that provides external access to services by assigning IP addresses to services. It is particularly useful for environments like home labs, where you may not have access to a cloud provider's load balancer service (e.g., AWS, GCP, Azure), but still need to expose Kubernetes services to the external network.
 
@@ -30,13 +50,13 @@ It also assigns IP Addresses to Services after you define a pool of available IP
 
 ---
 
-## Pi-hole
+### Pi-hole
 
 Pi-hole enables you to setup local DNS records on your homelab, so you can hit your services at something like `http://pihole.home` instead of `192.168.1.15`.   
 
 ---
 
-## NGINX 
+### NGINX 
 
 The Ingress NGINX Controller is a Kubernetes Ingress Controller that uses NGINX as a reverse proxy and load balancer to manage external access to services within a Kubernetes cluster. It acts as the gateway for all incoming HTTP(S) traffic, routing the traffic to the appropriate backend services based on the rules defined in Kubernetes Ingress resources.
 
