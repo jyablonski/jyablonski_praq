@@ -1,6 +1,8 @@
 # Helm
 Helm is a package manager for Kubernetes applications. Helm charts are packages of pre-configured Kubernetes resources that can be easily deployed to a Kubernetes cluster. They provide a convenient way to define, install, and upgrade even the most complex Kubernetes applications.
 
+Helm effectively packages up all of the Deployment, Service, Load Balancer etc type Files for a typical app with K8s which enables them to be re-creatable by others with minimal effort.
+
 Here are the key components of Helm charts:
 
 1. **Chart**: A Helm chart is a collection of files that describe a Kubernetes application. It contains a directory structure with files such as `Chart.yaml` (chart metadata), `values.yaml` (default configuration values), and a set of Kubernetes manifest files that define the resources needed for the application.

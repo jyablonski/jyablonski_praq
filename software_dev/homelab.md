@@ -36,10 +36,14 @@ Also features a customizable dashboard for monitoring and controlling devices.
 
 ### Longhorn
 
-Longhorn is a distributed storage solution for K8s Clusters. It provides persistent storage for containerized workloads.
+Longhorn is a distributed storage solution for K8s Clusters. It provides persistent storage for containerized workloads and can be paired with a Database like Postgres
 
 - Longhorn creates distributed storage volumes across multiple nodes in your Kubernetes cluster.
 - Each volume is backed by multiple replicas spread across different nodes, ensuring high availability and resilience to node failures.
+- Has automated scheduled backup functionality
+- Has a UI for managing storage, and a CLI and API for advanced operations
+
+[Blog Post](https://medium.com/@camphul/cloudnative-pg-in-the-homelab-with-longhorn-b08c40b85384)
 
 
 ### MetalLB
