@@ -45,3 +45,81 @@ def add_1(x: int) -> int:
 
 
 add_1(5)
+
+# In the recursive call, the argument is one less than the current value of n, so each recursion moves closer to the base case.
+
+
+def countdown(n: int):
+    print(n)
+
+    # base case
+    if n == 0:
+        return
+    else:
+        # the recursive call
+        countdown(n - 1)
+
+
+countdown(15)
+
+
+# non recursive way of doing it
+def countdown(n):
+    while n >= 0:
+        print(n)
+        n -= 1
+
+
+countdown(15)
+
+
+def factorial(n: int):
+    return 1 if n <= 1 else n * factorial(n - 1)
+
+
+factorial(4)
+
+names = [
+    "Adam",
+    [
+        "Bob",
+        [
+            "Chet",
+            "Cat",
+        ],
+        "Barb",
+        "Bert",
+    ],
+    "Alex",
+    ["Bea", "Bill"],
+    "Ann",
+]
+
+
+def count_leaf_items(item_list):
+    """Recursively counts and returns the
+    number of leaf items in a (potentially
+    nested) list.
+    """
+    count = 0
+    for item in item_list:
+        if isinstance(item, list):
+            count += count_leaf_items(item)
+        else:
+            count += 1
+
+    return count
+
+
+count_leaf_items(item_list=names)
+
+
+def is_palindrome(word):
+    """Return True if word is a palindrome, False if not."""
+    if len(word) <= 1:
+        return True
+    else:
+        return word[0] == word[-1] and is_palindrome(word[1:-1])
+
+
+is_palindrome("racecar")

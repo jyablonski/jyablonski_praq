@@ -72,3 +72,23 @@ new_value = 5
 max_value = max(max_value, new_value)
 
 ```
+
+## Backtracking
+
+Backtracking is a common technique for generating permutations and combinations. Backtracking works by building up a solution recursively and removing choices that don’t work.
+
+## Recursion
+
+Recursion is the technique of employing a recursive function, which is a function that calls itself.
+
+Similarly, a function that calls itself recursively must have a plan to eventually stop. Recursive functions typically follow this pattern:
+
+- There are one or more base cases that are directly solvable without the need for further recursion.
+- Each recursive call moves the solution progressively closer to a base case.
+
+Common use cases for recursion include:
+
+- Traversal of tree-like data structures is another good example, such as trees or nested lists
+- Detecting Palindromes
+
+`from sys import getrecursionlimit` in Python will tell you what the recursion limit is; it won't run something infinitely
