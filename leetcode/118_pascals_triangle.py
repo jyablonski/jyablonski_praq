@@ -33,20 +33,3 @@ def solution(rows: int) -> list[list[int]]:
 
 rows = 5
 solution(rows)
-
-
-res = [1]
-
-full_res = [[1]]
-
-for _ in range(rows - 1):
-    next_row = [0] * (len(res) + 1)
-
-    for j in range(len(res)):
-        next_row[j] += res[j]
-        next_row[j + 1] += res[j]
-
-    res = next_row
-    full_res.append(next_row)
-
-return full_res
