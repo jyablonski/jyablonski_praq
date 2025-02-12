@@ -152,3 +152,193 @@ fib = fibonacci_sequence()
 for _ in range(10):
     print(next(fib))
 ```
+
+## Dictionary
+
+Dictionaries in Python store key value pairs using a hash table under the hood
+
+- When you insert a key value pair into a dictionary, Python computes a hash value for the key using the built in `hash()` function
+- This hash value determines where the key value pair will be stored in an internal array
+- This hash-based lookup makes dictionary operations very fast on average, achieving O(1) time complexity for inserts, deletes, and lookups.
+
+The backing array stores the hash value of the key, the actual key, and the value.
+
+- The actual key must also be stored in the event we run into a hash collision
+- Without it, we wouldn't effectively be able to deal with collisions
+
+Multiple keys can actually end up having the same hash index, so Python solves this via open addressing w/ probing
+
+- If a collision occurs, Python searches for the next available slot using probing
+- This means Python tries index i + 1, i + 4, i + 9 etc instead of just i
+
+Python dictionaries automatically resize when the number of entries exceed a certain threshold (typically when the dictionary is 2/3 full)
+
+- Resizing involves creating a new larger backing array (typically double the size), and re-hashing all existing key value pairs
+- This is done to ensure the operations remain O(1) on average
+
+The `hash()` Function in Python computes a unique integer hash value for a given object.
+
+- Integers, Strings, Floats etc can all be hashed
+- A hash of an integer actually just returns an integer - this is on purpose as integers are already unique and efficiently distributable
+- Mutable Objects like Dictionaries or Lists cannot be hashed
+- Python randomizes string hashes at runtime for security reasons.
+- This means hash("hello") changes every time you restart Python.
+- However, integer hashes are consistent.
+
+Below is what it looks like in code
+
+``` python
+d = {}
+d["name"] = "Alice"
+
+hash("name") → 123456789
+index = hash("name") % table_size
+index = 123456789 % 8 = 5
+# so at index 5, Python stores: (123456789, "name", "Alice")
+
+d["age"] = 30
+
+# lets assume both name and age hash to index 5, causing a collision
+hash("name") % table_size = 5
+hash("age") % table_size = 5
+
+# python performs open addressing with quadratic probing, and basically just stores
+# age at index 6 instead
+
+# now if we go to get the value for the key `age` out of the dictionary, it'll hash it 
+# and go to index 5, but it sees `name` instead of `age`. python will continue probing for the 
+# index which actually has `age` until it finds it
+print(d["age"])
+```
+
+## Named Tuples
+
+A named tuple is a subclass of a regular tuple that allows you to assign meaningful names to each element. This makes your code more readable and self-documenting while keeping the efficiency of a tuple.
+
+Other bits about named tuples:
+
+- They're immutable, unlike regular tuples
+- Can be more memory efficient than dictionaries
+
+``` python
+from collections import namedtuple
+
+# Define a named tuple called 'Point' with fields 'x' and 'y'
+Point = namedtuple("Point", ["x", "y"])
+
+# Create an instance
+p = Point(3, 4)
+
+# Access values using dot notation
+print(p.x)  # Output: 3
+print(p.y)  # Output: 4
+
+# Named tuples are still tuples, so indexing works too
+print(p[0])  # Output: 3
+print(p[1])  # Output: 4
+```
+
+## contextlib.contextmanager
+
+`contextlib.contextmanager` is a decorator that allows you to create context managers using a generator function instead of defining a class with __enter__ and __exit__ methods
+
+- Typically used for mangaging temporary resources like files, network connections, or database sessions where you want to ensure cleanup happens automatically.
+
+The standard flow for using the decorator looks like below:
+
+1. Set up before yielding anything
+2. Yield a resource of some kind inside a `try` block in the function, so it can be used in a `with` block outside of the function
+3. Cleanup the yield in a finally block to ensure cleanup happens no matter what (even if you run into an exception)
+
+``` python
+from contextlib import contextmanager
+
+@contextmanager
+def my_context():
+    print("🔹 Setup before yield")
+    try:
+        yield "Some Resource"  # Provide a resource
+    finally:
+        print("🧹 Cleanup after yield")
+
+# Usage
+with my_context() as resource:
+    print(f"Using: {resource}")
+    # If an exception happens here, cleanup still runs
+
+@contextmanager
+def open_file(file_name, mode):
+    f = open(file_name, mode)
+    try:
+        yield f  # Provide the file object to the caller
+    finally:
+        f.close()  # Ensure file is closed
+
+with open_file("example.txt", "w") as f:
+    f.write("Hello, World!")
+
+# File is automatically closed after exiting the 'with' block
+
+@contextmanager
+def database_session():
+    session = create_db_session()
+    try:
+        yield session  # Provide the session
+        session.commit()  # Commit changes if no error
+    finally:
+        session.close()  # Ensure session closes
+
+with database_session() as session:
+    session.query(User).all()
+
+# the equivalent class based way of doing it
+class OpenFile:
+    def __init__(self, file_name, mode):
+        self.file = open(file_name, mode)
+
+    def __enter__(self):
+        return self.file
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.file.close()
+
+# Usage
+with OpenFile("example.txt", "w") as f:
+    f.write("Hello, World!")
+```
+
+
+## super.init()
+
+- `super()` is used in OOP to give access to methods in a parent class without explicitly naming it
+- `super().__init__(...)` calls the parent class’s constructor, allowing the child class to inherit and initialize properties from the parent.
+
+``` python
+class Product:
+    def __init__(self, product_name, price):
+        self.product_name = product_name
+        self.price = price
+
+# you need to pass in Product, AND call super init as well
+class Book(Product):
+    def __init__(self, product_name, price, author):
+        # Call parent class's __init__ method
+        super().__init__(product_name, price)
+        self.author = author
+
+# Creating an instance of Book
+book = Book("Python Crash Course", 29.99, "Eric Matthes")
+
+# Check attributes
+print(book.product_name)  # Output: Python Crash Course
+print(book.price)         # Output: 29.99
+print(book.author)        # Output: Eric Matthes
+
+# if you just did this, it wouldnt be enough for product name and price
+# to be inherited
+class Book(Product):
+    def __init__(self, product_name, price, author):
+        # Call parent class's __init__ method
+        # super().__init__(product_name, price)
+        self.author = author
+```

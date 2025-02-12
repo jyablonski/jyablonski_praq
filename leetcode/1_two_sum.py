@@ -10,6 +10,8 @@
 # if it doesnt exist, then we add that current pair to the `passed_items`
 
 
+# time complexity is o(n); we have to iterate through the list 1 by 1 til we find a solution
+# the dictionary operations are o(1) (checking, insewrting, and retrieving values)
 # my_dict[value] will return the key for the value
 def solution(nums: list[int], target: int):
     passed_items = {}
