@@ -342,3 +342,96 @@ class Book(Product):
         # super().__init__(product_name, price)
         self.author = author
 ```
+
+## Function Overloading
+
+Function Overloading involves using the `overload` decorator from typing. It helps mypy understand different return types based on input types.
+
+We're basically saying if we DO pass in a string, then we expect to return a string. If we pass in an int, we expect to return an int.
+
+Without overload, the best we can do is `def process(value: int | str) -> int | str:` where we're using an OR operator for both the inputs + output types. In this case, we cant force mypy to error out if we pass in a string and actually return an integer or something.
+
+The implementation of the actual function should *not* have an `overload` decorator on it.
+
+``` python
+from typing import overload
+
+# The ... (ellipsis) means this function has no implementation—it's just a type hint for mypy.
+
+@overload
+def process(value: int) -> int: ...
+
+# example 1 without overload
+def process(value: int | str) -> int | str:
+    if isinstance(value, int):
+        return value ** 2
+    return value[::-1]
+
+reveal_type(process(4))      # mypy: Revealed type is "int | str"
+reveal_type(process("abc"))  # mypy: Revealed type is "int | str"
+
+# example 2 w/ overload
+@overload
+def process(value: int) -> int: ...
+
+@overload
+def process(value: str) -> str: ...
+
+def process(value: int | str) -> int | str:
+    if isinstance(value, int):
+        return value ** 2
+    return value[::-1]
+
+reveal_type(process(4))      # mypy: Revealed type is "int"
+reveal_type(process("abc"))  # mypy: Revealed type is "str"
+
+
+# this is basically shorthand for `process = overload(process)`
+# don't need to call it w/ `overload()`
+# You only use () if the decorator takes arguments.
+
+@overload
+def process(value: int) -> int: ...
+```
+
+## Decorators
+
+
+``` python
+# decorator that doesnt take arguments
+def my_decorator(func):
+    def wrapper(*args, **kwargs):
+        print("Before function call")
+        result = func(*args, **kwargs)
+        print("After function call")
+        return result
+    return wrapper
+
+@my_decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+# essentially equivalent to `say_hello = my_decorator(say_hello)`
+# decorator -> wrapper
+# @my_decorator
+
+# decorator that does take arguments
+def repeat(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for _ in range(n):
+                func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+@repeat(3)
+def greet():
+    print("Hello!")
+
+greet()
+
+# outer -> decorator -> wrapper
+# @my_decorator(arg)
+
+```
