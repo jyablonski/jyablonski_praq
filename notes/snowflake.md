@@ -94,3 +94,36 @@ Snowflake Storage Format
 - Typically ~ 50-500 MB but ends up around 16 MB per File.
 - Automatically re-clusers and re-arranges micropartitions based on query access patterns.  This is the Snowflake Cluster Key.  It presorts the data so you can figure out exactly what data you want to bring in for each query.
 - You pay a little more to do this reclustering, but the reads can become much improved performance wise.
+
+
+## Extra Queries
+
+
+``` sql
+WITH tokens AS (
+  SELECT
+    start_time,
+    f.value as token 
+  FROM snowflake.account_usage.query_history,
+  LATERAL FLATTEN(REGEXP_SUBSTR_ALL(UPPER(query_text), '\\b\\w+\\b')) f
+  WHERE start_time >= DATEADD(month, -3, CURRENT_TIMESTAMP())
+)
+SELECT 
+  m.table_catalog,
+  m.table_schema,
+  m.table_name,
+  sum(m.ACTIVE_BYTES + m.TIME_TRAVEL_BYTES) as TOTAL_BYTES,
+  MAX(t.start_time) as last_query_time
+FROM tokens t
+RIGHT JOIN snowflake.account_usage.table_storage_metrics m 
+  ON t.token = UPPER(m.table_name)
+WHERE m.table_name IS NOT NULL 
+  AND m.TABLE_DROPPED IS NULL
+  AND m.ACTIVE_BYTES + m.TIME_TRAVEL_BYTES > 0
+GROUP BY ALL
+ORDER BY last_query_time DESC
+```
+
+- This query will identify all unused tables in the last 3 months
+- [Doc](https://espresso.ai/post/find-and-delete-unused-snowflake-tables-without-enterprise-access-history)
+- Includes False Positives: Tables mentioned in comments or unused CTEs might appear as "used"
