@@ -20,6 +20,8 @@ def solution(nums: list[int], target: int):
         diff = target - value
 
         if diff in passed_items:
+            # if it's in there then we have a match
+            # return a list of that index, and the key we're on which is the current index
             return [passed_items[diff], key]
 
         # after we visit it, and didnt find a solution, then add it to
