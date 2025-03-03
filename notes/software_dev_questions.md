@@ -295,3 +295,221 @@ graph = {
 - Logging can be used to identify where an application failed, when a specific piece of code was ran, or when a user ran into a specific bug
 - Logging captures all of the information you need to understand what your application is doing
 - Monitoring can capture high level statistics of how your servers are performing, what traffic looks like, and enables you to setup alerting based on various thresholds you want to set
+
+## Data Engineering
+
+---
+
+### **1. Systems Design & Scalability**
+1. How would you design a **real-time analytics platform** that processes millions of events per second?  
+
+- first ask the business if they truly even require this, as this is significantly expensive and requires AAA software + data engineering talent to support
+- prioritize low latency, scalability to handle spikes, fault tolerance to prevent data loss
+- utilize kafka to serve as a distributed log that buffers and streams real time events
+- utilize spark for real-time transformations and aggregations of the incoming data
+
+2. You need to build a **data lake architecture** for a large e-commerce company. What storage formats, partitioning strategies, and processing frameworks would you use?  
+
+- if using spark then can explore a lakehouse architecture w/ apache iceberg or delta lake. files would be stored in parquet w/ metadata files also associated with them. can partition out by tables, month, day, and put a query engine such as apache trino or aws athena on top of it to query 
+- cons of this approach are its harder for data analysts, juniors, and analytics engineers to grok. you really need to make sure you have clear instructions & documentation for how to query the data and build on it
+
+
+3. Given a **500TB dataset**, how would you optimize queries for **low-latency analytics**?  
+
+- identify what we're running analytics for
+- perform as much filtering as possible (only including what columns are needed, utilizing `WHERE` clause as much as possible)
+- utilize a data warehouse like snowflake which can effectively partition the data so you only grab what's needed
+- build ELT jobs to pre-compute the analytics aggregations in advance so stakeholders have a fast, efficient user experience
+
+
+4. How would you design a **CDC (Change Data Capture) pipeline** for ingesting updates from a relational database into a data warehouse?  
+
+- enable WAL on the relational database and setup debezium to read from it and capture all database changes
+- setup kafka for debezium to send database changes to topics. 1 topic per table
+- setup an s3 or warehouse sink if it's available in kafka to periodically dump new records from the table topics to the respective destination
+    - if using warehouse sink, data will be dumped by the sink directly to the warewhouse
+    - if using s3 sink, you can setup snowpipe or some other streaming ingestion tool to load the data from s3 to warehouse as the files land
+- you now have streaming data in snowflake. but still need to run transformations or other pipelines afterwards on a continuous basis to enrich it for reporting and analytics
+
+5. You need to handle **slowly changing dimensions (SCD Type 2)** in a distributed environment. How would you implement this efficiently?  
+
+- create `valid_from` and `valid_to` columns on the tables you want to enable scd2 on
+- create `is_enabled` column based on the date set to `valid_to` to clearly label the active records
+- insert a new row for every record change, and update the `valid_to` and `is_enabled` as needed
+---
+
+### **2. SQL & Optimization**
+6. Given the following query, how would you optimize it for **better performance in Redshift/Snowflake/BigQuery**?  
+
+  ```sql
+  SELECT user_id, COUNT(*) 
+  FROM user_events 
+  WHERE event_type = 'purchase' 
+  GROUP BY user_id 
+  HAVING COUNT(*) > 10;
+  ```
+
+- There's not much to optimize here.
+- Suggestion is just "Redshift Distkey or Snowflake cluster by user_id" lmfao
+  
+7. How would you **identify and fix slow queries** in a distributed data warehouse?  
+
+- Look at the Query Profile for it and see the most expensive steps and if there's any disk spillage
+- Check for `row_number()` type window functions or join explosions
+- Perform more filtering if needed, remove unused columns
+
+
+8. What are the trade-offs between using **partitioning, and indexing** in a big data system?  
+
+- Partitioning splits up the data to help filter it and enable faster scans
+- Indexing enables fast lookups, slows inserts updates deletes because it has to maintain the index
+
+9. Suppose you have a **skewed join** in a large Spark job. How would you optimize it?  
+
+- Use broadcast tables to avoid shuffle operations
+- Salt technique where you add a random string to what you're grouping by to evenly distribute the load
+- Spark distributes the workload evenly, avoiding a single overloaded partition.
+
+
+``` python
+
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, expr, lit, rand, monotonically_increasing_id
+
+spark = SparkSession.builder.appName("SaltingExample").getOrCreate()
+
+# Large transactions table (skewed on customer_id = 123)
+transactions = spark.createDataFrame([
+    (1, 123, 100), (2, 123, 200), (3, 123, 300),  # Highly skewed customer_id = 123
+    (4, 456, 400), (5, 789, 500)
+], ["transaction_id", "customer_id", "amount"])
+
+# Smaller dimension table
+customers = spark.createDataFrame([
+    (123, "Alice"), (456, "Bob"), (789, "Charlie")
+], ["customer_id", "customer_name"])
+
+NUM_SALTS = 5  # Number of salt buckets (tune based on skew severity)
+
+# add salt to the transactions table with value between 0 -4
+transactions_salted = transactions.withColumn("salt", (monotonically_increasing_id() % NUM_SALTS))
+
+# Duplicate small table rows for each salt value
+customers_salted = customers.crossJoin(spark.range(NUM_SALTS).withColumnRenamed("id", "salt"))
+
+joined_df = transactions_salted.join(
+    customers_salted,
+    on=["customer_id", "salt"],  # Now joins on both customer_id & salt
+    how="inner"
+)
+
+joined_df.show()
+
+# can also go the hash route to ensure the same key always gets the same salt
+from pyspark.sql.functions import hash
+
+transactions_salted = transactions.withColumn("salt", hash(col("customer_id")) % NUM_SALTS)
+customers_salted = customers.withColumn("salt", hash(col("customer_id")) % NUM_SALTS)
+```
+
+10. Given two large tables (1 billion+ rows), one transactional and one dimensional, which **join strategy** would you use in Snowflake/Redshift?  \
+
+- Broadcast joins are helpful when data is small <10 GB
+- Hash join used for distributed joins in snowflake + redshift
+- merge join used when both tables are sorted
+
+---
+
+### **3. Distributed Computing (Spark, Kafka, Airflow)**
+11. How does **data shuffling** work in Spark, and how can you minimize it?  
+
+- Shuffling is when a join, merge, or sort is requested and requires all data partitions to be re-distributed across all spark worker nodes
+- This requires all data to be serialized, sent over the network, and deserialized
+- Involves using Disk IO if data doesnt fit into memory
+- Ways around it are things like broadcast joins, where you load a table to memory for all spark worker nodes to avoid the shuffle operation from happening
+- Use narrow transformations like filter etc that dont require shuffle operations
+
+12. Explain how **Kafka handles message durability** and how you’d design a **high-throughput Kafka consumer**.  
+
+- Kafka is a log-based distributed store, meaning it stores messages in topics for x amount of hours or days
+- These topics can be replicated across brokers so messages arent lost if 1 of them fails
+- Consumers pull data from the topics at their own pace, and keep track of where they left off with their own offset
+- A high throughput Kafka consumer can periodically poll a topic for new data, bring the new data into memory, perform some operation on it, and then save it someplace else like S3
+
+13. How would you implement **exactly-once processing** in Kafka and Spark?  
+
+- enable idempotency on kafka w/ `enable.idempotence=true` so duplicate messages are ignored
+
+14. What’s the difference between **Spark’s narrow and wide transformations**, and how does it impact performance?  
+
+- narrow transformations are operations that dont require a shuffle operation, such as filtering. performance impact is minimal
+- wide transformations are operations that require a shuffle operation & moving data between partitions, like a group by count. this impacts performance because data has to be re-distributed across all worker nodes, slowing performance.
+
+15. How do you handle **backfilling** data in an Airflow DAG without rerunning everything?  
+
+- Parameterize Airflow DAG to allow `run_date` or `start_date` and `end_date` variables to be set.
+- You can then manually run the DAG, pass in the dates you want to run for, and have it only pull data for that specific date range
+- Then save it to S3 and merge it to warehouse to ensure you're not introducing duplicate data and making the pipeline idempotent
+
+---
+
+### **4. Data Modeling & Warehousing**
+16. How would you design a **dimensional model** for a rideshare company's trip data?  
+
+- tables: `dim_riders`, `dim_locations`, `dim_vehicles`, `dim_drivers` `fact_trips`
+- `fact_trips` has foreign keys for things like `rider_id`, `location_id`, `vehicle_id`, `driver_id`,
+- can then make aggregations very easily, group by any of the ID columns, look up `sum(fare_amount)` or how many ride transactions occurred during a certain timeframe or around a certain location
+
+17. What are the trade-offs between **Star Schema vs. Snowflake Schema** in a data warehouse?  
+
+- Star Schema things are more denormalized 
+    - `dim_location(city, state, country)`
+- Snowflake schema your dims can reference other dims, more joins and relationships are required. better for hierarchies
+    - `dim_city(city_id, city_name, state_id), dim_state(state_id, state_name, country_id)`
+
+18. How would you handle **schema evolution** in a production environment?  
+
+- instead of deleting columns, soft delete them by adding nulls
+- can utilize versioned tables instead of altering existing tables
+- utilize functionality on the warehouse itself to automatically add new columns it finds in data files it's loading
+
+19. Suppose your data warehouse is **growing too fast**. What techniques would you use to **reduce storage costs** without affecting query performance?  
+
+- add or utilize partitioning to automatically prune data that isnt needed for the query
+- add filters to all existing queries to only look at recent data or to filter down based on new column values or something
+- archive data older than x years to some other system such as s3
+
+20. Explain how you’d model **multi-tenancy** in a cloud data warehouse (e.g., Snowflake, BigQuery).  
+
+- can separate out either by schemas or by database, only give permissions to whichever schemas or databases are needed by the user so they cant see sensitive information in another database or schema
+
+---
+
+### **5. Cloud & Data Pipelines (AWS, GCP, Terraform, CI/CD)**
+21. How would you design a **serverless ETL pipeline** using AWS Lambda, S3, and Glue?  
+
+- raw data at `s3://my-bucket/raw-data/`
+- pull that data & perform data transformation or enrichment process
+- save processed data to `s3://-my-bucket/processed-data/`
+
+22. Explain how you’d implement **incremental loading** in a BigQuery/Snowflake pipeline.  
+
+- using timestamps to only load new or changed data, `insert into target from select * from source where created_at > (select max(created_at from source))`
+- these can be set either by the source system, or if you're generating `record_loaded_at` timestamps within the warehouse during your ingestion process
+
+23. How do you ensure **data quality checks** in an Airflow pipeline?  
+
+- can check things like # of records pulled, # of records in a table before & after ingestion occurs, and send alerts out if these row count checks dont match your expectations
+
+25. How would you **secure data pipelines** when working with PII in a cloud environment?  
+
+- can hash PII data, but this introduces issues
+- can implement row-level masking policies so specific users can only see PII data if they're admins or have permission
+- this enables the data to be stored accurately in the database, but means that the PII data is protected from most people for viewing
+
+
+``` sql
+CREATE MASKING POLICY mask_email
+AS (val STRING) RETURNS STRING ->
+CASE WHEN CURRENT_ROLE() = 'analyst' THEN '*****@email.com' ELSE val END;
+```
