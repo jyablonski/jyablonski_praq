@@ -435,3 +435,50 @@ greet()
 # @my_decorator(arg)
 
 ```
+
+## Classmethod
+
+`@classmethod` is a decorator that defines a method as a class method, meaning it is bound to the class rather than an instance of a class
+
+``` python
+class Example:
+    instance_count = 0
+
+    def __init__(self, name: str):
+        self.name = name
+        Example.increment_count()
+
+    @classmethod
+    def overwrite_name(cls):
+        cls.name = "BARF"
+        print("Class method", cls)
+
+    @classmethod
+    def increment_count(cls):
+        cls.instance_count += 1
+
+    @classmethod
+    def get_instance_count(cls):
+        return cls.instance_count
+
+    @staticmethod
+    def static_method():
+        print("Static method")
+
+s = Example(name="boo")
+f = Example(name="try")
+
+Example.overwrite_name()
+Example.name
+Example.get_instance_count()
+
+# these aren't affected
+print(s.name)
+print(f.name)
+```
+
+Useful when:
+
+- You want to modify a class-wide default value that all instances of the class share
+- Global counters when you want to track how many instances of the class exist
+- Configuration settings that affect all instances
