@@ -1,5 +1,5 @@
 # two sum
-def solution(nums: list[int], target: int):
+def solution(nums: list[int], target: int) -> list[int]:
     passed_items = {}
 
     for key, value in enumerate(nums):
