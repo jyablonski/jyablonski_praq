@@ -4,13 +4,49 @@
 
 Transactional databases are designed to sustain an organization’s operations, not to support columnar aggregations and analytical queries. Moreover, analytical queries on live production databases compete with transactional queries for resources, jeopardizing the critical operations the database supports. Analytical databases like data warehouses and governed data lakes are designed specifically to accommodate calculations across large numbers of records.
 
+## Indexes
 
-# SQL Query w/ no Index
+A SQL Index is a data structure that a database creates & maintains to speed up the retrieval of rows based on certain column.
+
+- Very similar to an index in a book; you just go to the index to find the page the word is on, rather than flipping through all the pages yourself.
+- In SQL, an index allows the database engine to find rows much faster without scanning the entire table.
+- Most databases will automatically use the index when it improves performance (this is called the query planner deciding to use it).
+
+By default, Postgres builds an unique b-tree index on every PRIMARY KEY column across all tables. This will be used for:
+
+- Fast Lookups on the Primary Key `user_id = ?`
+- Joins on the Primary Key
+- Ensuring no duplicate values are inserted for the Primary Key
+
+There are different types of Indexes:
+
+- B-tree is the default index type, good general-purpose index for most equality and range lookups
+- Hash is optimized for equality-only queries `=` and not as useful for `<` `>` or range queries
+- GIN is for indexing arrays, JSON-B, or full-text search
+- BRIN is a compact index for very large table w/ sequential data (time series)
+- GiST is for advanced geometric data queries
+
+Indexes enable faster reads on indexed columns, but slower writes. Every time you `INSERT` `UPDATE` or `DELETE`, the database must also update the index.
+
+- Indexes also consume disk space
+- Without Index, Postgres does sequential full table scans and time complexity is O(n)
+- With Index, Postgres navigates the index tree and queries turn into O(log(n))
+
+
+A composite index is when you build a single index on 2 or more columns in a table
+
+``` sql
+CREATE INDEX idx_status_created_at ON orders (status, created_at);
+```
+
+- Postgres will first index on the `status` column, and then inside each unique value of that column, it'll sort by `created_at` in a sorted nested hierarchy
+
+### SQL Query w/ no Index
 No indexes means the SQL DB has to do a `full table scan`.  This is the process of having all data sitting in disk objects called blocks. All columns of the data you request are then read INTO memory, and then each record is traversed in the entire dataset and only the ones you want filtered back to you are returned.
     * This is a costly operation, not only because of having to read the whole dataset but because of the disk -> memory transfer.
     * All queries with non-indexed tables has to do this.
 
-# SQL Query w/ Index
+### SQL Query w/ Index
 Alongside the data in disk there is a `b-tree` table with only the column you've indexed.  This lookup table tells the DB where each record is, in the exact block and the exact index in the block it's in.
     * This `b-tree` can also be sorted in some specific way.
     * If you index on `first_name`, then that lookup can be sorted and if you want the name `Adam` you'll know that it's around the beginning of the dataset.
@@ -557,3 +593,38 @@ Given all of the issues above that arise from going that route, hashed surrogate
 - The downside here are joins on strings can have worse performance than joins on integers like the autoincrementing IDs.
 - Storing these 32-character hashes is a bit larger on storage than storing an integer, but cost of storage is low now anyways.
 - Collisions can still happen at large data volume
+
+
+Example:
+
+- `2834248290` BIGINT is stored as 8 bytes
+- `550e8400-e29b-41d4-a716-446655440000` stored as a VARCHAR is 37 bytes (36 for the characters, 1 for the length)
+- `550e8400-e29b-41d4-a716-446655440000` stored as a UUID is 16 bytes
+
+Index Performance considerations:
+
+- BIGINT indexes are smaller and dense, they're faster for index scans and have the msot minimal I/O, range queries like BETWEEN or > are faster, as are CPU comparisons
+- UUID values take twice the space as BIGINTs, so that means larger index pages and more disk I/O
+
+If you need distributed uniqueness (no central coordination), UUIDs are often worth the slight index size tradeoff.
+
+## Enum Type
+
+Enums in Postgres are stored as a 4-byte integer, very similar to the normal `INTEGER` type. This is much smaller than storing typical varchar strings.
+
+For example, with an ENUM type below:
+
+``` sql
+CREATE TYPE status AS ENUM ('in_process', 'completed', 'failed');
+```
+
+- Internally, any values with these enum values will be stored as a 4-byte integer
+- When you query the table or these column values, they'll be displayed as the full string becasuse it passes you a refernce to the label
+
+This makes:
+
+- Query performance faster
+- Faster comparison performance
+- Smaller & Faster Indexes on this column
+
+This matters most when you have a big table, or are doing a lot of filtering + sorting

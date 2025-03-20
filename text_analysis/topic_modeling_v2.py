@@ -4,7 +4,7 @@ from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
 import string
-import matplotlib.pyplot as plt
+
 
 # Download stopwords
 nltk.download("stopwords")
@@ -26,41 +26,33 @@ def preprocess_text(text: str) -> str:
 # Apply preprocessing
 df["cleaned_text"] = df["text"].apply(preprocess_text)
 
-# Create a CountVectorizer
-vectorizer = CountVectorizer(max_df=0.95, min_df=2, stop_words="english")
-text_data = vectorizer.fit_transform(df["cleaned_text"])
+# Convert text to a document-term matrix
+vectorizer = CountVectorizer(max_features=1000, stop_words="english")
+doc_term_matrix = vectorizer.fit_transform(df["cleaned_text"])
+
+# Train LDA model
+num_topics = 7  # You can adjust this based on the dataset
+lda_model = LatentDirichletAllocation(n_components=num_topics, random_state=42)
+lda_model.fit(doc_term_matrix)
+
+# # Get topic keywords
 words = vectorizer.get_feature_names_out()
-
-# Create the LDA model
-n_topics = 5
-lda = LatentDirichletAllocation(n_components=n_topics, random_state=42)
-lda.fit(text_data)
-
-
-# Display top words per topic
-def print_top_words(model, feature_names, n_top_words):
-    for topic_idx, topic in enumerate(model.components_):
-        print(f"Topic {topic_idx}:")
-        print(
-            " ".join(
-                [feature_names[i] for i in topic.argsort()[: -n_top_words - 1 : -1]]
-            )
-        )
+topic_keywords = []
+for topic_idx, topic in enumerate(lda_model.components_):
+    top_keywords = [words[i] for i in topic.argsort()[-10:]]  # Top 5 words per topic
+    topic_keywords.append(top_keywords)
 
 
-n_top_words = 10
-print_top_words(lda, words, n_top_words)
+# Function to assign topic and subtopics
+def get_topic(text):
+    text_vectorized = vectorizer.transform([text])
+    topic_distribution = lda_model.transform(text_vectorized)[0]
+    topic_index = topic_distribution.argmax()  # Most dominant topic
+    return f"Topic {topic_index + 1}", topic_keywords[topic_index]
 
-# Get the document-topic matrix
-doc_topic_matrix = lda.transform(text_data)
-df["dominant_topic"] = doc_topic_matrix.argmax(axis=1)
 
-# Show the dominant topic for each document
-print(df[["text", "dominant_topic"]].head())
+# Apply topic modeling
+df["Topic"], df["Subtopics"] = zip(*df["cleaned_text"].apply(get_topic))
 
-# Plot the distribution of topics
-plt.hist(df["dominant_topic"], bins=n_topics, align="left")
-plt.xlabel("Topic")
-plt.ylabel("Number of Documents")
-plt.title("Topic Distribution")
-plt.show()
+# Display results
+print(df[["cleaned_text", "Topic", "Subtopics"]].head())
