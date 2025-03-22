@@ -8,8 +8,8 @@
    2. Turn the front the opposite direction of the side you want to move it to (left or right)
    3. Turn the bottom into the direction of the side you want to move to
    4. Counter the side you want to move to
-   5. Counter the middle
-   6. Clock the right side
+   5. Move middlepiece to the side you want to move to 
+   6. Clock the side you want to move to
    7. Fix your whites
    8. Once all 6 colors on each side are finished, move on
 5. Make the Yellow Plus on the White side using FUR URF
