@@ -1,12 +1,33 @@
 # gRPC
 
-gRPC (Google Remote Procedure Call) is an open source framework developed by Google for building high-performance, language agnostic distributed systems. It allows a client to directly call methods on a server from a different machine, enabling seamless communication between services. It uses HTTP/2 for transport and Protocol Buffers for the serialization format.
+gRPC (Google Remote Procedure Call) is an open-source framework developed by Google for building high-performance, language-agnostic distributed systems. It is commonly used in microservice architectures to enable efficient & highly performant service-to-service communication. gRPC leverages HTTP/2 for transport and Protocol Buffers (protobuf) as its interface definition and serialization format.
 
 gRPC uses Protobuf as the serialization format, which is:
 
 - Smaller than JSON or XML
-- Faster for serialization & deserialization
+- Faster for serialization & deserialization for getting data from memory into bytes that can be sent over the network to some other service
+  - Serialize from in-memory object into bytes ➡️ Send over network ➡️ Deserialize back into in-memory object.
 - Ensures data integrity by defined types and required fields
+
+## Pros & Cons
+
+It's a competitor to REST and has major advantages at scale over its counterpart:
+
+1. Performance & efficiency due to HTTP/2 and Protobuf
+2. Strongly Typed contracts / endpints through the .proto files
+3. Auto-generated code to reduce boilerplate
+4. Backwards-compatability w/ how the fields & their field numbers are setup
+
+But, it also has disadvantages over REST:
+
+1. Less human readable, debugging is a bit trickier
+2. Testing is more difficult compared to REST w/ curl or Postman
+3. gRPC doesn't work natively in browsers because they don't support HTTP/2, so you need gRPC-web which is an additional proxy layer that adds complexity
+4. Steeper learning curve with protocol buffers and the proto files
+5. gRPC is optimized for internal service to service communication and not so much for public-facing APIs
+6. For lightweight services where speed isn't critical or where human-readability (JSON) is important, the binary efficiency of gRPC might not justify the added complexity.
+
+## Internals 
 
 With Proto Files you define the structure and contract of the communication between client and server. Specifically, the Proto Files define:
 

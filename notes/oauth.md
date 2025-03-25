@@ -22,3 +22,38 @@ The OAuth 2.0 flow is a widely used protocol for authorization and authenticatio
 10. **End of Session**: The OAuth 2.0 flow ends when the user logs out or the access token expires. At this point, the client application must obtain a new access token to continue accessing the user's resources.
 
 Overall, the OAuth 2.0 flow allows for secure and controlled access to user resources by third-party applications without exposing the user's credentials. It provides a standardized framework for authorization and authentication on the web, making it widely adopted for various use cases, including social login, API access control, and delegated authorization.
+
+## Diagram
+
+``` mermaid
+sequenceDiagram
+    participant User
+    participant Client
+    participant AuthorizationServer
+    participant ResourceServer
+
+    User->>Client: Initiates OAuth2 flow (login)
+    Client->>AuthorizationServer: Request Authorization Code (via Authorization Endpoint)
+    AuthorizationServer->>User: Redirects to login page
+    User->>AuthorizationServer: User logs in and authorizes
+    AuthorizationServer->>Client: Redirects with Authorization Code
+    Client->>AuthorizationServer: Request Access Token (via Token Endpoint)
+    AuthorizationServer->>Client: Responds with Access Token and Refresh Token
+    Client->>ResourceServer: Request Protected Resource (using Access Token)
+    ResourceServer->>Client: Responds with the protected resource
+    Client->>User: Returns the requested resource
+```
+
+## OAuth2 eli5
+
+1. A user wants to log in to a new service using their Gmail account.
+2. The user clicks the "Log in with Gmail" button.
+3. The client (service) redirects the user to Google's authorization server, where the user is asked to log in and grant permission for the service to access their Gmail data.
+    - This step allows the service to validate the user’s identity but never directly receives the user’s credentials.
+4. Once the user grants permission, Google's authorization server sends an authorization code back to the client (usually through a redirect URL).
+    - This is a temporary token that expires quickly and can only be used once
+    - It's sent to the service, not the user's browser, making it less exposed to security risks.
+5. The client then exchanges the authorization code for an access token by sending it to Google's `/token` endpoint.
+    - The authorization code flow ensures that the access token is never exposed to the client directly, except when used to request data from Google's API.
+6. The client can now use the access token to request Gmail data from Google’s API.
+7. The requested Gmail information is returned to the client and then it sends the necessary data back to the user's browser.
