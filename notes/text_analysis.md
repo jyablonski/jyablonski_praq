@@ -120,3 +120,69 @@ These tools aren't perfect. There will be false positives. There will be misses.
 - b*tch - b1tch etc.
 
 From the Author - "This library is far from perfect. For example, it has a hard time picking up on less common variants of swear words like "f4ck you" or "you b1tch" because they don't appear often enough in the training corpus. Never treat any prediction from this library as unquestionable truth, because it does and will make mistakes. Instead, use this library as a heuristic."
+
+## TF-IDF
+
+TF-IDF is a numerical statistic that measures the importance of a word in a document relative to a collection of documents (corpus). It is widely used in information retrieval, text mining, and NLP tasks.
+
+- Removes common words ("the", "is") that appear in many documents but carry little meaning.
+- Highlights unique and important words in a document.
+- Used in search engines, topic modeling, and keyword extraction.
+
+## Word Embeddings
+
+Sentence embeddings are numerical vector representations of entire sentences or documents. Unlike traditional methods like bag-of-words or TF-IDF, which only capture word frequency, sentence embeddings capture semantic meaning by representing similar sentences close to each other in vector space.
+
+Machine learning models can only process numerical data, not raw text. To analyze, cluster, or classify text, we must first convert it into numbers that preserve meaning and context.
+
+BERT (Bidirectional Encoder Representations from Transformers) generates contextualized word embeddings. This generates 512 dimension data to capture as much information as it can.
+
+- But, too many dimensions can cause computational inefficiency and make clustering harder.
+
+Many machine learning models work best with low-dimensional data, but real-world datasets (like text embeddings) are high-dimensional.
+
+## UMAP
+
+UMAP is a dimensionality reduction algorithm used to reduce high-dimensional data into a lower-dimensional space while preserving the underlying structure and relationships. It is commonly used in clustering, visualization, and machine learning.
+
+
+## Topic Modeling 
+
+Topic Modeling is an unsupervised approach to breakdown a corpus of text and identify clusters & topics of similar text together.
+
+### 1️⃣ Preprocess the Text
+   - Clean the text (remove stopwords, punctuation, etc.).
+   - Convert text into sentence embeddings using BERT.
+
+### 2️⃣ Convert Text to High-Dimensional Embeddings
+   - Apply a pre-trained Sentence Transformer model (BERT-based) to encode each document into a 512-dimensional numerical vector.
+   ```python
+   from sentence_transformers import SentenceTransformer
+   model = SentenceTransformer("distilbert-base-nli-mean-tokens")
+   embeddings = model.encode(text_data, show_progress_bar=True)
+   ```
+   - Now each document is represented as a dense vector instead of raw text.
+
+### 3️⃣ Reduce Dimensionality with UMAP
+   - Since 512D is too high for clustering, UMAP reduces the embeddings to a lower-dimensional space (e.g., 5D for clustering).
+   ```python
+   import umap
+   umap_embeddings = umap.UMAP(n_neighbors=15, n_components=5, metric="cosine").fit_transform(embeddings)
+   ```
+   - This makes it easier for clustering algorithms to work effectively.
+
+### 4️⃣ Apply HDBSCAN for Clustering
+   - Now that the data is in a lower-dimensional space, apply HDBSCAN to group similar documents together.
+   ```python
+   import hdbscan
+   cluster = hdbscan.HDBSCAN(min_cluster_size=15, metric="euclidean", cluster_selection_method="eom").fit(umap_embeddings)
+   ```
+   - Documents with similar meanings will be assigned the same cluster label.
+   - Outliers (documents that don’t fit into any cluster) get the label -1.
+
+### 5️⃣ Extract Topics from Clusters (Optional)
+   - To understand what each cluster represents, extract top words per topic using TF-IDF.
+   ```python
+   tf_idf, count = c_tf_idf(documents=docs_per_topic.Doc.values, m=len(text_data))
+   top_n_words = extract_top_n_words_per_topic(tf_idf, count, docs_per_topic, n=20)
+   ```
