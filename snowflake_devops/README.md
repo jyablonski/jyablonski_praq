@@ -20,3 +20,10 @@ snow git execute \
     "@jyablonski_repo/branches/jacob/snowflake_devops/migrations/*" \
     -D "environment='dev'"
 ```
+
+
+``` sh
+
+liquibase update-sql --username=jyablonski --password=example
+liquibase update --username=jyablonski --password=example
+```
