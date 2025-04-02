@@ -1,0 +1,8 @@
+[connections.default]
+warehouse = "COMPUTE_WH"
+role = "ACCOUNTADMIN"
+database = "DEV"
+schema = "PUBLIC"
+account = "PFHRTLO-ARB20198"
+# user = "<INSERT YOUR USERNAME>"
+# password = "<INSERT YOUR PASSWORD>"

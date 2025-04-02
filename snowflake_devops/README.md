@@ -16,6 +16,7 @@ CREATE OR REPLACE GIT REPOSITORY dev.public.jyablonski_repo
 ```
 
 ``` sh
-snow git execute @jyablonski_repo/branches/jacob/snowflake_devops/migrations/*" \
+snow git execute \
+    "@jyablonski_repo/branches/jacob/snowflake_devops/migrations/*" \
     -D "environment='dev'"
 ```
