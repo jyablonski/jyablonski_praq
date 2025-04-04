@@ -179,3 +179,21 @@ Mesh filters helps make sure smaller particles / excessive dust doesn't get brou
 - Less air within the case than outside
 - More exhaust fans than intake fans
 - More dust will get into the case
+
+
+## Install Media
+
+1. Install OS boot media
+  - https://archlinux.org/download/
+2. Flash the boot media onto a USB Drive
+  - This requires first wiping the USB Drive
+  - Then use Rufus or belena-etcher to flash the boot media onto the USB Drive; you can't just drag and drop the raw iso image into the USB Drive and expect it to work
+  - This turns the .iso image into a bootable device that your BIOS can boot into on a fresh computer
+3. Plug USB Drive into new PC and get into the BIOS menu by spamming delete or f12 keys.
+
+You can verify the .iso image you installed by verifying the integrity of the checksums provided by the boot media owner (Archlinux in this case)
+
+- This process involves installing the `b2sums.txt` file which has a checksum for each iso image you can download
+- You then compare that checksum value in the txt file with your downloaded ISO. If they match, it prints "OK" meaning the file is valid and hasn't been tampered with by wherever you downloaded it from
+- If a file gets corrupted during download (due to a network issue, partial download, or disk error), the checksum won’t match.
+- It also protects against malicious tampering—if someone modified the ISO, the checksum would be different.
