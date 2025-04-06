@@ -187,8 +187,9 @@ Mesh filters helps make sure smaller particles / excessive dust doesn't get brou
   - https://archlinux.org/download/
 2. Flash the boot media onto a USB Drive
   - This requires first wiping the USB Drive
+  - This ISO File that we download isnt bootable by the Motherboard out of the box
   - Then use Rufus or belena-etcher to flash the boot media onto the USB Drive; you can't just drag and drop the raw iso image into the USB Drive and expect it to work
-  - This turns the .iso image into a bootable device that your BIOS can boot into on a fresh computer
+  - This turns the .iso image on the USB Drive into a bootable device, and it places the files in a layout that the system can understand and use during insetallation
 3. Plug USB Drive into new PC and get into the BIOS menu by spamming delete or f12 keys.
 
 You can verify the .iso image you installed by verifying the integrity of the checksums provided by the boot media owner (Archlinux in this case)
@@ -197,3 +198,25 @@ You can verify the .iso image you installed by verifying the integrity of the ch
 - You then compare that checksum value in the txt file with your downloaded ISO. If they match, it prints "OK" meaning the file is valid and hasn't been tampered with by wherever you downloaded it from
 - If a file gets corrupted during download (due to a network issue, partial download, or disk error), the checksum won’t match.
 - It also protects against malicious tampering—if someone modified the ISO, the checksum would be different.
+
+## BIOS Flashback
+
+BIOS Flashback is a feature on some motherboards that allows you to update the BIOS without having anything connected except the 24 pin ATX to the Motherboard.
+
+- Motherboards w/ BIOS Flashback typically have a button on the rear I/O Panel, along with a dedicated USB Port that says "BIOS"
+
+The process works by:
+
+1. Grab a 4+ GB USB Stick and plug it into a 2nd PC on Windows
+  - I tried doing this on Linux, but ran into issues around running the `.exe` file later on and it borked the Motherboard. Don't do this on Linux.
+2. Ensure the USB Stick is formatted as FAT32 so the Motherboard can understand it
+3. Go to your Motherboard's Page and download the latest BIOS Update
+4. Extract the BIOS Update Folder you just downloaded
+  - This will download 2 files: an `.exe` file and a `.CAP` file w/ the actual BIOS Update
+5. Run the `.exe` File inside, which will rename the CAP File to something the Motherboard can understand
+6. Place the renamed CAP file into the USB Folder
+7. Take the USB Stick and plug it into the dedicated USB Port for BIOS Flashback
+8. Plug in Power and flip the switch on the PSU, but do NOT power the PC on
+9. With Power and USB Stick plugged in, Press and hold the BIOS Flashback button for 10 seconds until lights start flashing on the button
+10. The Motherboard will begin updating and lights will continue flashing until the update is complete
+11. After the lights stop flashing, waiting 3 minutes and then unplug the USB and power the PC on and finish the update process.
