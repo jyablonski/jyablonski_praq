@@ -127,3 +127,139 @@ ORDER BY last_query_time DESC
 - This query will identify all unused tables in the last 3 months
 - [Doc](https://espresso.ai/post/find-and-delete-unused-snowflake-tables-without-enterprise-access-history)
 - Includes False Positives: Tables mentioned in comments or unused CTEs might appear as "used"
+
+
+## JSON
+
+Sure! Here's a cleaned-up writeup summarizing your example, including explanations and best practices:
+
+---
+
+## 🧾 Snowflake JSON Handling Example: Parsing JSON Strings, Working with VARIANT, and Flattening Arrays
+
+### 🧬 Python Source Data
+
+```python
+row = {
+    "id": 1,
+    "full_name": "Jane Doe",
+    "email": "jane.doe@example.com",
+    "is_active": True,
+    "signup_date": datetime.today().isoformat(),
+    "last_login_ts": datetime.now(timezone.utc).isoformat(),  # ISO-8601 UTC timestamp
+    "birth_date": "1990-07-15",
+    "created_at_unix": int(datetime.now(timezone.utc).timestamp()),  # epoch time
+    "account_balance": 1532.75,
+    "metadata_json_str": json.dumps({
+        "plan": "premium",
+        "referral": True,
+        "tags": ["beta", "new"]
+    }),
+    "preferences": {
+        "notifications": {"email": True, "sms": False},
+        "theme": "dark",
+        "language": "en-US"
+    },
+}
+```
+
+The Infer Scheam Create Table statement spit out the following DDL on the above data in a Parquet file:
+
+```sql
+CREATE OR REPLACE TABLE PRODUCTION.TEST_SCHEMA.TEST_TABLE (
+    id NUMBER,
+    full_name VARCHAR,
+    email VARCHAR,
+    is_active BOOLEAN,
+    signup_date VARCHAR,              -- should be TIMESTAMP
+    last_login_ts VARCHAR,           -- should be TIMESTAMP
+    birth_date VARCHAR,
+    created_at_unix NUMBER,
+    account_balance FLOAT,
+    metadata_json_str VARCHAR,       -- contains JSON string
+    preferences VARIANT,             -- nested JSON structure
+    METADATA_FILENAME VARCHAR,
+    METADATA_INGEST_TIME TIMESTAMP_NTZ
+);
+```
+
+#### Updated Schema With Better Typing:
+
+```sql
+CREATE OR REPLACE TABLE PRODUCTION.TEST_SCHEMA.TEST_TABLE_V2 (
+    id NUMBER,
+    full_name VARCHAR,
+    email VARCHAR,
+    is_active BOOLEAN,
+    signup_date TIMESTAMP,     -- fixed
+    last_login_ts TIMESTAMP,   -- fixed
+    birth_date VARCHAR,
+    created_at_unix NUMBER,
+    account_balance FLOAT,
+    metadata_json_str VARCHAR,
+    preferences VARIANT,
+    METADATA_FILENAME VARCHAR,
+    METADATA_INGEST_TIME TIMESTAMP_NTZ
+);
+```
+
+---
+
+Notes & Takeaways:
+
+- Use `PARSE_JSON()` on JSON **strings** to turn them into `VARIANT`, enabling further JSON processing.
+- For `VARIANT` columns, you can immediately access nested attributes using:
+
+  ```sql
+  preferences['language']::VARCHAR AS language
+  ```
+- Use `LATERAL FLATTEN(...)` to explode JSON arrays (from `VARIANT` or parsed strings).
+- If you're flattening an array but want to keep one row per record, **use a separate CTE and `ARRAY_AGG()`**, then join back.
+
+---
+
+Example Query: Parsing, Flattening, Joining
+
+```sql
+-- Step 1: Flatten the 'tags' JSON array into a comma-separated string (CTE)
+WITH tags AS (
+    SELECT
+        id,
+        ARRAY_TO_STRING(ARRAY_AGG(tag.value::STRING), ', ') AS tags
+    FROM test_schema.test_table_v2,
+         LATERAL FLATTEN(input => PARSE_JSON(metadata_json_str)['tags']) AS tag
+    GROUP BY id
+),
+
+-- Step 2: Parse fields from metadata_json_str and preferences
+data AS (
+    SELECT
+        *,
+        TO_TIMESTAMP(created_at_unix) AS unix_timestamp_value,
+        PARSE_JSON(metadata_json_str)['plan']::VARCHAR AS attribute_from_json_str,
+        preferences['language']::VARCHAR AS attribute_from_json_variant
+    FROM test_schema.test_table_v2
+)
+
+-- Step 3: Join the flattened tags back to the main data
+SELECT
+    data.*,
+    tags.tags
+FROM data
+INNER JOIN tags ON data.id = tags.id;
+```
+
+---
+
+Bonus: Flatten in One Shot (If Row Explosion Is Acceptable)
+
+``` sql
+SELECT
+  id,
+  ARRAY_TO_STRING(ARRAY_AGG(tag.value::STRING), ', ') AS tags
+FROM test_schema.test_table_v2,
+     LATERAL FLATTEN(input => PARSE_JSON(metadata_json_str)['tags']) AS tag
+GROUP BY id;
+```
+
+---
