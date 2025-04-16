@@ -36,6 +36,10 @@ dependencies = [
     "click>=8.1.7,<9",
     "structlog>=24.4.0,<25",
     "duckdb==1.2.1",
+    "google-auth>=2.38.0",
+    "google-auth-httplib2>=0.2.0",
+    "google-auth-oauthlib>=1.2.1",
+    "google-api-python-client>=2.167.0",
 ]
 
 [dependency-groups]

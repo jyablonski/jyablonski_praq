@@ -42,3 +42,63 @@ sub_sequence_2 = [15, 5, 10]
 
 sub_sequence_in_list(nums=l1, sub_sequence=sub_sequence_1)
 sub_sequence_in_list(nums=l2, sub_sequence=sub_sequence_2)
+
+
+## increasing subsequence hoe
+
+
+def solution(nums: list[int]) -> int:
+    l = 1
+    max_sub = 1
+
+    for i in range(len(nums) - 1):
+        if nums[i] < nums[i + 1]:
+            l += 1
+        else:
+            l = 1
+        max_sub = max(l, max_sub)
+
+    return max_sub
+
+
+l1 = [1, 3, 5, 7]
+l2 = [11, 3, 5, 17, 24, 19, 20, 21, 1, 2, 3, 1, 56]
+l3 = [10, 9, 2, 5, 3, 7, 101, 18]
+l4 = [0, 1, 0, 3, 2, 3]
+
+
+solution(nums=l1)
+solution(nums=l2)
+solution(nums=l3)
+solution(nums=l4)
+
+
+# this doesn't account for l4, where if we remove the first `3`
+# we actually get a longer subsequnence. zzzzz
+def solution(nums: list[int]) -> int:
+    current_sub = []
+    max_sub = []
+
+    for i in range(len(nums)):
+        current_sub = []
+        current_sub.append(nums[i])
+        current_max_num = nums[i]
+
+        l = i + 1
+        while l < (len(nums)):
+            print(f"checking {nums[l]} vs {current_max_num}")
+            if nums[l] > current_max_num:
+                current_sub.append(nums[l])
+                current_max_num = nums[l]
+                print(f"adding {nums[l]} to current_sub {current_sub}")
+                l += 1
+            else:
+                l += 1
+
+        print(f"am i exiting? L IS {l}")
+        if len(current_sub) > len(max_sub):
+            print(f"new max sub {current_sub}")
+            max_sub = current_sub
+
+    print("why are we returning")
+    return max_sub
