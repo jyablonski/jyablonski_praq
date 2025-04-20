@@ -15,6 +15,8 @@ Micropartitions have pre-calculated metadata assigned, with things like min and 
 You'll get better query performance if you select only the minmimum number of columns you need for the query, as Snowflake uses byte-range querying to grab the data from the micropartitions (aka if you do `select *` it has to do more work).
 
 ## Virtual Warehouses
+[Article](https://select.dev/posts/snowflake-pricing)
+
 Typical databasees revolve around a single server storing data & executing queries.  Snowflake separates the concept of compute and storage so all of your data is stored in S3, and you query it from individual compute warehouses.  
 
 These warehouses start as 4 vCpu, 16 GB memory instances at the X-SMALL size.  They double in compute/performance resources as you move up from X-SMALL to SMALL, MEDIUM, and LARGE etc.
