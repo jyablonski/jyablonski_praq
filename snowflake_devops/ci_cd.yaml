@@ -1,0 +1,54 @@
+name: Liquibase Deploy
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/liquibase.yml
+      - migrations/**
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/liquibase.yml
+      - migrations/**
+
+jobs:
+  deploy-dev:
+    if: github.event_name == 'pull_request'
+    name: Deploy Liquibase Changes (Dev)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Deploy Liquibase Changes (Dev)
+        uses: liquibase-github-actions/update@v4.31.1
+        with:
+          changelogFile: "liquibase/db_changelog.xml"
+          url: "${{ secrets.DB_URL }}?db=development&schema=raw_data"
+          username: "${{ secrets.DEV_DB_USERNAME }}"
+          password: "${{ secrets.DEV_DB_PASSWORD }}"
+          headless: true
+          logLevel: INFO
+          # licenseKey: ${{ secrets.LIQUIBASE_LICENSE_KEY }}
+
+  deploy-prod:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    name: Deploy Liquibase Changes (Prod)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Deploy Liquibase Changes (Prod)
+        uses: liquibase-github-actions/update@v4.31.1
+        with:
+          changelogFile: "liquibase/db_changelog.xml"
+          url: "${{ secrets.DB_URL }}?db=production&schema=raw_data"
+          username: "${{ secrets.PROD_DB_USERNAME }}"
+          password: "${{ secrets.PROD_DB_PASSWORD }}"
+          headless: true
+          logLevel: INFO
+          # licenseKey: ${{ secrets.LIQUIBASE_LICENSE_KEY }}
