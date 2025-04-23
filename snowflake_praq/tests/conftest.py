@@ -1,9 +1,9 @@
 import pytest
-from snowflake.snowpark.session import Session
+from snowflake_praq.snowpark.session import Session
 import datetime
-from snowflake.snowpark.mock import patch, ColumnEmulator, ColumnType
-from snowflake.snowpark.functions import to_timestamp
-from snowflake.snowpark.types import TimestampType
+from snowflake_praq.snowpark.mock import patch, ColumnEmulator, ColumnType
+from snowflake_praq.snowpark.functions import to_timestamp
+from snowflake_praq.snowpark.types import TimestampType
 
 
 @patch(to_timestamp)

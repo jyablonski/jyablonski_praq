@@ -1,6 +1,6 @@
 import pandas as pd
-from snowflake.snowpark import Session
-from snowflake.snowpark.types import (
+from snowflake_praq.snowpark import Session
+from snowflake_praq.snowpark.types import (
     LongType,
     StructType,
     StructField,
