@@ -208,10 +208,60 @@ These 12 notes repeat in higher or lower octaves. For example, after G#, the nex
 
 ## Scales
 
+You can play scales all across 1 string, or across multiple strings.
+
+- Across 1 string means it's pretty simple to play the scale, but you have to cover a lot of ground and it's not efficient
+  - Here, each note is going linearly higher in pitch along the string — octave spacing is preserved in a straight line.
+- Across multiple strings means it's a lot more compact and efficient to play, but is more complex to understand at first
+
+Playing ~3 notes per string is a way of organizing scales on the guitar so that each string plays exactly 3 notes of the scale before moving to the next string. This makes the scale pattern very uniform and efficient for speed, alternate picking, and muscle memory.
+
+When you play a scale across strings:
+- You're still playing the same scale (same notes, same whole-step/half-step order).
+- But the octave position of each note can change depending on where and how you play it.
+
+
+
 Root Note
 
 - A Major Scale - Root note is A
 - E Major Scale - Root note is E
+
+### C Major
+
+- C → D → E → F → G → A → B → C
+
+Standard Tuning:
+
+``` lua
+C Major (3-notes-per-string shape):
+E|----------------------------7--8--10--
+B|---------------------8--10--12--------
+G|----------------7--9--10--------------
+D|-----------7--9--10-------------------
+A|----7--8--10--------------------------
+E|8--10--12-----------------------------
+
+```
+
+Drop B Tuning
+
+``` lua
+C Major
+C#|--------------------------------------------------------------|  
+G#|------------------------------------------1--3--4-------------|  (A, B, C)
+E |-------------------------------0--1--3------------------------|  (E, F, G)
+B |-----------------------1-1-3-----------------------------------|  (C, C, D)
+F#|---------1--3--5----------------------------------------------|  (G, A, B)
+B |--1--3--5--6--------------------------------------------------|  (C, D, E, F)
+
+C#|----------------------------------------------------------| (1st string - Not required for these two octaves)
+G#|----------------------------------------------------------| (2nd string - Not required for these two octaves)
+E |-----------------------------------3--5--7--8-------------| (3rd string: G, A, B, C)
+B |-----------------------3--5--6----------------------------| (4th string: D, E, F)
+F#|-----------1--3--5--6-------------------------------------| (5th string: G, A, B, C)
+B |--1--3--5--6----------------------------------------------| (6th string: C, D, E, F)
+```
 
 ## Drop B Tuning
 
