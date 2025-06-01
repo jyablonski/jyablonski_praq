@@ -184,6 +184,24 @@ In Western music, there are 12 unique notes within an octave. Each of them are a
 
 There's no real reason E & B have no E# or B# respectively. E# is technically just F.
 
+A
+Bb
+B
+C
+Db
+D
+Eb
+E
+F
+Gb
+G
+Ab
+
+- all the sharps get flipped around to flats from the next note
+- A# -> Bb
+- G# -> Ab
+
+
 ## Playing Notes
 
 If you play the low E string open (no frets pressed), this is an E note
@@ -298,3 +316,84 @@ B |--1--3--5--6----------------------------------------------| (6th string: C, D
 5. Adjust string height
    1. Can turn the saddle screws to bring it up or down as needed. This will mainly affect playability, not necessarily how it sounds.
 6. Tune to Drop B
+
+
+# Scales
+
+Practicing scales is one of the best ways to build your ear, finger strength, and understanding of music theory. Here's a breakdown of **common scales** with their **step patterns** using **whole steps (W)** and **half steps (H)**.
+
+---
+
+## 🎼 1. **Major Scale (Ionian mode)**
+
+**Formula:** `W - W - H - W - W - W - H`
+
+* Example: **C Major** → C - D - E - F - G - A - B - C
+
+---
+
+## 🎼 2. **Natural Minor Scale (Aeolian mode)**
+
+**Formula:** `W - H - W - W - H - W - W`
+
+* Example: **A Minor** → A - B - C - D - E - F - G - A
+
+---
+
+## 🎼 3. **Harmonic Minor Scale**
+
+**Formula:** `W - H - W - W - H - W+H (3 semitones) - H`
+
+* Example: **A Harmonic Minor** → A - B - C - D - E - F - G# - A
+* Characteristic: Exotic, classical sound due to the **1.5 step** between F and G#
+
+---
+
+## 🎼 4. **Melodic Minor Scale (Ascending)**
+
+**Formula:** `W - H - W - W - W - W - H`
+
+* Example: **A Melodic Minor (ascending)** → A - B - C - D - E - F# - G# - A
+* Often played differently descending (like natural minor)
+
+---
+
+## 🎼 5. **Pentatonic Scales (5-note scales)**
+
+### a. **Major Pentatonic**
+
+**Formula:** `W - W - W+H - W - W+H`
+
+* Example: **C Major Pentatonic** → C - D - E - G - A - C
+
+### b. **Minor Pentatonic**
+
+**Formula:** `W+H - W - W - W+H - W`
+
+* Example: **A Minor Pentatonic** → A - C - D - E - G - A
+* Most common in rock, blues, and soloing
+
+---
+
+## 🎼 6. **Blues Scale (Minor Pentatonic + flat 5)**
+
+**Formula:** `W+H - W - H - H - W+H - W`
+
+* Example: **A Blues** → A - C - D - D# - E - G - A
+* The added D# (♭5) gives it the “blues” sound
+
+---
+
+## 🎼 7. **Modes of the Major Scale**
+
+Each mode is a major scale starting from a different scale degree:
+
+| Mode       | Formula       | Example in C | Flavor           |
+| ---------- | ------------- | ------------ | ---------------- |
+| Ionian     | W W H W W W H | C major      | Happy, bright    |
+| Dorian     | W H W W W H W | D Dorian     | Jazzy minor      |
+| Phrygian   | H W W W H W W | E Phrygian   | Dark, exotic     |
+| Lydian     | W W W H W W H | F Lydian     | Dreamy major     |
+| Mixolydian | W W H W W H W | G Mixolydian | Bluesy major     |
+| Aeolian    | W H W W H W W | A Aeolian    | Natural minor    |
+| Locrian    | H W W H W W W | B Locrian    | Dissonant, tense |
