@@ -513,3 +513,88 @@ CREATE MASKING POLICY mask_email
 AS (val STRING) RETURNS STRING ->
 CASE WHEN CURRENT_ROLE() = 'analyst' THEN '*****@email.com' ELSE val END;
 ```
+
+# Data Questions Round 2
+
+1. What’s the difference between a star schema and a snowflake schema? When would you use each?
+
+- Star Schema means you have Fact and Dimension Tables. Your Fact Tables have foreign keys to priamry keys in the Dimension Tables and you join them together
+- Snowflake Schema is similar, but your Dimension Tables could also have subdimension tables. So you still join Dimension Tables onto Fact tables, but you could further join in subdimension tables in as well. There's more branching of those dimension tables, which could be useful when you have complex hierarchies etc.
+
+2. How do you model slowly changing dimensions (SCD) in a data warehouse?
+
+- SCD handle data changes over time
+- Type 1 simply means you overwrite the old value, and you don't keep that historical data.
+- Type 2 means you add a new row with versioning, such as start and end timestamps `valid_from` and `valid_to` fields etc
+- Type 3 menas you add a new column for the previous value, so you have like `current_value` and `previous_value` etc
+- Type 1 is most simply and straightforward, but Type 2 is often needed when you need that historical context.
+- Setting up Audit Tables or enabling CDC / logical replication enables you to track all these changes and preserve the state of historical records to enable SCD2
+
+3. What are the tradeoffs of normalizing vs denormalizing a data warehouse?
+
+- Normalization is the process of organizing data (typically in an OLTP Database) to reduce data redundancy, improve data integrity, and maximize application performance 
+    - Break Tables down, utilize database constraints like foreign keys, eliminate data duplication
+    - Row-oriented OLTP Databases like Postgres are designed for this
+    - Most often this is how data is modeled in user-facing applications
+- Denormalization is the process of combining normalized tables into fewer tables for the sake of read performance and simplicity.
+    - Merge Tables into 1, add redundancy for faster querying and lookups etc
+    - Columnar OLAP Databases perform really well here and are better designed for these types of queries
+
+5. What is a data mart, and how does it differ from a data warehouse?
+
+- Subset of a data warehouse focused on a specific team or function like marketing, finance etc.
+---
+
+## ⚙️ Tools, Orchestration & Infrastructure
+6. How does Airflow work under the hood?
+
+- Airflow has a Scheduler component which looks for active DAGs that are scheduled to be ran, and triggers them to run at their specified time
+- It uses a backend database like Postgres to store metadata for all dags, their runs, timestamps, their success status etc.
+- The Webserver uses that backend database to display all of the dags, their recents runs and times etc.
+- The core package itself allows you to build tasks and create dependencies between those tasks to create your workflows. It can be as simple or as complex as you need it
+
+7. What are the benefits of dbt over custom SQL scripts? What are dbt models, seeds, and snapshots?
+
+- dbt introduces a number of features that come out of the box like its dependency graph via `ref()`, version control, data quality testing (primary key, not null etc), and documentation + model lineage
+- if you just went with raw sql and not dbt, then you'd have to build out all of the above yourself
+- if you wanted to orchestrate your sql scripts with airlfow, you'd have to manually manage those dependencies yourself. with dbt it's automatic w/ the `ref()` concept
+
+8. Explain how Terraform fits into a data engineering stack. What resources would you provision with it?
+
+- terraform is an IaC tool that has providers for many services and applications like AWS, Snowflake, Postgres, GCP etc.
+- it's used to build cloud infra in AWS like s3 buckets, ECR Repos, and ECS Tasks to run your docker images
+- it can also be used to provision infra in your databases and manage users, permissions, and access
+
+9. How would you manage secret rotation for your Airflow or dbt deployment in the cloud?
+
+- Not a concern, fuck off
+
+10. How would you monitor and alert on failures in a production data pipeline?
+
+- for airflow, always have failures alerted out to slack. can also integrate with a platform like pagerduty if after hours alerting and response is needed
+- for streaming, for snowflake we setup error integration which sends a message to SNS after any failures. you can setup triggers on any new SNS messages to be alerted on slack or pagerduty etc as needed.
+- can also setup tests in dbt to check for various conditions after your models are built, and be alerted if those fail to meet expectations or if they fall out of their defined thresholds so you can go investigate before stakeholders find out first.
+  - this helps build trust that you're being proactive in identifying and fixing issues before your clients even know about them.
+
+---
+
+## 📈 Performance & Optimization
+
+11. How do you optimize a slow-running Spark job?
+
+- Can adjust repartition size
+- Limit the amount of shuffle operations from things like a group by statemenet
+- Attempt broadcast joins for small tables
+- Utilize columnar formats like Parquet for predicate pushdown
+- Tune spark by adjusting memory, number of workers etc
+
+12. What are the most common causes of slow SQL queries, and how do you debug them?
+
+- typically querying too much data
+- watch out for join explosions for you might be screwing a join up and causing a many-to-many situation where you end up with billions of rows
+- window functions are also notoriously not performant, you want to be filtering the data as much as possible before you whip these out
+- in snowflake i utilize the query profile often to see what's going on, what steps are taking the longest to complete, what the row count of each step looks like
+- in postgres you can run explain or explain analyze to find out more, to see if an index is being used or what the most expensive step of the query is so you can adjust.
+    - it shows index usage and can help catch bad join plans that need to be adjusted
+    - explain doesnt run the query, it only estimates
+    - explain analyze will literally run the query but is obviously more expensive and takes time

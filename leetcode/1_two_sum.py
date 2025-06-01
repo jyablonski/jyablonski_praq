@@ -22,10 +22,11 @@ def solution(nums: list[int], target: int):
         if diff in passed_items:
             # if it's in there then we have a match
             # return a list of that index, and the key we're on which is the current index
+            print(passed_items)
             return [passed_items[diff], key]
 
-        # after we visit it, and didnt find a solution, then add it to
-        # the dictionary for our passed items
+        # after we visit it, and didnt find a solution, then store the key pair to
+        # the dictionary where the key is the value, and the value is the index we're on
         else:
             passed_items[value] = key
 

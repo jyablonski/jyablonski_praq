@@ -29,7 +29,14 @@ Each layer serves a specific function and interacts with the layers above and be
    - Uses protocols like:
      - **TCP (Transmission Control Protocol)** – Reliable, connection-oriented (e.g., web browsing, file transfers).
      - **UDP (User Datagram Protocol)** – Fast, connectionless (e.g., video streaming, VoIP).
-   - Examples: TCP, UDP, port numbers.
+   - Examples: TCP, UDP, port numbers, MetalLB.
+      - A Layer 4 load balancer routes traffic based on TCP port 443 but doesn’t inspect the HTTPS payload.
+      - A firewall blocks all inbound traffic on port 22 (SSH) using L4 rules.
+      - Layer 4 Load balancing cant insepect HTTP headers or paths
+   - Use when:
+      - Load Balancing based on TCP or UDP Ports
+      - Implementing firewall rules based on IP Addresses or ports
+      - 
 
 5. **Session Layer (Layer 5)**
    - Manages and controls **sessions (connections) between applications**.
@@ -45,7 +52,13 @@ Each layer serves a specific function and interacts with the layers above and be
 7. **Application Layer (Layer 7)**
    - The **interface between users and the network**.
    - Provides network services such as **web browsing, email, file transfer**.
-   - Examples: HTTP, FTP, SMTP (email), DNS.
+   - Examples: HTTP, FTP, SMTP (email), DNS, Traefik, Nginx.
+      - Reverse Proxy that routes traffic based on path `/api` to one service, and `/admin` to another service
+      - A WAF that filters out SQL injection attacks based on HTTP payloads
+      - TLS Termination Usually happens at Layer 7, where you decrypt TLS to inspect HTTP headers.
+   - Use when:
+      - Routing based on hostname, path, or headers
+      - Working with Application Data via HTTP
 
 The OSI Model provides:
 
