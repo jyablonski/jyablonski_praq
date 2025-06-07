@@ -598,3 +598,106 @@ CASE WHEN CURRENT_ROLE() = 'analyst' THEN '*****@email.com' ELSE val END;
     - it shows index usage and can help catch bad join plans that need to be adjusted
     - explain doesnt run the query, it only estimates
     - explain analyze will literally run the query but is obviously more expensive and takes time
+
+
+## Generic 
+
+1. How do you go about a decision to build vs buy
+
+- Tradeoff between customization and control vs speed and efficiency.
+- First define the business need:
+    - Is it a core capability to the business that can lead to competitive advantage? Then consider building
+    - Is it a commodity like email or authentication? then consider buying
+- Evaluate total cost of ownership
+    - Build Cost involves engineering hours, ongoing maintenance, and infrastructure
+    - Buying requires yearly cost, integration, and vendor lock in
+- Consider Time to Market
+    - If we buy, do we immediately get to use it in action/
+- Assess team's internal capabilities
+    - Do they have the expertise to build and maintain what it is you want
+
+2. When to use K8s vs something like ECS
+
+- ECS for simplicity when you're a small team and want a lightweight solution
+- K8s when you have the engineering talent to support it, you want the advanaced features, and your org has advanced devops expertise
+
+
+3. How do containers work
+
+- Containers package and run software in a lightweight, portable, reproducible environment
+- they bundle application code along with dependencies, system libraries, and other configuration settings to reliably run across environments
+- they utilize OS virtualization, using the host's kernel but run in isolated namespaces to separate their processes, networking, and file systems which makes them lighter weight than VMs.
+- If running on a linux host machine, they utilize the host linux kernel natively
+- If running on windows or mac, they have to use a VM to host linux for the containers to use
+
+4. What happens when you type google.com in a browser
+
+- browser checks DNS cache for dns resolution, which may resolve to your home router and eventually returns one or more ip addresses for google.com
+- browser then opens a TCP connection to google.com ip address on port 443
+- TLS handshake is then initiated to securely encrypt the communication
+- browser then sends a GET request to google.com
+    - Static content like images, JavaScript, and CSS is often served from Google's CDN, reducing latency.
+    - load blaancers which receive the request and forward it to the closest server for latency and performance
+- google then sends back a 200 response with html content for the webpage
+- your browser then parses that html to build the dom tree, load css + js + images, and render the page for you
+- (browser → router → ISP → backbone → Google CDN/data center).
+
+5. How would you deploy and roll back a service safely
+
+- Run test suite during PR Process
+- Run test suite after PR is merged to `main`
+- After test suite passes after a PR merge, automatically run the deployment process to create an immutable artifact like a docker image and store it to some remote location like ECR
+- From there, you can implement various different deployment strategies:
+    1. Rolling update - gradually replace servers running the old version with servers running the new version
+    2. Canary Deploy - route a small % of traffic to servers running the new version to monitor behavior before full rollout
+    3. Blue Green - deploy the new version alongside the old one, then flip traffic once validated.
+- Monitoring during and after deployment to ensure SLIs like error rate, latency, CPU/memory, and business KPIs like conversion rate are all within bounds
+- Every deployment should be reversible
+    1. In k8s, `kubectl rollout undo deployment/my-service`
+    2. In ArgoCD, revert to a previous git commit and sync
+    3. In Helm, `helm rollback <release> <revision>`
+- If reverting a deploy, watch out for things like database migrations which can cause serious issues if your code does not match up with your external databases
+
+6. Explain the differences between vertical and horizontal scaling
+
+- Vertical Scaling means increasing the resources (CPU, memory, storage) of a single machine to handle more load. It's often simpler but has a hard ceiling — you can only make a machine so big.
+- Horizontal Scaling involves adding or removing machines (or instances) to distribute load. It's more flexible and is often preferred for high availability and large-scale systems.
+- Monolithic applications can be harder to scale horizontally because all components are tightly coupled and often run on a single server. If only one part of the app is under heavy load, you’re forced to scale the entire system — usually vertically.
+- Microservices make horizontal scaling easier, since each service can be scaled independently based on its specific load and resource requirements.
+
+7. What’s the architecture of a Kubernetes cluster?
+
+- Control Place -> maanges the cluster's state, decides what should happen and when. It includes:
+    1. API Server is the frontdoor to the cluster where internal components and `kubectl` make their requests to
+    2. Scheduler assigns newly scheduled pods to appropriate nodes based on resource availability, rules, and other constraints
+    3. Controller Manager runs controllers that ensure the desired state (like replica sets, nodes etc) is maintained
+    4. etcd which is a consistent highly available key valuew store to store the entire cluster config and state like a source of truth
+    5. Cloud Controller Manager (like EKS) to manage provisioning cloud resources
+- Worker Nodes are what actually run the apps. They include:
+    1. Kubelet talks to the API Server and ensures containers on the node match the desired state
+    2. Container Runtime runs the actual container (Docker, containerd etc)
+    3. Kube Proxy manages networking rules and enables communication between pods and services across nodes
+    4. Pods are the smallest deployable unit in K8s. Each pod contains 1 or more containers that share storage, network, and lifecylce.
+- How It Works:
+    1. You define the desired state via YAML Files or `kubectl`
+    2. The API Server accepts the request and stores the spec in `etcd`
+    3. The scheduler picks nodes to run the pods
+    4. Kubelets on the nodes receive instructions and start containers using the container runtime
+    5. Kube Proxy routes traffic between services and pods as needed
+
+8. What is eventual consistency and where is it acceptable?
+
+- Eventual consistency is a consistency model in distributed systems where, in the absence of new writes, all replicas will eventually converge to the same value — but not necessarily immediately.
+- It relates to the CAP Theorem, which states that in a distributed system, you can only fully achieve two out of three: Consistency, Availability, and Partition Tolerance. 
+- Since network partitions are unavoidable (e.g., due to latency, packet loss, or node failure), distributed systems must tolerate partitions — meaning we’re forced to trade off between Consistency and Availability.
+    - A network partition happens when nodes in a distributed system cannot reliably communicate with each other, even though they are still running.
+    - When Database Shard A + B can't communicate with shard C, this is a partition in the system and there's a disconnect.
+    - You cant guarantee these issues wont happen
+    - So your system must be able to keep functioning, even when parts of the network can't talk to each other.
+    - For example, in Apache Cassandra if this happens it may still accept writes on 1 of the database shards, and when the partition heals it uses a conflict resolution strategy (last write wins) to merge the state back together. This is eventual consistency as you can still write during the partition, but sacrifices immediate consistency.
+- We must pick partition tolerance because xyz, so we have to choose between prioritizing availbility or consistency in our applications.
+- When to prefer eventual consistency (and favor availability):
+    - People adding things to shopping cart. Lets always make the customer able to pick items out and we'll figure the rest out later even if our database replicas aren't in sync.
+    - Also social media likes or comments etc.
+- When to prefer strong consistency 
+    - People submitting orders. Lets always prioritize finalizing a customer's order out to ensure we aren't handing out the same concert ticket to 2 different people.
