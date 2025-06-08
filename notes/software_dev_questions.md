@@ -642,6 +642,28 @@ CASE WHEN CURRENT_ROLE() = 'analyst' THEN '*****@email.com' ELSE val END;
 - your browser then parses that html to build the dom tree, load css + js + images, and render the page for you
 - (browser → router → ISP → backbone → Google CDN/data center).
 
+
+
+DNS Resolution: The client starts by resolving the domain name of the website to an IP address using DNS (Domain Name System).
+
+TCP Handshake: The client initiates a TCP connection with the server using a three-way handshake:
+    - SYN: The client sends a SYN (synchronize) packet to the server to request a connection.
+    - SYN-ACK: The server responds with a SYN-ACK (synchronize-acknowledge) packet to acknowledge the request.
+    - ACK: The client sends an ACK (acknowledge) packet to establish the connection.
+
+HTTP Request: Once the TCP connection is established, the client sends an HTTP GET request to the server to request the web page.
+
+Server Processing: The server processes the request, retrieves the requested web page, and prepares an HTTP response. (This is usually the only latency most SWE's think about and control!)
+
+HTTP Response: The server sends the HTTP response back to the client, which includes the requested web page content.
+
+TCP Teardown: After the data transfer is complete, the client and server close the TCP connection using a four-way handshake:
+    - FIN: The client sends a FIN (finish) packet to the server to terminate the connection.
+    - ACK: The server acknowledges the FIN packet with an ACK.
+    - FIN: The server sends a FIN packet to the client to terminate its side of the connection.
+    - ACK: The client acknowledges the server's FIN packet with an ACK.
+
+
 5. How would you deploy and roll back a service safely
 
 - Run test suite during PR Process
