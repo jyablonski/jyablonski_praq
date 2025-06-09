@@ -37,3 +37,37 @@ nums = [2, 2, 1, 5, 3]
 target = 6
 
 value = solution(nums=nums, target=target)
+
+
+# if the input array is sorted
+
+
+def solution(nums: list[int], target: int) -> bool:
+    left = 0
+    right = len(nums) - 1
+
+    while left < right:
+        current_sum = nums[left] + nums[right]
+        print(f"Checking {left} ({nums[left]}) and {right} ({nums[right]})")
+        if current_sum == target:
+            return True
+
+        if current_sum < target:
+            left += 1
+        else:
+            right -= 1
+
+    return None
+
+
+nums = [1, 2, 3, 6, 7, 8]
+target = 5
+
+b = solution(nums=nums, target=target)
+
+# Consider using the two-pointer technique for questions that involve searching for a pair (or more) of items in an array that meet a certain criteria.
+# Examples:
+
+#     Finding a pair of items that sum to a given target in an array.
+#     Finding a triplet of items that sum to 0 in a given array.
+#     Finding the maximum amount of water that can be held between two array items representing wall heights.
