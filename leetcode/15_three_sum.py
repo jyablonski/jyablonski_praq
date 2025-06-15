@@ -7,6 +7,8 @@
 # sort in the input array first
 
 
+# time complexity is o^2 because we are using nested loops in this solution from having to do
+# n iterations and each iterations having to take o(n) time to use the 2 pter technique
 def solution(nums: list[int]) -> list[list[int]]:
     result = []
     nums.sort()  # Sort the array to use two-pointer technique
@@ -17,32 +19,32 @@ def solution(nums: list[int]) -> list[list[int]]:
             continue
 
         # Two-pointer approach to find the other two numbers
-        l = key + 1
-        r = len(nums) - 1
-        while l < r:
-            three_sum = value + nums[l] + nums[r]
+        left = key + 1
+        right = len(nums) - 1
+        while left < right:
+            three_sum = value + nums[left] + nums[right]
 
             # if the value is > 0 then our three_sum is too large, decrement the right pter
             if three_sum > 0:
-                r -= 1
+                right -= 1
 
             # if the value is < 0 then our three_sum is too small, increment the left pter
             elif three_sum < 0:
-                l += 1
+                left += 1
 
             # else: we found our three_sum.  add the triplet to result and continue on
             else:
-                result.append([value, nums[l], nums[r]])
-                l += 1
-                r -= 1
+                result.append([value, nums[left], nums[right]])
+                left += 1
+                right -= 1
 
                 # Skip duplicates for the second number
-                while l < r and nums[l] == nums[l - 1]:
-                    l += 1
+                while left < right and nums[left] == nums[left - 1]:
+                    left += 1
 
                 # Skip duplicates for the third number
-                while l < r and nums[r] == nums[r + 1]:
-                    r -= 1
+                while left < right and nums[right] == nums[right + 1]:
+                    right -= 1
 
     return result
 
