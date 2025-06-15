@@ -211,8 +211,6 @@ def fib(n):
    - Given weights and values of items, find the maximum value that can be carried in a knapsack of a given capacity.
    - DP builds a table where each entry represents the maximum value for a given weight limit.
 
-``` python
-
 
 
 ## Backtracking
@@ -322,4 +320,42 @@ def combinationSum2(candidates, target):
 
     backtrack(0, [], 0)
     return result
+```
+
+## Sliding Window
+
+The sliding window technique is a powerful method for solving problems that involve contiguous subarrays or substrings. It allows you to maintain a subset of elements in a data structure while iterating through the array, which can lead to more efficient solutions than brute force methods.
+
+There are two main types of sliding window techniques:
+1. **Fixed-size Sliding Window**: The window size is constant, and you slide the window across the array.
+2. **Variable-size Sliding Window**: The window size can change based on certain conditions, expanding or contracting as needed.
+
+It's useful for problems involving:
+- Finding the maximum or minimum sum of a subarray of a fixed size.
+- Finding the longest substring with unique characters.
+
+If you know the length of the subsequence you are looking for, use a fixed-length sliding window. Otherwise, use a variable-length sliding window.
+
+
+``` python
+def variable_length_sliding_window(nums):
+  state = # choose appropriate data structure
+  start = 0
+  max_ = 0
+
+  for end in range(len(nums)):
+    # this syntax will keep track of the count of the current element in the state
+    state[s[end]] = state.get(s[end], 0) + 1
+    # extend window
+    # add nums[end] to state in O(1) in time
+
+    while state is not valid:
+      # repeatedly contract window until it is valid again
+      # remove nums[start] from state in O(1) in time
+      start += 1
+
+    # INVARIANT: state of current window is valid here.
+    max_ = max(max_, end - start + 1)
+
+  return max_
 ```

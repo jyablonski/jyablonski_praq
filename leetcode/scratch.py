@@ -102,3 +102,21 @@ def solution(nums: list[int]) -> int:
 
     print("why are we returning")
     return max_sub
+
+
+# Given an array of integers nums and an integer k, find the maximum sum of any contiguous
+# subarray of size k
+def fixed_sliding_window(nums: list[int], k: int) -> int:
+    max_sum = 0
+    start = 0
+    current_sum = 0
+
+    for end in range(len(nums)):
+        current_sum += nums[end]
+
+        if end - start + 1 == k:
+            max_sum = max(max_sum, current_sum)
+            current_sum -= nums[start]
+            start += 1
+
+    return max_sum
