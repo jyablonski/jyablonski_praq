@@ -182,6 +182,9 @@ In Western music, there are 12 unique notes within an octave. Each of them are a
 11. G
 12. G# (G sharp) / Ab (A flat)
 
+- No B# or E#
+- No F flat or C flat
+
 There's no real reason E & B have no E# or B# respectively. E# is technically just F.
 
 A

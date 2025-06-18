@@ -31,7 +31,7 @@ def solution(s: str) -> bool:
 
 
 s = "()[]{}"  # true
-s2 = "([])"  # false
+s2 = "([])"  # true
 s3 = "(([])}"  # false
 s4 = "(("
 s5 = "){"
@@ -42,3 +42,23 @@ solution(s4)
 solution(s5)
 
 t = [1, 2, 3]
+
+
+def solution(s: str) -> bool:
+    stack = []
+    mapping = {")": "(", "}": "{", "]": "["}
+
+    # iterate through the entire string
+    for char in s:
+        # Does this closing bracket correctly match the last opening bracket we saw?
+        if char in mapping:
+            if not stack or stack[-1] != mapping[char]:
+                return False
+
+            # otherwsie we can pop
+            stack.pop()
+        else:
+            stack.append(char)
+
+    # if there are any leftover values, return false
+    return len(stack) == 0

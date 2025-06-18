@@ -120,3 +120,38 @@ def fixed_sliding_window(nums: list[int], k: int) -> int:
             start += 1
 
     return max_sum
+
+
+def nextGreaterElement(nums):
+    n = len(nums)
+
+    # create new list of elements of size n and initialize them to -1
+    result = [-1] * n
+    stack = []
+
+    # iterate through nums and
+    for i in range(n):
+        # while we have items in the stack and if the current element
+        # is greater than the last element in stack, then add that element's index
+        # with the current value to result
+        while stack and nums[i] > nums[stack[-1]]:
+            idx = stack.pop()
+            result[idx] = nums[i]
+        stack.append(i)
+
+    return result
+
+
+# same thing, but smaller element rather than large now
+def nextSmallerElement(nums):
+    n = len(nums)
+    result = [-1] * n
+    stack = []
+
+    for i in range(n):
+        while stack and nums[i] < nums[stack[-1]]:
+            idx = stack.pop()
+            result[idx] = nums[i]
+        stack.append(i)
+
+    return result

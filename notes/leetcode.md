@@ -359,3 +359,14 @@ def variable_length_sliding_window(nums):
 
   return max_
 ```
+
+## Stack
+
+Stacks are a data structure of elements that follow the LIFO principle, which means the last element added to the stack is the first to be removed
+
+- New elements are pushed onto the stack
+- Old elements that are removed are popped from the stack
+- Both operations take O(1) time
+- In Python, Arrays `[]` can be used as a stack
+
+A monotonic stack is a special type of stack in which all elements on the stack are sorted in either descending or ascending order. It is used to solve problems that require finding the next greater or next smaller element in an array.

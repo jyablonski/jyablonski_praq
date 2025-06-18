@@ -23,6 +23,8 @@ def solution(s: str) -> str:
     for char in s:
         if char.isdigit():
             # this is some weird math to handle multi digit numbers like 12
+            # current_num = 0 * 10 + 1 = 1  # 1st loop
+            # current_num = 1 * 10 + 2 = 12 # 2nd loop
             current_num = current_num * 10 + int(char)
 
         elif char == "[":
