@@ -279,3 +279,71 @@ When dealing with failed requests, timeouts, and re-tries, retry with exponentia
 - https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/
 
 Idempotent APIs are critical for payment processing systems to ensure customers aren't double charged or anything like that.
+
+## Large File Upload
+
+Most APIs and API Gateways have a size limit on how large a payload can be, it's typically ~ 10 MB. So if you're trying to upload a video or a file that's larger than this, you typically have to build out a specialized workflow to enable that for your users.
+
+This typically involves direct uploads to S3 using multi-part uploads which allows you to upload chunks of data 1 at a time for the same "large file", where it's stiched back together in S3.
+
+- AWS offers multi-part uploads through a direct API
+  - Speeds up uploads
+  - Allows resuming failed uploads
+  - Enables parallelism
+- A presigned URL gives temporary access to perform an S3 operation (like PUT or GET) without needing AWS credentials, typically used for direct client uploads
+
+Large platforms generally let clients upload directly to S3 to offload the server. It works by:
+
+1. Clients request upload (like when they want to upload a video or save a file)
+2. Backend initializes multi-part upload by calling S3's `CreateMultipartUpload` API and returning an `UploadId` to track the session
+3. Backend generates pre-signed URLs for each ~5 MB chunk using `UploadId` and `PartNumber` and it returns those to the client
+4. Client uploads each part directly to S3 using the presigned URLs, directly bypassing the server
+5. Client then informs the backend when it's done by sending a list of uploaded part numbers and ETags
+6. Backend completes the upload by calling `CompleteMultipartUpload` with the part list and `UploadId`
+
+- Can combine this with S3 Event Notifications to look for completed multi part file uploads so you can take metadata related to the large file and go update some video_metadata attributes in your database if you want to know the final s3 key, or file size etc.
+
+so we're doing this so we dont have to send GBs of data to the bakcend to do the uploading. because we want the end state of this data to live somewhere in blob storage, we just build this workflow out so they directly upload to S3 in a secure, controlled way managed by us ?
+
+- Otherwise, the cost would double from the data transfer if it went into your server, then out to S3.
+- Your backend could also become bottlenecked by large concurrent uploads
+
+``` python
+import boto3
+
+s3 = boto3.client("s3")
+BUCKET_NAME = "your-bucket-name"
+
+def initiate_upload(key: str):
+    """Start multipart upload"""
+    response = s3.create_multipart_upload(Bucket=BUCKET_NAME, Key=key)
+    return response["UploadId"]
+
+def generate_presigned_urls(key: str, upload_id: str, total_parts: int):
+    """Generate presigned URLs for each part"""
+    urls = []
+    for part_number in range(1, total_parts + 1):
+        url = s3.generate_presigned_url(
+            ClientMethod="upload_part",
+            Params={
+                "Bucket": BUCKET_NAME,
+                "Key": key,
+                "UploadId": upload_id,
+                "PartNumber": part_number,
+            },
+            ExpiresIn=3600,  # valid for 1 hour
+        )
+        urls.append({"part_number": part_number, "url": url})
+    return urls
+
+def complete_upload(key: str, upload_id: str, parts: list):
+    """Complete multipart upload"""
+    response = s3.complete_multipart_upload(
+        Bucket=BUCKET_NAME,
+        Key=key,
+        UploadId=upload_id,
+        MultipartUpload={"Parts": parts},
+    )
+    return response
+
+```

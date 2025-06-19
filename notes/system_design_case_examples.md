@@ -463,16 +463,17 @@ Core Entities
 
 - Users
 - Videos
-- Subscriptionsa
+- Video Metadata
+- Subscriptions
 - Client / Device Tracking
 
 
 API
 
-- POST Upload Video userId, videoId
-- GET Video videoId
-- POST Subscribe userId, subscribeToUserId
-- GET Subscriptions userId, subscribedUserIds []
+- POST /videos {videoBytes, videoMetadata}                 # upload a new video
+- GET /videos/:videoId -> videoBytes, videoMetadata        # watch a new video
+- POST /users/:userId/subscriptions -> {subscribeToUserId} # new subscription
+- GET /users/:userId/subscriptions -> subscribedUserIds [] # get subscriptions
 
 High Level Design (that satisifes the Functional Requirements)
 
@@ -507,6 +508,8 @@ Deep Dives (to handle edge cases, critical performance implications, improvement
 - Less popular content that is also short might just be able to be encoded on demand
 - Some videos might only be popular in certain regions, so you don't nmeed to distribute them to other regions at all
 - Build your own CDN like Netflix, but this is a massive undertaking
+- build a chunker service to take a completed large file from a user from multi-part upload in s3, and build 2-10 second video clips of it that are stored back to S3. Then when users go to watch videos on youtube, we can immediately serve them content at a much faster pace by incrementally pulling & serving those chunks 1 at a time, as opposed to pulling an entire 5 GB video at once.
+  - this chunking process is what enables your low latency non-functional requirements so videos can start playing for users much faster
 
 
 
