@@ -42,6 +42,10 @@ dependencies = [
     "snowflake-sqlalchemy>=1.7.3",
     "sqlalchemy>=2.0.40",
     "snowflake-connector-python>=3.14.1",
+    "google-genai>=1.20.0",
+    "jsonref>=1.1.0",
+    "google-generativeai>=0.8.5",
+    "instructor>=1.8.3",
 ]
 
 [dependency-groups]

@@ -2,6 +2,8 @@ import instructor
 from pydantic import BaseModel
 from openai import OpenAI
 
+# https://aistudio.google.com/app/apikey
+
 
 # Define your desired output structure
 class UserInfo(BaseModel):
