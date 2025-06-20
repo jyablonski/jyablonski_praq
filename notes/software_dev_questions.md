@@ -707,7 +707,7 @@ TCP Teardown: After the data transfer is complete, the client and server close t
     4. Kubelets on the nodes receive instructions and start containers using the container runtime
     5. Kube Proxy routes traffic between services and pods as needed
 
-8. What is eventual consistency and where is it acceptable?
+8. What is eventual vs strong consistency?
 
 - Eventual consistency is a consistency model in distributed systems where, in the absence of new writes, all replicas will eventually converge to the same value — but not necessarily immediately.
 - It relates to the CAP Theorem, which states that in a distributed system, you can only fully achieve two out of three: Consistency, Availability, and Partition Tolerance. 
@@ -721,5 +721,59 @@ TCP Teardown: After the data transfer is complete, the client and server close t
 - When to prefer eventual consistency (and favor availability):
     - People adding things to shopping cart. Lets always make the customer able to pick items out and we'll figure the rest out later even if our database replicas aren't in sync.
     - Also social media likes or comments etc.
+    - Use when temporary inconsistencies are okay
 - When to prefer strong consistency 
     - People submitting orders. Lets always prioritize finalizing a customer's order out to ensure we aren't handing out the same concert ticket to 2 different people.
+    - When you want no stale reads
+
+9. When working with large code bases with slow test suites, what strategies can be used to improve test suite runtimes
+
+- You can selectively run only portions of your test suite depending on what code has been changed, so when a change is made only the tests that depend on those files or functions runs.
+- You can parallelize your tests and run them across multiple machines
+- Tier your tests into things liek tier 0 (fast, critical unit tests), 1 (broader test coverage), 2 (full refression suite).
+    - Tier 0 can be ran on every PR, while tier 1 and 2 are ran nightly or something
+- Cache test results
+
+10. What strategies do you use to reduce build times as projects grow?
+
+- Move to faster package management tools (Pipenv / Poetry -> uv)
+- Implement caching to re-use previous builds automatically
+- Multi Stage Docker Build to get the final container image into the smallest possible size to enable faster upload times
+- There's some other garbage about incremental builds and gradle shit, but im not a java hoe so fuck off
+
+11. How would you design a system to support multiple active versions (e.g., for A/B tests or canary releases)?
+
+- Implement and use feature flags to gradually expose behavior to users without redeploying
+- Request routing based on version - `v1/` vs `v2/` etc
+- ensure backwards compatability with database schemas across multiple versions
+    - worst case scenario - you have to use a separate database. hope you never have to do that
+- A/B testing handled at the load balancer level -> give 90% of the users the normal content, give 10% of users the new content that you're looking to evaluate
+
+12. How do you enforce or encourage consistent coding practices across multiple teams?
+
+- Implement pre commit hooks to manage things like linting and formatting before code ever gets committed
+- use shared config files to manage linting and formatting rules
+- can implement checks in CI / CD to block merges until test coverage, code style, and lint checks all pass
+- write internal style guides and maintain them as living documents
+- code review checklists -> make a PR template `github/pull_request_template.md`
+
+13. What tradeoffs do you consider when choosing between synchronous and asynchronous communication?
+
+- synchronous when you need realtime feedback, quick alignment, or help with ambiguous topics. it's useful for high stakes decisions, brainstorming, and unblocking
+- but, it's disruptive to work, hard to coordinate, and not written down unless somebody is actively doing that
+- async comms create a written record of discussions and decisions and can scale better
+- but, it's slower to reach alignment, easier for misunderstandings to happen, and decisions can get buried if not managed.
+
+14. How do you communicate technical risk to non-technical stakeholders?
+
+- translate risk to impact -> "if we're going to build xyz, it will take 6 months and we'll have less bandwidth to deliver new features"
+- frame scenarios as best case vs worst case
+- use visuals and metrics where possible
+- tie risk back to business goals
+
+15. How would you implement feature flags at scale across multiple teams and environments?
+
+- can utilize a dedicated feature flag service with SDKs for each language you use
+- can tag feature flags by team
+- can enforce auto-expiration policies so flags aren't enabled indefinitely
+- every feature flag change must be auditable and logged & visible
