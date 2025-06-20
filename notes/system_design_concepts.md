@@ -347,3 +347,53 @@ def complete_upload(key: str, upload_id: str, parts: list):
     return response
 
 ```
+
+## Streaming Protocols
+
+HLS (HTTP Live Streaming) and DASH (Dynamic Adaptive Streaming over HTTP) are the two most popular adaptive bitrate streaming protocols. They let users stream video efficiently over the internet by adapting playback quality in real time based on their network speed and device capability. They both:
+
+- Split video into small 2-10 second chunks
+- Offer multiple versions of the same video (480p, 720p, 1080p etc)
+- Allow the video player to switch quality levels dynamically without stopping the video
+
+HLS was developed by Apple and is widely supported on iOS, Safari, MacOS. It uses MPEG-TS segment files (.ts) and playlist files are in M3U8 Format
+
+```
+/video-id/
+├── master.m3u8
+├── 480p/
+│   ├── 480p.m3u8
+│   ├── segment1.ts
+│   ├── segment2.ts
+├── 720p/
+│   ├── 720p.m3u8
+│   ├── segment1.ts
+│   ├── segment2.ts
+├── 1080p/
+    ├── 1080p.m3u8
+    ├── segment1.ts
+    ├── segment2.ts
+```
+
+
+DASH (MPEG-DASH) is an open standard by MPEG used by many non-Apple platforms like Android, Chrome, Smart TVs etc. Segments are usually in MP4 fragments (.m4s) and the manifest is an XML file (.mpd)
+
+```
+manifest.mpd
+├── 1080p/
+│   ├── init.m4s
+│   ├── segment1.m4s
+│   ├── segment2.m4s
+```
+
+Let’s say you want to let users stream a video hosted in S3:
+
+- You transcode it into 480p, 720p, 1080p.
+- You segment each version into 6-second chunks.
+- You generate the m3u8 (HLS) or mpd (DASH) manifest.
+- Your frontend video player reads the manifest and switches quality dynamically.
+
+Bitrate in video streaming refers to the amount of data processed per second of video — typically measured in kilobits per second (kbps) or megabits per second (Mbps).
+
+- Higher bitrate = better quality (more detail, less compression) but larger files and more bandwidth is needed
+- Lower bitrate = lower quality but allows for smaller files and is more efficient for slow networks
