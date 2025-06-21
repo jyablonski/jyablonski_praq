@@ -1,10 +1,14 @@
 # Apache Flink
 
+[Article](https://www.redpanda.com/guides/event-stream-processing-kafka-streams-vs-flink)
+
 Apache Flink is an Open Source high-performance framework designed for large scale data processing, particularly in the real-time streaming domain. It provides true event-by-event streaming capabilities, as opposed to typical Python or Spark solutions which typically offer only micro-batch streaming solutions (polling every 30 - 60 seconds for new data etc).
 
 Features extremely low latency and stateful computations which enable users to process live data and generate insights on the fly.
 
-Commonly paired with tools like Apache Kafka for Streaming Delivery, and then putting Flink on top of that to process that data.
+So, to get data flowing into Flink, you need producer services or systems that generate and send the streaming data into a source Flink can read from.
+
+- [Producer app] --> Kafka topic --> Flink job --> Sink (console / DB / etc.)
 
 ## Use Cases
 
@@ -13,6 +17,13 @@ Commonly paired with tools like Apache Kafka for Streaming Delivery, and then pu
 3. IoT Sensor Data - detect equipment failure or anomalies in real time to avoid costly downtime or incidents
 4. General Anomaly Detection
 
+## Workflow Examples
+
+1. Real Time Sliding Window Aggregation - calculate rolling sum every 5 minutes across a streaming data feed
+2. Session Windowing for User Activity - detect user sessions by grouping clicks with inactivity gaps of 30 minutes
+3. Join multiple stream datasets together for Fraud Detection - join transactions and real time blacklist updates to flag suspicious payments as they happen
+4. Detect fraud patterns like 3 failed login attempts with 5 minutes followed by a successful login
+5. Process sensor data streams with out-of-order events, discarding or handling late data gracefully.
 
 ## Flink Memory Requirements
 
