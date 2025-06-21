@@ -1,0 +1,13 @@
+services:
+  postgres:
+    # this image includes pgvector which isnt in the alpine image
+    image: ankane/pgvector
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ${PWD}/bootstrap.sql:/docker-entrypoint-initdb.d/bootstrap.sql

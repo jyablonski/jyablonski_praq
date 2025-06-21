@@ -1,14 +1,45 @@
 # Python Package Management Files
 
 ### setup.py
-Old de facto standard for packaging.  It's a raw python script that installs the associated package. It did its job but new tools are around that do the job better.  Sometimes accompanied by a `setup.cfg` file.
+
+A `setup.py` file is a Python script that defines how to build and install a package. It was commonly used alongside setup.cfg for configuration. While it got the job done, modern tools like Poetry and uv offer simpler, more robust alternatives.
 
 ### pyproject.toml
-The new standardized format to describe project metadata.  Easier to work wtih and allows for a number of configurations for different Python tools such as linters, tests, and versions from 1 file.
 
+The modern, standardized way to configure Python projects. It replaces the need for the old files like `setup.py`, `setup.cfg` and centralizes configuration for:
+
+- Package metadata
+- Dependency management
+- Tool settings (linters, test runners, formatters)
+- Build systems (Poetry, Hatch etc)
 
 ## Poetry
-Poetry sits on top of `pyproject.toml` to manage metadata for your project, Package management and versioning, other plugins config options such as Tox, Pytest, Linters like Black + Flake8 etc all from 1 file.
+
+Poetry is a dependency management and packaging tool for Python, written in Python. It manages dependencies for your project, offers optional groups for things like `test` or `local` sets of packages, and can be used to create and deploy libraries to PyPI.
+
+With Poetry, you don't need to manage a `setup.py` file, you just use `pyproject.toml`.
+
+Uses a `poetry.lock` file for reproducible builds
+
+## uv
+
+uv is a new dependency and packagement management tool written in Rust that aims to be the fastest package manager in Python. It's a multi-purpose, high-performance toolchain that’s designed to unify and replace several commonly used tools.
+
+It offers a handful of incredibly advanced features:
+
+- Fastest Package Manager for Python
+- It includes `uvx` which effectively replaces `pipx` to run various scripts or CLIs in isolated environments
+- It includes Python Version Management to automatically download and instasll Python versions to use in your projects. This means no more need for 3rd party tools like `pyenv` or `asdf`
+- It works with `pyproject.toml` by default
+
+| Functionality                   | Traditional Tool(s)           | `uv` Replacement                            |
+| ------------------------------- | ----------------------------- | ------------------------------------------- |
+| Installing packages             | `pip`                         | `uv pip install`                            |
+| Creating virtual environments   | `virtualenv`, `venv`          | `uv venv`                                   |
+| Managing dependencies/lockfiles | `pip-tools`, `poetry install` | `uv pip compile`, `uv pip install`          |
+| Running CLI apps globally       | `pipx`                        | `uvx`                                       |
+| Managing Python versions        | `pyenv`, `asdf`, `rye`        | `uv` (built-in `python` version management) |
+
 
 ## Wheels
 [Article](https://realpython.com/python-wheels/)
