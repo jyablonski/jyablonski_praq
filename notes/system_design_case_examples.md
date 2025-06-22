@@ -96,24 +96,29 @@ API
 1. Fare Estimate
    1. Endpoint for when Users request a price estimate for a ride. 
    2. Takes a pickup and destination location
-   3. `POST /fare-estimate?pickupLocation={pickup}&destination={destination}`
+   3. `POST /fare-estimates` {pickupLocation, destination}`
    4. Returns {ride_id, estimated_price, estimated_pickup_time}
 2. Ride Request
    1. Endpoint for when Users request a ride. 
    2. Takes a Ride ID returned from the Fare Estimate
-   3. `PATCH /ride/request`, passing in the ride_id returned from the Fare Estimate
+   3. `PATCH /rides/:rideId`, passing in the ride_id returned from the Fare Estimate
    4. Patch because we might edit the Fare Estimate row and turn it from `is_booked` from false to true or something
 3. Driver Location Update Request
    1. Endpoint that is continuously called by Drivers on the clock to get their location update. 
    2. Takes a Lat Long
-   3. `POST /drivers/location/update`
+   3. `POST /drivers/:driverId/location` {latitude, longitude}
+   - Better to make this per-driver (/drivers/:id/location) to avoid needing to pull it from auth headers.
 4. Driver Accept Ride Request
    1. Endpoint that allows Drivers to accept or deny a ride request.
    2. Takes a Ride ID and a true / false value for yes or no
    3. If accepted, returns Lat / Long coordinates for pickup.
+   4. `POST /rides/:rideId/acceptance` {accepted: true}
+   - Backend extracts driverId from the authenticated user (JWT, session).
 5. Update Ride Status 
    1. Endpoint that updates Ride Status for a specific Ride ID
    2. Status -> "picked_up_rider" | "completed"
+   3. `PATCH /rides/:rideId/status` {status: picked_up_rider}
+   - Potential Status values: "requested" → "accepted" → "picked_up_rider" → "completed"
 
 
 High Level Design

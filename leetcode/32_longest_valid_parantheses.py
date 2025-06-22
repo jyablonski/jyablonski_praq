@@ -5,6 +5,9 @@
 
 # strategy involves using a stack that will always contain the index of hte last unmatched opening parantheses,
 # which is the start of the current valid substring
+# if we have ))()()(), our index stays = 1 and the valid parantheses pairs just get
+# appended and popped from the stack and we re-calculate the max valid pair len everytime
+# we solve a matched pair
 def solution(s: str) -> int:
     max_len = 0
     stack = [-1]
@@ -33,7 +36,7 @@ def solution(s: str) -> int:
 
 
 s1 = "()"
-s2 = ")()())"
+s2 = ")())()()()"
 
 solution(s=s1)
 solution(s=s2)
