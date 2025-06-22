@@ -1,54 +1,38 @@
-# loop through left to right and then right to left to ensure all possible valid substrings
-# are considered, especially those that might be cut off by invalid parentheses sequences in one direction.
+# Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring.
+
+# key assumption that the input string can only be `(` or `)`
+
+
+# strategy involves using a stack that will always contain the index of hte last unmatched opening parantheses,
+# which is the start of the current valid substring
 def solution(s: str) -> int:
-    # initialize left + right pointers
-    l = 0
-    r = 0
-    answer = 0
-    len_s = len(s)
+    max_len = 0
+    stack = [-1]
+    # this has to be -1 to handle edge cases like s = `()`
 
-    for i in range(len_s):
-        if s[i] == "(":
-            l += 1
+    for i, char in enumerate(s):
+        # always put opening parantheses onto the stack
+        if char == "(":
+            stack.append(i)
+
         else:
-            r += 1
+            # first pop the top element
+            stack.pop()
 
-        # if l == r, then a valid substring was found so we can update answer
-        if l == r:
-            print(f"current answer {answer}, new answer is {max(answer, 2 * l)}")
-            answer = max(answer, 2 * l)
+            # then check if the stack is empty or not
+            if not stack:
+                # stack is empty. addt he current index so any future substring
+                # can only start after this
+                stack.append(i)
+            else:
+                # stack is not empty.
+                # we can calculate the length of the valid substring
+                max_len = max(max_len, i - stack[-1])
 
-        # if this happens, it incicates an invalid substring was found
-        if r > l:
-            print(f"invalid r > l substring! {r} > {l} at {s[l]}")
-            l = 0
-            r = 0
-
-    l = 0
-    r = 0
-
-    # on the second pass
-    for i in range(len_s - 1, -1, -1):
-        if s[i] == "(":
-            l += 1
-        else:
-            r += 1
-
-        # if l == r, then a valid substring was found so we can update answer
-        if l == r:
-            print(f"current answer {answer}, new answer is {max(answer, 2 * l)}")
-            answer = max(answer, 2 * l)
-
-        # if this happens, it incicates an invalid substring was found
-        if l > r:
-            print(f"invalid l > r substring! {l} > {r} at {s[l]}")
-            l = 0
-            r = 0
-
-    return answer
+    return max_len
 
 
-s1 = "(()"
+s1 = "()"
 s2 = ")()())"
 
 solution(s=s1)
