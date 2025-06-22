@@ -370,3 +370,31 @@ Stacks are a data structure of elements that follow the LIFO principle, which me
 - In Python, Arrays `[]` can be used as a stack
 
 A monotonic stack is a special type of stack in which all elements on the stack are sorted in either descending or ascending order. It is used to solve problems that require finding the next greater or next smaller element in an array.
+
+## Greedy Algorithms
+
+Greedy algorithms are a category of algorithms in data structures and algorithms (DS&A) where decisions are made step by step, choosing the locally optimal solution at each step with the hope that this leads to a globally optimal solution.
+
+A globally optimal solution can be arrived at by making a locally optimal (greedy) choice at each step.
+
+- You don't need to consider all possibilities (like in dynamic programming or backtracking).
+- Once you make a choice, you never reconsider it
+
+A problem has an optimal substructure if an optimal solution to the problem contains optimal solutions to its subproblems.
+
+- Greedy and dynamic programming both require this property.
+- But greedy doesn't require overlapping subproblems (unlike DP).
+
+Greedy problems often involve sorting elements by some criteria, and are generally faster than dynamic programming because they're not considering all possible solutions
+
+``` py
+def solution(prices: list[int]) -> int:
+    min_price = prices[0]
+    max_profit = 0
+
+    for price in prices:
+        min_price = min(min_price, price)
+        max_profit = max(max_profit, price - min_price)
+
+    return max_profit
+```

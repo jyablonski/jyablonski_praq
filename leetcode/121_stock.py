@@ -36,4 +36,16 @@ def solution(nums: list[int]) -> int:
 nums = [7, 1, 5, 3, 6, 4]
 nums2 = [16, 15, 14, 13, 11, 5, 3, 1]
 
-solution(nums=nums2)
+solution(nums=nums)
+
+
+# this also works
+def solution(nums: list[int]) -> int:
+    min_price = nums[0]
+    max_profit = 0
+
+    for price in nums:
+        min_price = min(min_price, price)
+        max_profit = max(max_profit, price - min_price)
+
+    return max_profit

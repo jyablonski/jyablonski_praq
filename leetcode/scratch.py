@@ -155,3 +155,20 @@ def nextSmallerElement(nums):
         stack.append(i)
 
     return result
+
+
+# greedy algo
+def findContentChildren(greeds, cookies):
+    greeds.sort()
+    cookies.sort()
+
+    count = 0
+    i, j = 0, 0
+    while i < len(greeds) and j < len(cookies):
+        # current cookie can satisfy current child
+        if cookies[j] >= greeds[i]:
+            count += 1
+            i += 1
+        j += 1
+
+    return count
