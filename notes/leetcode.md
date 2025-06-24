@@ -398,3 +398,99 @@ def solution(prices: list[int]) -> int:
 
     return max_profit
 ```
+
+## Depth First Search
+
+DFS is a traversal algorithm to visit all nodes in a tree or graph data structure. It starts at the root node and tries to go down as far as possible until reaching a leaf node, when it reaches a leaf node, it backtracks to the closest parent node to explore the next path.
+
+- It's typically implemented as a recursive function, and visits new nodes by making recursive calls
+- As we make recursive calls to traverse down the tree, we keep pushing call frames onto the call stack until we reach our first base case, where node is None.
+- Backtracking occurs whenever a recursive call returns. The call frame is popped off the call stack, and execution returns to the next call frame on the call stack.
+- Time complexity is o(n) beacuse we have to visit each node exactly once
+
+Binary trees are typically used in these algorithms and they have key attributes & characteristics:
+
+- The top node of a binary tree is called the root
+- Each node in a binary tree can have at most 2 children, a left child and right child
+- A node that does not have any children is called a leaf node
+- The height (or depth) of a binary tree is the number of edges on the longest path between the root node and a leaf node
+- A balanced binary tree is one where the height of the left or right subtrees of every node differs by at most 1
+- A binary tree is "complete" if every level, except possibly the last, is completely filled, and all nodes are as far left as possible
+    - A complete binary tree has a height of O(log(n)), where n is the number of nodes in the tree.
+
+
+A binary search tree (BST) is a binary tree where:
+
+- All nodes in the left subtree have a value less than the root
+- All nodes in the right subtree have a value greater than the root
+
+
+``` py
+# template to act as a starting point to solve binary tree problems with DFS
+def dfs(node):
+    # base case
+    if node is None:
+        return some value
+    
+    ...
+    
+    left = dfs(node.left)
+    right = dfs(node.right)
+    return value based on left and right
+
+```
+
+- This is a template for solving DFS Problems
+
+To determine what the return value should be for a different problem, imagine you're at a node in the tree and ask yourself: "What information do I need from my left and right subtrees to solve the problem for my subtree?"
+
+- If the problem is to find the max value in a binary tree, then your return would be something like:
+
+``` py
+def maxValue(node):
+    if node is None:
+        return float('-inf')
+    
+    if node.left is None and node.right is None:
+        return node.val
+
+    left = maxValue(node.left)
+    right = maxValue(node.right)
+    return max(left, right, node.val)
+```
+
+In some cases, questions require us to pass information "down" from parents to child nodes, which we do via the parameters of our recursive function. If we need more parameters than the original function signature allows, then we need to introduce a helper function to help us recurse.
+
+- Questions involving root-to-leaf paths are common examples of where using helper functions are necessary, as we can use the helper function to introduce extra parameters that store the state of our current path.
+
+``` py
+def goodNodes(root):
+    # nodes is a "global" var in the context of this function and its child functions
+    # this is best practice and good to mention that you know the knowledge of variable scoping
+    nodes = []
+    def dfs(root, max_):
+```
+
+## Examples
+
+1. Given a binary tree, use Depth-First Search to find the sum of all nodes in the tree.
+
+``` py
+
+# Given a binary tree, use Depth-First Search to find the sum of all nodes in the tree.
+def dfs(node):
+    # base case: empty subtree
+    if node is None:
+        return 0
+    
+    # base case: leaf node
+    if node.left is None and node.right is None:
+        return node.val
+    
+    left = dfs(node.left)
+    right = dfs(node.right)
+    return left + right + node.val
+```
+
+- Formula is basically root node + sum(left subtree) + sum(right subtree)
+- The base cases are the subproblems we can solve directly (without making any recursive calls):

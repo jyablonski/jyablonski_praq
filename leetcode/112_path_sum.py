@@ -15,7 +15,7 @@ def solution(root, targetSum):
     if not root:
         return False  # Base case: If the tree is empty, no path exists
 
-    # if it's a leaf node, check if the path sum equals targetSum
+    # if we hit a leaf node, then check if the path sum equals targetSum
     if not root.left and not root.right:
         return root.val == targetSum
 
