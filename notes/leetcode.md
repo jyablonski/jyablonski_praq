@@ -462,6 +462,7 @@ def maxValue(node):
 In some cases, questions require us to pass information "down" from parents to child nodes, which we do via the parameters of our recursive function. If we need more parameters than the original function signature allows, then we need to introduce a helper function to help us recurse.
 
 - Questions involving root-to-leaf paths are common examples of where using helper functions are necessary, as we can use the helper function to introduce extra parameters that store the state of our current path.
+- Sometimes we may also want to use a global variable defined in the main function that we append to or modify in the helper function. In this case, define it and then run `nonlocal var_name` in the helper function to access it.
 
 ``` py
 def goodNodes(root):
@@ -469,6 +470,15 @@ def goodNodes(root):
     # this is best practice and good to mention that you know the knowledge of variable scoping
     nodes = []
     def dfs(root, max_):
+
+        # use this syntax if youi want to access nodes or append to it from the helper function
+        nonlocal nodes
+
+        return ...
+
+    dfs(root, float("inf"))
+
+    return nodes
 ```
 
 ## Examples
