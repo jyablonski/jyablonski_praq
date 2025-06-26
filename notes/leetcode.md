@@ -481,6 +481,9 @@ def goodNodes(root):
     return nodes
 ```
 
+Return Values - If I'm at a node in the tree, what values do I need from my left and right children to calculate xyz of the subtree rooted at the current node?
+
+
 ## Examples
 
 1. Given a binary tree, use Depth-First Search to find the sum of all nodes in the tree.
