@@ -36,3 +36,23 @@ target2 = 6
 
 solution(nums=nums1, target=target1)
 solution(nums=nums2, target=target2)
+
+
+def binary_search(nums: list[int], target: int) -> int:
+    # nums.sort()
+    n = len(nums)
+    left = 0
+    right = n - 1
+
+    while left <= right:
+        mid = (left + right) // 2
+
+        if nums[mid] == target:
+            return mid
+
+        if nums[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return -1

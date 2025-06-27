@@ -483,7 +483,16 @@ def goodNodes(root):
 
 Return Values - If I'm at a node in the tree, what values do I need from my left and right children to calculate xyz of the subtree rooted at the current node?
 
+``` py
+# check if you're trying to call past a leaf node - this is necessary so you dont try running node.val or node.left
+# on a node that doesn't exist
+if not node:
+    return
 
+# check if you're at a leaf node
+if not node.left and not node.right:
+    print(f"were at a leaf node")
+```
 ## Examples
 
 1. Given a binary tree, use Depth-First Search to find the sum of all nodes in the tree.
@@ -507,3 +516,95 @@ def dfs(node):
 
 - Formula is basically root node + sum(left subtree) + sum(right subtree)
 - The base cases are the subproblems we can solve directly (without making any recursive calls):
+
+## Graphs
+
+Depth-First Search is also used to solve interview questions involving graphs. Graphs are typically represented in two ways: an adjacency list or as a matrix, and each has a different method of implementing DFS.
+
+Graphs consist of:
+
+- Nodes which are also known as verticies
+- Edges which connect the nodes together
+- Nodes that are connected to each other via an edge are known as neighbors of that node
+
+Graphs can contain cycles, which is a path that starts and ends on the same node. Graphs can also have connected and disconnected components. A connected graph is a graph where there is a path between every pair of nodes. (A tree is a connected graph with no cycles.)
+
+A disconnected graph is a graph where there are at least two nodes that are not connected to each other by a path. This is basically like 2 distinct graphs.
+
+Graphs can be either directed or undirected. In a directed graph, edges between nodes only go in one direction. In an undirected graph, edges between nodes go in both directions. For the most part, the graphs that you will encounter during the coding interview will be undirected.
+
+An adjacency list is a common way to represent a graph. In an adjacency list, we are given a list of nodes, where each node is mapped to a list of its neighbors. These can be created in Python using a dictionray where the keys are nodes and the values are the list of nodes each node is connected to:
+
+``` py
+adjList = {    
+    1: [2],    
+    2: [1, 3, 4],    
+    3: [2, 4],    
+    4: [2, 3, 5],    
+    5: [4]    
+}    
+```
+
+- Adjacency lists allow you to look up the neighbors of any node in O(1) time, which is a necessary step for depth-first search.
+
+Given an integer n which represents the number of nodes in a graph, and a list of edges edges, where edges[i] = [ui, vi] represents a bidirectional edge between nodes ui and vi, write a function to return the adjacency list representation of the graph as a dictionary. The keys of the dictionary should be the nodes, and the values should be a list of the nodes each node is connected to.
+
+``` py
+# edges = [[0, 1]] means node 0 is connected to node 1
+n = 4
+edges = [[0, 1], [1, 2], [2, 3], [3, 0], [0, 2]]
+
+def build_adj_list(n, edges):
+    # build the dictionary with all the keys we need and with empty lists as the value
+    adj_list = {i: [] for i in range(n)}
+
+
+    for u, v in edges:
+        adj_list[u].append(v)
+        adj_list[v].append(u)
+
+    return adj_list
+
+# we had 5 pairs, so we have 10 total values in the sum of all lists here
+{
+    0: [1, 3, 2],
+    1: [0, 2],
+    2: [1, 3, 0],
+    3: [2, 0]
+}
+```
+
+DFS for a graph is conceptually similar to DFS on a binary tree. The algorithm tries to go as deep as possible along a path before backtracking to explore other paths. The main differences are:
+
+- Each node can have any amount of neighbors, so we need a `for loop` to iterate over each neighbor
+- Because graphs can contain cycles, we have to keep track of nodes we have already visited. If we encounter one, we need to return immediately without making any further recursive calls to avoid getting into an infinite loop
+- No need for explicit base case, we just need to iterate through all nodes in the graph and the recursion will stop on its own
+
+``` py
+# basic DFS implementation on adjacency list
+def dfs(adjList):
+  if not adjList:
+    return
+
+  visited = set()
+
+  def dfs_helper(node):
+    if node in visited:
+      return
+
+    visited.add(node)
+
+    for neighbor in adjList[node]:
+      dfs_helper(neighbor)
+
+    return
+
+  # Handle disconnected components
+  for node in adjList:
+    if node not in visited:
+      dfs_helper(node)
+```
+
+- Use a set to keep track of visited nodes
+- If you encounter a node you've already visited, return immediately
+- Use a for loop to iterate ovewr each neighbor of the current node, and recursively call `dfs` on each neighbor
