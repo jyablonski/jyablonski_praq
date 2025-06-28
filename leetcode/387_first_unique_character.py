@@ -17,6 +17,7 @@ def solution(s: str) -> int:
     # to grab the index of the first char that doesn't have a -1 set
     for char, index in passed_chars.items():
         if index != -1:
+            print(passed_chars)
             return index
 
     return -1

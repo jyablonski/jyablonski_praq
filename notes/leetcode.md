@@ -517,6 +517,43 @@ def dfs(node):
 - Formula is basically root node + sum(left subtree) + sum(right subtree)
 - The base cases are the subproblems we can solve directly (without making any recursive calls):
 
+## Breadth First Search
+
+BFS is a level by level traversal algorithm that starts at a node in a tree or graph like data structure and processes all nodes at the current level before moving to the nodes at the next level.
+
+It uses a queue to keep track of nodes it needs to visit, and follows these steps:
+
+- Starts at the root node and adds it to the queue
+- While the queue is not empty, remove the node at the front and visit it
+- Add the children of the node to the back of the queue
+- Repeats step 2 and 3 until the queue is empty
+
+Compared to depth-first search, BFS makes it much easier to tell when we have finished processing all nodes at a particular level.
+
+- This makes it a natural candidate for questions that ask something about the nodes at each level
+
+``` py
+from collections import deque
+
+def bfs(root):
+  if not root:
+    return []
+
+  result = []
+  queue = deque([root])
+
+  while queue:
+    curr_node = queue.popleft()
+    result.append(curr_node.val)
+    
+    if curr_node.left:
+      queue.append(curr_node.left)
+    if curr_node.right:
+      queue.append(curr_node.right)
+
+  return result
+```
+
 ## Graphs
 
 Depth-First Search is also used to solve interview questions involving graphs. Graphs are typically represented in two ways: an adjacency list or as a matrix, and each has a different method of implementing DFS.
