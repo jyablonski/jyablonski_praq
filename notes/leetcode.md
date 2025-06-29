@@ -211,7 +211,64 @@ def fib(n):
    - Given weights and values of items, find the maximum value that can be carried in a knapsack of a given capacity.
    - DP builds a table where each entry represents the maximum value for a given weight limit.
 
+3. The climbing stairs problem can be solved with recursion, but it would take o(n^2) time and a lot of repeat work has to be done. A better solution is DP.
 
+- DP makes sense when the problem has optimal substructure, which is to say if an optimal solution to the problem contains optimal solutions to subproblems.
+- If we know the number of ways to climb 3 steps and 4 steps, then we can add those together to get the number of ways we can get to 5 steps
+- So, if a problem has optimal substructure (it can be solved using recursion), and there are overlapping subproblems (the same recursive call is made multiple times), then we can use dynamic programming to handle the overlapping subproblems more efficiently.
+- The two ways of doing that are only solve each subproblem once
+
+Memoization is a strategy where we save the results of every subproblem that we've solved to eliminate any subsequent recursive calls that might go try to solve the same problem again.
+
+- This reduces the time complexity from O(2^n) to O(n)
+- This is known as a top down approach
+- But, keep in mind we still might be making unnecessary recursive calls, even if their answer is cached
+
+``` py
+# the recursive way 
+def climbStairs(n):
+    # base cases
+    if n <= 1:
+        return 1
+    
+    return climbStairs(n - 1) + climbStairs(n - 2)
+
+# the memo way
+def climbStairs(n: int) -> int:
+    memo = {}
+    
+    def climb_helper(i: int) -> int:
+        if i <= 1:
+            return 1
+        
+        # check if value is already in cache
+        # before making recursive calls
+        # corresponds to the green nodes in the diagram
+        if i in memo:
+            return memo[i]
+        
+        # store result in cache before returning
+        memo[i] = climb_helper(i - 1) + climb_helper(i - 2)
+        return memo[i]
+    
+    return climb_helper(n)
+
+# bottom up approach
+def stairs(n):
+    if n <= 1:
+        return 1
+    dp = [0] * (n + 1)
+
+    dp[0] = 1
+    dp[1] = 1
+    for i in range(2, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+    return dp[n]
+```
+
+The other solution is to use a bottom up approach by using the previous 2 series of steps to calculate the number of ways to climb the next step
+
+- Here, we start from climbstairs(0) -> 1 and go up to `n`
 
 ## Backtracking
 

@@ -628,3 +628,53 @@ This makes:
 - Smaller & Faster Indexes on this column
 
 This matters most when you have a big table, or are doing a lot of filtering + sorting
+
+
+### Index Example
+
+``` sql
+CREATE TABLE public.test_users (
+    id SERIAL PRIMARY KEY,
+    email TEXT NOT NULL,
+    age INT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT now()
+);
+
+INSERT INTO public.test_users (email, age)
+SELECT 
+    'user' || g::text || '@example.com',
+    (random() * 80 + 10)::int
+FROM generate_series(1, 1000000) AS g;
+
+Gather  (cost=1000.00..14424.37 rows=4459 width=48) (actual time=1.993..1306.415 rows=12488 loops=1)
+  Workers Planned: 2
+  Workers Launched: 2
+  ->  Parallel Seq Scan on test_users  (cost=0.00..12978.47 rows=1858 width=48) (actual time=0.059..1021.457 rows=4163 loops=3)
+        Filter: (age = 25)
+        Rows Removed by Filter: 329171
+Planning Time: 0.297 ms
+Execution Time: 1307.203 ms;
+
+EXPLAIN ANALYZE
+SELECT * FROM public.test_users WHERE age = 25;
+
+
+CREATE INDEX idx_users_age ON public.test_users(age);
+
+DROP INDEX idx_users_age;
+
+Index Scan using idx_users_age on test_users  (cost=0.42..6778.28 rows=10867 width=38) (actual time=0.765..55.995 rows=12488 loops=1)
+  Index Cond: (age = 25)
+Planning Time: 1.174 ms
+Execution Time: 56.850 ms;
+
+Index Scan using idx_users_age on test_users  (cost=0.42..6778.28 rows=10867 width=38) (actual time=0.032..10.777 rows=12488 loops=1)
+  Index Cond: (age = 25)
+Planning Time: 0.103 ms
+Execution Time: 11.540 ms;
+
+EXPLAIN ANALYZE
+SELECT * FROM public.test_users WHERE age = 25;
+
+drop table public.test_users;
+```
