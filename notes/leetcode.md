@@ -702,3 +702,27 @@ def dfs(adjList):
 - Use a set to keep track of visited nodes
 - If you encounter a node you've already visited, return immediately
 - Use a for loop to iterate ovewr each neighbor of the current node, and recursively call `dfs` on each neighbor
+
+
+## Intervals
+
+Interval problems typically involve sorting given interval lists, and then processing each interval in order.
+
+- They're given as a list of `[start, end]` times
+
+Sorting intervals by their start times makes it easy to merge 2 intervals that are overlapping
+
+- After sorting by start time, an interval overlaps with the previous interval if it starts before the end time of the previous interval
+- Detecting overlapping intervals is the basis for many leetcode questions
+- Solutions involve sorting by start times and then iterating over each one. If the current one overlaps with the previous one, then you found your answer
+
+When an interval overlaps with the previous interval in a list of intervals sorted by start times, they can be merged into a single interval.
+
+- To merge an interval into a previous interval, we set the end time of the previous interval to be the max of either end time.
+- `prev_interval[1] = max(prev_interval[1], interval[1])`
+
+Sometimes you'll want to sort by end time instead of start time
+
+- Example: finding the max number of non-overlapping intervals in a given list of intervals
+- If we sort by start time, we risk adding an interval that starts early but ends late, which will block us from adding other intervals until that interval ends.
+- If instead we sort by end time, we can start by adding the intervals that end the earliest. Intuitively, this frees time for us to add more intervals as early as possible, and yields the correct answer.

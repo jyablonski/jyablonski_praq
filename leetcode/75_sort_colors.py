@@ -17,15 +17,15 @@ def solution(nums: list[int]) -> None:
         # and increment both `left` and `i` by 1
         if nums[i] == 0:
             nums[i], nums[left] = nums[left], nums[i]
-            left += 1
             i += 1
+            left += 1
 
         # if we come across 2, then swap it to the right and
         # decrement the right pter by 1, bc everything to the
         # right of it is already 2 and sorted
 
-        # dont need to increment `i` because we need it to stay where
-        # it is for the subsequent loop iteration
+        # dont need to increment `i` because we may have just swapped a 0
+        # or 1 from the right, so we'll continue the next loop where it is
         elif nums[i] == 2:
             nums[i], nums[right] = nums[right], nums[i]
             right -= 1
