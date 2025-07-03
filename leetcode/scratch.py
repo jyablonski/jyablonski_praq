@@ -233,3 +233,48 @@ def levelSum(self, root: TreeNode) -> list[int]:
         nodes.append(sum_)
 
     return nodes
+
+
+# dictionary sorting example
+dict1 = {"abc": 1, "def": 3, "ghi": 2, "jkl": 7, "mno": 5}
+
+# build a sorted list of tuples from the dictionary
+dict1_sorted = sorted(dict1.items(), key=lambda x: x[1], reverse=True)
+
+list1 = list(dict1.items())
+
+for i in dict1_sorted:
+    print(i[0], i[1])
+
+
+# set operations
+visited = set()
+list1 = [1, 2, 3, 4, 5, 1, 6, 7, 3, 8]
+accepted = []
+rejected = []
+
+for key, value in enumerate(list1):
+    if value not in visited:
+        accepted.append(value)
+        visited.add(value)
+    else:
+        rejected.append((key, value))
+
+
+# append adds a single element to a list
+list2 = [1, 2, 3]
+
+# so you're only appendijng 1 record here to list1:  a list of ints `[1, 2, 3]`
+list1.append(list2)
+
+# if you just want to add each element from an iterable to the list, use extend
+
+list1.extend(list2)
+
+
+# this automatically splits up the 10 charcaters in 10 indiviudal elements
+visited = set("aeiouAEIOU")
+
+# you lose ordering in sets
+for i in visited:
+    print(i)
