@@ -44,4 +44,4 @@ l1 = [100, 200, 300, 500, 1000]
 for i in range(len(l1)):
     print(f"Index {i}")
     for j in range(i):
-        print(f"J Loop {j} because {i}")
+        print(f"J value is {l1[j]} and i is {l1[i]}")
