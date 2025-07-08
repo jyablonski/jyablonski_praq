@@ -278,3 +278,8 @@ visited = set("aeiouAEIOU")
 # you lose ordering in sets
 for i in visited:
     print(i)
+
+
+def print_nth_prime_number(n: int):
+    if n % 2 == 0:
+        print(n**n)

@@ -14,13 +14,15 @@ def maximum_subarray(nums: list[int]) -> int:
 
     # loop through every value in nums
     for value in nums:
+        # if the previous subarray ever ends up negative, it can never ahelp a future subarray
+        # it's like a binary "was prev subarray positive or negative". if it's negative, reset to 0
         if current_sum < 0:
             current_sum = 0
 
-        # add current value to current sum
+        # always add current value to current sum
         current_sum += value
 
-        # calculate new potential max subarray val
+        # always calculate new potential max subarray val
         max_sub = max(max_sub, current_sum)
 
     return max_sub
@@ -30,3 +32,6 @@ nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
 
 solution = maximum_subarray(nums=nums)
 print(solution)
+
+
+s = 1

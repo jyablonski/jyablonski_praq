@@ -460,7 +460,7 @@ def solution(prices: list[int]) -> int:
 
 DFS is a traversal algorithm to visit all nodes in a tree or graph data structure. It starts at the root node and tries to go down as far as possible until reaching a leaf node, when it reaches a leaf node, it backtracks to the closest parent node to explore the next path.
 
-- It's typically implemented as a recursive function, and visits new nodes by making recursive calls
+- It's typically implemented as a recursive function w/ a stack, and visits new nodes by making recursive calls
 - As we make recursive calls to traverse down the tree, we keep pushing call frames onto the call stack until we reach our first base case, where node is None.
 - Backtracking occurs whenever a recursive call returns. The call frame is popped off the call stack, and execution returns to the next call frame on the call stack.
 - Time complexity is o(n) beacuse we have to visit each node exactly once
@@ -550,6 +550,13 @@ if not node:
 if not node.left and not node.right:
     print(f"were at a leaf node")
 ```
+
+DFS Types
+
+1. Preorder - Process each node as you come across it
+2. Inorder - Go down to leaf nodes before you start processing nodes, and then backtrack and process nodes as you come across them
+3. Postorder - Go left, then right, and then current node
+
 ## Examples
 
 1. Given a binary tree, use Depth-First Search to find the sum of all nodes in the tree.
