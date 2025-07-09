@@ -10,10 +10,11 @@
 
 ## Non-functional Requirements
 
-Out of Scope
+
+## Out of Scope
 
 
-Core Entities
+## Core Entities
 
 
 ## API

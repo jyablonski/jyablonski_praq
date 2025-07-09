@@ -66,24 +66,24 @@ CAP theorem is a fundamental principle in distributed systems that describes the
 
 The three components of the CAP theorem are as follows:
 
-1. **Consistency (C)**:
+1. Consistency (C):
    - Consistency in the context of the CAP theorem means that all nodes in a distributed system have a consistent view of the data at all times. In other words, if a piece of data is updated, all subsequent reads will reflect that update.
 
-2. **Availability (A)**:
+2. Availability (A):
    - Availability means that the system remains operational and responsive, even in the presence of failures. Every non-failing node in the system must respond to requests, ensuring that the system is available for use.
 
-3. **Partition tolerance (P)**:
+3. Partition tolerance (P):
    - Partition tolerance refers to the system's ability to continue functioning and providing consistent responses even in the face of network partitions, where some nodes can't communicate with each other due to network failures.
 
 According to the CAP theorem, in a distributed system, you can only achieve two out of the three properties—Consistency, Availability, and Partition tolerance. It's not possible to simultaneously achieve all three. This theorem has significant implications for designing and managing distributed databases and systems.
 
 Here are the three possible combinations under the CAP theorem:
 
-- **CA**: Prioritizes Consistency and Availability, sacrificing Partition tolerance. In the event of a node failure, the system will sacrifice availability to ensure consistency.
+- CA: Prioritizes Consistency and Availability, sacrificing Partition tolerance. In the event of a node failure, the system will sacrifice availability to ensure consistency.
   
-- **CP**: Prioritizes Consistency and Partition tolerance, sacrificing Availability. In the event of a node failure, the system will sacrifice availability to maintain a consistent view of the data.
+- CP: Prioritizes Consistency and Partition tolerance, sacrificing Availability. In the event of a node failure, the system will sacrifice availability to maintain a consistent view of the data.
   
-- **AP**: Prioritizes Availability and Partition tolerance, sacrificing Consistency. The system will remain available and responsive even during network partitions, potentially resulting in temporary inconsistencies in the data until it's able to be corrected.
+- AP: Prioritizes Availability and Partition tolerance, sacrificing Consistency. The system will remain available and responsive even during network partitions, potentially resulting in temporary inconsistencies in the data until it's able to be corrected.
 
 
 ## Interview Tips
@@ -111,40 +111,40 @@ Write heavy platform - ticket design system (ticketmaster)
 
 Using an API gateway to route requests to various services rather than having the frontend directly call your microservices offers numerous benefits:
 
-### 1. **Centralized Control and Management**
-- **Single Entry Point**: An API gateway acts as a single entry point for all client requests, simplifying the architecture and making it easier to manage and secure.
-- **Security**: Centralizes security features such as authentication, authorization, rate limiting, and SSL termination, reducing the attack surface and simplifying the enforcement of security policies.
+### 1. Centralized Control and Management
+- Single Entry Point: An API gateway acts as a single entry point for all client requests, simplifying the architecture and making it easier to manage and secure.
+- Security: Centralizes security features such as authentication, authorization, rate limiting, and SSL termination, reducing the attack surface and simplifying the enforcement of security policies.
 
-### 2. **Traffic Management**
-- **Load Balancing**: Distributes incoming traffic across multiple instances of your microservices, improving availability and reliability.
-- **Rate Limiting and Throttling**: Protects backend services from being overwhelmed by too many requests, ensuring better performance and stability.
+### 2. Traffic Management
+- Load Balancing: Distributes incoming traffic across multiple instances of your microservices, improving availability and reliability.
+- Rate Limiting and Throttling: Protects backend services from being overwhelmed by too many requests, ensuring better performance and stability.
 
-### 3. **Performance Optimization**
-- **Caching**: Can cache responses from services to reduce load and latency for frequently requested data.
-- **Compression**: Compresses responses to reduce the amount of data transferred, speeding up communication with clients.
+### 3. Performance Optimization
+- Caching: Can cache responses from services to reduce load and latency for frequently requested data.
+- Compression: Compresses responses to reduce the amount of data transferred, speeding up communication with clients.
 
-### 4. **Protocol Transformation**
-- **Protocol Handling**: Translates between different protocols (e.g., HTTP, WebSocket, gRPC), allowing services to use the protocols most suited to their needs while presenting a unified interface to clients.
+### 4. Protocol Transformation
+- Protocol Handling: Translates between different protocols (e.g., HTTP, WebSocket, gRPC), allowing services to use the protocols most suited to their needs while presenting a unified interface to clients.
 
-### 5. **Simplified Client Interface**
-- **API Aggregation**: Combines multiple service calls into a single API call, reducing the number of requests the client needs to make and simplifying the client-side code.
-- **Version Management**: Handles API versioning, allowing multiple versions of the API to coexist and facilitating smooth transitions between API versions.
+### 5. Simplified Client Interface
+- API Aggregation: Combines multiple service calls into a single API call, reducing the number of requests the client needs to make and simplifying the client-side code.
+- Version Management: Handles API versioning, allowing multiple versions of the API to coexist and facilitating smooth transitions between API versions.
 
-### 6. **Improved Developer Experience**
-- **Consistency**: Provides a consistent API for all services, making it easier for frontend developers to interact with the backend.
-- **Documentation and Discovery**: Often integrates with tools to automatically generate API documentation, making it easier for developers to understand and use the available APIs.
+### 6. Improved Developer Experience
+- Consistency: Provides a consistent API for all services, making it easier for frontend developers to interact with the backend.
+- Documentation and Discovery: Often integrates with tools to automatically generate API documentation, making it easier for developers to understand and use the available APIs.
 
-### 7. **Security Enhancements**
-- **Authentication and Authorization**: Centralizes authentication and authorization, ensuring that all requests are properly authenticated and authorized before reaching the services.
-- **Data Validation**: Validates incoming requests and responses to ensure they meet the required formats and constraints, enhancing security and stability.
+### 7. Security Enhancements
+- Authentication and Authorization: Centralizes authentication and authorization, ensuring that all requests are properly authenticated and authorized before reaching the services.
+- Data Validation: Validates incoming requests and responses to ensure they meet the required formats and constraints, enhancing security and stability.
 
-### 8. **Service Discovery and Flexibility**
-- **Service Discovery**: Integrates with service discovery mechanisms to dynamically route requests to the appropriate service instances, supporting scalability and flexibility.
-- **Flexible Routing**: Routes requests based on various criteria (e.g., URL paths, request headers, or user roles), allowing for more complex and customizable routing logic.
+### 8. Service Discovery and Flexibility
+- Service Discovery: Integrates with service discovery mechanisms to dynamically route requests to the appropriate service instances, supporting scalability and flexibility.
+- Flexible Routing: Routes requests based on various criteria (e.g., URL paths, request headers, or user roles), allowing for more complex and customizable routing logic.
 
-### 9. **Monitoring and Analytics**
-- **Centralized Logging**: Aggregates logs from multiple services, providing a unified view of all incoming and outgoing traffic.
-- **Metrics and Monitoring**: Collects metrics and provides monitoring capabilities, helping to identify performance bottlenecks and other issues more easily.
+### 9. Monitoring and Analytics
+- Centralized Logging: Aggregates logs from multiple services, providing a unified view of all incoming and outgoing traffic.
+- Metrics and Monitoring: Collects metrics and provides monitoring capabilities, helping to identify performance bottlenecks and other issues more easily.
 
 ### Conclusion
 
@@ -397,3 +397,163 @@ Bitrate in video streaming refers to the amount of data processed per second of 
 
 - Higher bitrate = better quality (more detail, less compression) but larger files and more bandwidth is needed
 - Lower bitrate = lower quality but allows for smaller files and is more efficient for slow networks
+
+## HTTP
+
+
+### ✅ 2xx – Success
+
+| Code               | Meaning                    | Notes                                                                |
+| ------------------ | -------------------------- | -------------------------------------------------------------------- |
+| 200 OK         | The request was successful | Standard for most `GET`, `PUT`, or successful `POST` requests        |
+| 201 Created    | Resource was created       | Used after a `POST` that creates something (e.g., user, post, swipe) |
+| 204 No Content | Success, no response body  | Used after a `DELETE` or `PUT` when no data needs to be returned     |
+
+---
+
+### ⚠️ 3xx – Redirection
+
+| Code                      | Meaning                       | Notes                                                    |
+| ------------------------- | ----------------------------- | -------------------------------------------------------- |
+| 301 Moved Permanently | Resource moved; use new URL   | Permanent redirect                                       |
+| 302 Found             | Temporary redirect            | Often used for login flows                               |
+| 304 Not Modified      | Cached content is still valid | Used with `ETag`/`If-Modified-Since` headers for caching |
+
+---
+
+### ❌ 4xx – Client Errors
+
+| Code                         | Meaning                              | Notes                                                |
+| ---------------------------- | ------------------------------------ | ---------------------------------------------------- |
+| 400 Bad Request          | Malformed request                    | Missing parameters, invalid types, etc.              |
+| 401 Unauthorized         | Missing or invalid auth              | User must authenticate (usually with a token)        |
+| 403 Forbidden            | Authenticated but no access          | User is not allowed to do the action                 |
+| 404 Not Found            | Resource doesn't exist               | URL or object not found                              |
+| 409 Conflict             | Request conflicts with current state | E.g., trying to create a user that already exists    |
+| 422 Unprocessable Entity | Semantically invalid request         | Often used in validation-heavy APIs (like JSON\:API) |
+
+---
+
+### 💥 5xx – Server Errors
+
+| Code                          | Meaning                       | Notes                                           |
+| ----------------------------- | ----------------------------- | ----------------------------------------------- |
+| 500 Internal Server Error | Something broke on the server | Catch-all; usually means unhandled exception    |
+| 502 Bad Gateway           | Bad response from upstream    | E.g., Nginx ↔ app server                        |
+| 503 Service Unavailable   | Server overloaded or down     | Often used during maintenance or scaling issues |
+
+### HTTP Examples
+
+1. Register a new user
+
+```http
+POST /users
+{
+  "username": "jacob",
+  "email": "jacob@example.com",
+  "password": "securepassword123"
+}
+→ 201 Created
+```
+
+2. Log in a user (get token)
+
+```http
+POST /auth/login
+{
+  "email": "jacob@example.com",
+  "password": "securepassword123"
+}
+→ 200 OK
+{
+  "token": "jwt-token-here"
+}
+```
+
+3. Get user profile
+
+```http
+GET /users/{userId}
+→ 200 OK
+{
+  "id": "u123",
+  "username": "jacob",
+  "bio": "blah blah blah"
+}
+```
+
+4. Update user profile
+
+```http
+PUT /users/{userId}
+{
+  "bio": "Now with more dog photos!"
+}
+→ 200 OK
+```
+
+
+5. Upload profile photo
+
+```http
+POST /users/{userId}/photos
+Content-Type: multipart/form-data
+→ 201 Created
+```
+
+
+6. Swipe right or left
+
+```http
+POST /users/{userId}/swipes
+{
+  "targetUserId": "u999",
+  "decision": "yes"
+}
+→ 200 OK
+{
+  "matched": true
+}
+```
+
+
+7. Get swipe history
+
+```http
+GET /users/{userId}/swipes
+→ 200 OK
+[
+  { "targetUserId": "u999", "decision": "yes", "timestamp": "..." },
+  { "targetUserId": "u888", "decision": "no", "timestamp": "..." }
+]
+```
+
+8. Get all matches
+
+```http
+GET /users/{userId}/matches
+→ 200 OK
+[
+  { "matchId": "m123", "withUserId": "u999" },
+  { "matchId": "m124", "withUserId": "u777" }
+]
+```
+
+
+9. Send a message in a match
+
+```http
+POST /matches/{matchId}/messages
+{
+  "senderId": "u123",
+  "text": "Hey, how's it going?"
+}
+→ 201 Created
+```
+
+10. Delete a user account
+
+```http
+DELETE /users/{userId}
+→ 204 No Content
+```
