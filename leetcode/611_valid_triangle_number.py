@@ -10,7 +10,8 @@ def solution(nums: list[int]) -> int:
     nums_len = len(nums)
     num_combos = 0
 
-    # iterate backwards from largest value to the 2nd index, because we set j = k - 1
+    # iterate backwards from largest value to the 2nd index, because we set right = i - 1
+    # to compare against i
     for i in range(nums_len - 1, 1, -1):
         left = 0
         right = i - 1
@@ -34,4 +35,4 @@ def solution(nums: list[int]) -> int:
 nums1 = [2, 2, 3, 4]
 nums2 = [4, 2, 3, 4]
 
-solution(nums=nums1)
+solution(nums=nums2)
