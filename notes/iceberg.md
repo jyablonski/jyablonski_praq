@@ -123,3 +123,58 @@ Apache Iceberg is designed to manage large analytic datasets efficiently. Hereâ€
 3. Balancing Read and Write Efficiency:
    - Optimize the data ingestion process to avoid creating too many small files. This can involve batching writes or using buffering techniques.
    - Ensure that query patterns are considered when designing the data layout, as this can influence the optimal file size.
+
+### Catalog
+
+In Apache Iceberg, the catalog is responsible for tracking and managing tables and their metadata. Think of it as the index or registry that lets compute engines (like Spark, Trino, etc.) find and interact with your Iceberg tables.
+
+The catalog is Iceberg's way of managing and tracking tables and their metadata, so your compute engines can read and write to those tables in a consistent, transactional way - even across tools.
+
+| Role                          | Description                                                                                   |
+| ----------------------------- | --------------------------------------------------------------------------------------------- |
+| Table registration        | Keeps a list of all tables and their names (like `db.users`)                                  |
+| Metadata location storage | Stores where each table's metadata JSON lives (e.g., on S3 or HDFS)                           |
+| Transaction coordination  | Ensures atomic table changes (adds, deletes, schema evolution)                                |
+| Multi-engine support      | Allows multiple engines (e.g., Spark and Trino) to access the same Iceberg table consistently |
+
+Iceberg tables are made up of:
+
+* Data files (usually in Parquet or Avro format)
+* Manifest files (point to the data files)
+* Metadata files (point to manifest lists and describe the table schema, partitioning, etc.)
+
+The catalog tells your engine where the latest metadata file is so that it knows how to interpret and read the table correctly.
+
+Without a catalog, youâ€™d have to manually point to the metadata files.
+
+
+#### Catalog Types in Iceberg
+
+| Catalog Type       | Description                                                            |
+| ------------------ | ---------------------------------------------------------------------- |
+| Glue Catalog   | Uses AWS Glue as the metadata registry; stores table metadata in S3    |
+| Hadoop Catalog | Stores all metadata in a directory on S3 or HDFS; uses filesystem APIs |
+| REST Catalog   | API-based catalog for distributed multi-engine access                  |
+| Nessie         | Git-like versioned catalog over Iceberg tables                         |
+| In-memory      | Only for testing (non-persistent)                                      |
+
+#### Example: Glue Catalog
+
+When you run this in Spark:
+
+```python
+spark.conf.set("spark.sql.catalog.glue", "org.apache.iceberg.aws.glue.GlueCatalog")
+spark.conf.set("spark.sql.catalog.glue.warehouse", "s3://my-iceberg-warehouse")
+```
+
+And then:
+
+```python
+df.writeTo("glue.db.users").using("iceberg").createOrReplace()
+```
+
+Iceberg will:
+
+* Register the table name `db.users` in Glue
+* Point Glue to the metadata location: `s3://my-iceberg-warehouse/db/users/metadata/00001.metadata.json`
+* Keep updating this pointer as new transactions happen

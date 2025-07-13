@@ -43,7 +43,7 @@
 
 - GET /feed?lat={}&long={}&distance={} -> User[]
 
-- POST /swipe/{userId}
+- POST /swipes/{userId}
 
 {
   decision: "yes" | "no"
@@ -78,6 +78,8 @@
     - Can implement Elasticsearch and CDC to move profile data over and allow users to query from here
     - Can aggressively pre-compute a list of matches for each user for fast querying. But, they could very quickly blow through the entire precomputed cache here and we're back to running slow queries
     - Best solution is to use both: Elasticsearch, smart indexes on database tables, and pre-computing matches for users as often as we can
-
+- How to ensure low latency on swipe feed when finding new potential matches for users?
+    - Can implement Postgres <> PostGIS Extension to improve geospatial query performance
+    - Could also introduce Elasticsearch & setup CDC to keep it updated, but this is more complex
 
 ## Napkin Math

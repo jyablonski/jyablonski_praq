@@ -30,6 +30,9 @@ Core Entities
 
 ## API
 
+- Assume users are authenticated using JWTs, and each request will include a token in the `Authorization` Header which the backend validates before handling the request
+- Never include userId or timestamps in the request body, as these can be manipulated by the client
+
 - GET /songs/:songId -> get metadata + presigned S3 URL for a given song
 - POST /songs {artistId, songName, audioContent} -> create a new song
 - POST /users/:userId/playlists {playlistName} -> create a new playlist

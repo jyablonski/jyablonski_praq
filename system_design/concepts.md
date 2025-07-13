@@ -557,3 +557,69 @@ POST /matches/{matchId}/messages
 DELETE /users/{userId}
 → 204 No Content
 ```
+
+## CDC
+
+Change Data Capture (CDC) is a pattern used to sync changes from a primary database (like PostgreSQL) to other systems that serve different use cases - for example, syncing data to Elasticsearch to support low-latency full-text search.
+
+PostgreSQL is a great transactional database, but not optimized for certain features like full-text search at scale or under high query load. By syncing data to Elasticsearch via CDC, we can:
+
+- Offload heavy search traffic from the primary database
+- Enable faster and more flexible full-text queries
+- Reduce latency for user-facing search features
+
+CDC involves:
+
+1. Enabling logical replication on your database instance to turn all database changes into readable, structured events that go into a binlog
+2. A tool like Debezium can read those changes and send them off to some data store like Kafka in topics, 1 for each database table
+3. From Kafka, you can implement a Sink Connector like Elasticsearch Sink to dump the database records from Kafka into Elasticsearch and keep the data updated.
+
+Benefits include:
+
+- Postgres remains your single source of truth for transactional integrity.
+- Elasticsearch becomes a derived data store, optimized for read-heavy, search-oriented use cases.
+- Decoupled architecture improves fault tolerance and scalability.
+
+
+``` sh
+{
+  "change": [
+    {
+      "kind": "insert",
+      "schema": "public",
+      "table": "users",
+      "columnnames": ["id", "name", "email"],
+      "columnvalues": [123, "Alice", "alice@example.com"]
+    }
+  ]
+}
+```
+
+- Logical Replication Example
+- By default, only physical replication is enabled, which is just binary gibberish that no other application besides Postgres can read
+
+## Geospatial Queries
+
+If your applications require making geospatial queries with latitude / longitude data provided from users, then native databases like Postgres won't have the best performance out of the box to support this
+
+- Your non-functional requirements around latency will likely not be met w/ native Postgres
+
+The `postgis` Extension can be installed into your Postgres instance to provide geospatial capabilities to the database. This allows it to store, query, and analyze geographic and geometric data like coordinates, shapes, and distances.
+
+- It introduces types like `POINT` `LINESTRING` `POLYGON` and `GEOGRAPHY`
+- Uses GiST Indexes for efficient spatial querying, for example: to find all points within a 5 mile radius
+- Provides Spatial Query functions like `st_distance`, `st_within`, `st_intersects`, `st_contains` etc
+
+Supports workflows for:
+
+- Storing and querying places, routes, or coverage areas
+- Finding users or locations within x miles of you (tinder)
+- Matching drivers w/ riders (uber)
+
+Examples:
+
+- Tinder
+- Doordash
+- Uber
+
+The extension may work fine for small to medium scale geospatial use cases, but at large scale companies like Uber can opt for even more advanced, custom database solutions specifically for their needs.
