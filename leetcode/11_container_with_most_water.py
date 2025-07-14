@@ -26,8 +26,9 @@ def solution(height: list[int]) -> int:
         area = width * current_max_height
         max_area = max(max_area, area)
 
-        # increase left if its height is lower than right
-        # decrement right if its height is lower than left
+        # we're trying to find max area, so we want to keep the larger height value
+        # and update the other pointer appropriately to potentially find a larger height
+        # and thus, a larger area
         if height[l] < height[r]:
             l += 1
         else:
