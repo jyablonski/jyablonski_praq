@@ -11,10 +11,8 @@
 def solution(candidates: list[int], target: int) -> list[list[int]]:
     # the global list of valid combinations
     res = []
-
     # a temporary list that keeps track of the current solution we're on
     current_sol = []
-
     n = len(candidates)
 
     def backtrack(index, current_sum):
@@ -22,7 +20,6 @@ def solution(candidates: list[int], target: int) -> list[list[int]]:
         # base case 1: if current_sum == target then we've found
         # a valid combination, so store it in res
         if current_sum == target:
-
             # append a copy of current_sol to res.
             res.append(current_sol[:])
             return

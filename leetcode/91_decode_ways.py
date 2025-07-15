@@ -35,6 +35,7 @@ def solution(s: str) -> int:
         # so add dp[i-2]
         two_digits = int(s[i - 2 : i])
         if 10 <= two_digits <= 26:
+            print(f"{two_digits} can also be decoded 2 ways, so adding dp[i - 2]")
             dp[i] += dp[i - 2]
 
     # dp[n] contains the total number of ways to decode the entire string

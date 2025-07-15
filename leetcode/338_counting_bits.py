@@ -19,3 +19,14 @@ n2 = 5
 
 solution(n=n1)
 solution(n=n2)
+
+
+# lmfao these fucking chumps, just do this solution
+# but ooooooh it's only o(n log n) instead of o(n)
+def solution(n: int) -> list[int]:
+    dp = [0] * (n + 1)
+
+    for i in range(1, n + 1):
+        dp[i] = bin(i).count("1")
+
+    return dp
