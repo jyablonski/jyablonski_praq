@@ -16,9 +16,7 @@ class Solution:
             return None
 
         # swap child nodes on the current root node
-        tmp = root.left
-        root.left = root.right
-        root.right = tmp
+        root.left, root.right = root.right, root.left
 
         # recursively invert left and right subtrees
         self.invertTree(root.left)
