@@ -1,5 +1,7 @@
 # Given an array ofx strings strs, group the anagrams together. You can return the answer in any order.
 
+# Anagrams share the same letters in the same counts, so if you sort each word alphabetically, all anagrams will look the same.
+
 # pretty straight forward once you know to use a dictionary where the sorted input word
 # is the key, and then you can just add the input words as a list of values for each key.
 # return the values at the end

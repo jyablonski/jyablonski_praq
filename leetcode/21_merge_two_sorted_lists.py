@@ -11,7 +11,7 @@ def solution(list1, list2):
     dummy = ListNode(-1)
     tail = dummy
 
-    # while we have values in both linked lists:
+    # only iterate while we have elements in both lists still
     while list1 and list2:
         # compare list1 vs list2 values, and adjust
         # tail and the list accordingly depending on what one is chosen
@@ -23,11 +23,16 @@ def solution(list1, list2):
             tail.next = list2
             list2 = list2.next
 
-        # always increment the tail
+        # always advance the tail pointer so we're pointing to the last node
+        # in the merged list, and ready to add the next node
         tail = tail.next
 
-    # once we break out of the loop, set the remaining list to tail.next
+    # once we run out of elements in one of the lists, attach the remainder of
+    # whichever list to tail.next
     tail.next = list1 or list2
+
+    # return dummy.next, which is the actual start of the new merged linked list we
+    # just made
     return dummy.next
 
 

@@ -7,6 +7,9 @@
 # Return true if there is a cycle in the linked list. Otherwise, return false.
 
 
+# iterate through the entire linked list using slow and fast pointesr.
+# worst case, we'll each reach the end of the list with no cycle, or we'll hit a cycle
+# o(n) solution with o(1) space complexity
 class ListNode:
     def __init__(self, x):
         self.val = x
@@ -18,10 +21,15 @@ class Solution:
         slow = head
         fast = head
 
+        # while `fast.next` is necessary to ensure that the subsequent fast.next.next call
+        # doesn't crash
+        # for example: fast.next could be -4 and its subsequent .next would be `None`
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
 
+            # we're not comparing values here, we're comparing if they're the same object
+            # in memory, and thus are referencing the same node or not
             if slow == fast:
                 return True
 
