@@ -220,3 +220,33 @@ The process works by:
 9. With Power and USB Stick plugged in, Press and hold the BIOS Flashback button for 10 seconds until lights start flashing on the button
 10. The Motherboard will begin updating and lights will continue flashing until the update is complete
 11. After the lights stop flashing, waiting 3 minutes and then unplug the USB and power the PC on and finish the update process.
+
+## CPU Undervolting
+
+CPU Undervolting involves going into BIOS/UEFI and intentionally lowering the voltage being sent to the CPU. This leads to the CPU consuming less power, which means lower electricity used and less heat generated. Ultimately, this can lower CPU thermals and improve performance 
+
+- You're essentially running the CPU in a more efficient state which can result in better stability
+
+By the nature of how they're created, all CPUs have minor imperfections that make them slightly different from each other, even ones that are the same model (i9 10900k).
+
+- For this reason, CPU manufacturers deliberately set voltage thresholds that will work on all CPUs out of the box, otherwise they'd have to deal with tons of returns and RMAs
+- If they shipped CPUs undervolted, some wouldn't boot, or would crash, or behave unpredictably
+
+When undervolting, you're looking for a setting in the BIOS/UEFI called `Core Voltage Offset`. You want to set this to a negative value to actually "undervolt" the CPU.
+
+- Undervolt in small steps (e.g., -20mV at a time)
+- Run stress tests afterwards and monitor temps and performance
+- If stable, decrease voltage by another -10 or -20 mV again
+- If unstable, then increase voltage another 10 or 20 mV and check stability again
+
+If you try undervolting and your chip cant handle it, nothing permanent or dangerous happens.
+
+- Worst case, you'll have random system crashes or freezes etc
+- Blue screens of death
+
+If your system won't boot after attempting this, you have to reset your motherboard to factory settings by clearing CMOS
+
+- The CPU itself doesn't store the CPU voltage settings, it just reads them from the motherboard
+- Worst case if you brick your PC this way, resetting the motherboard should fix it up
+
+Overvolting is possible in theory, but unneccessary. Don't do this.

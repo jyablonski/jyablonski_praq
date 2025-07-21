@@ -20,13 +20,13 @@ def solution(s: str, k: int) -> int:
         # keep track of the most frequently used char
         max_freq = max(max_freq, state[s[end]])
 
-        # if that max_freq char + k is less than the current window size (`end - start + 1`)
-        # then we have to reduce the count of the character at s[start] in `state` by 1
-        # and also increment start by 1 because we're moving the window
+        # if the current window size (`end - start + 1`) - `max_freq` is > than `k`,
+        # then we have to shrink the window by reducing the count of the character at s[start]
+        # in `state` by 1 and also increment start by 1 because we're moving the window
 
         # we also add 1 to these windows because python is 0 based indexing
         # example: if start is 0 and end is 2, the window is actually 3 elements long, not 2
-        if k + max_freq < end - start + 1:
+        if (end - start + 1) - max_freq > k:
             state[s[start]] -= 1
             start += 1
 

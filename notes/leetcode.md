@@ -553,8 +553,8 @@ if not node.left and not node.right:
 
 DFS Types
 
-1. Preorder - Process each node as you come across it
-2. Inorder - Go down to leaf nodes before you start processing nodes, and then backtrack and process nodes as you come across them
+1. Preorder - Process each node as you come across it (root -> left -> right)
+2. Inorder - Go down to leaf nodes before you start processing nodes, and then backtrack and process nodes as you come across them (left -> root -> right)
 3. Postorder - Go left, then right, and then current node
 
 ## Examples

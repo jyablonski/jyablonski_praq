@@ -43,3 +43,19 @@ str2 = "abcycfew"
 
 solution(s=str1)
 solution(s=str2)
+
+
+# the sliding window method which immediately sets `start` if you find a dupe
+# instead of having to do it in a for loop
+def longestSubstringWithoutRepeat(s):
+    state = {}
+    start = 0
+    max_length = 0
+
+    for end in range(len(s)):
+        if s[end] in state:
+            start = max(start, state[s[end]] + 1)
+
+        state[s[end]] = end
+        max_length = max(max_length, end - start + 1)
+    return max_length

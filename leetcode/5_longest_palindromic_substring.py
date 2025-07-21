@@ -15,6 +15,8 @@ def solution(s: str) -> str:
     def expand_center(left, right):
         # we're allowed to keep expanding as long as left isnt negative, right isnt past the end,
         # and the characters match at the beginning and end of the string, which is what a palindrome is
+        # the `left + 1` is necessary to get it back to index 0, because if we exited the loop, left
+        # might be -1 now which is invalid
         while left >= 0 and right < len(s) and s[left] == s[right]:
             left -= 1
             right += 1
