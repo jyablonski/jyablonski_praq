@@ -22,6 +22,8 @@ def solution(gas: list[int], cost: list[int]) -> int:
     fuel = 0
 
     # iterate through the gas list
+    # even if the current route were on doesnt have enough gas to get to the next one,
+    # there's still a valid starting point somewhere because sum(gas) > sum(cost)
     for i in range(len(gas)):
         # whenever we don't have enough gas to reach the next station, we move our
         # starting gas station to the next station and reset our gas tank.

@@ -21,21 +21,23 @@
 # The given node will always be the first node with val = 1. You must return the copy of the given node as a reference
 # to the cloned graph.
 
+# the solution involves DFS and basically 3 parts:
+#   - check if the id of node we're on is in the `visited` dictionary, and skip it if so
+#   - if node not in visited, add it
+#   - then recursively go through the node's neighbors to build it up
+# a bit weird beceause you call dfs in both the parent function and again in the function itself
 
-# this is pretty fucking stupid lmfao
+
+# time complexity is O(N + M) where N is number of nodes and M is number of edges in the graph
+# space compleixty also O(N + M), we have to store N keys and all M edges as values in the dictionary
 class Node:
     def __init__(self, val=0, neighbors=None):
         self.val = val
         self.neighbors = neighbors if neighbors is not None else []
 
 
-from typing import Optional
-
-
-# time complexity is O(N + M) where N is number of nodes and M is number of edges in the graph
-# space compleixty also O(N + M), we have to store N keys and all M edges as values in the dictionary
 class Solution:
-    def cloneGraph(self, node: Optional["Node"]) -> Optional["Node"]:
+    def cloneGraph(self, node: Node | None = None) -> Node | None:
         if not node:
             return None
 
@@ -43,12 +45,16 @@ class Solution:
 
         # recursive helper function to perform DFS
         def dfs(n):
+            # base case: if the node was already cloned, return the clone
             if id(n) in visited:
                 return visited[id(n)]
 
+            # clone the node and add it to `visited` to avoid reprocessing it
             clone = Node(n.val)
             visited[id(n)] = clone
 
+            # recursively go through each neighbor and add its clone to the clone's
+            # neighbors list to build up the same neighbor structure in the clone
             for neighbor in n.neighbors:
                 clone.neighbors.append(dfs(neighbor))
 

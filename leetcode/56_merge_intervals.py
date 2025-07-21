@@ -6,6 +6,9 @@
 
 
 def solution(intervals: list[list[int]]) -> list[list[int]]:
+    # trick is to sort by start time to process the intervals in a predictable,
+    # left to right order for efficient merge logic (process earlier intervals
+    # before later ones) which enables greedy 1-pass merging
     sortedIntervals = sorted(intervals, key=lambda x: x[0])
     merged = []
 

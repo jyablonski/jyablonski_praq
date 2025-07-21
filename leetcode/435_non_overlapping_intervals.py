@@ -20,23 +20,24 @@ def solution(intervals: list[list[int]]) -> int:
     # earliest first, which frees up more time for intervals to be included later.
     # this could look like `[[1, 2], [2, 3], [1, 3], [3, 4]]` after
     intervals.sort(key=lambda x: x[1])
-    end = intervals[0][1]
+    max_end_time = intervals[0][1]
 
     # count keeps track of how many non-overlapping intervals we have
     count = 1
+    n = len(intervals)
 
-    print(f"intervals {intervals} and max end {end}")
+    print(f"intervals {intervals} and max end {max_end_time}")
     # then iterate over each one and if current start time is > the last known end time,
     # then they dont overlap and we increment count by 1
     # we skip the first 1 because that's our starting `end`, and the count is already = 1
-    for i in range(1, len(intervals)):
-        if intervals[i][0] >= end:
+    for i in range(1, n):
+        if intervals[i][0] >= max_end_time:
             # set the new end time
-            end = intervals[i][1]
+            max_end_time = intervals[i][1]
             count += 1
 
     print(f"Count is {count}")
-    return len(intervals) - count
+    return n - count
 
 
 intervals1 = [[1, 2], [2, 3], [3, 4], [1, 3]]
