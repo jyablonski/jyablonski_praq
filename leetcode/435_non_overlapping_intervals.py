@@ -36,6 +36,8 @@ def solution(intervals: list[list[int]]) -> int:
             max_end_time = intervals[i][1]
             count += 1
 
+    # at the end, n - count is the total number of intervals we have minus the # of non-overlapping ones
+    # this gives us the total to remove which we return
     print(f"Count is {count}")
     return n - count
 

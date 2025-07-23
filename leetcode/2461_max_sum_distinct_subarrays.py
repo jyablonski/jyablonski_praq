@@ -22,6 +22,9 @@ def solution(nums: list[int], k: int) -> int:
         # when the window is size `k`, if it contains all distinct elements
         # then we calculate a potential max sum
         if end - start + 1 == k:
+            # only recalculate max sum if everything in the current window is distinct
+            # if k = 3, then we need to have 3 distinct values in `state` in order to
+            # calculate a new max sum
             if len(state) == k:
                 max_sum = max(max_sum, current_sum)
 
@@ -32,6 +35,7 @@ def solution(nums: list[int], k: int) -> int:
             state[nums[start]] -= 1
 
             # if that key now has a count of 0, then remove the key
+            # this is necessary because of the len(state) check we do above
             if state[nums[start]] == 0:
                 del state[nums[start]]
 

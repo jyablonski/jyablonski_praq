@@ -733,3 +733,56 @@ Sometimes you'll want to sort by end time instead of start time
 - Example: finding the max number of non-overlapping intervals in a given list of intervals
 - If we sort by start time, we risk adding an interval that starts early but ends late, which will block us from adding other intervals until that interval ends.
 - If instead we sort by end time, we can start by adding the intervals that end the earliest. Intuitively, this frees time for us to add more intervals as early as possible, and yields the correct answer.
+
+## Heap
+
+A heap is an array-based binary tree where the root element (at index 0) is either the minimum or maximum value in the structure, depending on whether it is a min-heap or max-heap.
+
+- In a min heap, if we remove the smallest value from the heap, the elements of the array efficiently re-arrange so that the next smallest value takes its place at the front of the array.
+- Min Heap: `[1, 3, 5, 7, 9]`
+- Max Heap: `[-9, -7, -5, -3, -1]` - actually represents `[9, 7, 5, 3, 1]`
+- Heaps are complete Binary Trees
+
+Heaps are most frequently used in coding interviews to solve a class of problems known as "Top K" problems, which involve finding the k smallest or largest elements in a collection of elements.
+
+It's often built is an array, but it's helpful to visualize heaps as a binary tree in level-order traversal
+
+- `[1, 2, 4, 5, 8, 6, 9]`
+- 1
+- 2, 4
+- 5, 8, 6, 9
+
+The height of a heap is `log(n)` where n is the number of elements in the heap
+
+Heaps support the following operations:
+
+- `push(element)` adds a new element to the heap while still maintaining heap properties
+- `pop(element)` removes the root element from the heap
+- `peek(element)` gets the root element without removing it
+- `heapify([elements])` converts an array to a heap in-place
+- Pop and Push both have a time complexity of `O(log n)`, and the worse case involves swapping elements from the root to the last tree which is what could take log(n) time
+
+Heaps maintain their properties as you add, remove, or update elements in it. Adding a new leaf node could force multiple parent nodes to get completely re-arranged in order to retain valid heap properties
+
+Python offers the `heapq` module to turn arrays into min or max heaps
+
+``` py
+import heapq
+
+arr = [3, 1, 4, 1, 5, 9, 2]
+
+# convert array into a heap in-place. O(n)
+heapq.heapify(arr)
+
+# push 0 to the heap. O(log n)
+heapq.heappush(arr, 0)
+
+# peek the min element = 0. O(1)
+arr[0]
+
+# pop and return the min element = 0. O(log n)
+min_element = heapq.heappop(arr)
+
+# peek the new min element = 1. O(1)
+arr[0]
+```
