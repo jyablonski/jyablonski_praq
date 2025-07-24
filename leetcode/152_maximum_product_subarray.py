@@ -1,25 +1,29 @@
-# given integer array nums, find the contiguous ubarray within an array which has the largest product
+# given integer array nums, find the contiguous subarray within an array which has the largest product
 
 
-# THIS IS WRONG, DIDNT FINISH
-def maximum_subarray(nums: list[int]):
-    max_product = nums[0] * nums[1]
-    current_product = 0
-    l = 0
-    r = 1
+def solution(nums: list[int]) -> int:
+    max_so_far = nums[0]
+    min_so_far = nums[0]
+    max_product = nums[0]
 
-    for value in range(len(nums) - 1):
-        print(f"left {nums[l]} right {nums[r]}")
-        current_product = nums[l] * nums[r]
+    # skip the first number because we have to set all of the constants to it
+    for num in nums[1:]:
+        # when we encounter a negative, flip min and max
+        if num < 0:
+            max_so_far, min_so_far = min_so_far, max_so_far
 
-        max_product = max(current_product, max_product)
-        l += 1
-        r += 1
-        # current_product
+        # always re-calculate min and max which is basically cehcking for whether
+        # we want to keep re-using the same subarray, or whether we want to start
+        # fresh with num
+        max_so_far = max(num, num * max_so_far)
+        min_so_far = min(num, num * min_so_far)
+
+        # max product is always just a max of our return variable and the current max_so_far
+        max_product = max(max_product, max_so_far)
 
     return max_product
 
 
 nums = [2, 3, -2, 4, 7, -3, 4, 2]
 # solution = 2 * 3 has the largest product 6
-solution = maximum_subarray(nums=nums)
+solution(nums=nums)

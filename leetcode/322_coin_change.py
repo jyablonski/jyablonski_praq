@@ -33,6 +33,8 @@ def solution(coins: list[int], target_amount: int) -> int:
             # current value and 1 + dp[amount - coin],
             # dp[amount] represents the minimum number of coins needed to make the amount amount.
             # 1 + dp[amount - coin] represents the minimum number of coins needed to make the amount `amount - coin.`
+            # we do 1 because we found a new way to make up that amount, and we can re-use the previous solution value at
+            # `dp[amount - coin]`
             if amount - coin >= 0:
                 dp[amount] = min(dp[amount], 1 + dp[amount - coin])
 
