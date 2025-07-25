@@ -23,7 +23,8 @@ There are different types of Indexes:
 - B-tree is the default index type, good general-purpose index for most equality and range lookups
 - Hash is optimized for equality-only queries `=` and not as useful for `<` `>` or range queries
 - GIN is for indexing arrays, JSON-B, or full-text search
-- BRIN is a compact index for very large table w/ sequential data (time series)
+- BRIN is a compact index for very large table w/ sequential data (time series) or monotonically increasing data
+    - [Article] on these indexes
 - GiST is for advanced geometric data queries
 
 Indexes enable faster reads on indexed columns, but slower writes. Every time you `INSERT` `UPDATE` or `DELETE`, the database must also update the index.
