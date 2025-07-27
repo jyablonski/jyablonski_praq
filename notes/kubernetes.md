@@ -469,3 +469,56 @@ spec:
 [Examples Repo](https://github.com/argoproj/argocd-example-apps/tree/master)
 
 [Example Repo v2](https://github.com/ghik/kubernetes-the-harder-way)
+
+## Karpenter
+
+Karpenter is a K8s node autoscaler designed to efficiently provision compute resources on K8s clusters. 
+
+- Traditional autoscalers rely on predefined node groups 
+- Karpenter directly provisions new nodes in real time as they're needed based on the specific needs of pending pods
+- It intelligently selects the right size and compute resources (CPU, memory, GPU etc) from your cloud provider to match the workload's requirements
+- It continues to monitor the cluster for underutilized nodes or opportunities to consolidate workloads
+
+It uses various techniques to consolidate workloads onto the fewest, most cost-effective instances possible to maximize resource utilization. It also leverages Spot Instances to significantly reduce costs, and provides mechanisms to handle interruptions gracefully.
+
+It runs as a K8s operator in your cluster, and continuously monitors the API Server for pods that the default K8s scheduler has marked "unscheduable" (meaning there isn't enough resources on existing nodes to run)
+
+- It then makes direct calls to the cloud provider (AWS, GCP) to provision new instances to meet the workload requirements
+- After the new instances are provisioned, the pending pods are scheduled onto them
+
+To enable the use of Karpenter across your K8s services, you need to utilize the `resources:` and `requests:` blocks to specify the minimum resources for the pod.
+
+- Without this, Karpenter cannot efficiently pack pods or provision the correct node size
+
+``` yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+      - name: my-container
+        image: my-image:latest
+        resources:
+          requests:
+            cpu: "250m"  # Request 0.25 of a CPU at minimum
+            memory: "256Mi" # Request 256 MB of memory at minimum
+          limits:
+            cpu: "500m"     # Can spike to 0.5 a CPU before being limited
+            memory: "512Mi" # Can utilize up to 512 MB of memory before being limited
+
+# optional gpu resources
+resources:
+  requests:
+    nvidia.com/gpu: "1"
+  limits:
+    nvidia.com/gpu: "1"
+```
+
+When setting CPU and Memory Limits, follow these increment guidelines:
+
+- CPU: 	100m, 250m, 500m, 1000m
+- Memory: 128Mi, 256Mi, 512Mi, 1Gi
