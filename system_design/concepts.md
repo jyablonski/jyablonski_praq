@@ -558,6 +558,13 @@ DELETE /users/{userId}
 → 204 No Content
 ```
 
+GET /events                  # get all events
+GET /events/{id}             # get a specific event
+GET /venues/{id}             # get a specific venue
+GET /events/{id}/tickets     # get available tickets for an event
+POST /events/{id}/bookings   # create a new booking for an event
+GET /bookings/{id}           # get a specific booking
+
 ## CDC
 
 Change Data Capture (CDC) is a pattern used to sync changes from a primary database (like PostgreSQL) to other systems that serve different use cases - for example, syncing data to Elasticsearch to support low-latency full-text search.
