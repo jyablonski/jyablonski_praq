@@ -17,7 +17,7 @@ def solution(digits: str) -> list[str]:
         "9": ["w", "x", "y", "z"],
     }
 
-    # create a list
+    # use the mapping to create a list of all possible characters
     possible_chars = [mapping[digit] for digit in digits]
 
     if not possible_chars:

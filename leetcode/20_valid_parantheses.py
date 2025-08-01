@@ -19,14 +19,22 @@ def solution(s: str) -> bool:
     stack = []
 
     for char in s:
+        # if it's an open bracket, then add it to stack
         if char in combos:
             stack.append(char)
         else:
-            if len(stack) == 0 or combos[stack[-1]] != char:
+            # if it's a closing bracket and:
+            # 1. we don't have anything in stack
+            # 2. or the last character in the stack does not match with this one
+            # then return false
+            if not stack or combos[stack[-1]] != char:
                 return False
+
+            # otherwise, it's a match and we just pop the last value on the stack
             else:
                 stack.pop()
 
+    # return true only if stack is empty after iterating through the string
     return True if not stack else False
 
 
