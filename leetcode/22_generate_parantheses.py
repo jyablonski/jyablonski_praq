@@ -12,9 +12,15 @@ def solution(n: int) -> list[str]:
 
     def backtrack(current, open_count, close_count):
         # Base case: if the current string is complete
+        # then add it to res
+        # it's also guaranteed to be valid thx to our conditions below
+        # ex: if n = 3, then current will have 6 characters
         if len(current) == 2 * n:
             res.append(current)
             return
+
+        # these backtracking conditions help ensure we dont make invalid
+        # parantheses combinations
 
         # can we add a "(" until we hit n number of open parantheses?
         if open_count < n:

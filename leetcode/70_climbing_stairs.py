@@ -20,12 +20,13 @@ def solution(n: int) -> int:
         print(f"dp[{i}] = {dp[i - 1]} + {dp[i - 2]}")
         dp[i] = dp[i - 1] + dp[i - 2]
 
+    print(dp)
     # return the number of ways to reach the top of the staircase
     return dp[n]
 
 
 test1 = 1
-test2 = 14
+test2 = 4
 test3 = 30
 
 solution1 = solution(n=test1)

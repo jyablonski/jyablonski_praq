@@ -8,6 +8,8 @@
 def solution(n: int) -> list[int]:
     dp = [0] * (n + 1)
 
+    # Every number i in binary can be derived from its half (i // 2), shifted left
+    # with possibly a 1 added at the end depending on whether i is odd.
     for i in range(1, n + 1):
         dp[i] = dp[i // 2] + (i % 2)
 

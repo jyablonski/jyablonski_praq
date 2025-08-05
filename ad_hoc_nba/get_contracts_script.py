@@ -90,4 +90,4 @@ engine = sql_connection(
     port=17841,
 )
 
-contracts.to_sql("aws_contracts_source", con=engine, if_exists="append", index=False)
+contracts.to_sql("bbref_player_contracts", con=engine, if_exists="append", index=False)
