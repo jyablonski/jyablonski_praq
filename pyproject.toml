@@ -49,6 +49,8 @@ dependencies = [
     "sentence-transformers>=4.1.0",
     "diagrams>=0.24.4",
     "lxml>=6.0.0",
+    "dlt>=1.15.0",
+    "streamlit>=1.48.1",
 ]
 
 [dependency-groups]
