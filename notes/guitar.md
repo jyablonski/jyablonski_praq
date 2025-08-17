@@ -139,7 +139,7 @@ Drop B tuning is a type of guitar tuning that lowers the pitch of the strings, g
 - **5th string**: F# (one and a half steps down from A)
 - **4th string**: B (one and a half steps down from D)
 - **3rd string**: E (one and a half steps down from G)
-- **2nd string**: G# (one and a half steps down from B)
+- **2nd string**: G# (one and a half steps down from B)so 
 - **1st string**: C# (one and a half steps down from E)
 
 In musical terms, a "step" refers to a whole step (two frets on the guitar), and a "half step" refers to a half step (one fret on the guitar).
@@ -400,3 +400,158 @@ Each mode is a major scale starting from a different scale degree:
 | Mixolydian | W W H W W H W | G Mixolydian | Bluesy major     |
 | Aeolian    | W H W W H W W | A Aeolian    | Natural minor    |
 | Locrian    | H W W H W W W | B Locrian    | Dissonant, tense |
+
+
+## Note Examples
+
+- 5th String 5th Fret, 3rd String 7th Fret
+  -  B, B. Octave
+
+- 5th String 6th Fret, 3rd String 9th Fret
+  - C, C#
+
+- 5th String 2nd Fret, 4th String 4th Fret
+  - G# D#
+  - Perfect fifth because there's 7 semitones difference from G# to D#
+
+- 5th String 5th Fret, 4th String 7th Fret
+  - B, F#
+
+| 5th String Fret (Root) | 5th String Note | 4th String Fret | 4th String Note | Interval Name     | Semitones |
+| ---------------------- | --------------- | --------------- | --------------- | ----------------- | --------- |
+| 0                      | F#              | 0               | B               | Perfect 4th       | 5         |
+| 0                      | F#              | 1               | C               | Tritone / Aug 4th | 6         |
+| 0                      | F#              | 2               | C#              | Perfect 5th       | 7         |
+| 0                      | F#              | 3               | D               | Minor 6th         | 8         |
+| 0                      | F#              | 4               | D#              | Major 6th         | 9         |
+| 0                      | F#              | 5               | E               | Minor 7th         | 10        |
+| 0                      | F#              | 6               | F               | Major 7th         | 11        |
+| 0                      | F#              | 7               | F#              | Octave            | 12        |
+
+B F# B E G# C#
+
+1. A
+2. A# (A sharp) / Bb (B flat)
+3. B
+4. C
+5. C# (C sharp) / Db (D flat)
+6. D
+7. D# (D sharp) / Eb (E flat)
+8. E
+9. F
+10. F# (F sharp) / Gb (G flat)
+11. G
+12. G# (G sharp) / Ab (A flat)
+
+Fuller Octaves
+
+- B5 Power Chord
+- 5th string 5th fret -> B (root)
+- 4th string 7th fret -> F# (fifth) - it's called the 5th because it's a 5 letter difference, but actually 7 semitones apart
+- 3rd string 7th fret -> B (octave)
+
+so: 
+
+- we call it b power chord because the root note is b
+- it's b5 because it's a perfect fifth? - it's a power chord because we have a root note (B) and it's perfect fifth (f#) which is 5 letters apart, but actually 7 semitones different
+- the 3rd string 7th fret just adds an optional octave of the root, making it sound fuller, but is not required for it to be a power chord.
+
+| Interval         | Semitones |
+| ---------------- | --------- |
+| Unison / root    | 0         |
+| Minor 2nd        | 1         |
+| Major 2nd        | 2         |
+| Minor 3rd        | 3         |
+| Major 3rd        | 4         |
+| Perfect 4th      | 5         |
+| Tritone / Aug4th | 6         |
+| Perfect 5th      | 7         |
+| Minor 6th        | 8         |
+| Major 6th        | 9         |
+| Minor 7th        | 10        |
+| Major 7th        | 11        |
+| Octave           | 12        |
+
+
+
+### **1. Power Chord (Root + Perfect Fifth)**
+
+```
+5th string → Root
+4th string → Perfect Fifth (7 semitones above root)
+3rd string → Optional Octave (same as root)
+
+Example: B5
+5th string 5th fret → B (root)
+4th string 7th fret → F# (perfect fifth)
+3rd string 7th fret → B (octave, optional)
+```
+
+### **3. Major / Minor Thirds**
+
+**Shape:** root on 5th string → 1 string up, 3–4 frets higher
+
+* Minor Third (3 semitones) → dark / sad
+* Major Third (4 semitones) → bright / happy
+
+```
+Minor third: B → D
+5th string 5th fret → B
+4th string 8th fret → D
+
+Major third: B → D#
+5th string 5th fret → B
+4th string 9th fret → D#
+```
+
+### **4. Perfect Fourth**
+
+**Shape:** root on 5th string → 4th string, same fret
+
+```
+B → E
+5th string 5th fret → B
+4th string 5th fret → E
+```
+
+* Suspended / unresolved sound
+
+---
+
+### **5. Tritone / Augmented Fourth**
+
+**Shape:** root on 5th string → 4th string, 1 fret higher than perfect fourth
+
+```
+B → F
+5th string 5th fret → B
+4th string 6th fret → F
+```
+
+* Very tense, dissonant
+
+---
+
+### **6. Minor / Major Sixth**
+
+**Shape:** root on 5th string → 4th string, 3–4 frets higher than perfect fifth
+
+```
+Minor sixth: B → G
+4th string 9th fret → B
+3rd string 12th fret → G
+
+Major sixth: B → G#
+5th string 5th fret → B
+4th string 13th fret → G#
+```
+
+* Adds color / bluesy or jazzy flavor
+
+---
+
+## B Minor Scale High strings
+
+3rd string (E): 0 E, 2 F#, 4 G, 5 A, 7 B
+2nd string (G#): 0 G#, 2 A#, 4 B, 5 C#, 7 D
+1st string (C#): 0 C#, 2 D#, 4 E, 5 F#, 7 G#
