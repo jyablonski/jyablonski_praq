@@ -28,6 +28,8 @@ def solution(nums: list[int]) -> int:
         else:
             right = mid
 
+    # it doesn't matter whether you do nums[left] or nums[right] here,
+    # the loop ends when they're both equal to each other
     return nums[left]
 
 
