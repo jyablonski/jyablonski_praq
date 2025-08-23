@@ -91,17 +91,36 @@
 ### Growth & Retention Metrics
 - Customer Acquisition Cost (CAC): Cost to acquire a new customer.  
   - Formula: Total Sales & Marketing Expenses / Number of New Customers
+  - Depends on what the business wants to classify as "Acquisition". Could be users who signed up (for free), or made a first-purchase, or became a paid subscriber
 
 - Customer Lifetime Value (LTV): Total revenue expected from a customer over their lifetime.  
   - Formula: (ARPU × Gross Margin %) × Average Customer Lifespan
 
-- Churn Rate: Percentage of customers lost over a period.  
-  - Formula: (Lost Customers / Total Customers) × 100
-
-- Retention Rate: Percentage of customers retained.  
-  - Formula: 100% - Churn Rate
-
 - Net Promoter Score (NPS): Measures customer satisfaction and loyalty.
+
+- MAU (Monthly Active Users)
+
+  - Number of unique users who interact with your product in a month.
+  - Shows scale and engagement. Often paired with DAU (Daily Active Users).
+  - Example: If 50,000 people log in or take a key action at least once in August → MAU = 50,000.
+
+- DAU/MAU Ratio (Stickiness)
+
+  - Measures how often monthly users return daily.
+  - Ratio = DAU ÷ MAU.
+  - Example: If you have 5,000 DAU and 50,000 MAU, stickiness = 10%.
+
+- Churn Rate
+
+  - % of users who stop using your product in a given period.
+  - Churn = (Users lost ÷ Starting users) × 100.
+  - Lower churn = better retention.
+
+- Retention Rate
+
+  - % of users who return after a certain period (e.g., Day 7 retention).
+  - Key for SaaS, gaming, and subscription models.
+
 
 ## Tools
 
@@ -121,10 +140,10 @@
   - mParticle
   - RudderStack
 
-📌 CDP vs CRM: CDPs focus on aggregating and unifying raw customer data for insights and marketing activation, while CRMs are built for managing direct interactions with known customers.
+CDP vs CRM: CDPs focus on aggregating and unifying raw customer data for insights and marketing activation, while CRMs are built for managing direct interactions with known customers.
 
 ## 1️⃣ CDP APIs (Customer Data Platform)
-📌 Purpose: CDPs unify and manage customer data from multiple sources for analytics, personalization, and activation.  
+Purpose: CDPs unify and manage customer data from multiple sources for analytics, personalization, and activation.  
 
 ### Common CDP APIs & What They're Used For
 | API Type | Use Cases | Example Providers |
@@ -137,7 +156,7 @@
 | Event Streaming API | Send real-time data to marketing automation or personalization tools. | Tealium EventStream, Segment |
 
 ### Example Use Case:
-📌 Real-time Personalization:  
+Real-time Personalization:  
 - Use Segment's Data Ingestion API to collect customer activity.  
 - Call the Identity Resolution API to unify cross-device behavior.  
 - Use the Audience API to create a “High-Value Customers” segment.  
@@ -160,10 +179,10 @@
   - Zoho CRM
   - Pipedrive
 
-📌 CRM vs CDP: CRMs store structured customer interactions for business operations (e.g., sales, customer support), whereas CDPs unify raw behavioral data for broader customer insights.
+CRM vs CDP: CRMs store structured customer interactions for business operations (e.g., sales, customer support), whereas CDPs unify raw behavioral data for broader customer insights.
 
 ## 2️⃣ CRM APIs (Customer Relationship Management)
-📌 Purpose: CRMs store customer interactions, sales data, and support tickets to manage relationships across marketing, sales, and support teams.  
+Purpose: CRMs store customer interactions, sales data, and support tickets to manage relationships across marketing, sales, and support teams.  
 
 ### Common CRM APIs & What They're Used For
 | API Type | Use Cases | Example Providers |
@@ -177,7 +196,7 @@
 | Integration API | Connect CRM with other tools (CDP, ERP, Support, etc.). | Salesforce, Microsoft Dynamics 365 |
 
 ### Example Use Case:
-📌 Automating Lead Nurturing in HubSpot CRM  
+Automating Lead Nurturing in HubSpot CRM  
 - Capture form submissions via a Webhooks API.  
 - Use the Leads API to add new contacts to HubSpot.  
 - Use the Workflow Automation API to trigger an email sequence.  
@@ -198,10 +217,10 @@
   - CleverTap
   - MoEngage
 
-📌 CEP vs CDP: CEPs focus on engagement and messaging, while CDPs unify data to power those engagements.
+CEP vs CDP: CEPs focus on engagement and messaging, while CDPs unify data to power those engagements.
 
 ## 3️⃣ CEP APIs (Customer Engagement Platform)
-📌 Purpose: CEPs manage real-time, personalized customer engagement across channels (email, SMS, push notifications, in-app messages).  
+Purpose: CEPs manage real-time, personalized customer engagement across channels (email, SMS, push notifications, in-app messages).  
 
 ### Common CEP APIs & What They're Used For
 | API Type | Use Cases | Example Providers |
@@ -215,7 +234,7 @@
 | Multichannel Orchestration API | Coordinate messaging across SMS, push, email, and in-app. | OneSignal, Braze |
 
 ### Example Use Case:
-📌 Personalized Push Notification Campaign Using Braze  
+Personalized Push Notification Campaign Using Braze  
 - Use a CDP (Segment) to track user behavior (e.g., abandoned cart).  
 - Call Braze’s Behavioral Triggers API to send a push notification.  
 - Use A/B Testing API to test different messages.  
@@ -231,7 +250,7 @@ Starting and scaling a startup involves securing funding, proving market fit, an
 ---
 
 ## 1️⃣ Ideation & Validation (Pre-Seed Stage)  
-📌 Goal: Validate the business idea before raising money.  
+Goal: Validate the business idea before raising money.  
 
 ### Steps to Get Started:  
 ✔ Market Research: Identify the problem, market demand, and competitors.  
@@ -254,7 +273,7 @@ Funding Options at This Stage:
 ---
 
 ## 2️⃣ Seed Funding (Product-Market Fit & Early Growth)  
-📌 Goal: Get initial users, refine the product, and achieve early traction.  
+Goal: Get initial users, refine the product, and achieve early traction.  
 
 ### What Happens at This Stage?  
 ✔ Refining the Business Model: Determine revenue streams (e.g., SaaS subscriptions, e-commerce sales).  
@@ -275,7 +294,7 @@ Valuation:
 ---
 
 ## 3️⃣ Series A (Scaling & Revenue Growth)  
-📌 Goal: Prove repeatable revenue and scale operations.  
+Goal: Prove repeatable revenue and scale operations.  
 
 ### What Happens at This Stage?  
 ✔ Expanding Customer Base: Growth marketing, sales teams.  
@@ -294,7 +313,7 @@ Valuation Methods Used:
 ---
 
 ## 4️⃣ Series B & Beyond (Scaling to a Large Market)  
-📌 Goal: Expand globally, improve profitability, prepare for an IPO or acquisition.  
+Goal: Expand globally, improve profitability, prepare for an IPO or acquisition.  
 
 ### What Happens at This Stage?  
 ✔ Aggressive Expansion: Hiring, partnerships, international growth.  
@@ -314,7 +333,7 @@ Valuation Methods Used:
 ---
 
 ## 5️⃣ Exit Strategy: IPO, Acquisition, or Staying Private  
-📌 Goal: Allow investors and founders to cash out.  
+Goal: Allow investors and founders to cash out.  
 
 ### Options for an Exit:  
 ✔ Initial Public Offering (IPO): Selling shares on the stock market.  
