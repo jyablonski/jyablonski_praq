@@ -11,6 +11,7 @@ class TreeNode:
         self.right = right
 
 
+# use a recursive solution to iterate through the tree and keep subtracting the currnet root.val from targetSum
 def solution(root, targetSum):
     if not root:
         return False  # Base case: If the tree is empty, no path exists

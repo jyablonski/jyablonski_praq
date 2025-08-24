@@ -163,3 +163,32 @@ CREATE TABLE users_heavy (
 );
 
 ```
+
+## Web Server Performance
+
+Python better for fast prototyping or if the team only has familiarity with Python.
+
+- Python also has more libraries
+
+Go is better for high throughput (10,000+ requests per second (RPS)) and systems that require high performance
+
+1. Basic Web Server - 10-100k RPS for static content. 1k-10k for dynamic content, 100-1k for database-heavy content
+2. Go (Gin/Echo framework): 15,000 - 30,000 req/sec. 5-15 ms latency. Go uses 2-3x less memory than Python
+3. FastAPI (with Uvicorn): 8,000 - 15,000 req/sec. 20-50 ms latency
+4. FastAPI (async): 10,000 - 18,000 req/sec. 10-25 ms latency
+
+gRPC Go servers have nearly 50-80% higher throughput than REST.
+
+- 2-3x lower latecy
+- gRPC protobuf messages are 30-50% smaller than JSON
+- Significant network savings for large payloads
+- Much better performance because it's a binary protocol which gets to send significantly fewer bytes per request than JSON
+- Also utilizes HTTP/2 Multiplexing to support multiple streams per connection and have better resource utilization
+- Benefits are not as significant for CRUD applications w/ heavy database usage
+- Limited flexibility to support Frontends as browsers don't support gRPC, requires additional setup and more complex solutions like a gRPC Gateway middleman
+
+## Storage Performance
+
+1. Redis - between 100k and 1 million WPS. 0.1 - 1ms latency
+2. SSD Storage - 10-100k random WPS. 0.1 - 1ms latency
+3. HDD Storage - 100-1000 random WPS. 5 - 15ms latency

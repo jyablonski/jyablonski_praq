@@ -14,6 +14,7 @@ def rob(nums: list[int]) -> int:
     prev_max = 0
     current_max = 0
 
+    # same as house robber. we cleverly use a greedy approach and just iterate through nums linearly
     for value in nums:
         new_max = max(prev_max + value, current_max)
         prev_max = current_max

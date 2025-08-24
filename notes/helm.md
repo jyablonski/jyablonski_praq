@@ -142,3 +142,124 @@ helmfile destroy
 helmfile -l name=myapp apply
 
 ```
+
+### Helmfile + ArgoCD Strategies
+
+ArgoCD is fundamentally about a pull-based Git approach to keeping Helm K8s applications up to date, as opposed to a push-based CI / CD approach where you run commands like `helmfile apply` or `kubectl apply`
+
+You can leverage Helmfile with ArgoCD to keep all of your apps within the same Helmfile, and still utilize ArgoCD to manage the actual update and deployment process.
+
+- Once you have ArgoCD setup, you rarely run `Helmfile ***` again. You just update Git and ArgoCD handles the rest
+
+#### Pattern 1: Pre-rendered Manifests
+
+1. Keep your apps defined in a Helmfile
+2. Run `helmfile template` to render Helm charts into plain K8s manifests
+3. Commit the rendered manifests to git
+4. ArgoCD syncs the static manifests
+
+- Pros: Simple ArgoCD setup, full visibility of what's deployed, works well with GitOps workflows
+- Cons: Git repo gets cluttered with generated YAML, need CI/CD to re-render on changes
+
+#### Pattern 2: ArgoCD with Helm Plugin
+
+ArgoCD has native Helm support and can work directly with Helm charts:
+
+1. Keep your Helmfile for local development/testing
+2. Structure your repo so ArgoCD can find individual Helm charts
+3. Create ArgoCD Applications that point to the Helm charts directly
+4. ArgoCD renders the Helm charts at sync time
+
+- Pros: No pre-rendered manifests, cleaner git history
+- Cons: Less visibility into what's actually being deployed, ArgoCD needs to understand Helm
+
+#### Pattern 3: App of Apps with Helmfile
+
+This is more advanced:
+
+1. Use Helmfile to generate ArgoCD Application manifests themselves
+2. Deploy a root ArgoCD helm chart that manages other apps
+3. Helmfile becomes your "control plane" for defining what apps exist
+
+```yaml
+# In helmfile.yaml
+repositories:
+- name: local
+  url: file://./charts
+
+releases:
+- name: app-of-apps
+  chart: local/argocd-apps
+  namespace: argocd
+  values:
+  - applications:
+    # Your frontend app
+    - name: frontend
+      repoURL: https://github.com/myorg/monorepo
+      path: services/frontend
+      namespace: platform
+      branch: main
+
+    - name: backend
+      repoURL: https://github.com/myorg/monorepo
+      path: services/backend
+      namespace: platform
+      branch: main
+
+    - name: ml_recommender
+      repoURL: https://github.com/myorg/monorepo
+      path: services/ml_recommender
+      namespace: platform
+      branch: main
+
+# option 2
+repositories:
+- name: local
+  url: file://./charts
+
+environments:
+  dev:
+    values:
+    - environments/dev/values.yaml
+  prod:
+    values:
+    - environments/prod/values.yaml
+
+releases:
+- name: app-of-apps
+  chart: local/argocd-apps
+  namespace: argocd
+  values:
+  - values.yaml
+  - {{ .Values | toYaml }}
+
+# values.yaml
+defaults:
+  repoURL: https://github.com/myorg/monorepo
+  branch: main
+  namespace: platform
+
+services:
+- frontend
+- backend
+- ml-recommender
+```
+
+#### Pattern 4: Helmfile as ArgoCD Config Management Plugin
+
+ArgoCD supports custom config management plugins. You could:
+
+1. Install Helmfile as a plugin in ArgoCD
+2. ArgoCD runs `helmfile template` during sync
+3. Keep everything in Helmfile format
+
+This gives you the benefits of Helmfile's environment management while keeping ArgoCD as the deployment engine.
+
+#### Which approach to choose?
+
+- Pattern 1 is great for teams starting out or wanting maximum transparency
+- Pattern 2 works well if you're already heavy Helm users
+- Pattern 3 scales well for many applications
+- Pattern 4 gives you the most Helmfile features but requires custom setup
+
+The key insight is that Helmfile excels at managing multiple environments and complex value overrides, while ArgoCD excels at GitOps and keeping your cluster in sync with git. You can leverage both tools' strengths depending on your specific needs.

@@ -14,11 +14,14 @@ Hot Reads
       4. Durable - Transaction that are committed are permanent.  Enforced via WAL or the BinLog, which enables Admins to recover the database in the event of system failure etc.
    6. Examples: Postgres, MySQL
 2. Key Value Store
-   1. Effective at storing unstructured data quickly.
+   1. Effective at storing unstructured data quickly. Fast lookups in o(1) time for a specific key
    2. Scales well, designed for horizontal scalability.  Designed for large number of read + write operations across distributed systems.
    3. Pairs well w/ things like Lambda Functions
    4. Easy to implement Caching
-   5. Examples: DynamoDB, MongoDB
+   5. Requires very specific access patterns that you have to know up front in order to design the data effectively
+   6. Less flexible than relational databases. No concepts of relationships, limited join capabilities, limited reporting and analytics capabiltiies etc
+   7. Application Examples: DynamoDB, MongoDB
+   8. Usecase Examples: Twitter / Instagram timelines, tweets & post storage, viewing history. Everything is saved at a feed:
 3. Caching Store
    1. Used to improve the performance, reduce latency, and increase responsiveness of existing Applications.
    2. General idea is data can be stored in this Caching Store in-memory and then be accessed by applications much more quickly than if the Application had to go to an actual Database or other memory store for it.
@@ -630,3 +633,9 @@ Examples:
 - Uber
 
 The extension may work fine for small to medium scale geospatial use cases, but at large scale companies like Uber can opt for even more advanced, custom database solutions specifically for their needs.
+
+## Postgres Extensions
+
+1. pgvector - anytime you need to store vector embeddings for AI or ML applications that need to find similar items based on semantic meaning rather than exact matches
+2. PostGIS - anytime you need geospatial queries, ride sharing, local proximity user requests. Apps like Yelp, Uber, Tinder etc
+3. uuid-ossp - to create UUIDs for things like primary keys and distributed apps where you don't want auto incrementing keys

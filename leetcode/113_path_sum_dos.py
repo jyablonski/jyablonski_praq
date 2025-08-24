@@ -21,17 +21,15 @@ class Solution:
         targetSum: int,
         root: TreeNode | None = None,
     ) -> list[list[int]]:
-
         def dfs(node, target, path):
             if not node:
                 return
-            
+
             # append current value to the path
             path.append(node.val)
 
             # if we hit a leaf node, then lets check
             if not node.left and not node.right:
-
                 # if we find a path that equals our target, then append
                 # the current path to result
                 if node.val == target:
@@ -50,4 +48,5 @@ class Solution:
         return result
 
 
-root = [5,4,8,11,None,13,4,7,2,None,None,5,1], targetSum = 22
+root = [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1]
+targetSum = 22
