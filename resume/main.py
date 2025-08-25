@@ -16,7 +16,7 @@ from googleapiclient.http import MediaIoBaseDownload
 # the creds is just a service account w/ read access. after you create it and
 # give it the permissions, you have to add a key which is a json file that stores the creds
 SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
-CREDS_PATH = "resume/downloader_creds.json"
+CREDS_PATH = "downloader_creds.json"
 
 
 # Authenticate and create the service
