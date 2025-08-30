@@ -522,3 +522,47 @@ When setting CPU and Memory Limits, follow these increment guidelines:
 
 - CPU: 	100m, 250m, 500m, 1000m
 - Memory: 128Mi, 256Mi, 512Mi, 1Gi
+
+## Admin Path 
+
+- Below is an example of a K8s Ingress where you lock your REST APIs `/admin` endpoinmts to only ip addresses in your company's VPN. This is layer 4 because you're filtering traffic before it even reaches the ALB via only IP addresses, you're never reading HTTP requests here
+- This way the only way for the load balancer to even forward requests to the REST API in these cases is if they're on the company VPN. But, they would still have be logged in and authenticated which would be checked on the REST API's end
+- The Load Balancewr handles Layer 4 HTTP Routing, the 
+
+- Layer 4: Client connects to ALB - security group allows/denies based on source IP
+- Layer 7: ALB terminates SSL, reads HTTP request
+- Layer 7: ALB checks: "Is this /admin/* AND from VPN IP?"
+- Layer 7: Routes to appropriate target group based on path
+- Layer 7: Your app gets the request and does additional auth
+
+``` yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-ingress
+  annotations:
+    # layer 7 path-based routing
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    # This is the key part - restrict admin paths by IP
+    alb.ingress.kubernetes.io/conditions.admin: |
+      [{"field":"source-ip","sourceIpConfig":{"values":["YOUR_VPN_IP/32"]}}]
+spec:
+  rules:
+  - host: api.yourapp.com
+    http:
+      paths:
+      - path: /admin
+        pathType: Prefix
+        backend:
+          service:
+            name: api-service  # Same service, different auth
+            port: 
+              number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: api-service
+            port:
+              number: 80
+```
