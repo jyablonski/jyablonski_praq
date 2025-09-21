@@ -2,7 +2,20 @@
 
 ## The 12 Chromatic Notes
 There are only 12 distinct pitches in Western music:
-C, C#/Dflat, D, D#/Eflat, E, F, F#/Gflat, G, G#/Aflat, A, A#/Bflat, B
+
+1. A
+2. A# (A sharp) / Bb (B flat)
+3. B
+4. C
+5. C# (C sharp) / Db (D flat)
+6. D
+7. D# (D sharp) / Eb (E flat)
+8. E
+9. F
+10. F# (F sharp) / Gb (G flat)
+11. G
+12. G# (G sharp) / Ab (A flat)
+
 
 ## Sharps and Flats
 - Sharps (#) raise a note by a half-step: C#, D#, F#, G#, A#
@@ -17,7 +30,7 @@ C, C#/Dflat, D, D#/Eflat, E, F, F#/Gflat, G, G#/Aflat, A, A#/Bflat, B
 - Creates octave relationship between 6th and 4th strings for easy power chords
 
 ## Power Chords
-- Two notes: Root + Perfect 5th (7 semitones apart)
+- Two notes: Root + Perfect 5th (5 notes apart, 7 actual semitones apart)
 - Examples: A5 = A + E, C5 = C + G
 - No 3rd interval = neutral sound (neither major nor minor)
 - In drop tuning: one finger across multiple strings creates full power chord with octave
