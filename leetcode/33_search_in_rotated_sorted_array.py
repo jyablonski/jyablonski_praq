@@ -20,20 +20,24 @@ def solution(nums: list[int], target: int) -> int:
     left = 0
     right = n - 1
 
+    # use <= to consider all elements
     while left <= right:
         mid = (left + right) // 2
 
+        # if mid is the target, return it
         if nums[mid] == target:
             return mid
 
-        # the `nums[mid] > target` checks are not equal to because we already checked
+        # because it's a rotated sorted array, we have to check which side is properly sorted
+
+        # if nums[left] <= nums[mid], then we check if target is in that left range and adjust accordingly
         if nums[left] <= nums[mid]:
             if nums[left] <= target < nums[mid]:
                 right = mid - 1
             else:
                 left = mid + 1
 
-        # if nums[left] > nums[mid]
+        # if nums[left] > nums[mid], then we check if target is in that right range and adjust accordingly
         else:
             if nums[mid] < target <= nums[right]:
                 left = mid + 1
