@@ -1,8 +1,7 @@
 # Consumer Data
 
-Certainly! Here's a brief hands-on example of how you could work with data in each of these domains within a job description context:
-
 ### 1. **Retail Product Data**
+
 **Example:**
 Design and maintain a comprehensive retail product database that includes details like SKU, product name, description, price, availability, and supplier information. Implement data cleaning scripts to ensure data integrity and develop APIs for real-time inventory updates.
 
@@ -31,6 +30,7 @@ WHERE Availability < 20;
 ```
 
 ### 2. **Ecommerce Data**
+
 **Example:**
 Design and implement a data pipeline to collect and analyze ecommerce transactions, including order details, customer information, and payment methods. Create dashboards to track sales performance and customer purchasing trends.
 
@@ -60,6 +60,7 @@ print(sales_summary)
 ```
 
 ### 3. **Consumer Profile Data**
+
 **Example:**
 Create a centralized repository for consumer profile data, including demographic information, purchase history, and preferences. Implement data enrichment processes to enhance profiles with third-party data.
 
@@ -87,6 +88,7 @@ WHERE Age BETWEEN 25 AND 35;
 ```
 
 ### 4. **Clickstream Data**
+
 **Example:**
 Set up a clickstream data collection system to track user interactions on the website. Use this data to analyze user behavior, identify popular pages, and improve site navigation.
 
@@ -111,36 +113,39 @@ print(page_visits)
 ```
 
 ### 5. **Consumer Event Data**
+
 **Example:**
 Implement an event tracking system to log consumer events such as product views, add-to-cart actions, and purchases. Use this data to trigger personalized marketing campaigns.
 
 ```javascript
 // Example JavaScript code to log consumer events
 function logEvent(eventType, userID, productID) {
-    const event = {
-        eventType: eventType,
-        userID: userID,
-        productID: productID,
-        timestamp: new Date().toISOString()
-    };
+  const event = {
+    eventType: eventType,
+    userID: userID,
+    productID: productID,
+    timestamp: new Date().toISOString(),
+  };
 
-    // Send event to server (example URL)
-    fetch('https://example.com/log_event', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(event)
-    }).then(response => response.json())
-      .then(data => console.log('Event logged:', data))
-      .catch(error => console.error('Error logging event:', error));
+  // Send event to server (example URL)
+  fetch("https://example.com/log_event", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(event),
+  })
+    .then((response) => response.json())
+    .then((data) => console.log("Event logged:", data))
+    .catch((error) => console.error("Error logging event:", error));
 }
 
 // Log an example event
-logEvent('add_to_cart', 101, 1);
+logEvent("add_to_cart", 101, 1);
 ```
 
 ### 6. **Marketing Channel/Campaign Data**
+
 **Example:**
 Track and analyze data from various marketing channels and campaigns. Create reports to measure the effectiveness of different campaigns and optimize marketing spend.
 
@@ -167,6 +172,7 @@ FROM MarketingCampaigns;
 ```
 
 ### 7. **Affiliate Data**
+
 **Example:**
 Set up a system to manage and track affiliate data, including affiliate IDs, referral links, and commission rates. Generate reports on affiliate performance and calculate commissions.
 
@@ -194,6 +200,7 @@ GROUP BY a.AffiliateName;
 ```
 
 ### 8. **Retailer/Brand Data**
+
 **Example:**
 Maintain a database of retailer and brand information, including contact details, product lines, and sales agreements. Use this data to manage relationships and track performance.
 
