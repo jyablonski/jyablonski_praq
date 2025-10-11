@@ -3,18 +3,28 @@
 import bisect
 
 
-# O(n^2) solution
+# O(n log n) solution using binary search to efficiently break the problem down
 def solution(nums: list[int]) -> int:
-    n = len(nums)
-    dp = [1] * n
+    sub = []
 
-    for i in range(n):
-        for j in range(i):
-            if nums[j] < nums[i]:
-                dp[i] = max(dp[i], dp[j] + 1)
+    for num in nums:
+        print(f"Starting Sub is: {sub}")
+        # binary search to find where this number would fit in sub to keep it sorted
+        idx = bisect.bisect_left(sub, num)
 
-    print(dp)
-    return max(dp)
+        # The number is larger than all elements in sub, so we can extend the longest
+        # subsequence found so far and append the current value
+        if idx == len(sub):
+            sub.append(num)
+
+        # the number is smaller, so we can replace sub[idx] to create a better
+        # subsequence of that length and give more room for future extensions
+        else:
+            sub[idx] = num
+
+        print(f"    -> Sub is now: {sub}")
+
+    return len(sub)
 
 
 nums1 = [10, 9, 2, 5, 3, 7, 101, 18]
@@ -24,24 +34,27 @@ solution(nums=nums1)
 solution(nums=nums2)
 
 
-# O(n log n) solution
-class Solution:
-    def lengthOfLIS(self, nums: list[int]) -> int:
-        sub = []
-
-        for num in nums:
-            idx = bisect.bisect_left(sub, num)
-            if idx == len(sub):
-                sub.append(num)
-            else:
-                sub[idx] = num
-
-        return len(sub)
-
-
 l1 = [100, 200, 300, 500, 1000]
 
 for i in range(len(l1)):
     print(f"Index {i}")
     for j in range(i):
         print(f"J value is {l1[j]} and i is {l1[i]}")
+
+
+# Starting Sub is: []
+#     -> Sub is now: [10]
+# Starting Sub is: [10]
+#     -> Sub is now: [9]
+# Starting Sub is: [9]
+#     -> Sub is now: [2]
+# Starting Sub is: [2]
+#     -> Sub is now: [2, 5]
+# Starting Sub is: [2, 5]
+#     -> Sub is now: [2, 3]
+# Starting Sub is: [2, 3]
+#     -> Sub is now: [2, 3, 7]
+# Starting Sub is: [2, 3, 7]
+#     -> Sub is now: [2, 3, 7, 101]
+# Starting Sub is: [2, 3, 7, 101]
+#     -> Sub is now: [2, 3, 7, 18]

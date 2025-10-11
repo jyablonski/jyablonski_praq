@@ -18,9 +18,10 @@ def solution(words: list[str], chars: str) -> int:
     for word in words:
         word_count = Counter(word)
 
-        # This checks if you can form the word using the characters from chars.
+        # When you compare two Counter objects with >=, it checks if every
+        # character in char_count appears at least that many times in word_count.
         print(f"Checking if {word_count} <= {char_count}")
-        if word_count <= char_count:
+        if char_count >= word_count:
             result += len(word)
 
     return result
