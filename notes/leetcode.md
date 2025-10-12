@@ -8,18 +8,30 @@ Sorting is a fundamental technique in computer science that involves arranging t
 
 Idea: Repeatedly swap adjacent elements if they are in the wrong order. Largest elements "bubble" to the end.
 
+1. Iterate through all elements with i
+2. Go left to right of remaining unsorted elements with j
+3. Sort elements directly next to each other
+
 ```python
 def bubble_sort(arr):
     n = len(arr)
     for i in range(n):
+        print(f"i is on index {i}")
         for j in range(n - 1 - i):  # last i elements are already sorted
+            print(f"j is on index {j}")
             if arr[j] > arr[j + 1]:
+                print(f"    -> nums before: {arr}")
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                print(f"    -> nums after: {arr}")
+
+array = [4, 1, 7, 9, 2, 11]
+bubble_sort(array)
+
 ```
 
-* Time: O(n²) worst/avg, O(n) best (already sorted)
-* Space: O(1)
-* Simple but inefficient
+- Time: O(n²) worst/avg, O(n) best (already sorted)
+- Space: O(1)
+- Simple but inefficient
 
 ---
 
@@ -38,9 +50,9 @@ def selection_sort(arr):
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
 ```
 
-* Time: O(n²) always
-* Space: O(1)
-* Better than bubble, still bad for large lists
+- Time: O(n²) always
+- Space: O(1)
+- Better than bubble, still bad for large lists
 
 ---
 
@@ -59,13 +71,13 @@ def insertion_sort(arr):
         arr[j+1] = key
 ```
 
-* Time: O(n²) worst/avg, O(n) best (nearly sorted)
-* Space: O(1)
-* Good for small or nearly sorted data
+- Time: O(n²) worst/avg, O(n) best (nearly sorted)
+- Space: O(1)
+- Good for small or nearly sorted data
 
 ---
 
-## 🔥 Efficient Sorting Algorithms
+## Efficient Sorting Algorithms
 
 ### 4. Merge Sort (Divide & Conquer)
 
@@ -93,9 +105,9 @@ def merge(left, right):
     return result
 ```
 
-* Time: O(n log n) all cases
-* Space: O(n)
-* Very stable and consistent
+- Time: O(n log n) all cases
+- Space: O(n)
+- Very stable and consistent
 
 ---
 
@@ -113,9 +125,9 @@ def quick_sort(arr):
     return quick_sort(less) + [pivot] + quick_sort(greater)
 ```
 
-* Time: O(n log n) avg, O(n²) worst (bad pivot)
-* Space: O(log n) average (call stack)
-* Very fast in practice, but unstable
+- Time: O(n log n) avg, O(n²) worst (bad pivot)
+- Space: O(log n) average (call stack)
+- Very fast in practice, but unstable
 
 ---
 
@@ -134,10 +146,33 @@ def counting_sort(arr):
     return sorted_arr
 ```
 
-* Time: O(n + k) where `k` is the range of input
-* Space: O(k)
-* Very fast if range is small; not a comparison sort
+- Time: O(n + k) where `k` is the range of input
+- Space: O(k)
+- Very fast if range is small; not a comparison sort
 
+### Python `sorted`
+
+```py
+# sort by lexographical (a - z)
+sorted_words = sorted(freq.items(), key=lambda x: x[0])
+
+# sort by count / frequency of words in descending order
+# sorted works by default in ascending order; it always does ascending order.
+# so by making the count negative, we actually make the highest count values the
+# highest negative numbers so they appear first in the list, effectively making
+# it sort by descending.
+
+# you could also do
+sorted_words = sorted(freq.items(), key=lambda x: -x[1])
+
+# can also do this if you're only sorting by 1 criteria
+sorted(freq.items(), key=lambda x: x[1], reverse=True)
+
+# sort by both; the negative is necessary when you have multiple criteria
+sorted_words = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
+
+
+```
 
 ### Summary Table
 
@@ -151,22 +186,147 @@ def counting_sort(arr):
 | Heap Sort      | O(n log n)  | O(n log n)   | O(1)     | No     | Good worst-case guarantee |
 | Counting Sort  | O(n + k)    | O(n + k)     | O(k)     | Yes    | Non-comparison based      |
 
+## Dictionaries
+
+A dictionary is a built-in Python data structure that stores data as key-value pairs. Think of it like a real dictionary where you look up a word (key) to find its definition (value).
+
+```py
+# Empty dictionary
+empty_dict = {}
+
+# Dictionary with data
+student = {
+    "name": "Alice",
+    "age": 20,
+    "major": "Computer Science"
+}
+
+# Access by key
+print(student["name"])  # "Alice"
+
+# Safe access with .get() (returns None if key doesn't exist)
+print(student.get("major"))  # None
+
+# Get all keys
+keys = student.keys()  # dict_keys(['name', 'age', 'major'])
+
+# Get all values
+values = student.values()  # dict_values(['Alice', 20, 'CS'])
+
+# Get key-value pairs
+items = student.items()  # dict_items([('name', 'Alice'), ('age', 20), ('major', 'CS')])
+
+# Length
+len(student)  # 3
+
+text = "apple banana apple cherry banana apple"
+words = text.split()
+
+# Count word frequencies
+freq = {}
+for word in words:
+    if word in freq:
+        freq[word] += 1
+    else:
+        freq[word] = 1
+
+from collections import Counter
+
+# do the same thing in 1 line of code
+freq = Counter(words)
+```
 
 ## 2 Pointers
 
 The 2 pointer technique involves using 2 different pointers to iterate through a list. There are various ways these can be utilized:
 
 - Starting at index 0 and at index 1, and then iterating the right pointer by one and comparing the values at these 2 indexes
-    - These solutions are often (`n^2`) because you're iterating over every item in the list twice
+  - These solutions are often (`n^2`) because you're iterating over every item in the list twice
 - Starting with the left pointer at index 0 and the right pointer at `len(list) - 1` which is at the last value of the list
-    - If the list is sorted, this is particularly effective in a problem like two sum where you can increment the left pointer by 1, or decrement the right pointer by 1 until you find some target value you're looking for
+  - If the list is sorted, this is particularly effective in a problem like two sum where you can increment the left pointer by 1, or decrement the right pointer by 1 until you find some target value you're looking for
+
+## Recursion
+
+Recursion is a programming technique where a function calls itself to solve a problem by breaking it down into smaller, simpler versions of the same problem.
+
+Instead of using loops, recursion solves problems by:
+
+1. Breaking a big problem into smaller subproblems of the same type
+2. Solving the smallest case directly (base case)
+3. Building up the solution from there
+
+Every recursive function needs two parts:
+
+1. Base Case - The stopping condition (prevents infinite recursion)
+2. Recursive Case - The function calling itself with a simpler input
+
+```py
+def countdown(n):
+    # Base case: stop when we reach 0
+    if n == 0:
+        print("Blastoff!")
+        return
+
+    # Recursive case: print and call with smaller n
+    print(n)
+    countdown(n - 1)
+
+countdown(3)
+# Output:
+# 3
+# 2
+# 1
+# Blastoff!
+
+def factorial(n):
+    # Base case
+    if n <= 1:
+        return 1
+
+    # Recursive case
+    return n * factorial(n - 1)
+
+print(factorial(5))  # 120
+
+# factorial(5)
+# = 5 * factorial(4)
+# = 5 * (4 * factorial(3))
+# = 5 * (4 * (3 * factorial(2)))
+# = 5 * (4 * (3 * (2 * factorial(1))))
+# = 5 * (4 * (3 * (2 * 1)))
+# = 5 * (4 * (3 * 2))
+# = 5 * (4 * 6)
+# = 5 * 24
+# = 120
+```
+
+When to use recursion:
+
+- Problem naturally breaks into smaller subproblems (tree traversal, divide & conquer)
+- Code is cleaner and more intuitive
+- Working with recursive data structures (trees, graphs)
+
+```sh
+Recursion (a technique)
+    ├── Used in many contexts
+    │       ├── Tree traversal
+    │       ├── Divide & conquer
+    │       ├── Backtracking
+    │       └── Top-down DP (recursion + memoization)
+    │
+    └── NOT used in bottom-up DP
+
+Dynamic Programming (a strategy)
+    ├── Top-down approach → uses recursion + memoization
+    └── Bottom-up approach → uses iteration (NO recursion)
+```
 
 ## Dynamic Programming
 
 Dynamic Programming (DP) is a powerful technique used in computer science to solve optimization problems and combinatorial problems by breaking them down into smaller overlapping subproblems, solving each subproblem just once, and storing the result for future reuse.
 
 1. Dynamic programming = recursion + memoization
-2. Dynamic programming = building up solutions bottom-up using a table (tabulation
+2. Dynamic programming = building up solutions bottom-up using a table (tabulation)
 
 To apply DP, your problem must have:
 
@@ -179,7 +339,7 @@ Examples:
    - Recursive solution is inefficient due to repeated calculations.
    - DP stores results of previous calculations to avoid redundant work.
 
-``` python
+```python
 # top down memoization
 # You use recursion, but cache (memoize) the results of each subproblem.
 
@@ -208,6 +368,7 @@ def fib(n):
 ```
 
 2. Knapsack Problem
+
    - Given weights and values of items, find the maximum value that can be carried in a knapsack of a given capacity.
    - DP builds a table where each entry represents the maximum value for a given weight limit.
 
@@ -224,33 +385,33 @@ Memoization is a strategy where we save the results of every subproblem that we'
 - This is known as a top down approach
 - But, keep in mind we still might be making unnecessary recursive calls, even if their answer is cached
 
-``` py
-# the recursive way 
+```py
+# the recursive way
 def climbStairs(n):
     # base cases
     if n <= 1:
         return 1
-    
+
     return climbStairs(n - 1) + climbStairs(n - 2)
 
 # the memo way
 def climbStairs(n: int) -> int:
     memo = {}
-    
+
     def climb_helper(i: int) -> int:
         if i <= 1:
             return 1
-        
+
         # check if value is already in cache
         # before making recursive calls
         # corresponds to the green nodes in the diagram
         if i in memo:
             return memo[i]
-        
+
         # store result in cache before returning
         memo[i] = climb_helper(i - 1) + climb_helper(i - 2)
         return memo[i]
-    
+
     return climb_helper(n)
 
 # bottom up approach
@@ -284,7 +445,7 @@ Backtracking is particularly useful for problems involving permutations, combina
 
 Example: Generate all binary strings of length 2 using backtracking.
 
-``` python
+```python
 def generate_binary_strings(n):
 
     # create an empty list where we can store the results we're looking for
@@ -315,10 +476,9 @@ print(generate_binary_strings(2))
 
 ```
 
-
 When the problem involves finding unique combinations (like subsets, permutations, or groupings where order doesn’t matter or duplicates must be avoided), you need to add extra logic to avoid generating the same group multiple times.
 
-``` python
+```python
 def unique_combinations(nums):
 
     # Step 1: sort nums to enable skipping duplicates w/ the start logic
@@ -354,7 +514,7 @@ print(unique_combinations([1, 2, 2]))
 
 combinations sum2
 
-``` python
+```python
 def combinationSum2(candidates, target):
     candidates.sort()
     result = []
@@ -384,17 +544,18 @@ def combinationSum2(candidates, target):
 The sliding window technique is a powerful method for solving problems that involve contiguous subarrays or substrings. It allows you to maintain a subset of elements in a data structure while iterating through the array, which can lead to more efficient solutions than brute force methods.
 
 There are two main types of sliding window techniques:
+
 1. **Fixed-size Sliding Window**: The window size is constant, and you slide the window across the array.
 2. **Variable-size Sliding Window**: The window size can change based on certain conditions, expanding or contracting as needed.
 
 It's useful for problems involving:
+
 - Finding the maximum or minimum sum of a subarray of a fixed size.
 - Finding the longest substring with unique characters.
 
 If you know the length of the subsequence you are looking for, use a fixed-length sliding window. Otherwise, use a variable-length sliding window.
 
-
-``` python
+```python
 def variable_length_sliding_window(nums):
   state = # choose appropriate data structure
   start = 0
@@ -444,7 +605,7 @@ A problem has an optimal substructure if an optimal solution to the problem cont
 
 Greedy problems often involve sorting elements by some criteria, and are generally faster than dynamic programming because they're not considering all possible solutions
 
-``` py
+```py
 def solution(prices: list[int]) -> int:
     min_price = prices[0]
     max_profit = 0
@@ -473,24 +634,22 @@ Binary trees are typically used in these algorithms and they have key attributes
 - The height (or depth) of a binary tree is the number of edges on the longest path between the root node and a leaf node
 - A balanced binary tree is one where the height of the left or right subtrees of every node differs by at most 1
 - A binary tree is "complete" if every level, except possibly the last, is completely filled, and all nodes are as far left as possible
-    - A complete binary tree has a height of O(log(n)), where n is the number of nodes in the tree.
-
+  - A complete binary tree has a height of O(log(n)), where n is the number of nodes in the tree.
 
 A binary search tree (BST) is a binary tree where:
 
 - All nodes in the left subtree have a value less than the root
 - All nodes in the right subtree have a value greater than the root
 
-
-``` py
+```py
 # template to act as a starting point to solve binary tree problems with DFS
 def dfs(node):
     # base case
     if node is None:
         return some value
-    
+
     ...
-    
+
     left = dfs(node.left)
     right = dfs(node.right)
     return value based on left and right
@@ -503,11 +662,11 @@ To determine what the return value should be for a different problem, imagine yo
 
 - If the problem is to find the max value in a binary tree, then your return would be something like:
 
-``` py
+```py
 def maxValue(node):
     if node is None:
         return float('-inf')
-    
+
     if node.left is None and node.right is None:
         return node.val
 
@@ -521,7 +680,7 @@ In some cases, questions require us to pass information "down" from parents to c
 - Questions involving root-to-leaf paths are common examples of where using helper functions are necessary, as we can use the helper function to introduce extra parameters that store the state of our current path.
 - Sometimes we may also want to use a global variable defined in the main function that we append to or modify in the helper function. In this case, define it and then run `nonlocal var_name` in the helper function to access it.
 
-``` py
+```py
 def goodNodes(root):
     # nodes is a "global" var in the context of this function and its child functions
     # this is best practice and good to mention that you know the knowledge of variable scoping
@@ -540,7 +699,7 @@ def goodNodes(root):
 
 Return Values - If I'm at a node in the tree, what values do I need from my left and right children to calculate xyz of the subtree rooted at the current node?
 
-``` py
+```py
 # check if you're trying to call past a leaf node - this is necessary so you dont try running node.val or node.left
 # on a node that doesn't exist
 if not node:
@@ -561,18 +720,18 @@ DFS Types
 
 1. Given a binary tree, use Depth-First Search to find the sum of all nodes in the tree.
 
-``` py
+```py
 
 # Given a binary tree, use Depth-First Search to find the sum of all nodes in the tree.
 def dfs(node):
     # base case: empty subtree
     if node is None:
         return 0
-    
+
     # base case: leaf node
     if node.left is None and node.right is None:
         return node.val
-    
+
     left = dfs(node.left)
     right = dfs(node.right)
     return left + right + node.val
@@ -596,7 +755,7 @@ Compared to depth-first search, BFS makes it much easier to tell when we have fi
 
 - This makes it a natural candidate for questions that ask something about the nodes at each level
 
-``` py
+```py
 from collections import deque
 
 def bfs(root):
@@ -609,7 +768,7 @@ def bfs(root):
   while queue:
     curr_node = queue.popleft()
     result.append(curr_node.val)
-    
+
     if curr_node.left:
       queue.append(curr_node.left)
     if curr_node.right:
@@ -636,21 +795,21 @@ Graphs can be either directed or undirected. In a directed graph, edges between 
 
 An adjacency list is a common way to represent a graph. In an adjacency list, we are given a list of nodes, where each node is mapped to a list of its neighbors. These can be created in Python using a dictionray where the keys are nodes and the values are the list of nodes each node is connected to:
 
-``` py
-adjList = {    
-    1: [2],    
-    2: [1, 3, 4],    
-    3: [2, 4],    
-    4: [2, 3, 5],    
-    5: [4]    
-}    
+```py
+adjList = {
+    1: [2],
+    2: [1, 3, 4],
+    3: [2, 4],
+    4: [2, 3, 5],
+    5: [4]
+}
 ```
 
 - Adjacency lists allow you to look up the neighbors of any node in O(1) time, which is a necessary step for depth-first search.
 
 Given an integer n which represents the number of nodes in a graph, and a list of edges edges, where edges[i] = [ui, vi] represents a bidirectional edge between nodes ui and vi, write a function to return the adjacency list representation of the graph as a dictionary. The keys of the dictionary should be the nodes, and the values should be a list of the nodes each node is connected to.
 
-``` py
+```py
 # edges = [[0, 1]] means node 0 is connected to node 1
 n = 4
 edges = [[0, 1], [1, 2], [2, 3], [3, 0], [0, 2]]
@@ -681,7 +840,7 @@ DFS for a graph is conceptually similar to DFS on a binary tree. The algorithm t
 - Because graphs can contain cycles, we have to keep track of nodes we have already visited. If we encounter one, we need to return immediately without making any further recursive calls to avoid getting into an infinite loop
 - No need for explicit base case, we just need to iterate through all nodes in the graph and the recursion will stop on its own
 
-``` py
+```py
 # basic DFS implementation on adjacency list
 def dfs(adjList):
   if not adjList:
@@ -709,7 +868,6 @@ def dfs(adjList):
 - Use a set to keep track of visited nodes
 - If you encounter a node you've already visited, return immediately
 - Use a for loop to iterate ovewr each neighbor of the current node, and recursively call `dfs` on each neighbor
-
 
 ## Intervals
 
@@ -766,7 +924,7 @@ Heaps maintain their properties as you add, remove, or update elements in it. Ad
 
 Python offers the `heapq` module to turn arrays into min or max heaps
 
-``` py
+```py
 import heapq
 
 arr = [3, 1, 4, 1, 5, 9, 2]
