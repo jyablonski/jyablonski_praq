@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from nba_api.stats.static import players
 
-from jyablonski_common_modules.sql import sql_connection
+from jyablonski_common_modules.sql import create_sql_engine
 
 
 def clean_player_names(df: pd.DataFrame) -> pd.DataFrame:
@@ -34,7 +34,7 @@ def clean_player_names(df: pd.DataFrame) -> pd.DataFrame:
 # Create an instance of the NBAStats class
 nba_players = players.get_players()
 
-df = pd.DataFrame(nba_players).query(f"is_active == True")
+df = pd.DataFrame(nba_players).query("is_active == True")
 df["headshot"] = df["id"].apply(
     lambda x: f"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/{x}.png"
 )
@@ -46,12 +46,13 @@ df["yrs_exp"] = 0
 df["is_rookie"] = False
 
 
-engine = sql_connection(
+engine = create_sql_engine(
     database=os.environ.get("RDS_DB"),
     schema="nba_source",
     user=os.environ.get("RDS_USER"),
-    pw=os.environ.get("RDS_PW"),
+    password=os.environ.get("RDS_PW"),
     host=os.environ.get("IP"),
+    port=17841,
 )
 
-df.to_sql("aws_player_attributes_source", con=engine, if_exists="append", index=False)
+df.to_sql("internal_player_attributes", con=engine, if_exists="append", index=False)

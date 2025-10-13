@@ -51,6 +51,7 @@ dependencies = [
     "lxml>=6.0.0",
     "dlt>=1.15.0",
     "streamlit>=1.48.1",
+    "nba-api>=1.10.2",
 ]
 
 [dependency-groups]
