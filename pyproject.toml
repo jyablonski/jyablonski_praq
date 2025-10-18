@@ -52,6 +52,7 @@ dependencies = [
     "dlt>=1.15.0",
     "streamlit>=1.48.1",
     "nba-api>=1.10.2",
+    "vortex-data>=0.53.0",
 ]
 
 [dependency-groups]
