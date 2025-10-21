@@ -1,19 +1,28 @@
 # given array nums containing n distinct numbers in range [0, n] return the only number
 # that's missing from the array
 
+# much more intuitive solution, use a set to keep track of all nums in the provided array,
+# and then then you just iterate through nums + 1 until you find the 1 not in the input array
+def solution_new(nums: list[int]) -> int:
+    num_set = set(nums)
+
+    for i in range(len(nums) + 1):
+        if i not in num_set:
+            return i
+
 
 def solution(nums: list[int]) -> int:
     length = len(nums)
     result = length
     print(f"starting result: {result}")
-    print(f"\n")
+    print("\n")
 
     for i in range(length):
         print(f"before result: {result}")
         print(f"calculating {result} += ({i} - {nums[i]})")
         result += i - nums[i]
         print(f"after result: {result}")
-        print(f"\n")
+        print("\n")
 
     return result
 
