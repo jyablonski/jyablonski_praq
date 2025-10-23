@@ -10,6 +10,8 @@ BI users often aren’t SQL experts. Semantic layers abstract the complexity (jo
 
 A semantic layer (like dbt Metric Layer, Looker’s LookML, or MetricFlow) enables multiple tools (Looker, Mode, Hex, etc.) to query the same definitions. This avoids metric drift across tools and reports.
 
+- But, Semantic Layers are essentially a specification/API, not a query interface that end users interact with directly. You need something to consume it.
+
 ## A Better Pattern
 
 Layered Architecture (Modern Analytics Stack):
@@ -23,42 +25,42 @@ Layered Architecture (Modern Analytics Stack):
 
 You can build a wide "presentation layer" table (say `fct_revenue_metrics`) that includes every metric and dimension your BI users need. This is:
 
-* Simple
-* Performant (assuming materialized / pre-aggregated)
-* Controlled (you define the exact shape)
+- Simple
+- Performant (assuming materialized / pre-aggregated)
+- Controlled (you define the exact shape)
 
 And this works pretty well at small scale or with a limited team
 
-* Metric definitions are stable
-* Dashboards are highly curated
-* Query performance is great, because it's just selecting precomputed results from a table (`select x, y from table z`)
+- Metric definitions are stable
+- Dashboards are highly curated
+- Query performance is great, because it's just selecting precomputed results from a table (`select x, y from table z`)
 
 But it doesn't scale well when you add complexity. If users need:
 
-* 10 dimensions (e.g., country, device, customer type)
-* 5 metrics
-* Across multiple time grains (daily, weekly, monthly)
+- 10 dimensions (e.g., country, device, customer type)
+- 5 metrics
+- Across multiple time grains (daily, weekly, monthly)
 
 You’d need to either:
 
-* Materialize dozens of tables to cover all combos
-* Or store raw data and re-aggregate in the BI tool (which means... semantic logic again)
+- Materialize dozens of tables to cover all combos
+- Or store raw data and re-aggregate in the BI tool (which means... semantic logic again)
 
 Stakeholders will always want:
 
-* A new cut of the data (e.g., "Can I see conversion by *browser*?")
-* A modified metric (e.g., "Revenue, but excluding refunds")
+- A new cut of the data (e.g., "Can I see conversion by _browser_?")
+- A modified metric (e.g., "Revenue, but excluding refunds")
 
 Without a semantic layer, you either:
 
-* Say “no”
-* Create yet another table
+- Say “no”
+- Create yet another table
 
 If every metric is materialized into a table:
 
-* Where do users see how “revenue” was defined?
-* How do you trace changes?
-* What if the logic changes?
+- Where do users see how “revenue” was defined?
+- How do you trace changes?
+- What if the logic changes?
 
 Semantic layers let you version, document, and test metric logic — like code.
 
@@ -66,10 +68,10 @@ Semantic layers let you version, document, and test metric logic — like code.
 
 Predefined tables sacrifice flexibility for speed and stability. They can still serve a use case for:
 
-* KPI dashboards with stable requirements
-* High level Executive summaries
-* Real-time metrics (e.g., orders in the last 24 hours)
-* Any dataset that is refreshed once a day and can be precomputed easily
+- KPI dashboards with stable requirements
+- High level Executive summaries
+- Real-time metrics (e.g., orders in the last 24 hours)
+- Any dataset that is refreshed once a day and can be precomputed easily
 
 ## The Best Practice? Use Both
 
@@ -88,18 +90,19 @@ Predefined tables sacrifice flexibility for speed and stability. They can still 
 
 1. Use dbt for:
 
-   * Building clean, well-modeled tables (like `fct_orders`, `dim_customers`)
-   * Documenting columns, not necessarily metrics
-   * (Optional) Using `dbt metrics` if you also serve metrics to non-Looker tools (e.g., Hex or Mode) so dbt is the source of truth
+   - Building clean, well-modeled tables (like `fct_orders`, `dim_customers`)
+   - Documenting columns, not necessarily metrics
+   - (Optional) Using `dbt metrics` if you also serve metrics to non-Looker tools (e.g., Hex or Mode) so dbt is the source of truth
 
 2. Use LookML for:
 
-   * Defining metrics (like `total_revenue`, `LTV`, `churn_rate`)
-   * Applying joins, dimension groups, filters
-   * Exposing those to users in Explores
-   * Surfacing tooltips/descriptions directly in the UI
+   - Defining metrics (like `total_revenue`, `LTV`, `churn_rate`)
+   - Applying joins, dimension groups, filters
+   - Exposing those to users in Explores
+   - Surfacing tooltips/descriptions directly in the UI
 
 3. Optionally use dbt docs or dbt semantic layer for:
 
-   * Cross-tool metadata
-   * Programmatic metric usage (e.g., in APIs or notebooks)
+   - Cross-tool metadata
+   - Programmatic metric usage (e.g., in APIs or notebooks)
+   - dbt Semantic layer would be for if you wanted to serve these metrics someplace outside of Looker
