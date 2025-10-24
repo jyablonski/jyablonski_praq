@@ -10,13 +10,14 @@ class Solution:
         current = head
 
         while current:
-            # 1. make pointer to next_node
+            # 1. make pointer to next_node so we don't lose it
+            # in the next step
             next_node = current.next
 
-            # 2. update current to point to prev
+            # 2. update current next to point to prev
             current.next = prev
 
-            # 3. get ready for next node
+            # 3. get ready for next node by moving both pointers forward
             #       update prev to point to current
             #       update current to point to next
             prev = current

@@ -33,18 +33,26 @@ def solution(n: int, head: ListNode | None = None) -> ListNode | None:
 
 # 2 pointer approach
 def removeNthFromEnd(head, n):
+    # initial fast and slow pointers
     fast = slow = head
+
+    # move faster point n + 1 steps ahead
     for _ in range(n):
         fast = fast.next
 
-    # special case: removing head
+    # special case: if we're asked to remove the head
+    # of the linked list, then we just return head.next
     if not fast:
         return head.next
 
+    # Move both pointers until fast reaches the end
+    # This maintains a gap of n+1 nodes between them
     while fast.next:
         fast = fast.next
         slow = slow.next
 
+    # Now slow is at the node right before the one we want to remove
+    # Skip the target node
     slow.next = slow.next.next
     return head
 
