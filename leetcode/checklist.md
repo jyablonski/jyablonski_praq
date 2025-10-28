@@ -11,3 +11,4 @@
   - The other branch eliminates `mid`: `left = mid + 1` (or `right = mid - 1`)
   - Loop converges to single element when `left == right` — that's your answer
 - sorted syntax: `sorted(intervals, key = lambda x: x[0])`
+- backtracking is a recursive technique typically used for combinations, permutations, word search, palindromes etc
