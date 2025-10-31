@@ -7,20 +7,21 @@ Observability can be broken down into 3 main components: logs, traces, and aggre
 Logs are what happened, traces are how they happened.
 
 - **Logging**: Integrate logging frameworks to capture structured logs efficiently. Consider log aggregation tools (Elasticsearch, Splunk) for centralized storage and analysis.
-  
 - **Tracing**: Implement distributed tracing with tools like OpenTelemetry or Jaeger to capture request flows across your API services. Configure instrumentation to propagate trace context between services.
-  
 - **Metrics**: Configure Prometheus to scrape metrics exposed by your API server and infrastructure components. Use Grafana for visualization and creating dashboards that combine metrics from Prometheus with logs and trace data for comprehensive monitoring.
 
 1. **Prometheus -> Thanos:**
-   - **Prometheus** is a monitoring and alerting toolkit originally developed by SoundCloud, now a part of the Cloud Native Computing Foundation (CNCF). It collects metrics from monitored targets by scraping HTTP endpoints.
+
+   - **Prometheus** is a monitoring and alerting toolkit originally developed by SoundCloud, now a part of the Cloud Native Computing Foundation (CNCF). It collects metrics from monitored targets by scraping HTTP endpoints. By default, Prometheus stores time-series data locally on disk for a limited retention period - typically 15 days.
    - **Thanos** is an open-source project that adds long-term storage capabilities to Prometheus. It allows for seamless querying of historical data across multiple Prometheus servers and provides downsampling and retention policies.
 
 2. **Vector ships logs to Quickwit:**
+
    - **Vector** is a high-performance, open-source observability data router. It can collect, transform, and route logs, metrics, and traces to various destinations.
    - **Quickwit** seems to be the destination for logs in this setup. Quickwit is an open-source search engine that provides fast and scalable full-text search capabilities. It can index and make logs searchable.
 
 3. **Traces via Jaeger to Quickwit:**
+
    - **Jaeger** is an open-source, end-to-end distributed tracing system. It is used for monitoring and troubleshooting microservices-based distributed systems.
    - Traces from Jaeger are also directed to Quickwit for storage and indexing, alongside logs from Vector.
 
@@ -29,6 +30,7 @@ Logs are what happened, traces are how they happened.
    - Grafana serves as the user interface in your setup, providing a unified view for metrics, logs (via Quickwit), and traces.
 
 ### Simplified Flow:
+
 - Prometheus collects metrics and sends them to Thanos for long-term storage and querying.
 - Vector collects logs and sends them to Quickwit, which indexes them for fast search and retrieval.
 - Jaeger collects traces and sends them to Quickwit alongside logs.
@@ -36,28 +38,33 @@ Logs are what happened, traces are how they happened.
 
 This architecture allows for a self-hosted, scalable, and customizable observability stack, replacing the functionality previously provided by Datadog with open-source alternatives.
 
-
 ### Role of OpenTelemetry:
 
 **1. Instrumentation:**
-   - **OpenTelemetry** provides libraries for instrumenting your applications to generate distributed traces and metrics automatically. These libraries are available for various programming languages and frameworks.
+
+- **OpenTelemetry** provides libraries for instrumenting your applications to generate distributed traces and metrics automatically. These libraries are available for various programming languages and frameworks.
 
 **2. Tracing:**
-   - With OpenTelemetry, your applications can generate distributed traces that capture the flow of requests across various microservices and components.
+
+- With OpenTelemetry, your applications can generate distributed traces that capture the flow of requests across various microservices and components.
 
 **3. Exporters:**
-   - OpenTelemetry supports exporters that can send traces and metrics to various backends, including Jaeger (for tracing) and Prometheus (for metrics).
+
+- OpenTelemetry supports exporters that can send traces and metrics to various backends, including Jaeger (for tracing) and Prometheus (for metrics).
 
 ### Integration with the Existing Components:
 
 **1. Traces:**
-   - OpenTelemetry can export traces to Jaeger. These traces are then routed to Quickwit for storage and indexing, alongside logs from Vector.
+
+- OpenTelemetry can export traces to Jaeger. These traces are then routed to Quickwit for storage and indexing, alongside logs from Vector.
 
 **2. Metrics:**
-   - OpenTelemetry can export metrics to Prometheus. Thanos can then handle long-term storage and querying of these metrics, providing scalability and retention policies.
+
+- OpenTelemetry can export metrics to Prometheus. Thanos can then handle long-term storage and querying of these metrics, providing scalability and retention policies.
 
 **3. Visualization:**
-   - Grafana can integrate with Prometheus for metrics visualization and with Quickwit for logs and traces (via Jaeger and potentially OpenTelemetry if you choose to use it for metrics as well).
+
+- Grafana can integrate with Prometheus for metrics visualization and with Quickwit for logs and traces (via Jaeger and potentially OpenTelemetry if you choose to use it for metrics as well).
 
 ### Flow with OpenTelemetry:
 
@@ -76,9 +83,7 @@ This architecture allows for a self-hosted, scalable, and customizable observabi
 
 By incorporating OpenTelemetry into your observability stack, you enhance the granularity and depth of your monitoring and tracing capabilities, facilitating better insights into the performance and behavior of your applications and infrastructure.
 
-
 ## Tooling
-
 
 ### Thanos
 
@@ -95,7 +100,7 @@ The Thanos Store retrieves historical data from object storage and makes it avai
 
 The Thanos compactor periodically compacts and downsamples the data in object storage, to save storage costs and improve query efficiency. This is enabled by Downsampling, which is the process of reducing the resolution of time-series data by aggregating multiple data points into fewer data points. This method is still sufficient to perform long-term trend analysis and observe patterns.
 
-``` yaml
+```yaml
 services:
   thanos-compactor:
     image: quay.io/thanos/thanos:v0.24.0
@@ -132,12 +137,11 @@ Jaeger queries are allowed through a REST API for retrieving traces from the sto
 
 Jaeger supports multiple storage backends for storing traces, including Elasticsearch, Cassandra, and Kafka.
 
-
 For development and testing, Jaeger provides an all-in-one Docker container that includes the agent, collector, query, and UI components.
 
-For production, Jaeger components are often deployed as separate services to ensure scalability and resilience. 
+For production, Jaeger components are often deployed as separate services to ensure scalability and resilience.
 
-``` yaml
+```yaml
 services:
   jaeger-agent:
     image: jaegertracing/jaeger-agent:1.24
@@ -177,7 +181,7 @@ You can also implement OpenTelemetry to instrument your app and generate traces,
 
 ### Vector
 
-Vector is a high performance observability data pipline that allows you to route your logs, metrics, and traces to any destination source such as S3, Elasticsearch, Kafka etc. 
+Vector is a high performance observability data pipline that allows you to route your logs, metrics, and traces to any destination source such as S3, Elasticsearch, Kafka etc.
 
 ## Conclusion
 
@@ -185,6 +189,56 @@ Prometheus and OpenTelemetry serve distinct roles in the observability and monit
 
 OpenTelemetry can export metrics to Prometheus for storage, querying, and alerting purposes. This setup leverages Prometheus’ strength in time-series data handling while using OpenTelemetry for data generation.
 
-Thanos can then be added on to your Prometheus setup to allow you to extend its capabilities for long-term storage, high availability, and efficient querying of Prometheus metrics data. 
+Thanos can then be added on to your Prometheus setup to allow you to extend its capabilities for long-term storage, high availability, and efficient querying of Prometheus metrics data.
 
-Integrating Grafana with OpenTelemetry, Prometheus, and Thanos allows you to leverage Grafana’s powerful visualization capabilities to monitor, analyze, and troubleshoot your distributed systems effectively. 
+Integrating Grafana with OpenTelemetry, Prometheus, and Thanos allows you to leverage Grafana’s powerful visualization capabilities to monitor, analyze, and troubleshoot your distributed systems effectively.
+
+## Grafana Stack
+
+The Grafana Stack is a collection of open-source tools that work together to provide a comprehensive monitoring and observability solution.
+
+So in the Grafana stack context:
+
+- Loki = logs
+- Prometheus + Thanos = metrics (short-term + long-term)
+- Tempo or Jaeger = traces
+- Grafana = visualization for all of the above
+
+Going more in depth:
+
+**Loki**: Loki is a log aggregation system designed to work seamlessly with Grafana. It allows users to collect, store, and query logs from various sources. Loki is optimized for cost-effective log storage and retrieval, making it a popular choice for log management in the Grafana Stack.
+
+- Loki stores logs in AWS S3 buckets or other object storage systems, which helps reduce storage costs compared to traditional log management solutions.
+- It uses a label-based approach to index logs, allowing for efficient querying and filtering of log data.
+
+**Tempo**: Tempo is a distributed tracing backend that integrates with Grafana. It allows users to collect, store, and query traces from various applications and services. Tempo is designed to be scalable and cost-effective, making it suitable for large-scale distributed systems.
+
+- Jaeger competes with Tempo as a tracing solution, but Tempo is tightly integrated with the Grafana Stack, providing a seamless experience for users who want to visualize traces alongside metrics and logs.
+- Tempo stores traces in object storage systems like AWS S3, which helps reduce storage costs compared to traditional tracing solutions.
+
+By combining these components, the Grafana Stack provides a unified platform for monitoring metrics, logs, and traces, enabling users to gain deep insights into their applications and infrastructure.
+
+## Grafana
+
+Grafana becomes your "single pane of glass" where you:
+
+- View dashboards
+- Search logs
+- Configure alerts
+- Jump between metrics, logs, and traces seamlessly
+
+## Storage Backends
+
+Object storage (S3, GCS, etc.) has become the best-practice backend for all three, and for good reasons.
+
+- Scalability: Object storage systems are designed to scale horizontally, allowing you to store vast amounts of data without worrying about running out of space. This means we can scale them independently of our monitoring infrastructure.
+- Cost-effectiveness: Object storage is often cheaper than traditional block storage solutions, making it an attractive option for long-term data retention.
+- Durability: Object storage systems typically offer high durability guarantees, ensuring that your data is safe and can be recovered in case of hardware failures.
+
+All three tools (Thanos, Loki, Tempo) have built-in support for object storage backends, making it easy to configure and use them in your monitoring stack. Their write patterns typically look like:
+
+1. Data is buffered in memory or on local disk for a short period of time.
+2. Data is then batched and written to the object storage backend in larger chunks.
+3. Metadata and indexes are updated to reflect the new data stored in the object storage.
+
+This approach allows for efficient and cost-effective storage of large volumes of monitoring data, while still providing fast access and query capabilities when needed.
