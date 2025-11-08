@@ -281,3 +281,39 @@ When to get it:
 The reality: SOC 2 doesn't guarantee security - it verifies you have documented controls operating consistently. It's compliance theater to some extent, but it's necessary theater that signals "we're enterprise-ready" and provides standardized assurance that enterprises trust.
 
 So really it's just following best practices and having good processes and workflows in place to build and maintain your software, and then having engineers and the company actually follow those processes, and then writing all of it down in the form of documentation, policies, and procedures so you're prepared for when auditors come.
+
+## Keycloak
+
+Keycloak is a self-hosted Identity and Access Management tool that competes with something like Okta to provide:
+
+- SSO
+- MFA
+- User federation and management
+- OAuth 2.0 and OpenID Connect support
+
+The key differences compared to Okta are:
+
+- Open Source
+- Self hosted on your own infrastructure (K8s + EC2 etc)
+- No license fee
+- Full control + customization
+- Requires internal engineering effort to implement, build, and manage
+
+Typically, you should use managed services for things you don't specialize in, so you can focus on your own core value proposition. So, it normally makes more sense for orgs to go with Okta and just pay the SaaS fee in order to gain access to the functionality provided by these tools.
+
+When does it make sense to go with Keycloak?
+
+- When you're selling software to enterprises that they expect to integrate with their SSO provider, you need a custom identity layer that can handle this
+- When you have 1000s of users at scale, the Okta per-user cost would become untenable.
+- When you have highly custom authentication flows that go beyond standard OAuth / OIDC
+- When you have compliance requirements that require it, like government contracts requiring on-prem deployment etc or industry regulations that require data can't leave certain jurisdictions
+
+Self-hosting Keycloak isn't just "spin up a container":
+
+- High availability setup means multiple nodes and load balancing
+- Database management and backups
+- Security patches and updates
+- Monitoring and incident response
+- Testing auth flows (you really don't want bugs here)
+
+Auth/identity is absolutely critical infrastructure. If it breaks, everything breaks. This is exactly the kind of thing you want someone else to be responsible for unless you have a compelling reason otherwise.
