@@ -1,21 +1,23 @@
 # System Design
+
 Hot Reads
 
 ## Tools
+
 1. Relational Database
-   1. The go-to choice for many use cases.  
+   1. The go-to choice for many use cases.
    2. Versatile, stores structured data, allows various forms of OLTP and OLAP needs.
    3. Can store many different types of structured data in different tables.
    4. Allows you to configure complex data relationships.
    5. ACID Compliance
-      1. Atomic - Transactions are all or nothing.  If it fails, nothing gets committed.
-      2. Consistent - Database is always in a consistent state.  Data integrity is maintained, constraints don't fail etc.
+      1. Atomic - Transactions are all or nothing. If it fails, nothing gets committed.
+      2. Consistent - Database is always in a consistent state. Data integrity is maintained, constraints don't fail etc.
       3. Isolated - Concurrent Transactions do not affect each other; they process 1 at a time.
-      4. Durable - Transaction that are committed are permanent.  Enforced via WAL or the BinLog, which enables Admins to recover the database in the event of system failure etc.
+      4. Durable - Transaction that are committed are permanent. Enforced via WAL or the BinLog, which enables Admins to recover the database in the event of system failure etc.
    6. Examples: Postgres, MySQL
 2. Key Value Store
    1. Effective at storing unstructured data quickly. Fast lookups in o(1) time for a specific key
-   2. Scales well, designed for horizontal scalability.  Designed for large number of read + write operations across distributed systems.
+   2. Scales well, designed for horizontal scalability. Designed for large number of read + write operations across distributed systems.
    3. Pairs well w/ things like Lambda Functions
    4. Easy to implement Caching
    5. Requires very specific access patterns that you have to know up front in order to design the data effectively
@@ -27,7 +29,7 @@ Hot Reads
    2. General idea is data can be stored in this Caching Store in-memory and then be accessed by applications much more quickly than if the Application had to go to an actual Database or other memory store for it.
    3. Primarily works in-memory, which is why it's so fast.
       1. Because it's in-memory, there's a limit of how much data can be stored in a Caching Store.
-   4. Has a Time-to-live (TTL) feature which describes how long to keep the data cached for.  There are also methods and ways to invalidate the cache and reset things.
+   4. Has a Time-to-live (TTL) feature which describes how long to keep the data cached for. There are also methods and ways to invalidate the cache and reset things.
    5. Commonly used in web applications, databases, and REST APIs.
    6. Examples: Redis, Memcached
 4. Queuing Services
@@ -40,7 +42,7 @@ Hot Reads
 5. Pub Sub
    1. Mechanism to build publisher / subscriber patterns in distributed systems.
    2. Message Producers (publishers) send messages to a central broker where they are stored in a log-based format, and message consumers (subscribers) read from those logs to consume the messages at their own pace.
-   3. As opposed to Queuing Services, messages are *not* removed from the log when they are consumed.  Instead, they have a TTL and are deleted after that TTL expires (typically 7 days).
+   3. As opposed to Queuing Services, messages are _not_ removed from the log when they are consumed. Instead, they have a TTL and are deleted after that TTL expires (typically 7 days).
    4. Messages are stored in a log-based format in what are known as Topics.
    5. Allow for high scalability and performance, often used in a distributed system format with multiple brokers for performance & failover redundancy.
    6. Common use cases include real time data processing, notifications & alerts, or decoupled microservices similar to Queueing Services.
@@ -65,14 +67,17 @@ Hot Reads
       2. Integrates directly w/ all AWS Services like EC2, Lambda, ECS etc.
 
 ## CAP Theorem
-CAP theorem is a fundamental principle in distributed systems that describes the trade-offs and constraints when designing and implementing distributed databases & systems. 
+
+CAP theorem is a fundamental principle in distributed systems that describes the trade-offs and constraints when designing and implementing distributed databases & systems.
 
 The three components of the CAP theorem are as follows:
 
 1. Consistency (C):
+
    - Consistency in the context of the CAP theorem means that all nodes in a distributed system have a consistent view of the data at all times. In other words, if a piece of data is updated, all subsequent reads will reflect that update.
 
 2. Availability (A):
+
    - Availability means that the system remains operational and responsive, even in the presence of failures. Every non-failing node in the system must respond to requests, ensuring that the system is available for use.
 
 3. Partition tolerance (P):
@@ -83,13 +88,11 @@ According to the CAP theorem, in a distributed system, you can only achieve two 
 Here are the three possible combinations under the CAP theorem:
 
 - CA: Prioritizes Consistency and Availability, sacrificing Partition tolerance. In the event of a node failure, the system will sacrifice availability to ensure consistency.
-  
 - CP: Prioritizes Consistency and Partition tolerance, sacrificing Availability. In the event of a node failure, the system will sacrifice availability to maintain a consistent view of the data.
-  
 - AP: Prioritizes Availability and Partition tolerance, sacrificing Consistency. The system will remain available and responsive even during network partitions, potentially resulting in temporary inconsistencies in the data until it's able to be corrected.
 
-
 ## Interview Tips
+
 1. Ask clarifying questions
 2. Get a general about broad numbers & scale
    1. How many users / requests / orders etc do we expect
@@ -98,54 +101,57 @@ Here are the three possible combinations under the CAP theorem:
       3. 3,300 per day
       4. ~2,400 users during peak hrs (7am - 9pm)
 3. Auto scaling automatically to meet demand at peak hrs and then scale down during periods of low traffic
-Hot reads
-
-
-
+   Hot reads
 
 Example
 Read heavy platform - twitter
 Write heavy platform - ticket design system (ticketmaster)
-
-
-
 
 # Common Elements
 
 Using an API gateway to route requests to various services rather than having the frontend directly call your microservices offers numerous benefits:
 
 ### 1. Centralized Control and Management
+
 - Single Entry Point: An API gateway acts as a single entry point for all client requests, simplifying the architecture and making it easier to manage and secure.
 - Security: Centralizes security features such as authentication, authorization, rate limiting, and SSL termination, reducing the attack surface and simplifying the enforcement of security policies.
 
 ### 2. Traffic Management
+
 - Load Balancing: Distributes incoming traffic across multiple instances of your microservices, improving availability and reliability.
 - Rate Limiting and Throttling: Protects backend services from being overwhelmed by too many requests, ensuring better performance and stability.
 
 ### 3. Performance Optimization
+
 - Caching: Can cache responses from services to reduce load and latency for frequently requested data.
 - Compression: Compresses responses to reduce the amount of data transferred, speeding up communication with clients.
 
 ### 4. Protocol Transformation
+
 - Protocol Handling: Translates between different protocols (e.g., HTTP, WebSocket, gRPC), allowing services to use the protocols most suited to their needs while presenting a unified interface to clients.
 
 ### 5. Simplified Client Interface
+
 - API Aggregation: Combines multiple service calls into a single API call, reducing the number of requests the client needs to make and simplifying the client-side code.
 - Version Management: Handles API versioning, allowing multiple versions of the API to coexist and facilitating smooth transitions between API versions.
 
 ### 6. Improved Developer Experience
+
 - Consistency: Provides a consistent API for all services, making it easier for frontend developers to interact with the backend.
 - Documentation and Discovery: Often integrates with tools to automatically generate API documentation, making it easier for developers to understand and use the available APIs.
 
 ### 7. Security Enhancements
+
 - Authentication and Authorization: Centralizes authentication and authorization, ensuring that all requests are properly authenticated and authorized before reaching the services.
 - Data Validation: Validates incoming requests and responses to ensure they meet the required formats and constraints, enhancing security and stability.
 
 ### 8. Service Discovery and Flexibility
+
 - Service Discovery: Integrates with service discovery mechanisms to dynamically route requests to the appropriate service instances, supporting scalability and flexibility.
 - Flexible Routing: Routes requests based on various criteria (e.g., URL paths, request headers, or user roles), allowing for more complex and customizable routing logic.
 
 ### 9. Monitoring and Analytics
+
 - Centralized Logging: Aggregates logs from multiple services, providing a unified view of all incoming and outgoing traffic.
 - Metrics and Monitoring: Collects metrics and provides monitoring capabilities, helping to identify performance bottlenecks and other issues more easily.
 
@@ -153,13 +159,11 @@ Using an API gateway to route requests to various services rather than having th
 
 An API gateway offers significant benefits over direct frontend-to-microservice communication by providing centralized management, improved security, performance optimization, and a simplified client interface. It enables better scalability, reliability, and maintainability of a microservices architecture, making it an essential component in modern distributed systems.
 
-
 ## WebSockets
 
 WebSockets provide a persistent TCP style connection between client and server allowing for real time bidirectional communication with support for web browsers. They're initiated by an "upgrade" protocol on an existing TCP Connection to change L7 protocols.
 
 - It allows either the client or the server to push data to the other without being prompted by a new request
-
 
 1. Client initiates WebSocket handshake over HTTP (with a backing TCP connection)
 2. Connection upgrades to WebSocket protocol, WebSocket takes over the TCP connection
@@ -169,8 +173,10 @@ WebSockets provide a persistent TCP style connection between client and server a
 WebSockets just allow you to effectively have a channel where you can send binary packets to the server from the client and vice versa. This means you'll need some way of defining what it is your client and server are exchanging.
 
 - JSON messages are a great option here
+- The message sent are NOT HTTP requests, it's a new protocol entirely.
+- WebSocket is so much better for real-time apps - you're not paying the HTTP tax on every message. You're just sending tiny binary frames with minimal overhead.
 
-WebSockets come up in system design interviews when you need high-frequency, persistent, bi-directional communication between client and server. 
+WebSockets come up in system design interviews when you need high-frequency, persistent, bi-directional communication between client and server.
 
 - Real time applications, games etc
 - Chat applications
@@ -178,6 +184,42 @@ WebSockets come up in system design interviews when you need high-frequency, per
 - Collaborative editing (Google Docs)
 
 WebSockets are powerful, but the infra required to support them can be expensive and the overhead of stateful connections (especially at scale) will require significant accommodations in your design.
+
+```py
+import asyncio
+import websockets
+
+async def client():
+    # Connect to the WebSocket server
+    uri = "ws://localhost:8080/ws"
+
+    async with websockets.connect(uri) as websocket:
+        print("Connected to server")
+
+        # Receive welcome message
+        message = await websocket.recv()
+        print(f"Received: {message}")
+
+        # Send a message
+        await websocket.send("Hello from Python client!")
+
+        # Receive response
+        response = await websocket.recv()
+        print(f"Received: {response}")
+
+        # Send another message after a delay
+        await asyncio.sleep(2)
+        await websocket.send("Another message!")
+
+        # Receive response
+        response = await websocket.recv()
+        print(f"Received: {response}")
+
+# Run the client
+asyncio.run(client())
+```
+
+- Clients connect at a endpoint and a port like normal, but include `ws://` for secure websockets
 
 ## WebRTC
 
@@ -247,7 +289,6 @@ While load balancers play a key role in distributing load and traffic, they are 
 
 Load Balancing Algorithms are used to distribute traffic:
 
-
 - Round Robin: Requests are distributed sequentially across servers
 - Random: Requests are distributed randomly across servers
 - Least Connections: Requests go to the server with the fewest active connections
@@ -255,7 +296,6 @@ Load Balancing Algorithms are used to distribute traffic:
 - IP Hash: Client IP determines which server receives the request (useful for session persistence)
 
 Round Robin and Random are typically appropriate to use.
-
 
 Light travels through fiber optic cables at about 2/3 the speed of light in a vacuum, which is approximately 200,000 km/s. This means a round trip between New York and London (about 5,600 km) has a theoretical minimum latency of around 56ms just from the physics of signal propagation, before adding any processing time. This physical constraint is why geographic distribution is essential for low-latency applications.
 
@@ -311,7 +351,7 @@ so we're doing this so we dont have to send GBs of data to the bakcend to do the
 - Otherwise, the cost would double from the data transfer if it went into your server, then out to S3.
 - Your backend could also become bottlenecked by large concurrent uploads
 
-``` python
+```python
 import boto3
 
 s3 = boto3.client("s3")
@@ -378,7 +418,6 @@ HLS was developed by Apple and is widely supported on iOS, Safari, MacOS. It use
     ├── segment2.ts
 ```
 
-
 DASH (MPEG-DASH) is an open standard by MPEG used by many non-Apple platforms like Android, Chrome, Smart TVs etc. Segments are usually in MP4 fragments (.m4s) and the manifest is an XML file (.mpd)
 
 ```
@@ -403,11 +442,10 @@ Bitrate in video streaming refers to the amount of data processed per second of 
 
 ## HTTP
 
-
 ### ✅ 2xx – Success
 
-| Code               | Meaning                    | Notes                                                                |
-| ------------------ | -------------------------- | -------------------------------------------------------------------- |
+| Code           | Meaning                    | Notes                                                                |
+| -------------- | -------------------------- | -------------------------------------------------------------------- |
 | 200 OK         | The request was successful | Standard for most `GET`, `PUT`, or successful `POST` requests        |
 | 201 Created    | Resource was created       | Used after a `POST` that creates something (e.g., user, post, swipe) |
 | 204 No Content | Success, no response body  | Used after a `DELETE` or `PUT` when no data needs to be returned     |
@@ -416,8 +454,8 @@ Bitrate in video streaming refers to the amount of data processed per second of 
 
 ### ⚠️ 3xx – Redirection
 
-| Code                      | Meaning                       | Notes                                                    |
-| ------------------------- | ----------------------------- | -------------------------------------------------------- |
+| Code                  | Meaning                       | Notes                                                    |
+| --------------------- | ----------------------------- | -------------------------------------------------------- |
 | 301 Moved Permanently | Resource moved; use new URL   | Permanent redirect                                       |
 | 302 Found             | Temporary redirect            | Often used for login flows                               |
 | 304 Not Modified      | Cached content is still valid | Used with `ETag`/`If-Modified-Since` headers for caching |
@@ -426,8 +464,8 @@ Bitrate in video streaming refers to the amount of data processed per second of 
 
 ### ❌ 4xx – Client Errors
 
-| Code                         | Meaning                              | Notes                                                |
-| ---------------------------- | ------------------------------------ | ---------------------------------------------------- |
+| Code                     | Meaning                              | Notes                                                |
+| ------------------------ | ------------------------------------ | ---------------------------------------------------- |
 | 400 Bad Request          | Malformed request                    | Missing parameters, invalid types, etc.              |
 | 401 Unauthorized         | Missing or invalid auth              | User must authenticate (usually with a token)        |
 | 403 Forbidden            | Authenticated but no access          | User is not allowed to do the action                 |
@@ -439,8 +477,8 @@ Bitrate in video streaming refers to the amount of data processed per second of 
 
 ### 💥 5xx – Server Errors
 
-| Code                          | Meaning                       | Notes                                           |
-| ----------------------------- | ----------------------------- | ----------------------------------------------- |
+| Code                      | Meaning                       | Notes                                           |
+| ------------------------- | ----------------------------- | ----------------------------------------------- |
 | 500 Internal Server Error | Something broke on the server | Catch-all; usually means unhandled exception    |
 | 502 Bad Gateway           | Bad response from upstream    | E.g., Nginx ↔ app server                        |
 | 503 Service Unavailable   | Server overloaded or down     | Often used during maintenance or scaling issues |
@@ -495,7 +533,6 @@ PUT /users/{userId}
 → 200 OK
 ```
 
-
 5. Upload profile photo
 
 ```http
@@ -503,7 +540,6 @@ POST /users/{userId}/photos
 Content-Type: multipart/form-data
 → 201 Created
 ```
-
 
 6. Swipe right or left
 
@@ -518,7 +554,6 @@ POST /users/{userId}/swipes
   "matched": true
 }
 ```
-
 
 7. Get swipe history
 
@@ -542,7 +577,6 @@ GET /users/{userId}/matches
 ]
 ```
 
-
 9. Send a message in a match
 
 ```http
@@ -561,12 +595,12 @@ DELETE /users/{userId}
 → 204 No Content
 ```
 
-GET /events                  # get all events
-GET /events/{id}             # get a specific event
-GET /venues/{id}             # get a specific venue
-GET /events/{id}/tickets     # get available tickets for an event
-POST /events/{id}/bookings   # create a new booking for an event
-GET /bookings/{id}           # get a specific booking
+GET /events # get all events
+GET /events/{id} # get a specific event
+GET /venues/{id} # get a specific venue
+GET /events/{id}/tickets # get available tickets for an event
+POST /events/{id}/bookings # create a new booking for an event
+GET /bookings/{id} # get a specific booking
 
 ## CDC
 
@@ -590,8 +624,7 @@ Benefits include:
 - Elasticsearch becomes a derived data store, optimized for read-heavy, search-oriented use cases.
 - Decoupled architecture improves fault tolerance and scalability.
 
-
-``` sh
+```sh
 {
   "change": [
     {

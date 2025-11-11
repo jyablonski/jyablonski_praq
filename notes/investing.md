@@ -65,6 +65,22 @@ A Roth IRA (Individual Retirement Account) is a type of retirement savings accou
 
 7. Estate Planning Benefits: Roth IRAs can offer estate planning benefits, as they can be passed on to heirs tax-free, subject to certain rules and regulations.
 
+### Backdoor Roth IRA
+
+If you make >= $150k MAGI (income - deductibles like 401k/HSA contributions), you can't directly make Roth IRA Contributions. But, you can do a backdoor approach where you put after-tax dollars into a traditional IRA, and then convert those funds from the traditional IRA into your Roth IRA.
+
+- This is a loophole that leaves everybody scratching their heads, but is approved by the IRS and is perfectly legal
+- This means you can always make Roth IRA contributions every single year, regardless of how high your income is.
+
+Steps:
+
+1. Open a Traditional IRA (if you don't have one already)
+2. Transfer money from HYSA into this IRA to the max limit ($7,000 for 2025/2026)
+3. Wait 1-2 business days for the funds to settle, leaving the funds in cash/money market (don't invest them)
+4. Convert the Traditional IRA funds to your existing Roth IRA, converting the full balance
+5. Select "no" on taxes withheld
+6. Invest the funds once they're in your Roth IRA
+7. File Form 8606 with your taxes to report the non-deductible contribution and conversion
 
 ## 401k
 
@@ -88,8 +104,8 @@ Here are some key features and aspects of a 401(k) plan:
 
 Overall, a 401(k) plan is a valuable tool for retirement savings, offering tax advantages, employer contributions, and a variety of investment options to help individuals build a nest egg for retirement. It's important for participants to understand the features and rules of their specific 401(k) plan and to make informed decisions about contributions, investments, and retirement planning.
 
-
 ## Mutual Fund
+
 A mutual fund is a type of investment vehicle that pools money from multiple investors to invest in a diversified portfolio of securities, such as stocks, bonds, money market instruments, or a combination of these assets. Mutual funds are managed by professional portfolio managers or investment firms, who make investment decisions on behalf of the fund's shareholders.
 
 - They're great for consumers who want a hands-off approach to investing and defer to professional management to figure out how to best use the money
@@ -118,7 +134,6 @@ Here are some key features and aspects of mutual funds:
 
 Overall, mutual funds provide individual investors with a convenient and accessible way to invest in a diversified portfolio of securities managed by professional investment managers. They offer benefits such as diversification, professional management, liquidity, and a variety of investment options, making them popular investment choices for investors seeking exposure to different asset classes and investment strategies.
 
-
 ## Index Fund
 
 An index fund is a type of mutual fund or exchange-traded fund (ETF) that seeks to track the performance of a specific market index, such as the S&P 500, the Dow Jones Industrial Average, or the Nasdaq Composite. Instead of actively selecting individual stocks or securities to include in the fund's portfolio, an index fund aims to replicate the performance of the underlying index by holding a diversified portfolio of securities that closely mirrors the index's composition.
@@ -139,12 +154,12 @@ Here are some key features and aspects of index funds:
 
 Overall, index funds offer investors a straightforward and cost-effective way to gain exposure to a broad market index and participate in the overall performance of the market. They are popular investment options for long-term investors seeking diversified exposure to various asset classes while keeping costs low.
 
-
 ## NASDAQ vs S&P 500
 
 The NASDAQ Composite and the S&P 500 are both widely followed stock market indices in the United States, but they have distinct characteristics and represent different segments of the stock market.
 
 1. NASDAQ Composite:
+
    - The NASDAQ Composite is an index that tracks the performance of all common stocks listed on the NASDAQ stock exchange. It includes stocks of companies across various sectors, including technology, healthcare, consumer discretionary, industrials, and more.
    - The NASDAQ Composite is known for its heavy weighting towards technology-related companies, particularly those in the technology, internet, and biotechnology sectors. Many well-known technology companies, such as Apple, Microsoft, Amazon, Google (Alphabet), Facebook, and Intel, are listed on the NASDAQ.
    - The NASDAQ Composite is often associated with growth-oriented and innovative companies, as the index tends to have a higher concentration of high-growth, high-volatility stocks compared to other indices like the S&P 500.
@@ -163,6 +178,7 @@ In summary, while both the NASDAQ Composite and the S&P 500 are important stock 
 Stocks and bonds are two primary types of investment securities that individuals can purchase as part of their investment portfolios. Here's an overview of each:
 
 1. Stocks:
+
    - Stocks, also known as equities or shares, represent ownership in a company. When an investor buys shares of stock, they become partial owners of the company and are entitled to a portion of its profits, known as dividends, if the company distributes them.
    - Stocks are considered to be riskier investments compared to bonds because their value can fluctuate significantly in response to market conditions, company performance, economic factors, and investor sentiment.
    - The potential return on stocks comes primarily from capital appreciation, which occurs when the stock price increases over time, allowing investors to sell their shares at a higher price than they paid.
@@ -177,9 +193,9 @@ Stocks and bonds are two primary types of investment securities that individuals
    - Investors may buy bonds for income generation, capital preservation, portfolio diversification, and risk management purposes. Bonds are also commonly used by investors to achieve specific financial goals, such as funding retirement expenses or financing education costs.
    - Example: a 1-year CD w/ $1000 investment and 5.00% APY compounded monthly. You'd earn $50.95 in interest, w/ $1050.95 returned at maturity. These are low risk and FDIC insured up to $250k, but you cannot withdraw the money early without penalties.
    - Example: a 2-year US Government bond treasury note with a 4.50% interest (coupon) rate paid semiannually. You'd earn $22.50 every 6 months for 2 years, or $90 total, and have received $1090 at time of maturity. They are more liquid than CDs as you can sell them in the secondary market before maturity.
-      - This can be lucrative if interest rates go down. Like you got the bond at 4.50% interest, but now they only offer 3.50%.
-      - Same can happen in reverse if interest rates have gone up since you took the bond, and it is now worth less.
-      - If you hold, you will always receive the full amount back.
+     - This can be lucrative if interest rates go down. Like you got the bond at 4.50% interest, but now they only offer 3.50%.
+     - Same can happen in reverse if interest rates have gone up since you took the bond, and it is now worth less.
+     - If you hold, you will always receive the full amount back.
 
 In summary, stocks represent ownership in a company and offer the potential for capital appreciation and dividends, while bonds represent debt obligations and offer fixed income payments and the return of principal at maturity. Both stocks and bonds play important roles in investment portfolios, providing investors with opportunities to achieve their financial goals through a combination of growth, income, and risk management.
 
@@ -193,3 +209,23 @@ An Exchange-Traded Fund (ETF) is a type of investment fund that is traded on a s
 Many ETFs are passively managed (i.e., they simply track an index like the S&P 500), which means lower management fees. However, there are actively managed ETFs as well, which are managed by a fund manager who makes investment decisions on behalf of the investors.
 
 ETFs can be traded throughout the day and you can take more advantage of price fluctuations during market hours. They're great for people who want more control and less management costs.
+
+## Brokerage Account
+
+A Brokerage Account is an investment account that allows you to buy and sell stocks, bonds, and trade on various funds like a typical IRA. The difference is:
+
+- There is no contribution limit on the $$$ you put in
+- There is no withdrawal restrictions on when you can take the money out like typical IRA and 401k Accounts
+- You're charged w/ capital gains tax on the profits when you take the money out (typically 15-20%, depends on how long the money has been in there)
+
+They're an instrument you can leverage in addition to your IRA + 401k Investment Accounts if you wish to put additional post-tax dollars into the stock market.
+
+Ultimately, it's up to you on when you decide to tax the money out of the brokerage account. There's multiple options:
+
+- Use it as an additional retirement account instrument and put money in & don't touch it
+- Use it to invest for big ticket purchases in the next 5-15 years that you can delay if the market has a downturn (like a vacation home, house upgrade, boat etc)
+- Retire early, live off the brokerage account from 45-59, then use retirement accounts after 59+
+
+But, you still have all of the volatility that comes w/ the stock market. You could invest $100k and if the market has a 25% downturn that takes 5+ years to recover, you'll be in the red until that 5 years.
+
+- With IRAs and 401ks, you don't give a fuck if this happens. The money stays in the investment accounts and it has 30+ years until your retirement to climb back up and continue growing.
