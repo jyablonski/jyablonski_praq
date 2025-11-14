@@ -50,7 +50,7 @@ These are the key components of a typical Kubernetes cluster. Understanding thei
 
 ## Helm
 
-Helm is a package manager for Kubernetes applications. It provides a way to define, install, and upgrade even the most complex Kubernetes applications.  Helm uses what are called Helm Charts which are `.yml` based files used to declaritively state every part about how to deploy the Kubernetes application.  Helm charts are used to simplify and standardize the deployment of Kubernetes applications by encapsulating all the necessary Kubernetes resources and configurations into a single, reusable package.
+Helm is a package manager for Kubernetes applications. It provides a way to define, install, and upgrade even the most complex Kubernetes applications. Helm uses what are called Helm Charts which are `.yml` based files used to declaritively state every part about how to deploy the Kubernetes application. Helm charts are used to simplify and standardize the deployment of Kubernetes applications by encapsulating all the necessary Kubernetes resources and configurations into a single, reusable package.
 
 Here's a breakdown of what Helm charts are for in the Kubernetes world:
 
@@ -79,7 +79,7 @@ In summary, Helm charts are a critical tool in the Kubernetes ecosystem for simp
 
 `values.yml`
 
-``` yaml
+```yaml
 image:
   repository: your-docker-registry/nba_elt_rest_api
   tag: latest
@@ -89,34 +89,32 @@ service:
 
 `templates/deployment.yml`
 
-``` yaml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "nba-elt-rest-api.fullname" . }}
-  labels:
-    {{- include "nba-elt-rest-api.labels" . | nindent 4 }}
+  name: { { include "nba-elt-rest-api.fullname" . } }
+  labels: { { - include "nba-elt-rest-api.labels" . | nindent 4 } }
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: { { .Values.replicaCount } }
   selector:
     matchLabels:
-      {{- include "nba-elt-rest-api.selectorLabels" . | nindent 8 }}
+      { { - include "nba-elt-rest-api.selectorLabels" . | nindent 8 } }
   template:
     metadata:
-      labels:
-        {{- include "nba-elt-rest-api.selectorLabels" . | nindent 12 }}
+      labels: { { - include "nba-elt-rest-api.selectorLabels" . | nindent 12 } }
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: { { .Chart.Name } }
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: { { .Values.service.port } }
 ```
 
 commands
 
-``` sh
+```sh
 helm repo add trino https://trinodb.github.io/charts
 helm install example-trino-cluster trino/trino
 
@@ -163,8 +161,7 @@ Key features and capabilities of `eksctl` include:
 
 By using `eksctl`, developers and administrators can accelerate the setup and management of EKS clusters, making it easier to run containerized applications on AWS with Kubernetes. It abstracts much of the underlying AWS infrastructure complexity, allowing users to focus on their applications and workloads.
 
-
-``` sh
+```sh
 eksctl create cluster --name dev-cluster --version 1.31 --region us-east-1 --nodegroup-name standard-workers --node-type t3.micro --nodes 3 --nodes-min 1 --nodes-max 4 --managed
 
 aws eks update-kubeconfig --name dev-cluster --region us-east-1
@@ -190,7 +187,7 @@ If a new version fails to start, Argo CD can immediately rollback to the previou
 
 Example Argo CD File
 
-``` yaml
+```yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -203,22 +200,22 @@ spec:
     repoURL: https://gitlab.com/nanuchi/argocd-app-config.git
     targetRevision: HEAD
     path: dev
-  destination: 
+  destination:
     server: https://kubernetes.default.svc
     namespace: myapp
 
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
 
     automated:
       selfHeal: true
       prune: true
-
 ```
+
 ## K8s Files
 
-1. `deployment.yaml` - Config files used to define and manage deployments.  You typically specify a container image to run, give it a name, how many replicas it should have, and what port it will run on
+1. `deployment.yaml` - Config files used to define and manage deployments. You typically specify a container image to run, give it a name, how many replicas it should have, and what port it will run on
 
 2. `service.yaml` - Config files used to specify what ports should be exposed on the pods running your application
 
@@ -246,10 +243,9 @@ spec:
 
 Service Accounts are a type of Kubernetes resource used to provide an identity for pods running within the cluster. They are particularly useful for granting specific permissions to pods that need to interact with the Kubernetes API or other AWS services securely.
 
-IAM Role for Service Accounts (IRSA) is a mechanism to allow EKS Pods to assume an IAM Role for various AWS Permissions.  The idea here is you might have multiple different pods running on a worker node in EKS; if you assigned an IAM Role at the worker node level then all pods would be forced to use the same IAM Role which may or may not be ideal.  Service Accounts enable a finer grain of detail and allow you to separate out the IAM Role being used by Pod / Deployment.
+IAM Role for Service Accounts (IRSA) is a mechanism to allow EKS Pods to assume an IAM Role for various AWS Permissions. The idea here is you might have multiple different pods running on a worker node in EKS; if you assigned an IAM Role at the worker node level then all pods would be forced to use the same IAM Role which may or may not be ideal. Service Accounts enable a finer grain of detail and allow you to separate out the IAM Role being used by Pod / Deployment.
 
-
-``` yaml
+```yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -259,7 +255,7 @@ metadata:
     eks.amazonaws.com/role-arn: arn:aws:iam::YOUR_ACCOUNT_ID:role/YOUR_IAM_ROLE_NAME
 ```
 
-``` yaml
+```yaml
 apiVersion: v1
 kind: Deployment
 metadata:
@@ -267,8 +263,8 @@ metadata:
 spec:
   serviceAccountName: my-service-account
   containers:
-  - name: my-container
-    image: my-image
+    - name: my-container
+      image: my-image
 ```
 
 ## Managing EKS Cluster Access
@@ -276,12 +272,14 @@ spec:
 Managing access to an EKS cluster involves a combination of several strategies to ensure security, appropriate access levels, and efficient operations. Here are the primary methods to control access to an EKS cluster:
 
 ### 1. **Kubernetes Role-Based Access Control (RBAC)**
+
 Kubernetes RBAC allows you to define roles and bind them to users or groups, controlling what actions they can perform within the cluster.
 
 - **Roles and ClusterRoles**: Define sets of permissions. Roles are namespace-scoped, while ClusterRoles are cluster-scoped.
 - **RoleBindings and ClusterRoleBindings**: Bind roles to users, groups, or service accounts.
 
 Example Role and RoleBinding:
+
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -309,12 +307,14 @@ roleRef:
 ```
 
 ### 2. **AWS Identity and Access Management (IAM)**
+
 IAM roles and policies control who can perform actions on AWS resources, including EKS clusters.
 
 - **Cluster Creation IAM Role**: When creating an EKS cluster, you specify an IAM role that EKS uses to manage AWS resources.
 - **IAM Users and Roles for Kubernetes API Access**: Configure IAM users and roles to have permissions to interact with the Kubernetes API.
 
 To map IAM roles and users to Kubernetes RBAC, use the `aws-auth` ConfigMap in the `kube-system` namespace:
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -335,6 +335,7 @@ data:
 ```
 
 ### 3. **Amazon EKS Managed Policies**
+
 EKS provides managed IAM policies that you can attach to IAM roles to grant necessary permissions for interacting with the cluster.
 
 - **AmazonEKSClusterPolicy**: Grants permissions needed by EKS to manage the cluster.
@@ -342,12 +343,14 @@ EKS provides managed IAM policies that you can attach to IAM roles to grant nece
 - **AmazonEKSCNIPolicy**: Grants permissions for the Amazon VPC CNI plugin to modify network interfaces.
 
 ### 4. **Network Access Control**
+
 Control network access to the EKS cluster using security groups and network policies.
 
 - **Security Groups**: Control inbound and outbound traffic to the worker nodes and the control plane.
 - **Network Policies**: Use Kubernetes Network Policies to control traffic between pods within the cluster.
 
 Example Network Policy:
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -359,16 +362,17 @@ spec:
     matchLabels:
       app: nginx
   ingress:
-  - from:
-    - podSelector:
-        matchLabels:
-          app: client
-    ports:
-    - protocol: TCP
-      port: 80
+    - from:
+        - podSelector:
+            matchLabels:
+              app: client
+      ports:
+        - protocol: TCP
+          port: 80
 ```
 
 ### 5. **Private Endpoint Access**
+
 Restrict access to the EKS cluster API endpoint to specific CIDR blocks or make it private so that it can only be accessed from within the VPC.
 
 - **Public Access**: The API server endpoint is accessible from the internet. You can restrict it by specifying allowed IP CIDR blocks.
@@ -377,6 +381,7 @@ Restrict access to the EKS cluster API endpoint to specific CIDR blocks or make 
 Configure endpoint access when creating the cluster or update it later using the AWS Management Console, CLI, or API.
 
 ### 6. **AWS Single Sign-On (SSO)**
+
 Integrate AWS SSO with EKS to manage user access through your identity provider.
 
 - **Configure AWS SSO**: Set up SSO and link it with your directory (e.g., Active Directory, Google Workspace).
@@ -390,7 +395,7 @@ The Kubernetes Horizontal Pod Autoscaler (HPA) is the Kubernetes Resource that d
 
 Below is an example where we're defining a Deployment and setting some CPU + Memory Limits
 
-``` yaml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -406,15 +411,15 @@ spec:
         app: my-app
     spec:
       containers:
-      - name: my-container
-        image: my-image
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+        - name: my-container
+          image: my-image
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
 ```
 
 ```
@@ -472,9 +477,9 @@ spec:
 
 ## Karpenter
 
-Karpenter is a K8s node autoscaler designed to efficiently provision compute resources on K8s clusters. 
+Karpenter is a K8s node autoscaler designed to efficiently provision compute resources on K8s clusters.
 
-- Traditional autoscalers rely on predefined node groups 
+- Traditional autoscalers rely on predefined node groups
 - Karpenter directly provisions new nodes in real time as they're needed based on the specific needs of pending pods
 - It intelligently selects the right size and compute resources (CPU, memory, GPU etc) from your cloud provider to match the workload's requirements
 - It continues to monitor the cluster for underutilized nodes or opportunities to consolidate workloads
@@ -490,7 +495,7 @@ To enable the use of Karpenter across your K8s services, you need to utilize the
 
 - Without this, Karpenter cannot efficiently pack pods or provision the correct node size
 
-``` yaml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -500,15 +505,15 @@ spec:
   template:
     spec:
       containers:
-      - name: my-container
-        image: my-image:latest
-        resources:
-          requests:
-            cpu: "250m"  # Request 0.25 of a CPU at minimum
-            memory: "256Mi" # Request 256 MB of memory at minimum
-          limits:
-            cpu: "500m"     # Can spike to 0.5 a CPU before being limited
-            memory: "512Mi" # Can utilize up to 512 MB of memory before being limited
+        - name: my-container
+          image: my-image:latest
+          resources:
+            requests:
+              cpu: "250m" # Request 0.25 of a CPU at minimum
+              memory: "256Mi" # Request 256 MB of memory at minimum
+            limits:
+              cpu: "500m" # Can spike to 0.5 a CPU before being limited
+              memory: "512Mi" # Can utilize up to 512 MB of memory before being limited
 
 # optional gpu resources
 resources:
@@ -520,22 +525,79 @@ resources:
 
 When setting CPU and Memory Limits, follow these increment guidelines:
 
-- CPU: 	100m, 250m, 500m, 1000m
+- CPU: 100m, 250m, 500m, 1000m
 - Memory: 128Mi, 256Mi, 512Mi, 1Gi
 
-## Admin Path 
+### Karpenter Setup
+
+Karpenter actually only takes a few lines of code for 2 resources to get initially setup:
+
+1. Karpenter Controller
+
+- The actual Service that runs in your K8s Cluster to make the EC2 API calls to spin instances up & down
+- You have to pass in a valid IAM Role for it to use & make the API calls
+
+```yaml
+# This runs as a Pod in your cluster
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: karpenter
+  namespace: karpenter
+spec:
+  replicas: 2 # Usually 2 for HA
+  template:
+    spec:
+      serviceAccountName: karpenkarpenter-roleter
+      containers:
+        - name: controller
+          image: public.ecr.aws/karpenter/controller:v0.x.x
+```
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: karpenter-role
+  namespace: karpenter
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::123456789012:role/KarpenterControllerRole-my-cluster
+```
+
+- This is a K8s resource that basically creates this `ServiceAccount` K8s abstraction over an IAM Role. Then, you just reference it in your manifest files appropriately
+- 100% of the IAM Roles you want to use across your K8s manifest files must be used through a `ServiceAccount`
+- Typically, you can just template this out so in your Helm Chart `values.yaml` you pass in the full IAM Role, and then the Template will create the ServiceAccount resource and handle it for you
+
+2. Karpenter Provisioner Config
+
+- Defines what Instance Types the Controller can spin up
+- You can create multiple provisioner configs in the event you have some general-purpose instances, and then separate GPU instances. You manage these with the `metadata -> name` block
+
+```yaml
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: general-purpose
+spec:
+  requirements:
+    - key: node.kubernetes.io/instance-type
+      operator: In
+      values: ["t3.medium", "t3.large"]
+```
+
+## Admin Path
 
 - Below is an example of a K8s Ingress where you lock your REST APIs `/admin` endpoinmts to only ip addresses in your company's VPN. This is layer 4 because you're filtering traffic before it even reaches the ALB via only IP addresses, you're never reading HTTP requests here
 - This way the only way for the load balancer to even forward requests to the REST API in these cases is if they're on the company VPN. But, they would still have be logged in and authenticated which would be checked on the REST API's end
-- The Load Balancewr handles Layer 4 HTTP Routing, the 
+- The Load Balancewr handles Layer 4 HTTP Routing, the
 
 - Layer 4: Client connects to ALB - security group allows/denies based on source IP
 - Layer 7: ALB terminates SSL, reads HTTP request
-- Layer 7: ALB checks: "Is this /admin/* AND from VPN IP?"
+- Layer 7: ALB checks: "Is this /admin/\* AND from VPN IP?"
 - Layer 7: Routes to appropriate target group based on path
 - Layer 7: Your app gets the request and does additional auth
 
-``` yaml
+```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -548,21 +610,84 @@ metadata:
       [{"field":"source-ip","sourceIpConfig":{"values":["YOUR_VPN_IP/32"]}}]
 spec:
   rules:
-  - host: api.yourapp.com
-    http:
-      paths:
-      - path: /admin
-        pathType: Prefix
-        backend:
-          service:
-            name: api-service  # Same service, different auth
-            port: 
-              number: 80
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: api-service
-            port:
-              number: 80
+    - host: api.yourapp.com
+      http:
+        paths:
+          - path: /admin
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service # Same service, different auth
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service
+                port:
+                  number: 80
 ```
+
+## ExternalDNS
+
+ExternalDNS is a controller that automatically creates/updates/deletes Route 53 DNS records based on your Ingress resources. Without it, you'd have to manually create DNS records in Terraform every time you deploy an app.
+
+It runs as a Deployment in your K8s Cluster
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      serviceAccountName: external-dns-role # Maps to IAM role
+      containers:
+        - name: external-dns
+          image: registry.k8s.io/external-dns/external-dns:v0.14.0
+          args:
+            - --source=ingress
+            - --provider=aws
+            - --aws-zone-type=public
+            - --registry=txt
+            - --txt-owner-id=my-cluster
+```
+
+- The IAM Role needs appropriate Route53 Permissions to update changed resource record sets and list hosted zones etc.
+
+Then once ExternalDNS is running, you just create Ingress resources w/ hostnames and it'll automatically create the appropriate Route53 A Records for you:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nba-dashboard
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+spec:
+  rules:
+    - host: dashboard.yourdomain.com # ← ExternalDNS sees this
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: nba-dashboard
+                port: 9000
+```
+
+What happens automatically:
+
+1. AWS Load Balancer Controller creates the ALB
+2. ExternalDNS watches the Ingress
+3. ExternalDNS gets the ALB DNS name (e.g., k8s-ingress-abc123.elb.amazonaws.com)
+4. ExternalDNS creates Route 53 A record: dashboard.yourdomain.com → ALB
+5. Done! Your app is accessible at dashboard.yourdomain.com
+
+When you delete the Ingress:
+
+1. ExternalDNS automatically deletes the Route 53 record
+2. No orphaned DNS entries!
