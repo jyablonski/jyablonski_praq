@@ -56,6 +56,36 @@ Extended Power Chords are power chords that are played w/ additional octaves of 
 - So instead of playing a 1 finger power chord on 2 strings, you can play the same 2 notes across 5+ strings for a thicker, fuller sound
 - They're not major or minor, they're still power chords
 
+For example, you can play any of the 12 power chords on the neck w/ this shape:
+
+```
++2 frets
++2 frets
++2 frets
++4 frets
++5 frets
+
+Low 3 strings: same fret
+3rd string: +2 frets
+2nd string: +3 frets (from the root)
+```
+
+All 12 power chords in Drop D:
+
+- Fret 0: D5 (0-0-0-2-3)
+- Fret 1: D#5/Eb5 (1-1-1-3-4)
+- Fret 2: E5 (2-2-2-4-5)
+- Fret 3: F5 (3-3-3-5-6)
+- Fret 4: F#5/Gb5 (4-4-4-6-7)
+- Fret 5: G5 (5-5-5-7-8)
+- Fret 6: G#5/Ab5 (6-6-6-8-9)
+- Fret 7: A5 (7-7-7-9-10)
+- Fret 8: A#5/Bb5 (8-8-8-10-11)
+- Fret 9: B5 (9-9-9-11-12)
+- Fret 10: C5 (10-10-10-12-13)
+- Fret 11: C#5/Db5 (11-11-11-13-14)
+- Fret 12: D5 (12-12-12-14-15) - back to D, one octave higher!
+
 ## Triad
 
 3-note chord built by stacking two intervals of a third on top of each other
@@ -134,6 +164,82 @@ E
 - 1st and 2nd String are a perfect 5th apart for 1 finger power chords
 - 1st and 3rd String are the same to create full octaves
 - All scales learnt on standard tuning are the same, except for the low e string which is moved up 1 whole step, or 2 frets
+
+## Pentatonic Scale
+
+Patterns:
+
+- Minor Pentatonic: Root - +3 frets (minor 3rd) - +2 frets - +2 frets - +3 frets
+- Major Pentatonic: Root - +2 frets - +2 frets - +3 frets (minor 3rd) - +2 frets
+
+### Position 1 (Box Pattern - most common)
+
+```
+e|---5---8---|  (A and C)
+B|---5---8---|  (E and G)
+G|---5---7---|  (C and E)
+D|---5---7---|  (G and A)
+A|---5---7---|  (D and E)
+D|---7--10---|  (A and C)
+```
+
+- Root notes (A): Fret 5 on 1st string (e), fret 7 on 4th string (D), fret 7 on 6th string (D)
+
+### Position 2
+
+```
+e|---8--10---|  (C and D)
+B|---8--10---|  (G and A)
+G|---7---9---|  (E and G)
+D|---7---9---|  (A and C)
+A|---7--10---|  (E and G)
+D|--10--12---|  (C and D)
+```
+
+- Root notes (A): Fret 10 on 2nd string (B), fret 7 on 4th string (D)
+
+### Position 3
+
+```
+e|--10--12---|  (D and E)
+B|--10--13---|  (A and C)
+G|---9--12---|  (G and A)
+D|---9--12---|  (C and E)
+A|--10--12---|  (G and A)
+D|--12--14---|  (D and E)
+```
+
+- Root notes (A): Fret 10 on 2nd string (B), fret 12 on 3rd string (G), fret 12 on 5th string (A)
+
+---
+
+### Position 4
+
+```
+e|--12--15---|  (E and G)
+B|--13--15---|  (C and D)
+G|--12--14---|  (A and C)
+D|--12--14---|  (E and G)
+A|--12--14---|  (A and C)
+D|--14--17---|  (E and G)
+```
+
+- Root notes (A): Fret 12 on 3rd string (G), fret 12 on 5th string (A)
+
+---
+
+### Position 5
+
+```
+e|--15--17---|  (G and A)
+B|--15--17---|  (D and E)
+G|--14--17---|  (C and E)
+D|--14--16---|  (G and A)
+A|--14--17---|  (C and E)
+D|--17--19---|  (G and A)
+```
+
+- Root notes (A): Fret 17 on 1st string (e), fret 16 on 4th string (D), fret 19 on 6th string (D)
 
 ## Terminology
 

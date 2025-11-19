@@ -2,7 +2,7 @@
 
 Ad Selling for Software Apps (mobile, web etc) generally works through either direct deals or using dedicated ad platforms
 
-For Direct deals, you work directly with B2B companies who want to run advertising on your app. 
+For Direct deals, you work directly with B2B companies who want to run advertising on your app.
 
 - You get better margins but have to source the ad deals yourself, figure out terms w/ the B2B you're partnering with etc
 - But, you control the ad content and who's it's from, which means better targeting, user trust, and often higher revenue
@@ -20,8 +20,8 @@ Or you can use an Ad Platform that sources advertisements from companies for you
 1. You (the developer) integrate ad slots or placements into your app.
 2. These slots are filled by:
 
-   * A platform/marketplace like Google AdMob, Meta Audience Network, etc.
-   * Or, direct deals with businesses or agencies.
+   - A platform/marketplace like Google AdMob, Meta Audience Network, etc.
+   - Or, direct deals with businesses or agencies.
 
 3. When users interact with your app and see or click on ads, you get paid (based on impressions, clicks, conversions, etc.).
 
@@ -35,26 +35,26 @@ You integrate with a platform that handles everything for you.
 
 #### Examples:
 
-* Google AdMob
-* Meta Audience Network
-* Unity Ads
-* AppLovin, IronSource, MoPub (now part of AppLovin)
+- Google AdMob
+- Meta Audience Network
+- Unity Ads
+- AppLovin, IronSource, MoPub (now part of AppLovin)
 
 #### How It Works:
 
-* You create an account and define ad units (specific spots in your app like banners, interstitials, rewarded videos).
-* You get an SDK or JavaScript snippet to integrate.
-* Advertisers bid on showing their ads to your users via real-time auctions.
-* You earn money per impression (CPM), per click (CPC), or per install/conversion (CPA).
+- You create an account and define ad units (specific spots in your app like banners, interstitials, rewarded videos).
+- You get an SDK or JavaScript snippet to integrate.
+- Advertisers bid on showing their ads to your users via real-time auctions.
+- You earn money per impression (CPM), per click (CPC), or per install/conversion (CPA).
 
-- As part of these SDKs, you can pass user info like location, demographics, interests etc as long as its within privacy and policy limits
-    - Many platforms require you to get explicit user consent (e.g., GDPR in EU, CCPA in California) before collecting or passing personal data.
-    - You cannot pass personally identifiable information (PII) like name, email, or exact location unless you comply with strict privacy rules.
-- The SDK then passes that info along to the ad network to potentially serve more relevant ads. For example, users in NYC might see different ads than users in Paris.
-- The Ad Platform wants to serve the best matching ad creative it can, and they use proprietary algorithms under the hood to do that
-- This potentially could impact app performance as this all happens at runtime, but there are performance improvements to be made here (show loading indicators, lazy load ads, cache them etc)
+* As part of these SDKs, you can pass user info like location, demographics, interests etc as long as its within privacy and policy limits
+  - Many platforms require you to get explicit user consent (e.g., GDPR in EU, CCPA in California) before collecting or passing personal data.
+  - You cannot pass personally identifiable information (PII) like name, email, or exact location unless you comply with strict privacy rules.
+* The SDK then passes that info along to the ad network to potentially serve more relevant ads. For example, users in NYC might see different ads than users in Paris.
+* The Ad Platform wants to serve the best matching ad creative it can, and they use proprietary algorithms under the hood to do that
+* This potentially could impact app performance as this all happens at runtime, but there are performance improvements to be made here (show loading indicators, lazy load ads, cache them etc)
 
-``` js
+```js
 AdRequest adRequest = new AdRequest.Builder()
     .addKeyword("fitness")
     .setGender(AdRequest.GENDER_MALE)
@@ -66,10 +66,10 @@ adView.loadAd(adRequest);
 
 #### Key Terms:
 
-* CPM (Cost Per Mille): You earn money per 1,000 impressions.
-* CPC (Cost Per Click): You earn when users click an ad.
-* Fill Rate: The % of ad requests that are actually served with ads.
-* eCPM: Effective CPM — a blended revenue-per-thousand value based on clicks, views, installs, etc.
+- CPM (Cost Per Mille): You earn money per 1,000 impressions.
+- CPC (Cost Per Click): You earn when users click an ad.
+- Fill Rate: The % of ad requests that are actually served with ads.
+- eCPM: Effective CPM — a blended revenue-per-thousand value based on clicks, views, installs, etc.
 
 ---
 
@@ -79,28 +79,28 @@ You bypass the middleman and sell ad space directly to businesses or agencies.
 
 #### How It Works:
 
-* You identify potential advertisers (brands, local businesses, partners).
-* Negotiate a deal: fixed fee, CPM, CPC, etc.
-* You either serve the ad manually or use an in-house system or basic ad server.
+- You identify potential advertisers (brands, local businesses, partners).
+- Negotiate a deal: fixed fee, CPM, CPC, etc.
+- You either serve the ad manually or use an in-house system or basic ad server.
 
 #### Pros:
 
-* You keep 100% of the revenue
-* Full control over pricing, content, and terms
+- You keep 100% of the revenue
+- Full control over pricing, content, and terms
 
 #### Cons:
 
-* Much more effort to find advertisers
-* Need to handle contracts, billing, ad serving, etc.
-* Not scalable unless you have a large user base
+- Much more effort to find advertisers
+- Need to handle contracts, billing, ad serving, etc.
+- Not scalable unless you have a large user base
 
 ---
 
 ## How You Get Paid
 
-* Through the ad network's revenue dashboard
-* Usually monthly payouts, via bank transfer or PayPal
-* Must hit a minimum threshold (e.g. $100)
+- Through the ad network's revenue dashboard
+- Usually monthly payouts, via bank transfer or PayPal
+- Must hit a minimum threshold (e.g. $100)
 
 ---
 
@@ -116,19 +116,19 @@ You bypass the middleman and sell ad space directly to businesses or agencies.
 
 ## Gotchas to Watch For
 
-* User experience: Too many ads -> bad UX, they may delete the app, leave bad reviews, unsubscribe etc
-* Policy violations: Misleading ad placements or accidental clicks can get you banned from the ad platform
-* Ad blockers: Users can block ads
-* Fill rate drops in niche or low-demand markets
+- User experience: Too many ads -> bad UX, they may delete the app, leave bad reviews, unsubscribe etc
+- Policy violations: Misleading ad placements or accidental clicks can get you banned from the ad platform
+- Ad blockers: Users can block ads
+- Fill rate drops in niche or low-demand markets
 
 ---
 
 ## Advanced: Mediation and Header Bidding
 
-* Mediation tools (e.g. AdMob Mediation, IronSource) let you combine multiple networks and choose the highest-bidding one.
-* Header bidding (used in web more than mobile) is a real-time auction where multiple buyers compete before a page loads.
+- Mediation tools (e.g. AdMob Mediation, IronSource) let you combine multiple networks and choose the highest-bidding one.
+- Header bidding (used in web more than mobile) is a real-time auction where multiple buyers compete before a page loads.
 
---- 
+---
 
 # Types of Ads
 
@@ -138,11 +138,11 @@ What: Small, usually fixed strips at the top or bottom of the screen.
 
 ### Implications:
 
-* Impressions: Very high — banners are shown continuously while the user is on a screen.
-* CTR: Usually low (0.1%–0.5%) because banners are easy to ignore (“banner blindness”).
-* CPM: Typically lowest among ad formats (e.g., $0.5 - $3).
-* User Experience: Least intrusive; users can continue interacting without interruption.
-* Best for: Apps that want steady, passive revenue without annoying users.
+- Impressions: Very high — banners are shown continuously while the user is on a screen.
+- CTR: Usually low (0.1%–0.5%) because banners are easy to ignore (“banner blindness”).
+- CPM: Typically lowest among ad formats (e.g., $0.5 - $3).
+- User Experience: Least intrusive; users can continue interacting without interruption.
+- Best for: Apps that want steady, passive revenue without annoying users.
 
 ---
 
@@ -152,11 +152,11 @@ What: Full-screen ads shown during natural breaks (e.g., between game levels or 
 
 ### Implications:
 
-* Impressions: Lower than banners since they appear less frequently.
-* CTR: Higher than banners (1–3%) because they take over the screen.
-* CPM: Higher than banners, often \$3–\$10 or more.
-* User Experience: Can be disruptive if overused — risks annoying users and causing churn.
-* Best for: Apps with clear transition points; games or content apps where natural pauses exist.
+- Impressions: Lower than banners since they appear less frequently.
+- CTR: Higher than banners (1–3%) because they take over the screen.
+- CPM: Higher than banners, often \$3–\$10 or more.
+- User Experience: Can be disruptive if overused — risks annoying users and causing churn.
+- Best for: Apps with clear transition points; games or content apps where natural pauses exist.
 
 ---
 
@@ -166,11 +166,11 @@ What: Users voluntarily watch a video or interactive ad in exchange for in-app r
 
 ### Implications:
 
-* Impressions: Limited by how often users want to claim rewards.
-* CTR: Very high because users choose to watch.
-* CPM: Highest among typical formats (can be \$10+).
-* User Experience: Positive, since ads provide value to users.
-* Best for: Games and apps with virtual economies; great for engagement and revenue.
+- Impressions: Limited by how often users want to claim rewards.
+- CTR: Very high because users choose to watch.
+- CPM: Highest among typical formats (can be \$10+).
+- User Experience: Positive, since ads provide value to users.
+- Best for: Games and apps with virtual economies; great for engagement and revenue.
 
 ---
 
@@ -181,14 +181,13 @@ What: Ads designed to blend seamlessly with app content (e.g., recommended artic
 - Native ads must be clearly labeled (e.g., “Sponsored,” “Ad”) to avoid misleading users for both legal reasons and UX
 - They should match the app’s UI style without disrupting usability or trust.
 
-
 ### Implications:
 
-* Impressions: Similar to banners, but depends on placement.
-* CTR: Generally higher than banners because they feel less like ads (0.5–2%).
-* CPM: Mid-range, often better than banners.
-* User Experience: Can feel more natural, but must be clearly labeled to avoid misleading users.
-* Best for: Content apps, news, social media — where blending ads into content works well.
+- Impressions: Similar to banners, but depends on placement.
+- CTR: Generally higher than banners because they feel less like ads (0.5–2%).
+- CPM: Mid-range, often better than banners.
+- User Experience: Can feel more natural, but must be clearly labeled to avoid misleading users.
+- Best for: Content apps, news, social media — where blending ads into content works well.
 
 ### Examples
 
@@ -204,11 +203,11 @@ What: Interactive mini-ads that let users try a game or app before installing.
 
 ### Implications:
 
-* Impressions: Lower, since these ads tend to be shown selectively.
-* CTR: Very high engagement because users interact directly.
-* CPM: Very high, often among the top-performing formats.
-* User Experience: Engaging and immersive but can be longer than typical ads.
-* Best for: Gaming apps looking to promote installs of other games or interactive content.
+- Impressions: Lower, since these ads tend to be shown selectively.
+- CTR: Very high engagement because users interact directly.
+- CPM: Very high, often among the top-performing formats.
+- User Experience: Engaging and immersive but can be longer than typical ads.
+- Best for: Gaming apps looking to promote installs of other games or interactive content.
 
 ---
 
@@ -226,12 +225,12 @@ What: Interactive mini-ads that let users try a game or app before installing.
 
 ## Implications for Monetization Strategy
 
-* If you want steady baseline revenue without annoying users: use banners + native ads.
-* If you want to maximize revenue per user and have natural pause points: add interstitials but use sparingly.
-* If your app has virtual goods or rewards, prioritize rewarded ads - great for engagement and \$\$\$.
-* If you’re a gaming app targeting installs of other games, playable ads can outperform everything else but might be harder to implement.
+- If you want steady baseline revenue without annoying users: use banners + native ads.
+- If you want to maximize revenue per user and have natural pause points: add interstitials but use sparingly.
+- If your app has virtual goods or rewards, prioritize rewarded ads - great for engagement and \$\$\$.
+- If you’re a gaming app targeting installs of other games, playable ads can outperform everything else but might be harder to implement.
 
---- 
+---
 
 # How Advertisers Assess Ad Performance
 
@@ -243,44 +242,46 @@ Advertisers assess ad performance by tracking specific metrics and KPIs that mea
 
 Before running ads, advertisers set clear goals, such as:
 
-* Brand awareness (getting their name seen)
-* Clicks (drive traffic to a website or app)
-* Conversions (sales, sign-ups, installs)
-* Engagement (likes, shares, video views)
+- Brand awareness (getting their name seen)
+- Clicks (drive traffic to a website or app)
+- Conversions (sales, sign-ups, installs)
+- Engagement (likes, shares, video views)
 
 For example:
 
 - Campaign objective could be to generate profit by spending maybe $100k on advertising in order to sell $500k worth of product that took $300k to build?
-    - 1000 customers bought a $500 product each -> $500k in revenue
+  - 1000 customers bought a $500 product each -> $500k in revenue
 - Return on Ad Spend (ROAS) would be $500k / $100k = 5 in this case. For every $1 you spent on ads, you get $5 in revenue
 - Cost per Acquisition (CPA) for those 1000 customers is Ad spend / conversions, so $100k / 1000 = $100 per customer
 - There's also some Customer LTV to be calculated here - maybe 25 of those 1000 customers were first-timers who just got introduced to your product.
 - follow up questions: can ad spend scale profitably here (if we spent $200k on advertising instead, does net profit turn into $200k here?)
 - Also have to factor in other costs like support, fulfillment
+
 ---
 
 ## 2. Track Basic Metrics
 
 ### Impressions
 
-* Number of times the ad was shown to users.
-* Measures reach and exposure.
+- Number of times the ad was shown to users.
+- Measures reach and exposure.
 
 ### Clicks
 
-* Number of times users clicked the ad.
-* Measures interest and engagement.
+- Number of times users clicked the ad.
+- Measures interest and engagement.
 
 ### CTR (Click-Through Rate)
 
-* Clicks ÷ Impressions.
-* Indicates ad relevance and appeal.
+- Clicks ÷ Impressions.
+- Indicates ad relevance and appeal.
 
-- This typically ranges a lot based on type of ad (banner ad, interstitial ad, search ad etc) and industry
-- Well-targeted ads (right interests, demographics, behavior) get much higher CTR than broad targeting.
-- Targeting ads to where users are already searching or expressing intent is one of the most powerful strategies in digital advertising. It’s often called “intent-based marketing” or “search intent targeting.”
-    - Search Engines Ads
-    - Shopping Ads
+* This typically ranges a lot based on type of ad (banner ad, interstitial ad, search ad etc) and industry
+* Well-targeted ads (right interests, demographics, behavior) get much higher CTR than broad targeting.
+* Targeting ads to where users are already searching or expressing intent is one of the most powerful strategies in digital advertising. It’s often called “intent-based marketing” or “search intent targeting.”
+  - Search Engines Ads
+  - Shopping Ads
+
 ---
 
 ## 3. Measure Conversion Metrics
@@ -289,17 +290,17 @@ If the goal is to get users to take a specific action (purchase, install, sign-u
 
 ### Conversions
 
-* Number of users who completed the desired action.
+- Number of users who completed the desired action.
 
 ### Conversion Rate
 
-* Conversions ÷ Clicks (or sometimes Impressions).
-* Shows how effective the ad is at driving actions.
+- Conversions ÷ Clicks (or sometimes Impressions).
+- Shows how effective the ad is at driving actions.
 
 ### CPA (Cost Per Acquisition)
 
-* Total campaign cost / Conversions.
-* Measures how much each conversion costs.
+- Total campaign cost / Conversions.
+- Measures how much each conversion costs.
 
 ---
 
@@ -309,13 +310,13 @@ Advertisers calculate:
 
 ### ROAS (Return on Ad Spend)
 
-* Revenue generated ÷ Ad spend.
-* Shows how profitable the campaign is.
+- Revenue generated ÷ Ad spend.
+- Shows how profitable the campaign is.
 
 ### Lifetime Value (LTV)
 
-* Predicts how much revenue a converted user will generate over time.
-* Helps justify higher CPA if LTV is good.
+- Predicts how much revenue a converted user will generate over time.
+- Helps justify higher CPA if LTV is good.
 
 ---
 
@@ -323,10 +324,10 @@ Advertisers calculate:
 
 Advertisers also look at:
 
-* Bounce rate on landing pages.
-* Session duration if sending traffic to a website.
-* Video watch rates for video ads.
-* Viewability (whether the ad was actually seen).
+- Bounce rate on landing pages.
+- Session duration if sending traffic to a website.
+- Video watch rates for video ads.
+- Viewability (whether the ad was actually seen).
 
 ---
 
@@ -334,8 +335,8 @@ Advertisers also look at:
 
 They use attribution tools to understand which ads or channels contributed most to conversions:
 
-* Last-click attribution: gives credit to the last ad clicked.
-* Multi-touch attribution: credits multiple touchpoints along the user journey.
+- Last-click attribution: gives credit to the last ad clicked.
+- Multi-touch attribution: credits multiple touchpoints along the user journey.
 
 ---
 
@@ -343,20 +344,20 @@ They use attribution tools to understand which ads or channels contributed most 
 
 Based on performance, advertisers:
 
-* Adjust targeting (demographics, interests).
-* Change creatives (images, copy).
-* Test different ad formats.
-* Reallocate budget to best-performing campaigns.
+- Adjust targeting (demographics, interests).
+- Change creatives (images, copy).
+- Test different ad formats.
+- Reallocate budget to best-performing campaigns.
 
 ---
 
 ## Tools Advertisers Use
 
-* Google Ads Manager
-* Facebook Ads Manager
-* Appsflyer, Adjust, Branch (for mobile attribution)
-* Google Analytics
-* DSP dashboards (Demand-Side Platforms)
+- Google Ads Manager
+- Facebook Ads Manager
+- Appsflyer, Adjust, Branch (for mobile attribution)
+- Google Analytics
+- DSP dashboards (Demand-Side Platforms)
 
 ---
 
@@ -385,14 +386,14 @@ LTV (Lifetime Value) estimates the total revenue or profit a business expects to
 
 ### 1. Define the Time Period
 
-* Decide the timeframe you want to measure (e.g., 12 months, customer lifespan, or average subscription duration).
+- Decide the timeframe you want to measure (e.g., 12 months, customer lifespan, or average subscription duration).
 
 ---
 
 ### 2. Gather Key Metrics
 
-| Metric                              | Description                                                 |
-| ----------------------------------- | ----------------------------------------------------------- |
+| Metric                          | Description                                                 |
+| ------------------------------- | ----------------------------------------------------------- |
 | ARPU (Average Revenue Per User) | Average revenue generated per user per period (e.g., month) |
 | Gross Margin                    | Revenue minus direct costs, expressed as a percentage       |
 | Churn Rate                      | % of customers lost per period                              |
@@ -434,9 +435,9 @@ If monthly churn is 5%, lifespan is 1 ÷ 0.05 = 20 months.
 
 ### 6. More Advanced Methods
 
-* Cohort Analysis: Track groups of customers who started at the same time to measure retention and spending over time.
-* Discounted Cash Flow (DCF): Apply a discount rate to future revenues to account for the time value of money.
-* Predictive Models: Use machine learning to forecast future customer behavior and spending.
+- Cohort Analysis: Track groups of customers who started at the same time to measure retention and spending over time.
+- Discounted Cash Flow (DCF): Apply a discount rate to future revenues to account for the time value of money.
+- Predictive Models: Use machine learning to forecast future customer behavior and spending.
 
 ---
 
@@ -454,6 +455,54 @@ If monthly churn is 5%, lifespan is 1 ÷ 0.05 = 20 months.
 
 ### Why LTV Matters
 
-* Helps determine maximum Customer Acquisition Cost (CAC).
-* Guides marketing budget allocation.
-* Supports product and retention strategies.
+- Helps determine maximum Customer Acquisition Cost (CAC).
+- Guides marketing budget allocation.
+- Supports product and retention strategies.
+
+### GAM Quick Reference Summary
+
+### Ad Units
+
+- What: Designated ad spaces/placements on your site (e.g., Header, Sidebar, Footer)
+- Key point: Reusable templates across your entire site. If you setup 3 spots for ads on your site across all article pages, there will be 3 ad units in total when you pull data from GAM
+
+### Line Items
+
+- What: Specific ad campaigns with delivery instructions
+- Contains: Which ads, where to show them, targeting rules, pricing, date range
+- Think of it as: The "campaign order" that tells GAM what to deliver
+
+### Deal Types (Line Item Types)
+
+Direct Deals (You negotiate):
+
+- Sponsorship: Advertiser gets % of impressions, premium placement
+- Standard: Advertiser gets specific # of impressions, guaranteed delivery
+
+Programmatic (Google manages):
+
+- Price Priority: Auction-based, highest bid wins
+- Network: Google Ad Exchange/AdSense fills unsold inventory at market rates
+
+Your Own:
+
+- House: Your promotional ads, free, lowest priority fallback
+
+### Getting Your Data Out
+
+Data Transfer Files (DTF):
+
+- Raw, granular exports to BigQuery/Cloud Storage
+- Impression-level data with all dimensions (ad unit, line item, device, geo, time, etc.)
+- Best for: Custom analysis, dashboards, historical trends, no UI limits
+
+GAM API:
+
+- Programmatic access to pull reports/data on-demand
+- Best for: Real-time integrations, custom tools, automated workflows
+
+Standard GAM UI Reports:
+
+- Point-and-click reporting
+- Best for: Quick insights, less technical users
+- Limited: Row limits, less granular
