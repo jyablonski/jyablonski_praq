@@ -1,41 +1,10 @@
-from datetime import datetime
 import os
 
 import pandas as pd
-from sqlalchemy import exc, create_engine, text as sql_text
-from sqlalchemy.engine.base import Connection, Engine
+from sqlalchemy import text as sql_text
+from sqlalchemy.engine.base import Connection
 
-
-def sql_connection(
-    rds_schema: str,
-    RDS_USER: str = os.environ.get("RDS_USER"),
-    RDS_PW: str = os.environ.get("RDS_PW"),
-    RDS_IP: str = os.environ.get("IP"),
-    RDS_DB: str = os.environ.get("RDS_DB"),
-) -> Engine:
-    """
-    SQL Connection function to define the SQL Driver + connection variables needed to connect to the DB.
-    This doesn't actually make the connection, use conn.connect() in a context manager to create 1 re-usable connection
-
-    Args:
-        rds_schema (str): The Schema in the DB to connect to.
-
-    Returns:
-        SQL Connection variable to a specified schema in my PostgreSQL DB
-    """
-    try:
-        connection = create_engine(
-            f"postgresql+psycopg2://{RDS_USER}:{RDS_PW}@{RDS_IP}:5432/{RDS_DB}",
-            connect_args={"options": f"-csearch_path={rds_schema}"},
-            # defining schema to connect to
-            echo=False,
-            isolation_level="AUTOCOMMIT",
-        )
-        print(f"SQL Engine for schema: {rds_schema} Successful")
-        return connection
-    except exc.SQLAlchemyError as e:
-        print(f"SQL Engine for schema: {rds_schema} Failed, Error: {e}")
-        return e
+from jyablonski_common_modules.sql import create_sql_engine
 
 
 def build_audit_table(
@@ -43,6 +12,10 @@ def build_audit_table(
     schema: str,
     connection: Connection,
 ):
+    """
+    Build audit table and trigger for a given table.
+    Now with schema-qualified references to avoid issues when moving schemas.
+    """
     try:
         table_cols_df = pd.read_sql_query(
             sql=sql_text(
@@ -87,7 +60,7 @@ def build_audit_table(
         )
 
         audit_trigger_create_function = f"""
-            CREATE OR REPLACE FUNCTION {table}_audit_trigger_function()
+            CREATE OR REPLACE FUNCTION {schema}.{table}_audit_trigger_function()
             RETURNS trigger AS $body$
             BEGIN
             if (TG_OP = 'INSERT') then
@@ -141,11 +114,11 @@ def build_audit_table(
 
         create trigger {table}_audit_trigger
         after insert or update or delete on {schema}.{table}
-        for each row execute function {table}_audit_trigger_function();
+        for each row execute function {schema}.{table}_audit_trigger_function();
         """
         connection.execute(sql_text(f"{audit_trigger_attach_function}"))
 
-        print(f"Built Audit Trigger {table}_audit_trigger")
+        print(f"Built Audit Trigger {table}_audit_trigger on {schema}.{table}")
 
         return audit_trigger_create_function
 
@@ -153,135 +126,25 @@ def build_audit_table(
         raise e
 
 
-engine = sql_connection("nba_prod")
+if __name__ == "__main__":
+    engine = create_sql_engine(
+        database=os.environ.get("RDS_DB"),
+        schema="nba_source",
+        user=os.environ.get("RDS_USER"),
+        password=os.environ.get("RDS_PW"),
+        host=os.environ.get("IP"),
+        port=17841,
+    )
+    connection = engine.connect()
 
-connection = engine.connect()
+    silver_tables = ["ml_tonights_games"]
 
-bb = build_audit_table(table="rest_api_users", schema="nba_prod", connection=connection)
+    for table in silver_tables:
+        print(f"\n--- Processing {table} in silver schema ---")
+        build_audit_table(table=table, schema="silver", connection=connection)
 
+    gold_tables = ["feature_flags", "incidents", "rest_api_users", "user_predictions"]
 
-text_file = open("audit.txt", "w")
-n = text_file.write(bb)
-text_file.close()
-
-
-# didnt finish this mfer
-def build_audit_table_mysql(
-    table: str,
-    schema: str,
-    connection: Connection,
-) -> tuple[str, str]:
-    try:
-        cursor = connection.cursor()
-
-        # Get column names and data types
-        cursor.execute(
-            f"""
-            SELECT COLUMN_NAME, DATA_TYPE
-            FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA = '{schema}' AND TABLE_NAME = '{table}'
-            """
-        )
-        table_cols = cursor.fetchall()
-
-        # Construct CREATE TABLE statement
-        # col_statements = [
-        #     f"{col_name} {data_type}" for col_name, data_type in table_cols
-        # ]
-        # table_cols_create_statement = ", ".join(col_statements)
-
-        # cursor.execute(
-        #     f"""
-        #     CREATE TABLE IF NOT EXISTS {schema}.{table}_audit (
-        #         audit_id INT AUTO_INCREMENT PRIMARY KEY,
-        #         {table_cols_create_statement},
-        #         audit_type VARCHAR(10) NOT NULL,
-        #         audit_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        #     )
-        #     """
-        # )
-        # print(f"Built Table {schema}.{table}_audit")
-
-        # Construct trigger function
-        table_cols_str = ", ".join([col_name for col_name, _ in table_cols])
-        table_cols_new = ", ".join([f"NEW.{col_name}" for col_name, _ in table_cols])
-        table_cols_old = ", ".join([f"OLD.{col_name}" for col_name, _ in table_cols])
-
-        audit_trigger_create_function = f"""
-            drop trigger if exists {table}_audit_insert_trigger;
-            
-            create trigger {table}_audit_insert_trigger
-            after insert
-            on {table}
-            for each row
-            insert into {table}_Audit (
-                {table_cols_str},
-                audit_type,
-                audit_created_at
-            )
-            values (
-                {table_cols_new},
-                'INSERT',
-                CURRENT_TIMESTAMP
-            );
-
-            """
-        cursor.execute(audit_trigger_create_function)
-        print(f"Created Trigger {table}_audit_insert_trigger")
-
-        audit_trigger_update_function = f"""
-            drop trigger if exists {table}_audit_update_trigger;
-            
-            create trigger {table}_audit_update_trigger
-            after update
-            on {table}
-            for each row
-            insert into {table}_Audit (
-                {table_cols_str},
-                audit_type,
-                audit_created_at
-            )
-            values (
-                {table_cols_new},
-                'UPDATE',
-                CURRENT_TIMESTAMP
-            );
-
-            """
-        cursor.execute(audit_trigger_update_function)
-        print(f"Created Trigger Function {table}_audit_trigger_function")
-
-        audit_trigger_delete_function = f"""
-            drop trigger if exists {table}_audit_delete_trigger;
-            
-            create trigger {table}_audit_delete_trigger
-            after delete
-            on {table}
-            for each row
-            insert into {table}_Audit (
-                {table_cols_str},
-                audit_type,
-                audit_created_at
-            )
-            values (
-                {table_cols_old},
-                'DELETE',
-                CURRENT_TIMESTAMP
-            );
-
-            """
-        cursor.execute(audit_trigger_delete_function)
-        print(f"Created Trigger Function {table}_audit_trigger_function")
-
-        connection.commit()
-        cursor.close()
-
-        return (
-            audit_trigger_create_function,
-            audit_trigger_update_function,
-            audit_trigger_delete_function,
-        )
-
-    except Exception as e:
-        connection.rollback()
-        raise e
+    for table in gold_tables:
+        print(f"\n--- Processing {table} in gold schema ---")
+        build_audit_table(table=table, schema="gold", connection=connection)
