@@ -1,0 +1,555 @@
+# Guitar
+
+## Components
+
+- Body
+  - The base of the Guitar which is typically made of wood
+  - Different types of Wood are used such as Maple, Mahogany, Alder etc
+- Neck
+  - Fretboard - made of wood with metal frets embedded along its length
+  - Headstock - end of the neck which has the tuning pegs for the strings
+  - Truss Rod - the Metal Rod in the neck that maintains its shape and adjusts the tension to counteract the pull of the strings
+- Bridge
+  - Fixed Bridge - Stationary and provides stable tuning
+  - Tremolo Bridge - allows the player to bend the pitch of the strings with a whammy bar.
+- Pickups
+  - Pickups are critical components that convert string vibrations into electrical signals, which can then be amplified to produce a sound.
+  - Single-coil - Known for their bright, clear sound. but prone to electromagnetic interference
+  - Humbucker - Consists of two coils wired out of phase to cancel out noise and produce a thicker, warmer sound
+  - Piezo - Uses piezoelectric crystals to detect string vibrations in hybrid electric-acoustic guitars
+  - Active - Includee an onboard preamp powered by a battery and produce a high powerful tone, but require battery changes.
+- Electronics
+  - Volume and Tone controls - Knobs that adjust the output level and tonal quality of the sound
+  - Pickup Selector Switch - Allows the player to choose between different pickups or combinations of pickups
+  - Output jack - Input for a cable to connect the Electric Guitar to an Amplifer of other audio equipment
+- Tuners
+  - Tuning Pegs - Located on the headstock to adjust tension and pitch of each string
+  - Machine Heads - Actual mechanism in the tuning peg that holds the string tension and allows for fine tuning
+- Strings
+  - Electric Guitar STrings - typically steel or nickel and vary in thickness which affects sound and playability
+- Nut
+  - Small piece of hard material location at the junction of the headstock and fretboard to guide the strings from the tuners to the fretboard
+- Pickguard
+  - A plastic or laminate piece attached to the body to protect the finish from wear & tear from pick scratches
+- Strap Buttons
+  - Metal Knobs mounted on the body where the guitar strap is attached to allow the player to hold the guitar while standing
+
+## Frets
+
+A fret is a raised metal strip embedded along the neck of a guitar. Frets are placed at specific intervals, allowing the guitarist to change the pitch of the strings by pressing them down behind these metal strips.
+
+- You press down on a string at a specific fret to play a note.
+- When you press a string down behind a fret, you shorten the vibrating length of the string, raising its pitch. The pitch increases by one half-step for each successive fret.
+- The small circles or dots in the middle of certain frets on the guitar neck are called fret markers or position markers. These are inlaid into the fretboard and serve as visual guides to help guitarists quickly identify specific frets and positions on the neck.
+- The 1st Fret is located closest to the Headstock, and goes down from there.
+
+When pressing down on a fret to play a note, you should press the string just behind the metal fret wire, not directly on it or in the middle of the fret.
+
+- `|---| 1 | 2 | 3 | 4 |`
+- This helps in producing a clear, buzz-free note. This also requires less finger pressure and effort from your end to reduce finger fatigue and improve playing efficiency
+- Avoid pressing directly on top of the fret wire as this can mute the string or produce an unwanted buzzing sound.
+- Pressing in the middle of the fret requires more effort and can lead to unclear notes or buzzing.
+
+```lua
+Fretboard
+| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
+| --- | 1   | 2   | 3   | 4   |
+     ^
+   Press here (just behind the metal fret wire)
+```
+
+## Strings
+
+Guitars typically have 6 Strings
+
+- E (thickest)
+- A
+- D
+- G
+- B
+- e (thinnest)
+
+## Terminology
+
+Fretting - using your left hand to press down on the strings at different frets to change the pitch
+
+Strumming and picking - use your right hand to strum the strings with a pick or your fingers. Different strumming patterns produce different sounds.
+
+Chords - a combination of 2 or more notes played simultaneously. Fundamenetal building block in music
+
+- Each chord has a specific quality or character, such as major, minor, diminished, etc., depending on the intervals (the distance between the notes).
+- Root note: The base note that the chord is built on. It gives the chord its name (e.g., C in a C major chord).
+- Intervals: The distance between notes in a chord. Common intervals in chords are:
+  - 3rd: Defines whether the chord is major or minor.
+  - 5th: Provides stability to the chord.
+- A triad, the most basic type of chord, consists of three notes:
+  - Root
+  - 3rd (major or minor)
+  - 5th (perfect)
+- Major Chords:
+  - A major chord has a root, a major 3rd, and a perfect 5th.
+  - The major 3rd interval gives the chord a happy, bright sound.
+  - Example: A C major chord (C) consists of the notes C (root), E (major 3rd), and G (perfect 5th).
+- Minor Chords:
+  - A minor chord has a root, a minor 3rd, and a perfect 5th.
+  - The minor 3rd interval gives the chord a sad, darker sound.
+  - Example: A C minor chord (Cm) consists of the notes C (root), E♭ (minor 3rd), and G (perfect 5th).
+- Diminished Chords:
+  - A diminished chord has a root, a minor 3rd, and a diminished 5th (lowered 5th).
+  - This chord has a tense, unstable sound.
+  - Example: A C diminished chord (Cdim) consists of C (root), E♭ (minor 3rd), and G♭ (diminished 5th).
+- On guitar, chords are often played by strumming several strings at once, with each finger pressing down on specific frets to form the notes of the chord.
+- Major chords sound bright and happy.
+- Minor chords sound sad or melancholic.
+- Diminished chords sound tense.
+- Augmented chords sound bright but dissonant.
+
+Pedals effect distortion, reverb, and elay between the guitar and the amplifier to change the sound.
+
+An octave is a musical interval that spans eight notes in a diatonic scale, where the first and eighth notes have the same name and the higher note has double the frequency of the lower note.
+
+- An octave is the interval between one note and another note that is double or half its frequency. When you go up or down one octave, the note name stays the same, but it sounds higher or lower in pitch.
+
+- Open Low E String (E2): The open sixth string.
+- 12th Fret of the Low E String (E3): Playing the 12th fret on the low E string produces the E note one octave higher than the open string.
+
+Power Chords are 2-note chords
+
+- Power chords are a staple in rock and metal because of their simplicity and their full, powerful sound when played with distortion.
+
+## Tuning
+
+Standard Guitar Tuning is EADGBe
+
+1. **6th String (Low E)**: The thickest string, produces an E note when played open.
+2. **5th String (A)**: The second thickest string, produces an A note when played open.
+3. **4th String (D)**: Produces a D note when played open.
+4. **3rd String (G)**: Produces a G note when played open.
+5. **2nd String (B)**: Produces a B note when played open.
+6. **1st String (High e)**: The thinnest string, produces a high E note when played open.
+
+- the `e` produces the note E, specifically the E note that is two octaves higher than the low E note produced by the sixth (thickest) string.
+
+Drop B tuning is a type of guitar tuning that lowers the pitch of the strings, giving the guitar a heavier and darker tone, commonly used in genres like metal, hard rock, and grunge. In Drop B tuning, the strings are tuned as follows from lowest (6th string) to highest (1st string):
+
+- **6th string**: B (two and a half steps down from E)
+- **5th string**: F# (one and a half steps down from A)
+- **4th string**: B (one and a half steps down from D)
+- **3rd string**: E (one and a half steps down from G)
+- **2nd string**: G# (one and a half steps down from B)so
+- **1st string**: C# (one and a half steps down from E)
+
+In musical terms, a "step" refers to a whole step (two frets on the guitar), and a "half step" refers to a half step (one fret on the guitar).
+
+The `#` symbol denotes a sharp, meaning the note is raised by one half step from its natural counterpart.
+
+B Flat (Bb) means the note is played one half step lower than B. This is an enharmonic equivalent to A#, which is A played one half step higher. A# and Bb play the same note and sound the exact same.
+
+- When you play different frets on the same string of a guitar, you're changing the pitch of the note produced.
+- For F# (F Sharp), that should be played one half step higher than F
+- If you play the 1st Fret on the Low E String, that's an F. If you play it on the 2nd Fret, that's F#
+
+### Steps to Tune to Drop B:
+
+1. **Tune the 6th String**: Lower the E string down to B. This is achieved by tuning down five half steps (or a perfect fourth interval).
+2. **Tune the 5th String**: Lower the A string down to F#.
+3. **Tune the 4th String**: Lower the D string down to B.
+4. **Tune the 3rd String**: Lower the G string down to E.
+5. **Tune the 2nd String**: Lower the B string down to G#.
+6. **Tune the 1st String**: Lower the high E string down to C#.
+
+- The lower tuning decreases string tension, which may require heavier gauge strings to maintain proper tension and playability.
+- Lower tunings can affect the neck tension, so a truss rod adjustment may be necessary to maintain proper neck relief.
+- You may need to adjust the intonation of the guitar to ensure it stays in tune along the fretboard.
+
+## Notes
+
+In Western music, there are 12 unique notes within an octave. Each of them are a half step (semitone) apart. These notes are:
+
+1. A
+2. A# (A sharp) / Bb (B flat)
+3. B
+4. C
+5. C# (C sharp) / Db (D flat)
+6. D
+7. D# (D sharp) / Eb (E flat)
+8. E
+9. F
+10. F# (F sharp) / Gb (G flat)
+11. G
+12. G# (G sharp) / Ab (A flat)
+
+- No B# or E#
+- No F flat or C flat
+
+There's no real reason E & B have no E# or B# respectively. E# is technically just F.
+
+A
+Bb
+B
+C
+Db
+D
+Eb
+E
+F
+Gb
+G
+Ab
+
+- all the sharps get flipped around to flats from the next note
+- A# -> Bb
+- G# -> Ab
+
+## Playing Notes
+
+If you play the low E string open (no frets pressed), this is an E note
+
+- If you play the low E string while pressing down on the 1st fret, this goes up a half step (semitone) to an F note
+- If you play the low E string while pressing down on the 2nd fret, this goes up a whole step (1 step) to an F# (equivalent to G flat) note
+- If you play the low E string while pressing down on the 3rd fret, this goes up a 1.5 steps to a G note
+
+To take the last bullet as an example, you just played the low E String w/ the 3rd fret pressed down and played a G note. This is 2 octaves higher than if you were to play the same note on the open G string.
+
+- The low E string, when fretted at the 3rd fret, gives a deeper, bassier G sound due to its thicker string gauge.
+- The open G string will sound brighter and sharper because it's a thinner string and higher in pitch.
+
+Each fret on the guitar represents a half step (or semitone) on the musical scale. There are 12 semitones in an octave, so if you go up 12 frets (12 half steps), you reach the same note, but one octave higher.
+
+### Explanation:
+
+- **Natural Notes**: A, B, C, D, E, F, G
+- **Sharp/Flat Notes**: Notes that have two names (enharmonic equivalents), such as A# and Bb, which represent the same pitch.
+
+These 12 notes repeat in higher or lower octaves. For example, after G#, the next note would be A, but an octave higher.
+
+## Scales
+
+You can play scales all across 1 string, or across multiple strings.
+
+- Across 1 string means it's pretty simple to play the scale, but you have to cover a lot of ground and it's not efficient
+  - Here, each note is going linearly higher in pitch along the string — octave spacing is preserved in a straight line.
+- Across multiple strings means it's a lot more compact and efficient to play, but is more complex to understand at first
+
+Playing ~3 notes per string is a way of organizing scales on the guitar so that each string plays exactly 3 notes of the scale before moving to the next string. This makes the scale pattern very uniform and efficient for speed, alternate picking, and muscle memory.
+
+When you play a scale across strings:
+
+- You're still playing the same scale (same notes, same whole-step/half-step order).
+- But the octave position of each note can change depending on where and how you play it.
+
+Root Note
+
+- A Major Scale - Root note is A
+- E Major Scale - Root note is E
+
+### C Major
+
+- C → D → E → F → G → A → B → C
+
+Standard Tuning:
+
+```lua
+C Major (3-notes-per-string shape):
+E|----------------------------7--8--10--
+B|---------------------8--10--12--------
+G|----------------7--9--10--------------
+D|-----------7--9--10-------------------
+A|----7--8--10--------------------------
+E|8--10--12-----------------------------
+
+```
+
+Drop B Tuning
+
+```lua
+C Major
+C#|--------------------------------------------------------------|
+G#|------------------------------------------1--3--4-------------|  (A, B, C)
+E |-------------------------------0--1--3------------------------|  (E, F, G)
+B |-----------------------1-1-3-----------------------------------|  (C, C, D)
+F#|---------1--3--5----------------------------------------------|  (G, A, B)
+B |--1--3--5--6--------------------------------------------------|  (C, D, E, F)
+
+C#|----------------------------------------------------------| (1st string - Not required for these two octaves)
+G#|----------------------------------------------------------| (2nd string - Not required for these two octaves)
+E |-----------------------------------3--5--7--8-------------| (3rd string: G, A, B, C)
+B |-----------------------3--5--6----------------------------| (4th string: D, E, F)
+F#|-----------1--3--5--6-------------------------------------| (5th string: G, A, B, C)
+B |--1--3--5--6----------------------------------------------| (6th string: C, D, E, F)
+```
+
+## Drop B Tuning
+
+1. Buy appropriate strings
+   1. .10 - .46 strings that ship default with most guitars aren't thick enough to handle lower tuning. These strings get very floppy and it's not ideal to play
+   2. .12 - .60 or .11 - .56 strings are ideal for Drop B. They're heavier strings to account for the lower tuning. But, the rest of your guitar isn't setup out of the box for these heavier strings
+2. File down String Nuts (at the headstock) to accommodate the new strings
+   1. These strings will probably not fit into the small slots available like with the .10 - .46 strings
+   2. Without doing this, as you play the strings will constantly slip out of place there and your guitar will go out of tune much faster
+   3. Use a nut file to widen the slots, but don't over-file.
+3. Tune Truss Rod
+   1. Heavier strings put more tension on the neck, which could cause it to bow.
+      1. The truss rod helps balance that tension to maintain proper neck relief
+      2. Neck relief refers to the slight forward bow or concave curve in the guitar neck that allows for smooth playing without buzzing or dead spots.
+      3. When you switch to heavier strings, the increased tension may cause the neck to bow too much, making the action (string height) higher than desired.
+   2. Hold the low B string (or any string) down at the 1st fret and at the fret where the neck meets the body (usually the 15th-17th fret).
+   3. Look at the gap between the string and the frets around the 7th-9th frets.
+      1. If there is too much gap (more than the thickness of a business card), the neck has too much relief (bowed forward).
+      2. If there is no gap, the neck is either too straight or back-bowed.
+   4. Adjust the truss rod in small increments (1/4 turn at a time) and give it time to settle after each adjustment
+      1. You will need a truss rod wrench or Allen key that fits your guitar.
+      2. Righty-tighty, lefty-loosey: Turning the truss rod clockwise tightens it (reduces neck relief), while turning it counterclockwise loosens it (increases neck relief).
+      3. Since heavier strings cause the neck to bow forward, you will want to loosen the truss rod slightly by turning it counterclockwise.
+      4. Let the neck settle: After each adjustment, give the neck some time to settle (several minutes or even a day). It takes time for the wood to adjust to the new tension.
+      5. After making a small adjustment, retune the guitar to Drop B.
+      6. Repeat the process of checking the neck relief by holding down the string at the 1st and last frets to check the gap.
+   5. Proper adjustment - There should be a slight gap between the string and the 7th-9th frets when fretting the string at the 1st and last frets. The guitar should feel comfortable to play, with no excessive fret buzz or overly high action.
+   6. Improper adjustments can damage the guitar
+4. Tune String Saddle to adjust for inotation
+   1. After tuning to drop B, the guitar may sound out of tune higher up in the fretboard. This is an intonation issue
+   2. Use a Tuner to compare the harmonic and fretted notes at the 12th fret
+   3. Adjust the saddle position to ensure the fretted note at the 12th fret matches the harmonic \*\*
+   4. Repeat process for each string until the guitar is intonated
+5. Adjust string height
+   1. Can turn the saddle screws to bring it up or down as needed. This will mainly affect playability, not necessarily how it sounds.
+6. Tune to Drop B
+
+# Scales
+
+Practicing scales is one of the best ways to build your ear, finger strength, and understanding of music theory. Here's a breakdown of **common scales** with their **step patterns** using **whole steps (W)** and **half steps (H)**.
+
+---
+
+## 🎼 1. **Major Scale (Ionian mode)**
+
+**Formula:** `W - W - H - W - W - W - H`
+
+- Example: **C Major** → C - D - E - F - G - A - B - C
+
+---
+
+## 🎼 2. **Natural Minor Scale (Aeolian mode)**
+
+**Formula:** `W - H - W - W - H - W - W`
+
+- Example: **A Minor** → A - B - C - D - E - F - G - A
+
+---
+
+## 🎼 3. **Harmonic Minor Scale**
+
+**Formula:** `W - H - W - W - H - W+H (3 semitones) - H`
+
+- Example: **A Harmonic Minor** → A - B - C - D - E - F - G# - A
+- Characteristic: Exotic, classical sound due to the **1.5 step** between F and G#
+
+---
+
+## 🎼 4. **Melodic Minor Scale (Ascending)**
+
+**Formula:** `W - H - W - W - W - W - H`
+
+- Example: **A Melodic Minor (ascending)** → A - B - C - D - E - F# - G# - A
+- Often played differently descending (like natural minor)
+
+---
+
+## 🎼 5. **Pentatonic Scales (5-note scales)**
+
+### a. **Major Pentatonic**
+
+**Formula:** `W - W - W+H - W - W+H`
+
+- Example: **C Major Pentatonic** → C - D - E - G - A - C
+
+### b. **Minor Pentatonic**
+
+**Formula:** `W+H - W - W - W+H - W`
+
+- Example: **A Minor Pentatonic** → A - C - D - E - G - A
+- Most common in rock, blues, and soloing
+
+---
+
+## 🎼 6. **Blues Scale (Minor Pentatonic + flat 5)**
+
+**Formula:** `W+H - W - H - H - W+H - W`
+
+- Example: **A Blues** → A - C - D - D# - E - G - A
+- The added D# (♭5) gives it the “blues” sound
+
+---
+
+## 🎼 7. **Modes of the Major Scale**
+
+Each mode is a major scale starting from a different scale degree:
+
+| Mode       | Formula       | Example in C | Flavor           |
+| ---------- | ------------- | ------------ | ---------------- |
+| Ionian     | W W H W W W H | C major      | Happy, bright    |
+| Dorian     | W H W W W H W | D Dorian     | Jazzy minor      |
+| Phrygian   | H W W W H W W | E Phrygian   | Dark, exotic     |
+| Lydian     | W W W H W W H | F Lydian     | Dreamy major     |
+| Mixolydian | W W H W W H W | G Mixolydian | Bluesy major     |
+| Aeolian    | W H W W H W W | A Aeolian    | Natural minor    |
+| Locrian    | H W W H W W W | B Locrian    | Dissonant, tense |
+
+## Note Examples
+
+- 5th String 5th Fret, 3rd String 7th Fret
+
+  - B, B. Octave
+
+- 5th String 6th Fret, 3rd String 9th Fret
+
+  - C, C#
+
+- 5th String 2nd Fret, 4th String 4th Fret
+
+  - G# D#
+  - Perfect fifth because there's 7 semitones difference from G# to D#
+
+- 5th String 5th Fret, 4th String 7th Fret
+  - B, F#
+
+| 5th String Fret (Root) | 5th String Note | 4th String Fret | 4th String Note | Interval Name     | Semitones |
+| ---------------------- | --------------- | --------------- | --------------- | ----------------- | --------- |
+| 0                      | F#              | 0               | B               | Perfect 4th       | 5         |
+| 0                      | F#              | 1               | C               | Tritone / Aug 4th | 6         |
+| 0                      | F#              | 2               | C#              | Perfect 5th       | 7         |
+| 0                      | F#              | 3               | D               | Minor 6th         | 8         |
+| 0                      | F#              | 4               | D#              | Major 6th         | 9         |
+| 0                      | F#              | 5               | E               | Minor 7th         | 10        |
+| 0                      | F#              | 6               | F               | Major 7th         | 11        |
+| 0                      | F#              | 7               | F#              | Octave            | 12        |
+
+B F# B E G# C#
+
+1. A
+2. A# (A sharp) / Bb (B flat)
+3. B
+4. C
+5. C# (C sharp) / Db (D flat)
+6. D
+7. D# (D sharp) / Eb (E flat)
+8. E
+9. F
+10. F# (F sharp) / Gb (G flat)
+11. G
+12. G# (G sharp) / Ab (A flat)
+
+Fuller Octaves
+
+- B5 Power Chord
+- 5th string 5th fret -> B (root)
+- 4th string 7th fret -> F# (fifth) - it's called the 5th because it's a 5 letter difference, but actually 7 semitones apart
+- 3rd string 7th fret -> B (octave)
+
+so:
+
+- we call it b power chord because the root note is b
+- it's b5 because it's a perfect fifth? - it's a power chord because we have a root note (B) and it's perfect fifth (f#) which is 5 letters apart, but actually 7 semitones different
+- the 3rd string 7th fret just adds an optional octave of the root, making it sound fuller, but is not required for it to be a power chord.
+
+| Interval         | Semitones |
+| ---------------- | --------- |
+| Unison / root    | 0         |
+| Minor 2nd        | 1         |
+| Major 2nd        | 2         |
+| Minor 3rd        | 3         |
+| Major 3rd        | 4         |
+| Perfect 4th      | 5         |
+| Tritone / Aug4th | 6         |
+| Perfect 5th      | 7         |
+| Minor 6th        | 8         |
+| Major 6th        | 9         |
+| Minor 7th        | 10        |
+| Major 7th        | 11        |
+| Octave           | 12        |
+
+### **1. Power Chord (Root + Perfect Fifth)**
+
+```
+5th string → Root
+4th string → Perfect Fifth (7 semitones above root)
+3rd string → Optional Octave (same as root)
+
+Example: B5
+5th string 5th fret → B (root)
+4th string 7th fret → F# (perfect fifth)
+3rd string 7th fret → B (octave, optional)
+```
+
+### **3. Major / Minor Thirds**
+
+**Shape:** root on 5th string → 1 string up, 3–4 frets higher
+
+- Minor Third (3 semitones) → dark / sad
+- Major Third (4 semitones) → bright / happy
+
+```
+Minor third: B → D
+5th string 5th fret → B
+4th string 8th fret → D
+
+Major third: B → D#
+5th string 5th fret → B
+4th string 9th fret → D#
+```
+
+### **4. Perfect Fourth**
+
+**Shape:** root on 5th string → 4th string, same fret
+
+```
+B → E
+5th string 5th fret → B
+4th string 5th fret → E
+```
+
+- Suspended / unresolved sound
+
+---
+
+### **5. Tritone / Augmented Fourth**
+
+**Shape:** root on 5th string → 4th string, 1 fret higher than perfect fourth
+
+```
+B → F
+5th string 5th fret → B
+4th string 6th fret → F
+```
+
+- Very tense, dissonant
+
+---
+
+### **6. Minor / Major Sixth**
+
+**Shape:** root on 5th string → 4th string, 3–4 frets higher than perfect fifth
+
+```
+Minor sixth: B → G
+4th string 9th fret → B
+3rd string 12th fret → G
+
+Major sixth: B → G#
+5th string 5th fret → B
+4th string 13th fret → G#
+```
+
+- Adds color / bluesy or jazzy flavor
+
+---
+
+## B Minor Scale High strings
+
+3rd string (E): 0 E, 2 F#, 4 G, 5 A, 7 B
+2nd string (G#): 0 G#, 2 A#, 4 B, 5 C#, 7 D
+1st string (C#): 0 C#, 2 D#, 4 E, 5 F#, 7 G#
