@@ -171,3 +171,4 @@ notes/private/**
 *tables*
 **.vortex
 system_design/cases/**example**
+*.pkl
