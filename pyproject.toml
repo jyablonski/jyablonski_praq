@@ -55,6 +55,9 @@ dependencies = [
     "vortex-data>=0.53.0",
     "mlflow>=3.6.0",
     "scikit-learn>=1.7.2",
+    "mcp>=1.22.0",
+    "starlette>=0.50.0",
+    "uvicorn>=0.38.0",
 ]
 
 [dependency-groups]
@@ -70,6 +73,11 @@ dev = [
 
 [tool.uv]
 package = false
+
+[tool.uv.workspace]
+members = [
+    "mcp/mcp-rag-server",
+]
 
 [build-system]
 requires = ["hatchling"]
