@@ -118,6 +118,11 @@ features = store.get_online_features(
 # Returns: {'avg_spend_30d': 50.25} in 5ms
 ```
 
+The key point here is the API needs to use Feast SDK to fetch features from Redis. If you are using Feast in the Producer Service to push data to Redis, you also need to use Feast in the Consumer Service to read from Redis.
+
+- The data is written to Redis in a specific way, optimized for speed, that only the Feast SDK knows how to use.
+- Trying to reproduce this logic manually is dumb as fuck so don't do that bruh`
+
 ---
 
 ### 4. Production Best Practices & Gotchas
@@ -153,14 +158,7 @@ Treat your feature registry like code.
 #### D. dbt Integration
 
 - Don't write SQL inside Feast definitions. It makes lineage impossible to track.
-- Do create a specific layer in dbt (e.g., `analytics.features.*`) specifically for Feast consumption.
-- Do use dbt tags (`tags: ["feast"]`) so you can run `dbt run --select tag:feast` before materialization.
-
-### Summary: Do you need it?
-
-1.  YES, if: You have a user-facing app that needs to make decisions in \<100ms using historical data (e.g., "Is this credit card transaction fraudulent?" or "Customize this homepage based on last week's clicks").
-
-2.  NO, if: You are doing batch predictions (e.g., "Email these 10k users a coupon tonight"). In this case, just read directly from Snowflake using the Offline Store API (or just SQL). You don't need the complexity of Redis and Materialization.
+- Create a specific layer in dbt (e.g., `analytics.ml_features.*`) specifically for Feast consumption.
 
 ## Deployment
 
