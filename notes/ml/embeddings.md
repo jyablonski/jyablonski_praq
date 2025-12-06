@@ -55,3 +55,58 @@ Computing similarity scores for all documents doesn't really make sense because 
    - User purchase and browsing history is used to build user embeddings
    - Recommendations use embedding similarity to suggest complementary or alternative products
    - Leads to higher conversion rates and user satisfaction
+
+## Generating Embeddings
+
+### Step 1: The Model (The "Translator")
+
+Actually taking input data and generating embeddings involves using a Transformer Model (like BERT or OpenAI's text-embedding-3).
+
+- This model is essentially a massive, pre-trained neural network that has learned over billions of sentence pairs to learn which sentences usually share the same meaning.
+  - It "knows" that "cellular phone" and "mobile device" are semantically identical, even though they share no common words.
+- You feed it raw text ("The quick brown fox").
+- It passes that text through layers of math operations.
+- The final layer outputs a fixed-length list of floating-point numbers (e.g., `[0.1, -0.9, 0.4 ...]`).
+- Code Level: In Python, this is often just an API call to OpenAI or a local library like `sentence-transformers` or `HuggingFace`.
+
+### Step 2: The Storage (Postgres + pgvector)
+
+Postgres by itself doesn't understand vector math. You need to install the `pgvector` extension.
+
+- This allows Postgres to store a new data type: `vector(1536)`.
+- It allows you to run special SQL queries like "Find the 5 rows whose vector is mathematically closest to this query vector."
+
+### Real-time Code Example
+
+```python
+@app.post("/reviews")
+def upload_reviews(payload: UserInput):
+
+   review = payload.review_text
+
+   # do something like write a review - like normal
+   write_review_to_database(review=review)
+
+   # also send the review to an embedding queue for async processing
+   send_review_to_embedding_queue(review=review)
+
+   return {"status": "success"}
+```
+
+### The Comparison: Event-Driven vs. Batch Polling
+
+| Feature      | Event-Driven (Queue)                                             | Batch Polling (Cron)                                                      |
+| :----------- | :--------------------------------------------------------------- | :------------------------------------------------------------------------ |
+| Latency      | Near Real-time: Embeddings exist seconds after upload.           | High Latency: Embeddings appear whenever the job runs (e.g., every hour). |
+| Complexity   | High: Requires a Broker (Redis/RabbitMQ) and worker maintenance. | Low: Just a script and a scheduler (cron, Airflow).                       |
+| API Costs    | Higher/Inefficient: You make 1 API call per review.              | Lower/Optimized: You send 100 reviews in 1 API call (batching).           |
+| Failure Mode | If the queue fills up or crashes, you might lose messages.       | If the job fails, it just picks up the same pending rows next time.       |
+
+### 2\. When to use which?
+
+- Use the Queue (Real-time) if the user needs immediate feedback.
+  - _Example:_ A user types a review and immediately sees "Here are 3 other reviews similar to yours\!"
+- Use Batching (Polling) for almost everything else.
+  - _Example:_ You are building a recommendation engine that updates nightly, or internal analytics dashboards. If the user doesn't see the result immediately, Batch is best practice because it puts less load on your database and saves money on API calls.
+
+---

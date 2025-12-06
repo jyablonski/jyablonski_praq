@@ -2,7 +2,7 @@ services:
   postgres:
     # this image includes pgvector which isnt in the alpine image
     image: ankane/pgvector
-    container_name: postgres
+    container_name: postgres2
     ports:
       - 5432:5432
     environment:
