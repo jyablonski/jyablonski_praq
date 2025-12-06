@@ -1,0 +1,59 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ${PWD}/docker/db:/docker-entrypoint-initdb.d
+
+  rest_api:
+    build:
+      context: ${PWD}/services/rest_api
+      dockerfile: Dockerfile
+    container_name: rest_api_service
+    restart: unless-stopped
+    ports:
+      - "8083:8083"
+    volumes:
+      # volume linking for hot-reloading
+      - ${PWD}/services/rest_api/src:/home/appuser/src
+    environment:
+      - ENV_TYPE=docker_dev
+      - MLFLOW_CONN_URI=http://mlflow_service:5000
+      - ENABLE_V1_ROUTER=true
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GIT_PYTHON_REFRESH=quiet
+    depends_on:
+      - postgres
+      - mlflow_service
+
+  mlflow_service:
+    build:
+      context: ${PWD}/services/experiments
+      dockerfile: Dockerfile
+    container_name: mlflow_service
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=postgresql://postgres:postgres@postgres:5432/postgres
+      - MLFLOW_ARTIFACTS_DESTINATION=/mlflow/artifacts
+    volumes:
+      # volume linking for persistence
+      - ${PWD}/docker/mlflow/artifacts:/mlflow/artifacts
+    depends_on:
+      - postgres
+    command: >
+      mlflow server
+      --backend-store-uri postgresql://postgres:postgres@postgres:5432/postgres
+      --artifacts-destination /mlflow/artifacts
+      --host 0.0.0.0
+      --port 5000
+
+volumes:
+  postgres_data:
