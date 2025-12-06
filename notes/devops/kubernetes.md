@@ -486,6 +486,94 @@ Karpenter is a K8s node autoscaler designed to efficiently provision compute res
 
 It uses various techniques to consolidate workloads onto the fewest, most cost-effective instances possible to maximize resource utilization. It also leverages Spot Instances to significantly reduce costs, and provides mechanisms to handle interruptions gracefully.
 
+### Spot Instances
+
+Spot Instances can be interrupted with only a 2-minute warning when AWS needs the capacity back. Karpenter handles this through several mechanisms:
+
+- It listens to Spot Instance interruption notices and proactively drains and reschedules pods from nodes that are about to be interrupted
+- Pods are evicted and rescheduled onto other nodes before the instance terminates
+- This 2-minute window is usually enough for graceful pod shutdown and rescheduling
+- Karpenter also diversifies workloads across multiple instance types and availability zones to reduce the risk of simultaneous interruptions
+- Your application must handle SIGTERM by immediately failing readiness probes (removing itself from Service endpoints to stop new traffic), completing in-flight requests within the termination grace period (typically 30-60 seconds), and exiting cleanly. Without this graceful shutdown logic, requests will fail when pods are force-killed.
+- Karpenter automatically provisions replacement capacity while Kubernetes reschedules the evicted pods to other nodes. Use Pod Disruption Budgets to maintain minimum availability during these transitions, and design clients with retry logic since some request failures are inevitable with Spot's interruption model—this is the trade-off for significant cost savings.
+
+The code for this is below:
+
+```py
+from fastapi import FastAPI, Response, status
+import signal
+import asyncio
+
+app = FastAPI()
+
+# Track shutdown state
+shutdown_initiated = False
+
+def handle_sigterm(signum, frame):
+    """Handle SIGTERM by marking shutdown as initiated"""
+    global shutdown_initiated
+    print("SIGTERM received, initiating graceful shutdown...")
+    shutdown_initiated = True
+
+# Register the signal handler
+signal.signal(signal.SIGTERM, handle_sigterm)
+
+@app.get("/healthz/ready")
+async def readiness_probe():
+    """Readiness probe - fails when shutdown is initiated"""
+    if shutdown_initiated:
+        return Response(
+            content="Shutting down",
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE
+        )
+
+    # Add any other readiness checks here (DB connections, etc.)
+    return {"status": "ready"}
+
+@app.get("/healthz/live")
+async def liveness_probe():
+    """Liveness probe - only checks if app is alive, not if it's ready"""
+    return {"status": "alive"}
+
+# Your actual API endpoints
+@app.get("/api/data")
+async def get_data():
+    return {"data": "example"}
+```
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-api
+spec:
+  replicas: 6
+  template:
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: api
+          image: my-api:latest
+          ports:
+            - containerPort: 8000
+          livenessProbe:
+            httpGet:
+              path: /healthz/live
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz/ready
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 1 # Fail fast when shutdown starts
+```
+
+- Once SIGTERM is received, the readiness probe will start failing immediately, which forces k8s to remove the pod from service endpoints and stop sending new traffic to it
+- The app then has up to 60 seconds (as defined in `terminationGracePeriodSeconds`) to finish processing in-flight requests and exit cleanly before k8s forcefully kills it
+
 It runs as a K8s operator in your cluster, and continuously monitors the API Server for pods that the default K8s scheduler has marked "unscheduable" (meaning there isn't enough resources on existing nodes to run)
 
 - It then makes direct calls to the cloud provider (AWS, GCP) to provision new instances to meet the workload requirements
@@ -532,7 +620,7 @@ When setting CPU and Memory Limits, follow these increment guidelines:
 
 Karpenter actually only takes a few lines of code for 2 resources to get initially setup:
 
-1. Karpenter Controller
+#### 1. Karpenter Controller
 
 - The actual Service that runs in your K8s Cluster to make the EC2 API calls to spin instances up & down
 - You have to pass in a valid IAM Role for it to use & make the API calls
@@ -568,7 +656,7 @@ metadata:
 - 100% of the IAM Roles you want to use across your K8s manifest files must be used through a `ServiceAccount`
 - Typically, you can just template this out so in your Helm Chart `values.yaml` you pass in the full IAM Role, and then the Template will create the ServiceAccount resource and handle it for you
 
-2. Karpenter Provisioner Config
+#### 2. Karpenter Provisioner Config
 
 - Defines what Instance Types the Controller can spin up
 - You can create multiple provisioner configs in the event you have some general-purpose instances, and then separate GPU instances. You manage these with the `metadata -> name` block

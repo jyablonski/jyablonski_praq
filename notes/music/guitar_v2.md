@@ -1,5 +1,7 @@
 # Music Theory Overview
 
+[Scales Practice Site](https://www.all-guitar-chords.com/scales)
+
 ## The 12 Chromatic Notes
 
 There are only 12 distinct pitches in Western music:
