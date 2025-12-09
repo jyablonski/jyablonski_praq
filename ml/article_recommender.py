@@ -309,42 +309,32 @@ def train_pipeline():
 # =============================================================================
 
 if __name__ == "__main__":
-    # 1. Run Training
+    # Set tracking URI for dockerized MLflow
+    import os
+
+    mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000"))
+
+    # Run Training and Registration
     run_id = train_pipeline()
 
-    # 2. Simulate Production API
-    print("\n🚀 SIMULATING PRODUCTION API")
-    print("=" * 50)
+    # Register model to MLflow Model Registry
+    print("\n📝 Registering Model to MLflow...")
+    client = mlflow.tracking.MlflowClient()
 
-    # Load the model Generic (PyFunc) - This is what your API does
-    # It doesn't know it's a Random Forest. It just knows it's a "PythonModel"
     model_uri = f"runs:/{run_id}/recommender_engine"
-    production_model = mlflow.pyfunc.load_model(model_uri)
+    model_name = "article_recommender"
 
-    # 3. The Frontend Request (Session Data ONLY)
-    # Notice: We do NOT send "subscription_tier" or "age". The model looks that up.
-    frontend_request = pd.DataFrame(
-        [
-            {
-                "user_id": 42,
-                "time_on_site_mins": 45.5,
-                "articles_visited": 8,
-                "pages_viewed": 12,
-                "scroll_depth_pct": 88.0,
-                "hour_of_day": 20,
-                "is_weekend": 0,
-            }
-        ]
+    # Register the model
+    mv = mlflow.register_model(model_uri, model_name)
+
+    # Promote to Production stage
+    client.transition_model_version_stage(
+        name=model_name, version=mv.version, stage="Production"
     )
 
-    print("\n📨 Received Request:")
-    print(frontend_request.to_dict(orient="records")[0])
+    print(f"Model '{model_name}' version {mv.version} promoted to Production")
+    print("View in MLflow UI: http://localhost:5000")
 
-    # 4. Generate Recommendations
-    # The wrapper automatically: Joins User Data -> Scales -> Encodes -> Predicts -> Ranks
-    response = production_model.predict(frontend_request)
-
-    print("\n✅ API Response:")
-    import json
-
-    print(json.dumps(response, indent=2))
+    # REST API can now pull that model from MLFlow, and use the `predict` method
+    # for inference. the predict method will automatically handle preprocessing and
+    # xyz because it's utilizing the sklearn.Pipeline inside the pyfunc wrapper.
