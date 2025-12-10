@@ -103,8 +103,8 @@ graph = {
 18.  What are the different types of database joins (INNER, LEFT, RIGHT, FULL OUTER)?
 
 - Inner joins only return rows found in the source table and the table being joined
-- Left + Right joins only return rows found in the respective table
-- Full Outer joins will return all rows found in both tables even if they didn't have a match
+- Left + Right joins return all rows from the base table, and attempt to join in the join table but will keep values as NULL if there is no join match
+- Full Outer joins will return all rows found in either tables even if they didn't have a match
 
 19.  Explain ACID properties in database transactions.
 
