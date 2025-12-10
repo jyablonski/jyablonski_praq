@@ -282,3 +282,37 @@ curl -X POST http://localhost:8083/recommend \
 }
 
 ```
+
+## Production Setting
+
+In Prod, the wrapper class would only need to load the model artifact. The API would handle feature enrichment before calling `predict`.
+
+```py
+def load_context(self, context):
+    # Just the model - that's all MLflow needs to provide
+    self.pipeline = mlflow.sklearn.load_model(context.artifacts["sklearn_pipeline"])
+
+def predict(self, context, model_input: pd.DataFrame) -> list[dict]:
+    # model_input already has everything:
+    # - session features (from frontend)
+    # - user features (API enriched from Redis/feature store before calling predict)
+
+    probabilities = self.pipeline.predict_proba(model_input)
+    # ... format and return
+```
+
+```py
+@app.post("/recommend")
+async def recommend(request: RecommendationRequest):
+    # 1. Get Session data from the frontend request,
+    # and user features from the feature store
+    session_data = request.model_dump()
+    user_features = await get_user_features(request.user_id)
+
+    # 2. Combine into model input
+    model_input = pd.DataFrame([{**session_data, **user_features}])
+
+    # 3. Call model
+    results = model.predict(model_input)
+    return results
+```

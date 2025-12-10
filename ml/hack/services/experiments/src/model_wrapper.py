@@ -30,6 +30,12 @@ class ArticleRecommenderWrapper(mlflow.pyfunc.PythonModel):
         """
         self.users_df = pd.read_parquet(context.artifacts["users_db"])
         self.articles_df = pd.read_parquet(context.artifacts["articles_db"])
+
+        # all of the preprocessing and model steps were baked into this pipeline object,
+        # stored when we called `pipeline.fit`, and then saved to MLflow.
+
+        # now the API can load the model back in and use it for predictions on new data
+        # using the those same steps
         self.pipeline = mlflow.sklearn.load_model(context.artifacts["sklearn_pipeline"])
 
         # Cache feature columns expected by pipeline (exclude user_id and target cols)

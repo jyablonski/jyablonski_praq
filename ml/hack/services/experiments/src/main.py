@@ -49,6 +49,11 @@ def save_artifacts_locally(sk_pipeline, users_df, articles_df) -> dict:
 
     # Save sklearn pipeline
     sklearn_path = ARTIFACT_DIR / "sklearn_pipeline"
+
+    # this is just using MLflow's serialization format to save to a local directory,
+    # not uploading to the MLflow server yet.
+    # we want to bundle all the artifacts (data, pipeline, and wrapper class) together
+    # when we log the pyfunc model to MLflow in `log_model_to_mlflow`
     mlflow.sklearn.save_model(sk_pipeline, sklearn_path)
 
     return {
@@ -83,9 +88,12 @@ def log_model_to_mlflow(artifact_paths: dict, metrics: dict, config: Config) -> 
         # code_paths bundles the wrapper source so it can be loaded without the original module structure
         mlflow.pyfunc.log_model(
             artifact_path="recommender_model",
-            python_model=ArticleRecommenderWrapper(),
+            python_model=ArticleRecommenderWrapper(),  # this gets pickled and saved, and then loaded back in for the rest api
+            # save users and articles data along w/ the model, simulating a feature store lookup that would happen in production
             artifacts=artifact_paths,
-            code_paths=["model_wrapper.py"],
+            code_paths=[
+                "model_wrapper.py"
+            ],  # this is needed to ensure the source code and imports are available when loading the model
             pip_requirements=[
                 "pandas",
                 "numpy",
@@ -138,12 +146,13 @@ def main():
     print("\n--- Training model ---")
     sk_pipeline, metrics = train_model(users_df, articles_df, interactions_df, config)
 
-    # Save and log
+    # Save pipeline + model and log it to MLflow under a new run ID
     print("\n--- Logging to MLflow ---")
     artifact_paths = save_artifacts_locally(sk_pipeline, users_df, articles_df)
     run_id = log_model_to_mlflow(artifact_paths, metrics, config)
 
-    # Register
+    # Register the model so the API can pick it up like `models:/article_recommender@production` and
+    # not some random run ID
     print("\n--- Registering model ---")
     register_model(run_id)
 

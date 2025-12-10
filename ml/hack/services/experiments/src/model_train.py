@@ -69,6 +69,7 @@ def build_preprocessor() -> ColumnTransformer:
                 CATEGORICAL_FEATURES,
             ),
         ],
+        # this ignores any columns not explicitly listed (safety net)
         remainder="drop",
     )
 
@@ -82,6 +83,10 @@ def build_pipeline() -> Pipeline:
     """
     preprocessor = build_preprocessor()
 
+    # RandomForest to handle the multi-label problem (predicting click probability for
+    # each of the N articles independently)
+    #   When you call pipeline.fit(X, y), it fits the scaler/encoder on X, transforms X, then trains the classifier
+    #   When you call pipeline.predict(X_new), it transforms X_new using the already-fitted scaler/encoder, then predicts
     classifier = MultiOutputClassifier(
         RandomForestClassifier(
             n_estimators=50,
@@ -91,6 +96,9 @@ def build_pipeline() -> Pipeline:
         )
     )
 
+    # The key benefit: preprocessing params (means, std devs, category mappings) are saved with the pipeline.
+    # So when the REST API loads the model and calls predict on new data, it applies the exact same
+    # transformations that were learned during training. No train/serve skew.
     return Pipeline(
         [
             ("preprocessor", preprocessor),
@@ -111,7 +119,8 @@ def prepare_training_data(
     Returns:
         Tuple of (X DataFrame, y multi-label array of shape (n_samples, n_articles))
     """
-    # Join interactions with user features
+    # Join session-level data with user features we synthetically generated
+    # in production, this would be pulled from snowflake or a feature store for training
     merged = interactions_df.merge(
         users_df[["user_id"] + USER_FEATURES],
         on="user_id",
@@ -128,6 +137,8 @@ def prepare_training_data(
     n_articles = config.n_articles
     y = np.zeros((n_samples, n_articles), dtype=int)
 
+    # Converts "1,5,12" -> [0,1,0,0,0,1,0,0,0,0,0,0,1,0,...] which is the format
+    # the MultiOutputClassifier expects for multi-label classification
     for idx, clicked_str in enumerate(merged["clicked_ids"]):
         if clicked_str:
             clicked_ids = [int(x) for x in clicked_str.split(",")]
@@ -151,19 +162,19 @@ def train_model(
     # Prepare training data
     X, y = prepare_training_data(interactions_df, users_df, config)
 
-    # Train/test split
+    # 80/20 Train/test split
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=config.random_seed
     )
 
-    # Build and fit pipeline
+    # Build and fit pipeline on the 80% training set
     pipeline = build_pipeline()
     pipeline.fit(X_train, y_train)
 
-    # Evaluate
+    # Evaluate on 20% test set
     y_pred = pipeline.predict(X_test)
 
-    # Calculate metrics
+    # Calculate performance metrics so we can log them to this run in MLflow
     # Exact match accuracy (all articles correct for a sample)
     exact_match = (y_pred == y_test).all(axis=1).mean()
 
