@@ -19,4 +19,4 @@
 
 6. Some high level `instructor` classes or functions?
 
-7. Potentially explore the distroless images again from google, but these fucking sucked last time i tried
+7. Potentially explore the distroless images again from google, but these were limited to only 1 python version last time i tried idk?
