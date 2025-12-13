@@ -779,3 +779,48 @@ When you delete the Ingress:
 
 1. ExternalDNS automatically deletes the Route 53 record
 2. No orphaned DNS entries!
+
+## Sidecar Pattern in Kubernetes
+
+A pod can have multiple containers that share the same network namespace and volumes. The typical pattern is one main application container plus one or more "sidecar" containers handling auxiliary tasks.
+
+Common sidecar use cases:
+
+- Log shipping (reading from shared volume, forwarding to observability stack)
+- Metrics exporters
+- Service mesh proxies (Envoy via Istio/Linkerd)
+- Adapters that transform output format
+
+When you probably don't need one:
+
+- Your app logs to stdout and a node-level DaemonSet (like Fluent Bit) already collects logs
+- You expose `/metrics` directly from your app
+- You're not running a service mesh
+
+Start without sidecars until you hit a real problem.
+
+### How to define it
+
+Just add multiple entries under `containers` in your deployment spec:
+
+```yaml
+spec:
+  template:
+    spec:
+      containers:
+        - name: api
+          image: my-app:latest
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log/app
+        - name: log-shipper
+          image: fluent/fluent-bit:latest
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log/app
+      volumes:
+        - name: logs
+          emptyDir: {}
+```
+
+Both containers start simultaneously when the pod initializes. For cases where startup order matters, Kubernetes 1.28+ supports native sidecars via init containers with `restartPolicy: Always`.
