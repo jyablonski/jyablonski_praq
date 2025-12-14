@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prompt_template name="data_analyst">
+    <context>
+        <role>{{role}}</role>
+        <expertise>
+            {{#expertise}}
+            <area>{{.}}</area>
+            {{/expertise}}
+        </expertise>
+        <constraints>
+            {{#constraints}}
+            <rule>{{.}}</rule>
+            {{/constraints}}
+        </constraints>
+    </context>
+    
+    <task>
+        <description>Analyze the provided dataset and answer the user's question.</description>
+        
+        <dataset>
+            <description>{{dataset_description}}</description>
+            <schema>
+                {{#columns}}
+                <column>{{.}}</column>
+                {{/columns}}
+            </schema>
+            <sample_data>
+                {{#sample_rows}}
+                <row>{{.}}</row>
+                {{/sample_rows}}
+            </sample_data>
+        </dataset>
+        
+        <user_query>{{user_query}}</user_query>
+        
+        <output_requirements>
+            <format>{{output_format}}</format>
+            <instructions>
+                - Provide clear, actionable insights
+                - Include relevant statistics when applicable
+                - Explain your reasoning
+            </instructions>
+        </output_requirements>
+    </task>
+</prompt_template>
