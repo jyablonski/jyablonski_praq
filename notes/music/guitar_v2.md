@@ -174,26 +174,29 @@ Patterns:
 - Minor Pentatonic: Root - +3 frets (minor 3rd) - +2 frets - +2 frets - +3 frets
 - Major Pentatonic: Root - +2 frets - +2 frets - +3 frets (minor 3rd) - +2 frets
 
+The next 5 positions are all playing A minor pentatonic scale, just in different areas of the neck. These patterns can be moved up and down the neck to play the same scale in different keys.
+
 ### Position 1 (Box Pattern - most common)
 
 ```
 e|---5---8---|  (A and C)
 B|---5---8---|  (E and G)
-G|---5---7---|  (C and E)
+G|---5---7---|  (C and D)
 D|---5---7---|  (G and A)
 A|---5---7---|  (D and E)
 D|---7--10---|  (A and C)
 ```
 
 - Root notes (A): Fret 5 on 1st string (e), fret 7 on 4th string (D), fret 7 on 6th string (D)
+- A minor pentatonic
 
 ### Position 2
 
 ```
 e|---8--10---|  (C and D)
 B|---8--10---|  (G and A)
-G|---7---9---|  (E and G)
-D|---7---9---|  (A and C)
+G|---7--10---|  (D and E)
+D|---7--10---|  (A and C)
 A|---7--10---|  (E and G)
 D|--10--12---|  (C and D)
 ```
@@ -205,8 +208,8 @@ D|--10--12---|  (C and D)
 ```
 e|--10--12---|  (D and E)
 B|--10--13---|  (A and C)
-G|---9--12---|  (G and A)
-D|---9--12---|  (C and E)
+G|--10--12---|  (E and G)
+D|--10--12---|  (C and D)
 A|--10--12---|  (G and A)
 D|--12--14---|  (D and E)
 ```
@@ -220,13 +223,13 @@ D|--12--14---|  (D and E)
 ```
 e|--12--15---|  (E and G)
 B|--13--15---|  (C and D)
-G|--12--14---|  (A and C)
-D|--12--14---|  (E and G)
-A|--12--14---|  (A and C)
+G|--12--14---|  (G and A)
+D|--12--14---|  (D and E)
+A|--12--15---|  (A and C)
 D|--14--17---|  (E and G)
 ```
 
-- Root notes (A): Fret 12 on 3rd string (G), fret 12 on 5th string (A)
+- Root notes (A): fret 14 on the G string (A) and fret 12 on the A string (A).
 
 ---
 
@@ -235,9 +238,9 @@ D|--14--17---|  (E and G)
 ```
 e|--15--17---|  (G and A)
 B|--15--17---|  (D and E)
-G|--14--17---|  (C and E)
-D|--14--16---|  (G and A)
-A|--14--17---|  (C and E)
+G|--14--17---|  (A and C)
+D|--14--17---|  (E and G)
+A|--15--17---|  (C and D)
 D|--17--19---|  (G and A)
 ```
 
