@@ -51,6 +51,49 @@ Note G -> B is only 4 semitones difference which is an oddball
 - No 3rd interval = neutral sound (neither major nor minor)
 - In drop tuning: one finger across multiple strings creates full power chord with octave
 
+## Barre Chords (Drop D)
+
+### Major Barre Chords
+
+Root on the 6th string (D shape):
+
+```
+D major:   0-0-0-2-3-2
+E major:   2-2-2-4-5-4
+F major:   3-3-3-5-6-5
+G major:   5-5-5-7-8-7
+```
+
+Barre the low three strings, then use an A-shape major triad on the top three.
+
+Root on the 5th string (standard A-shape):
+These stay the same as standard tuning since the A string is unchanged:
+
+```
+C major:   x-3-5-5-5-3
+D major:   x-5-7-7-7-5
+```
+
+### Minor Barre Chords
+
+Root on the 6th string:
+
+```
+Dm:   0-0-0-2-3-1
+Em:   2-2-2-4-5-3
+Fm:   3-3-3-5-6-4
+Gm:   5-5-5-7-8-6
+```
+
+Same idea - barre the bottom three, then use an Am-shape triad on top.
+
+Root on the 5th string (standard Am-shape):
+
+```
+Cm:   x-3-5-5-4-3
+Dm:   x-5-7-7-6-5
+```
+
 ### Extended Power Chords
 
 Extended Power Chords are power chords that are played w/ additional octaves of the root or even of fifth being played
