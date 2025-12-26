@@ -216,6 +216,79 @@ Immutable artifacts – Build the image once, promote through environments by ch
 
 Fail fast with clear errors – Validate early, surface problems before they hit the cluster.
 
+## Monitoring and SLO Integration
+
+The platform can automatically generate observability infrastructure from the same `k8s_spec.yaml` that defines the application. Since all services deploy through the shared chart with consistent metric labels, we can template Grafana dashboards and Prometheus alerting rules without per-service customization.
+
+### Spec format
+
+```yaml
+name: payments-api
+replicas: 3
+port: 8080
+
+monitoring:
+  slos:
+    availability: 99.9 # percentage of non-5xx responses
+    latency:
+      p95: 300ms # 95th percentile threshold
+      p99: 1s # 99th percentile threshold
+      target: 99.0 # percentage of requests meeting latency threshold
+    window: 30d # SLO evaluation window (default: 30d)
+```
+
+If `monitoring` is omitted, the platform still generates a standard dashboard with common SLIs (request rate, error rate, latency percentiles) but without SLO-specific panels or alerting.
+
+### What gets generated
+
+From the monitoring block, the shared chart emits:
+
+1. PrometheusRule (recording rules) — pre-computes error ratios and latency percentiles as named metrics, reducing query complexity in dashboards and alerts
+
+2. PrometheusRule (alerts) — multi-window burn rate alerts following the Google SRE model. A fast burn (14.4x) over a short window pages immediately; slower burns over longer windows create tickets
+
+3. GrafanaDashboard CRD — a templated dashboard showing error budget remaining, burn rate, SLI trends over time, and request volume for context
+
+4. ServiceMonitor — ensures Prometheus scrapes the service's metrics endpoint with appropriate labels
+
+### Standard dashboard panels
+
+Every generated dashboard includes:
+
+| Panel                  | Description                                           |
+| ---------------------- | ----------------------------------------------------- |
+| Error budget remaining | Percentage of budget left in the current window       |
+| Burn rate              | Current consumption rate relative to sustainable pace |
+| Availability over time | Rolling success rate with SLO target line             |
+| Latency percentiles    | p50, p95, p99 with threshold markers                  |
+| Request rate           | Traffic volume for context                            |
+| Recent SLO breaches    | Annotations marking threshold violations              |
+
+### How alerting works
+
+Rather than alerting on instantaneous threshold breaches (noisy), the platform uses burn rate alerting:
+
+- Critical (pages): Burning 2% of monthly budget in 1 hour (14.4x burn rate sustained for 5 minutes)
+- Warning (tickets): Burning 5% of monthly budget in 6 hours (6x burn rate sustained for 30 minutes)
+
+This catches real incidents while ignoring brief spikes that don't meaningfully impact users.
+
+### Customization escape hatches
+
+For services needing additional monitoring beyond the standard template:
+
+```yaml
+monitoring:
+  slos:
+    availability: 99.9
+  extra_dashboards:
+    - path: dashboards/custom-business-metrics.json
+  extra_alerts:
+    - path: alerts/custom-rules.yaml
+```
+
+These are applied alongside (not instead of) the generated resources, allowing teams to extend without forking the platform.
+
 ---
 
 ### When not to use this
