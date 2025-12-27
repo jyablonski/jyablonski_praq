@@ -35,23 +35,21 @@
 
 1. Install OS boot media
 
-- https://archlinux.org/download/
+- Go to https://archlinux.org/download/
+- Download `archlinux-<date>-x86_64.iso` from a nearby mirror in your region (should be between 800 MB - 1.5 GB)
+- Verify the download if desired (checksums are provided on the download page)
+  - Download PGP signature
+  - Run `gpg --verify ~/Downloads/archlinux-2025.12.01-x86_64.iso.sig ~/Downloads/archlinux-2025.12.01-x86_64.iso`
+  - You want to see `Good signature ...`
 
 2. Flash the boot media onto a USB Drive
 
 - This requires first wiping the USB Drive
 - This ISO File that we download isnt bootable by the Motherboard out of the box
-- Then use Rufus or belena-etcher to flash the boot media onto the USB Drive; you can't just drag and drop the raw iso image into the USB Drive and expect it to work
+- Then use belena-etcher to flash the boot media onto the USB Drive; you can't just drag and drop the raw iso image into the USB Drive and expect it to work
 - This turns the .iso image on the USB Drive into a bootable device, and it places the files in a layout that the system can understand and use during insetallation
 
 3. Plug USB Drive into new PC and get into the BIOS menu by spamming delete or f12 keys.
-
-You can verify the .iso image you installed by verifying the integrity of the checksums provided by the boot media owner (Archlinux in this case)
-
-- This process involves installing the `b2sums.txt` file which has a checksum for each iso image you can download
-- You then compare that checksum value in the txt file with your downloaded ISO. If they match, it prints "OK" meaning the file is valid and hasn't been tampered with by wherever you downloaded it from
-- If a file gets corrupted during download (due to a network issue, partial download, or disk error), the checksum won’t match.
-- It also protects against malicious tampering—if someone modified the ISO, the checksum would be different.
 
 4. Once in BIOS, select the USB drive as the boot device
 
