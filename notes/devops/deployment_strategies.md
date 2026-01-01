@@ -9,7 +9,7 @@
 - Pros: Easy to implement.
 - Cons: Downtime during deployment; no rollback safety.
 
----
+______________________________________________________________________
 
 ### 2. Rolling Deployment
 
@@ -18,7 +18,7 @@
 - Pros: No downtime, lower resource usage.
 - Cons: Can be slow, hard to rollback instantly if bugs are discovered.
 
----
+______________________________________________________________________
 
 ### 3. Blue-Green Deployment
 
@@ -32,7 +32,7 @@
 * Safer for big changes, allows a clear separation between old and new
 * Better for when you deploy less frequently and have larger changes
 
----
+______________________________________________________________________
 
 ### 4. Canary Deployment
 
@@ -97,7 +97,7 @@ metadata:
     argocd-image-updater.argoproj.io/my-app.allow-tags: regexp:^v[0-9]+\.[0-9]+\.[0-9]+$
 ```
 
----
+______________________________________________________________________
 
 ### 5. Feature Flags / Toggles
 
@@ -123,20 +123,20 @@ else:
 
 1. Load Feature Flags on Startup
    - Simple, but requires restart or refresh to update flags
-2. Poll for Feature Flag Updates
+1. Poll for Feature Flag Updates
    - Simpler than websocket implementation, but might have slightly stale flags
-3. Have Websocket or SSE connections to update flags in real time as they're changed
+1. Have Websocket or SSE connections to update flags in real time as they're changed
    - More Complex to manage and requires reconnection logic
 
----
+______________________________________________________________________
 
 ## Choosing the Right Strategy
 
-| Criteria                | Best Strategies                    |
+| Criteria | Best Strategies |
 | ----------------------- | ---------------------------------- |
-| Zero downtime           | Rolling, Blue-Green, Canary        |
-| Fast rollback           | Blue-Green, Feature Flags          |
-| Gradual exposure        | Canary, A/B Testing                |
-| Experimental features   | Feature Flags, Shadow, A/B Testing |
-| Simplicity              | Recreate, Rolling                  |
-| Real-user safety checks | Canary, Shadow                     |
+| Zero downtime | Rolling, Blue-Green, Canary |
+| Fast rollback | Blue-Green, Feature Flags |
+| Gradual exposure | Canary, A/B Testing |
+| Experimental features | Feature Flags, Shadow, A/B Testing |
+| Simplicity | Recreate, Rolling |
+| Real-user safety checks | Canary, Shadow |

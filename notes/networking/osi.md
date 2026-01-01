@@ -12,14 +12,14 @@ Each layer serves a specific function and interacts with the layers above and be
    - Examples: Ethernet cables, Wi-Fi, Bluetooth, hubs, repeaters, cross Atlantic cabling.
    - Basically the transferring of data in its most physical form
 
-2. **Data Link Layer (Layer 2)**
+1. **Data Link Layer (Layer 2)**
 
    - Responsible for **framing, addressing (MAC addresses), error detection, and correction**.
    - Divided into **Logical Link Control (LLC)** and **Media Access Control (MAC)** sublayers.
    - Examples: Ethernet, Wi-Fi (802.11), MAC addresses, switches, bridges.
    - The bit you really do not ever need to involve yourself with
 
-3. **Network Layer (Layer 3)**
+1. **Network Layer (Layer 3)**
 
    - Manages **routing, logical addressing (IP addresses), and packet forwarding**.
    - Determines the best path for data transmission.
@@ -27,7 +27,7 @@ Each layer serves a specific function and interacts with the layers above and be
    - This layer is responsible for translating between host addresses and network addressing to send data across different networks
    - Routers operate at this layer
 
-4. **Transport Layer (Layer 4)**
+1. **Transport Layer (Layer 4)**
 
    - Ensures **end-to-end communication, reliability, and flow control**.
    - Uses protocols like:
@@ -42,20 +42,21 @@ Each layer serves a specific function and interacts with the layers above and be
      - Implementing firewall rules based on IP Addresses or ports
      -
 
-5. **Session Layer (Layer 5)**
+1. **Session Layer (Layer 5)**
 
    - Manages and controls **sessions (connections) between applications**.
    - Handles session establishment, maintenance, and termination.
    - Examples: NetBIOS, RPC (Remote Procedure Call).
 
-6. **Presentation Layer (Layer 6)**
+1. **Presentation Layer (Layer 6)**
 
    - Responsible for **data translation, encryption, and compression**.
    - Converts data into a format that the application layer can understand.
    - Examples: SSL/TLS (encryption), JPEG, ASCII, MPEG.
    - This layer deals with data compression and encrypting + decrypting data
 
-7. **Application Layer (Layer 7)**
+1. **Application Layer (Layer 7)**
+
    - The **interface between users and the network**.
    - Provides network services such as **web browsing, email, file transfer**.
    - Examples: HTTP, FTP, SMTP (email), DNS, Traefik, Nginx.

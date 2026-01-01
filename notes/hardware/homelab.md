@@ -53,13 +53,13 @@ MetalLB is a load balancer for Kubernetes clusters that provides external access
 
 It also assigns IP Addresses to Services after you define a pool of available IPs
 
----
+______________________________________________________________________
 
 ### Pi-hole
 
 Pi-hole enables you to setup local DNS records on your homelab, so you can hit your services at something like `http://pihole.home` instead of `192.168.1.15`.
 
----
+______________________________________________________________________
 
 ### NGINX
 
@@ -110,6 +110,7 @@ NGINX-internal can be used so it's only enabled for your local area network (LAN
 ## Tainting Master Node
 
 - By default, k3s does not taint the master node.
+
 - To dedicate master node and prevent workloads scheduling there:
 
   ```bash

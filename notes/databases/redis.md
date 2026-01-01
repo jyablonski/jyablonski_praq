@@ -24,22 +24,22 @@ It supports:
 Example usecases:
 
 1. Cache Layer
-2. Rate Limiting
-3. Leaderboard
-4. PubSub Messaging
-5. Job Queues
-6. User Session Store
+1. Rate Limiting
+1. Leaderboard
+1. PubSub Messaging
+1. Job Queues
+1. User Session Store
 
 ## Standard Redis Size
 
 A standard Redis node depends on the workload, but for general purposes:
 
-| Component | Typical Specs                                                                                             |
+| Component | Typical Specs |
 | --------- | --------------------------------------------------------------------------------------------------------- |
-| CPU       | 4–8 vCPUs (Redis is single-threaded for command execution, but networking and I/O use event-driven async) |
-| RAM       | Enough to hold all your dataset in memory, plus overhead (e.g., 16–64 GB common)                          |
-| Disk      | Only needed for persistence (RDB snapshots or AOF logs), usually SSD                                      |
-| Network   | High throughput and low latency, preferably 10 Gbps for large deployments                                 |
+| CPU | 4–8 vCPUs (Redis is single-threaded for command execution, but networking and I/O use event-driven async) |
+| RAM | Enough to hold all your dataset in memory, plus overhead (e.g., 16–64 GB common) |
+| Disk | Only needed for persistence (RDB snapshots or AOF logs), usually SSD |
+| Network | High throughput and low latency, preferably 10 Gbps for large deployments |
 
 - Redis is extremely fast because it’s in-memory.
 - On a modern 4–8 vCPU node:

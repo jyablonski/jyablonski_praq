@@ -8,22 +8,22 @@ The Core Concept: Instead of the LLM directly connecting to some 3rd party syste
 
 It is critical to understand that the LLM does not execute code. The Host does the work.
 
-1.  Discovery: The Host App connects to your MCP Server and asks, "What tools do you have?" The Server replies: "I have `get_ticket` and `delete_ticket`."
-2.  The Prompt: The User asks the LLM: "Delete ticket 123."
-3.  The Decision (LLM): The LLM analyzes the text. It pauses generation and sends a structured request to the Host: _"Please run the tool `delete_ticket` with argument `123`."_
-4.  The Execution (Host): The Host App receives this request. It connects to the MCP Server and executes the function.
-5.  The Return (MCP): The MCP Server runs the logic (e.g., deletes the row in SQL) and returns a JSON result (e.g., `{"status": "success"}`).
-6.  Context Injection (Host): The Host takes that JSON and pastes it back into the chat context as a "Tool Result."
-7.  Final Answer (LLM): The LLM reads the result and generates the final natural language response: _"I have successfully deleted ticket 123."_
+1. Discovery: The Host App connects to your MCP Server and asks, "What tools do you have?" The Server replies: "I have `get_ticket` and `delete_ticket`."
+1. The Prompt: The User asks the LLM: "Delete ticket 123."
+1. The Decision (LLM): The LLM analyzes the text. It pauses generation and sends a structured request to the Host: _"Please run the tool `delete_ticket` with argument `123`."_
+1. The Execution (Host): The Host App receives this request. It connects to the MCP Server and executes the function.
+1. The Return (MCP): The MCP Server runs the logic (e.g., deletes the row in SQL) and returns a JSON result (e.g., `{"status": "success"}`).
+1. Context Injection (Host): The Host takes that JSON and pastes it back into the chat context as a "Tool Result."
+1. Final Answer (LLM): The LLM reads the result and generates the final natural language response: _"I have successfully deleted ticket 123."_
 
 ### The Primitives: Resources vs. Tools
 
 MCP Servers expose two main types of capabilities:
 
-| Type      | Analogy           | Direction     | Use Case                                                                                                    |
+| Type | Analogy | Direction | Use Case |
 | :-------- | :---------------- | :------------ | :---------------------------------------------------------------------------------------------------------- |
 | Resources | "The File Reader" | Server -> LLM | Read-Only Data. Fetching logs, reading API docs, getting the content of a file. Used for providing context. |
-| Tools     | "The Robot Arm"   | LLM -> Server | Executable Actions. API POST requests, database writes, strictly defined functions with side effects.       |
+| Tools | "The Robot Arm" | LLM -> Server | Executable Actions. API POST requests, database writes, strictly defined functions with side effects. |
 
 ### Why JSON-RPC? (The Protocol)
 
@@ -97,7 +97,7 @@ The only caveat is that the Host App (e.g., Claude Desktop) needs network access
 
 - This is typically done via VPN, API Keys, or OAuth authentication.
 
-### RAG <> MCP
+### RAG \<> MCP
 
 Before MCP, RAG pipelines were typically hard-coded scripts that combined retrieval and generation in a single monolithic function. MCP allows more modular and flexible RAG implementations by exposing retrieval functions as MCP Resources or Tools.
 

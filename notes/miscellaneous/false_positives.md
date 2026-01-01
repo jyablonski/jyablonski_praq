@@ -14,12 +14,12 @@ And your model's predictions are:
 - The model predicts they have the disease (Positive)
 - The model predicts they don't (Negative)
 
-|                    | Actual Positive (Has disease) | Actual Negative (No disease) |
+| | Actual Positive (Has disease) | Actual Negative (No disease) |
 | ------------------ | ----------------------------- | ---------------------------- |
-| Predicted Positive | ✅ True Positive (TP)         | ❌ False Positive (FP)       |
-| Predicted Negative | ❌ False Negative (FN)        | ✅ True Negative (TN)        |
+| Predicted Positive | ✅ True Positive (TP) | ❌ False Positive (FP) |
+| Predicted Negative | ❌ False Negative (FN) | ✅ True Negative (TN) |
 
----
+______________________________________________________________________
 
 ### Easy Examples
 
@@ -44,7 +44,7 @@ Think of "positive" and "negative" as the model claiming something is true or no
 > - False Positive: Model cries wolf, but there’s no wolf.
 > - False Negative: Model misses the wolf when it’s there.
 
----
+______________________________________________________________________
 
 ### Numerical Example
 
@@ -60,19 +60,19 @@ Now break it down:
 - Of the 80 healthy people, 5 are incorrectly predicted to have the disease → False Positives = 5
 - The other 75 are correctly predicted as healthy → True Negatives = 75
 
-|                    | Actual Positive | Actual Negative |
+| | Actual Positive | Actual Negative |
 | ------------------ | --------------- | --------------- |
-| Predicted Positive | 18 (TP)         | 5 (FP)          |
-| Predicted Negative | 2 (FN)          | 75 (TN)         |
+| Predicted Positive | 18 (TP) | 5 (FP) |
+| Predicted Negative | 2 (FN) | 75 (TN) |
 
 ### Summary Table
 
-| Term                | What it means                                                     |
+| Term | What it means |
 | ------------------- | ----------------------------------------------------------------- |
-| True Positive (TP)  | Correctly predicted positive (model says “yes,” and it’s true)    |
+| True Positive (TP) | Correctly predicted positive (model says “yes,” and it’s true) |
 | False Positive (FP) | Incorrectly predicted positive (model says “yes,” but it’s false) |
-| True Negative (TN)  | Correctly predicted negative (model says “no,” and it’s true)     |
-| False Negative (FN) | Incorrectly predicted negative (model says “no,” but it’s false)  |
+| True Negative (TN) | Correctly predicted negative (model says “no,” and it’s true) |
+| False Negative (FN) | Incorrectly predicted negative (model says “no,” but it’s false) |
 
 ## How Businesses Think About It
 
@@ -137,12 +137,12 @@ The key is context and consequence.
 
 ## Summary Table
 
-| Domain            | Prefer to Minimize | Why                                             |
+| Domain | Prefer to Minimize | Why |
 | ----------------- | ------------------ | ----------------------------------------------- |
-| Healthcare        | False Negatives    | Missing a diagnosis could kill someone          |
-| Finance           | False Negatives    | Missed fraud = real money loss                  |
-| Email Spam        | False Positives    | Don’t want to miss real messages                |
-| Criminal Justice  | False Positives    | Wrongful accusation is very costly              |
-| Self-driving Cars | False Negatives    | Safety-critical (e.g., not detecting obstacles) |
-| Cybersecurity     | False Negatives    | Breaches are worse than alert fatigue           |
-| Hiring Systems    | False Negatives    | Losing great candidates is bad for business     |
+| Healthcare | False Negatives | Missing a diagnosis could kill someone |
+| Finance | False Negatives | Missed fraud = real money loss |
+| Email Spam | False Positives | Don’t want to miss real messages |
+| Criminal Justice | False Positives | Wrongful accusation is very costly |
+| Self-driving Cars | False Negatives | Safety-critical (e.g., not detecting obstacles) |
+| Cybersecurity | False Negatives | Breaches are worse than alert fatigue |
+| Hiring Systems | False Negatives | Losing great candidates is bad for business |

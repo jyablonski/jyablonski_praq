@@ -36,55 +36,56 @@ Pre-processing text data is a crucial step before running any analysis or machin
    - For official documents, this is a good idea.
    - For social media text data, this is probably a bad idea
 
-2. **Removing Punctuation**:
+1. **Removing Punctuation**:
 
    - Strip out punctuation marks such as commas, periods, exclamation points, etc., as they are usually not meaningful for text analysis.
 
-3. **Tokenization**:
+1. **Tokenization**:
 
    - Split the text into individual words or tokens. This can be done by splitting on spaces or using more sophisticated tokenization techniques that handle contractions and punctuation.
    - Before: `text = "Tokenization is a fundamental step in natural language processing."`
    - After: `['Tokenization', 'is', 'a', 'fundamental', 'step', 'in', 'natural', 'language', 'processing', '.']`
 
-4. **Removing Stop Words**:
+1. **Removing Stop Words**:
 
    - Eliminate common words that do not carry significant meaning, such as "the," "and," "is," etc. Libraries like NLTK or spaCy provide lists of stop words.
 
-5. **Stemming and Lemmatization**:
+1. **Stemming and Lemmatization**:
 
    - **Stemming**: Reduce words to their base or root form (e.g., "running" to "run").
    - **Lemmatization**: Convert words to their base or dictionary form (e.g., "running" to "run"), which is more accurate than stemming.
 
-6. **Removing Special Characters**:
+1. **Removing Special Characters**:
 
    - Strip out special characters (e.g., "@", "#", "$") unless they hold specific significance for the analysis (e.g., hashtags in social media analysis).
 
-7. **Removing Whitespace**:
+1. **Removing Whitespace**:
 
    - Eliminate extra whitespace, including leading and trailing spaces.
 
-8. **Handling Negations**:
+1. **Handling Negations**:
 
    - Treat negations carefully (e.g., "not happy" should be treated differently from "happy"). Some methods involve tagging negated words or creating bigrams that capture the negation context.
 
-9. **Spelling Correction**:
+1. **Spelling Correction**:
 
    - Correct spelling mistakes to ensure consistency. This can be done using libraries like TextBlob or autocorrect.
 
-10. **Text Normalization**:
+1. **Text Normalization**:
 
-    - Normalize text by converting all characters to their canonical forms (e.g., converting accented characters to their unaccented counterparts).
+   - Normalize text by converting all characters to their canonical forms (e.g., converting accented characters to their unaccented counterparts).
 
-11. **Removing HTML Tags**:
+1. **Removing HTML Tags**:
 
-    - Remove HTML tags if the text data is scraped from web pages.
+   - Remove HTML tags if the text data is scraped from web pages.
 
-12. **N-grams Creation**:
+1. **N-grams Creation**:
 
-    - Create n-grams (combinations of adjacent words) to capture more context (e.g., bigrams like "new york").
+   - Create n-grams (combinations of adjacent words) to capture more context (e.g., bigrams like "new york").
 
-13. **Vectorization**:
-    - Convert text data into numerical vectors using techniques like Bag of Words (BoW), Term Frequency-Inverse Document Frequency (TF-IDF), or word embeddings (e.g., Word2Vec, GloVe, BERT).
+1. **Vectorization**:
+
+   - Convert text data into numerical vectors using techniques like Bag of Words (BoW), Term Frequency-Inverse Document Frequency (TF-IDF), or word embeddings (e.g., Word2Vec, GloVe, BERT).
 
 ## Sentiment Analyis
 
@@ -107,13 +108,13 @@ The Latent Dirichlet Allocation (LDA) model is a generative probabilistic model 
 
 Generative Process:
 
-- **Choose the number of topics \( K \)**.
-- For each topic \( k \), choose a distribution over words \(\beta_k\) from a Dirichlet prior.
-- For each document \( d \):
-  - Choose a distribution over topics \(\theta_d\) from a Dirichlet prior.
-  - For each word \( w \) in document \( d \):
-    - Choose a topic \( z \) from the topic distribution \(\theta_d\).
-    - Choose a word \( w \) from the word distribution corresponding to topic \( z \).
+- **Choose the number of topics ( K )**.
+- For each topic ( k ), choose a distribution over words (\\beta_k) from a Dirichlet prior.
+- For each document ( d ):
+  - Choose a distribution over topics (\\theta_d) from a Dirichlet prior.
+  - For each word ( w ) in document ( d ):
+    - Choose a topic ( z ) from the topic distribution (\\theta_d).
+    - Choose a word ( w ) from the word distribution corresponding to topic ( z ).
 
 LDA basically takes a ton of text data and is able to identify logical groups or sets in that text data, and reports back the results it finds. Documents that frequently use words from a particular topic will have higher probabilities for that topic.
 

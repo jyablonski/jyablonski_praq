@@ -14,21 +14,21 @@ It's a bridge between:
 ML Ops matters because traditional systems are relatively static - you deploy code and it behaves predictably. ML systems are different and have unique challenges.
 
 1. Models can decay, and performance degrades as real-world data drifts
-2. Models are only as good as their training data, so this is a big dependency to getting good quality systems
-3. Lots of experiments must be completed to find the best model
-4. Hard to recreate results without proper tracking and systems in place
-5. Model performance needs to be tracked, not just system health
-6. Cross functional requirements because you need data scientists, engineers, and domain experts
+1. Models are only as good as their training data, so this is a big dependency to getting good quality systems
+1. Lots of experiments must be completed to find the best model
+1. Hard to recreate results without proper tracking and systems in place
+1. Model performance needs to be tracked, not just system health
+1. Cross functional requirements because you need data scientists, engineers, and domain experts
 
 ## Core Principles
 
 1. Automation - minimize as much manual intervention in the ML lifecycle as possible, from data validation to model deployment
-2. Versioning and keeping everything in Code
+1. Versioning and keeping everything in Code
    - This includes all code, Data, Models, Infrastructure, and Pipeline definitions
-3. CI / CD to test, validate, evaluate models and deploy them automatically when they pass criteria
-4. Monitoring & Observability to track model performance in production, in addition to system metrics
-5. Reproducibility - anyone should be able to re-create any model at any time
-6. Collaboration between data scientists, data engineers, DevOps / Infra engineers, and business stakeholders
+1. CI / CD to test, validate, evaluate models and deploy them automatically when they pass criteria
+1. Monitoring & Observability to track model performance in production, in addition to system metrics
+1. Reproducibility - anyone should be able to re-create any model at any time
+1. Collaboration between data scientists, data engineers, DevOps / Infra engineers, and business stakeholders
 
 ## Tools
 
@@ -77,8 +77,8 @@ Python Libraries
 Before starting, you have to sit down with stakeholders and define:
 
 1. Business objectives and ML success metrics
-2. Determine if ML is the right solution
-3. Identify stakeholders to own the project and establish requirements
+1. Determine if ML is the right solution
+1. Identify stakeholders to own the project and establish requirements
 
 After establishing the problem definition, you move into the data collection part.
 
@@ -135,11 +135,11 @@ In terms of actually using these models in production, there are various differe
    - Run predictions on a schedule in batches
    - Example: My ML Pipeline Script for the NBA Project
    - Simple, effective, easy to do.
-2. Real Time Serving
+1. Real Time Serving
    - Run the model on demand via a REST API
    - Model gets used when specific endpoints are hit, and results are provided in the response
    - Allows for low latency, real time responses that can be ran on-demand
-3. Streaming
+1. Streaming
    - Run the model in Spark or Python by reading data in from something like Kafka or Kinesis, and immediately applying the model on the input records before writing the data back out someplace
 
 Deployment methods here are similar to traditional software deployment strategies.
@@ -155,16 +155,16 @@ Deployment methods here are similar to traditional software deployment strategie
    - Latency, throughput, error rates (on HTTP endpoints serving the models etc)
    - CPU, memory utilization
    - Request rates
-2. Model Performance Metrics
+1. Model Performance Metrics
    - Prediction quality: accuracy, precision, recall
    - Business metrics: revenue impact, user satisfaction
    - Statistical metrics: Distribution shifts, correlation changes
-3. Data Quality Metrics
+1. Data Quality Metrics
    - Missing Values
    - Outliers
    - Feature Distributions
    - Drift reports - how is the data changing over the last x days / weeks etc
-4. Alerting
+1. Alerting
    - Model degradation
    - Data Drift
    - Prediciton distribution shifts
@@ -202,8 +202,8 @@ REST API -> MLflow Model Registry
 Use ML to enhance core value drivers of your business.
 
 1. Increase user content consumption -> more page views -> more ad impressions -> more revenue
-2. Reduce user churn -> retain audience -> stable growth + reach -> sustained ad inventory value
-3. Optimize content placement -> right content to right users -> better engagement -> higher ad performance -> more revenue
+1. Reduce user churn -> retain audience -> stable growth + reach -> sustained ad inventory value
+1. Optimize content placement -> right content to right users -> better engagement -> higher ad performance -> more revenue
 
 Prioritize consumption first, this is the fastest to implement and has the most direct revenue impact. Layer in churn afterwards to protect the gains from the increased content consumption. And then refine content placement afterwards, squeezing out more value from existing traffic.
 
@@ -233,7 +233,7 @@ Real-time API (on-demand)
 
 - How it works: Frontend calls ML service with context (user ID, current article, recent clicks), model predicts and returns recommendations instantly
 - Fresh recommendations based on current session, can incorporate real-time signals (what they just clicked)
-- But, more complex infrastructure, latency concerns (need <100ms response), higher compute costs
+- But, more complex infrastructure, latency concerns (need \<100ms response), higher compute costs
 - Best for highly personalized "you might also like" based on the current session and reading habits. Dynamic homepage that adapts as users browse
 
 Typically you want to start with batch based, and then move to a real-time solution once you have experience and enough data to make it worth pursuing.

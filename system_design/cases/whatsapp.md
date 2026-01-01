@@ -3,13 +3,11 @@
 [Video](https://www.youtube.com/watch?v=cr6p0n0N-VA)
 [Guide](https://www.hellointerview.com/learn/system-design/deep-dives/realtime-updates)
 
-
 Core Requirements
 
 - Users should be able to start chats with 1 or more users
 - Users should be able to send & receive messages & media
 - Users should be able to access messages after they've been offline
-
 
 Non-functional Requirements
 
@@ -22,7 +20,6 @@ Out of Scope
 
 - Things like Audio / Video Calling
 
-
 Core Entities
 
 - Users
@@ -30,19 +27,21 @@ Core Entities
 - Messages
 - Client / Device Tracking
 
-
 API
 
 - Create Chat userId, targetUserIds []
+
 - Create Message userId, targetChatId, message
+
 - Create Attachment
+
 - Modify Participants (on Chat)
 
 - New Message Notifications
+
 - Chat Updates
 
-RESTful API may not make as much sense here as opposed to using Websockets to ferry messages back & forth. There's no real great way of outlining these Websocket API commands, so just doing high level for now. 
-
+RESTful API may not make as much sense here as opposed to using Websockets to ferry messages back & forth. There's no real great way of outlining these Websocket API commands, so just doing high level for now.
 
 High Level Design (that satisifes the Functional Requirements)
 
@@ -64,7 +63,6 @@ Database DDL
   - This can be used to provide notifications to users of new chats they haven't read yet.
   - Once they've read them, remove them from the Inbox Table
 
-
 Deep Dives (to handle edge cases, critical performance implications, improvements to the system that can be made)
 
 - Horizontally Scale the Chat Service
@@ -77,7 +75,6 @@ Deep Dives (to handle edge cases, critical performance implications, improvement
   - When a new message is published to a channel, Redis pushes it directly to all subscribed Chat Servers.
   - The subscribing Chat Servers then forward the message to the connected clients over their respective WebSocket connections. Since the message is handled in-memory by Redis, the process is extremely fast, ensuring minimal latency.
 - Add a new Cleanup Microservice which deletes records out of inboxes + messages tables in DynamoDB
-
 
 Napkin Math
 

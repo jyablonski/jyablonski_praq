@@ -11,7 +11,7 @@ Web analytics tracking is the process of collecting, measuring, analyzing, and r
 
 This is crucial for improving UX, marketing, conversion rates, and business decisions.
 
----
+______________________________________________________________________
 
 ## 🧩 Components of Web Analytics Tracking
 
@@ -33,7 +33,7 @@ These methods collect events like:
 - Video plays
 - Purchases
 
----
+______________________________________________________________________
 
 ### 2. User Identification
 
@@ -53,7 +53,7 @@ These methods collect events like:
 - **Doesn’t work across different devices**.
 - **Clearing cookies** resets the user ID.
 
----
+______________________________________________________________________
 
 #### **B. Authentication-Based (Logged-in Users)**
 
@@ -75,7 +75,7 @@ These methods collect events like:
 - Requires the user to **log in**.
 - **Privacy concerns** (GDPR, CCPA require user consent).
 
----
+______________________________________________________________________
 
 #### **C. Device & Browser Fingerprinting**
 
@@ -95,7 +95,7 @@ These methods collect events like:
 - **Less reliable** (since minor changes can break tracking).
 - **Privacy laws are restricting its use** (Safari, Firefox block fingerprinting).
 
----
+______________________________________________________________________
 
 #### **D. Mobile App & Ad Tracking**
 
@@ -108,19 +108,19 @@ These methods collect events like:
 
 - User sees an Instagram ad for sneakers → Clicks → Later sees the same ad in a game (tracked via device ID).
 
----
+______________________________________________________________________
 
 #### **2. How Analytics Tools Handle User Identification**
 
-| **Tool**                   | **Primary User ID Method**                  | **Cross-Device Tracking?** |
+| **Tool** | **Primary User ID Method** | **Cross-Device Tracking?** |
 | -------------------------- | ------------------------------------------- | -------------------------- |
-| **Google Analytics (GA4)** | Client ID (cookie) + User ID (if logged in) | **Yes, if logged in**      |
-| **Mixpanel**               | Anonymous ID + User ID                      | **Yes, after login**       |
-| **Facebook Ads**           | Facebook ID, cookies, device ID             | **Yes**                    |
-| **Google Ads**             | GAID/IDFA, cookies                          | **Yes**                    |
-| **Adobe Analytics**        | First-party cookies + optional User ID      | **Yes, if configured**     |
+| **Google Analytics (GA4)** | Client ID (cookie) + User ID (if logged in) | **Yes, if logged in** |
+| **Mixpanel** | Anonymous ID + User ID | **Yes, after login** |
+| **Facebook Ads** | Facebook ID, cookies, device ID | **Yes** |
+| **Google Ads** | GAID/IDFA, cookies | **Yes** |
+| **Adobe Analytics** | First-party cookies + optional User ID | **Yes, if configured** |
 
----
+______________________________________________________________________
 
 #### **3. Privacy & Regulations**
 
@@ -136,7 +136,7 @@ User identification is heavily impacted by privacy laws:
 - Ad platforms rely more on **first-party data & contextual targeting**.
 - Google is phasing out **third-party cookies** in Chrome (2024+).
 
----
+______________________________________________________________________
 
 #### **4. Identity Resolution (Merging Users)**
 
@@ -146,7 +146,7 @@ User identification is heavily impacted by privacy laws:
   - User logs in (User ID = `user_456`).
   - Mixpanel **merges** data: `abc123` is now part of `user_456`.
 
----
+______________________________________________________________________
 
 ### 3. **Session Tracking**
 
@@ -155,7 +155,7 @@ A **session** is a collection of user interactions within a given time frame (e.
 - Different tracking tools track this in different ways
 - For example, in Google Analytics a session begins when a user lands on a site and ends after 30 mins of inactivity. It relies more on event-based tracking and the sessions are less rigid.
 
----
+______________________________________________________________________
 
 ### 4. **Event Tracking**
 
@@ -171,7 +171,7 @@ Modern tools (GA4, Mixpanel, Amplitude) are **event-driven**, meaning every inte
 
 When users land on a site, a session begins for that user and that specific time window to represent their session. They might have several events within that session before leaving, such as page views, ad clicks, or a conversion event.
 
----
+______________________________________________________________________
 
 ### 5. **Attribution**
 
@@ -183,7 +183,7 @@ Techniques:
 - **Referral Headers** (shows the previous page)
 - **Attribution Models** (last-click, first-click, linear, data-driven)
 
----
+______________________________________________________________________
 
 ### 6. **Data Storage**
 
@@ -194,24 +194,24 @@ The raw data collected is stored either:
 
 ## 💡 Popular Tools & Ecosystem
 
-| Tool                       | Purpose                             |
+| Tool | Purpose |
 | -------------------------- | ----------------------------------- |
-| **Google Analytics (GA4)** | Standard web & app analytics        |
-| **Google Tag Manager**     | Tag deployment without code changes |
-| **Mixpanel**               | Product & event-based analytics     |
-| **Amplitude**              | Behavioral analytics                |
-| **Hotjar**                 | Heatmaps & session recordings       |
-| **Facebook Pixel**         | Conversion tracking for Meta ads    |
-| **LinkedIn Insight Tag**   | Tracking for LinkedIn campaigns     |
+| **Google Analytics (GA4)** | Standard web & app analytics |
+| **Google Tag Manager** | Tag deployment without code changes |
+| **Mixpanel** | Product & event-based analytics |
+| **Amplitude** | Behavioral analytics |
+| **Hotjar** | Heatmaps & session recordings |
+| **Facebook Pixel** | Conversion tracking for Meta ads |
+| **LinkedIn Insight Tag** | Tracking for LinkedIn campaigns |
 
----
+______________________________________________________________________
 
 ## 🟣 Modern Trends
 
 1. **Event-Driven Analytics** (more flexibility, used by GA4, Mixpanel)
-2. **Server-Side Tracking** (for privacy & ad blockers)
-3. **Cookieless Tracking** (due to GDPR, CCPA, and browsers phasing out 3rd-party cookies)
-4. **First-Party Data** emphasis
+1. **Server-Side Tracking** (for privacy & ad blockers)
+1. **Cookieless Tracking** (due to GDPR, CCPA, and browsers phasing out 3rd-party cookies)
+1. **First-Party Data** emphasis
 
 ```mermaid
 graph TD
@@ -233,7 +233,7 @@ graph TD
 
 ## Terminology
 
----
+______________________________________________________________________
 
 ### **1. Page View (PV)**
 
@@ -243,7 +243,7 @@ A **page view** is recorded when a page fully loads in a browser.
 - Even if the user **doesn’t scroll or interact**, it still counts as a page view.
 - Single Page Applications (SPA) require special tracking (e.g., virtual page views).
 
----
+______________________________________________________________________
 
 ### **2. Ad Render (Impression)**
 
@@ -259,7 +259,7 @@ This happens when an ad **loads onto the page** (but may not be visible to the u
 - Ad **exists in the HTML**, so an impression is counted.
 - Even if the user doesn’t scroll to see the ad, it still counts as an impression.
 
----
+______________________________________________________________________
 
 ### **3. Ad Viewability (Visible Impression)**
 
@@ -273,7 +273,7 @@ This is when the ad is **actually seen** by the user (not just loaded).
 - User scrolls, and 50% of the ad is visible for **at least one second** → **Viewability counted**.
 - If the user never scrolls, the impression was logged, but **not counted as a viewable impression**.
 
----
+______________________________________________________________________
 
 ### **4. Ad Click (Engagement)**
 
@@ -289,15 +289,15 @@ An ad click happens when a user **actively clicks on the ad**.
 - If the landing page loads → **GA records a page view**.
 - If the user bounces quickly, GA might classify it as a **bounce session**.
 
----
+______________________________________________________________________
 
 ### **Key Differences Summary**
 
-| **Action**              | **What It Means**                           | **Where It’s Tracked**             |
+| **Action** | **What It Means** | **Where It’s Tracked** |
 | ----------------------- | ------------------------------------------- | ---------------------------------- |
-| **Page View**           | Page fully loads in browser                 | Google Analytics                   |
-| **Ad Impression**       | Ad loads (even if not seen)                 | Ad platform (Google Ads, Facebook) |
-| **Viewable Impression** | Ad is visible (e.g., 50% pixels for 1+ sec) | Ad platform & analytics tools      |
-| **Ad Click**            | User clicks the ad                          | Ad platform + GA (if tracked)      |
+| **Page View** | Page fully loads in browser | Google Analytics |
+| **Ad Impression** | Ad loads (even if not seen) | Ad platform (Google Ads, Facebook) |
+| **Viewable Impression** | Ad is visible (e.g., 50% pixels for 1+ sec) | Ad platform & analytics tools |
+| **Ad Click** | User clicks the ad | Ad platform + GA (if tracked) |
 
 Would you like to see how tracking tools handle attribution for these events? 🚀

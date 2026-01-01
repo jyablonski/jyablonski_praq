@@ -217,24 +217,24 @@ Your body maintains a very tight pH balance (around 7.4 in blood):
 ### Carbs
 
 1. You eat it -> Enzymes in your mouth and intestines break it down into glucose
-2. Glucose enters your bloodstream -> Your blood sugar rises
-3. Pancreas releases insulin -> Acts like a "key" to unlock your cells
-4. Glucose enters cells -> Gets burned immediately for energy (ATP), stored in muscles/liver as glycogen, or converted to fat if you have excess
+1. Glucose enters your bloodstream -> Your blood sugar rises
+1. Pancreas releases insulin -> Acts like a "key" to unlock your cells
+1. Glucose enters cells -> Gets burned immediately for energy (ATP), stored in muscles/liver as glycogen, or converted to fat if you have excess
 
 ### Proteins
 
 1. You eat it -> Stomach acid and enzymes break it down into amino acids
-2. Amino acids enter bloodstream -> Circulate to where they're needed
-3. Body uses them primarily for building -> Repairs muscle, makes enzymes, creates hormones, builds new tissue
-4. If needed for energy -> Can be converted to glucose, then follows the same path as carbs (but this is not the preferred use)
+1. Amino acids enter bloodstream -> Circulate to where they're needed
+1. Body uses them primarily for building -> Repairs muscle, makes enzymes, creates hormones, builds new tissue
+1. If needed for energy -> Can be converted to glucose, then follows the same path as carbs (but this is not the preferred use)
 
 ### Fats
 
 1. You eat it -> Bile from gallbladder breaks it into droplets, then enzymes break it into fatty acids
-2. Fatty acids enter cells -> NO insulin needed (this is key!)
-3. Burned for energy in mitochondria -> Produces even MORE ATP than glucose
-4. Also used for -> Building cell membranes, making hormones, protecting organs
-5. Excess stored as body fat -> Your long-term energy reserve
+1. Fatty acids enter cells -> NO insulin needed (this is key!)
+1. Burned for energy in mitochondria -> Produces even MORE ATP than glucose
+1. Also used for -> Building cell membranes, making hormones, protecting organs
+1. Excess stored as body fat -> Your long-term energy reserve
 
 ### Summary
 
@@ -245,9 +245,9 @@ Your body maintains a very tight pH balance (around 7.4 in blood):
 Think of your body like a car:
 
 1. Carbs = gasoline (fuel)
-2. Protein = metal and parts (building materials)
-3. Fats = oil and lubricants (essential functions)
-4. Vegetables/Fruits = engine coolant, brake fluid, transmission fluid, spark plugs, filters, etc.
+1. Protein = metal and parts (building materials)
+1. Fats = oil and lubricants (essential functions)
+1. Vegetables/Fruits = engine coolant, brake fluid, transmission fluid, spark plugs, filters, etc.
 
 All three eventually produce ATP (the actual energy your cells use), but they take different routes to get there!
 
@@ -260,9 +260,9 @@ After working out, your body recognizes this damage and thinks: "Okay, these mus
 The repair process looks like:
 
 1. Your body sends amino acids (from the protein you eat) to the damaged muscle tissue
-2. Muscle protein synthesis kicks in - your cells use those amino acids to repair the tears and build NEW muscle protein
-3. Your muscles grow back slightly bigger and stronger than before - this is called hypertrophy
-4. Over time, this accumulates - each workout, you damage -> repair -> grow slightly stronger
+1. Muscle protein synthesis kicks in - your cells use those amino acids to repair the tears and build NEW muscle protein
+1. Your muscles grow back slightly bigger and stronger than before - this is called hypertrophy
+1. Over time, this accumulates - each workout, you damage -> repair -> grow slightly stronger
 
 ## Ketosis
 

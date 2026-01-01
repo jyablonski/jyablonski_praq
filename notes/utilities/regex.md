@@ -29,6 +29,7 @@ else:
 #### 3. **Common Patterns**
 
 1. **Character Classes**:
+
    - `\d`: Any digit (0-9).
    - `\D`: Non-digit.
    - `\w`: Any word character (alphanumeric + underscore).
@@ -36,7 +37,8 @@ else:
    - `\s`: Any whitespace.
    - `\S`: Non-whitespace.
 
-2. **Quantifiers**:
+1. **Quantifiers**:
+
    - `*`: Zero or more.
    - `+`: One or more.
    - `?`: Zero or one.
@@ -44,21 +46,25 @@ else:
    - `{n,}`: At least `n` occurrences.
    - `{n,m}`: Between `n` and `m` occurrences.
 
-3. **Anchors**:
+1. **Anchors**:
+
    - `^`: Start of a string.
    - `$`: End of a string.
 
-4. **Groups and Captures**:
+1. **Groups and Captures**:
+
    - `(pattern)`: Capturing group.
    - `(?:pattern)`: Non-capturing group.
 
-5. **Special Sequences**:
+1. **Special Sequences**:
+
    - `|`: Logical OR.
    - `.`: Matches any character except a newline.
 
 #### 4. **Testing Examples**
 
 - **Validate an Email Address**:
+
   ```python
   email_pattern = r"^[\w.-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$"
   email = "example.email@test-domain.com"
@@ -70,6 +76,7 @@ else:
   ```
 
 - **Extract All URLs from Text**:
+
   ```python
   text = "Visit us at https://example.com or http://test.org"
   url_pattern = r"https?://[^\s]+"
@@ -79,6 +86,7 @@ else:
   ```
 
 - **Split a String by Multiple Delimiters**:
+
   ```python
   text = "apple;orange|banana,grape"
   delimiters = r"[;,|]"
@@ -90,20 +98,25 @@ else:
 #### 5. **Using Online Tools for Regex Testing**
 
 1. **[Regex101](https://regex101.com/):**
+
    - Explains your pattern step-by-step.
    - Allows testing with real-time feedback.
    - Supports Python flavor.
 
-2. **[RegExr](https://regexr.com/):**
+1. **[RegExr](https://regexr.com/):**
+
    - A user-friendly interface for learning and testing regex.
 
-3. **Python REPL or Jupyter Notebooks**:
+1. **Python REPL or Jupyter Notebooks**:
+
    - Experiment interactively with Python's `re` module.
 
 #### 6. **Tips for Implementation**
 
 - Use **raw strings (`r"pattern"`)** to avoid escaping backslashes (`\\`).
+
 - Use **named groups (`(?P<name>pattern)`)** for easier readability:
+
   ```python
   pattern = r"(?P<protocol>https?)://(?P<domain>[^\s/]+)"
   match = re.search(pattern, "https://example.com")
@@ -113,6 +126,7 @@ else:
   ```
 
 - Test regex thoroughly to cover edge cases:
+
   ```python
   test_cases = ["abc123", "123abc", "abc-123"]
   pattern = r"^[a-z]+\d+$"
@@ -122,6 +136,7 @@ else:
   ```
 
 - **Compile patterns** for repeated use:
+
   ```python
   compiled_pattern = re.compile(r"\b\d{3}-\d{2}-\d{4}\b")  # SSN pattern
   data = "123-45-6789 is a valid SSN, but 123456789 is not."

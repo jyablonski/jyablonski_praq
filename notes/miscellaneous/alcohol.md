@@ -30,22 +30,22 @@ Every alcoholic drink on earth follows this linear path. You cannot have step 2 
   - Flavor: The liquid absorbs vanilla, caramel, and spice notes from the wood.
   - Smoothness: Oxygen slowly enters the barrel, removing the harsh "burn."
 
----
+______________________________________________________________________
 
 ### II. The "Family Tree" of Alcohol
 
 The type of alcohol is defined entirely by what sugar source you start with.
 
-| Base Ingredient            | Fermented Only (Low ABV) | Distilled (High ABV - Clear)  | Distilled + Aged (High ABV - Brown) |
+| Base Ingredient | Fermented Only (Low ABV) | Distilled (High ABV - Clear) | Distilled + Aged (High ABV - Brown) |
 | :------------------------- | :----------------------- | :---------------------------- | :---------------------------------- |
-| Grapes                     | Wine                     | Eau-de-vie / Pisco / Grappa   | Cognac / Brandy                     |
-| Grains (Barley, Corn, Rye) | Beer                     | White Dog / Moonshine / Vodka | Whiskey / Scotch / Bourbon          |
-| Agave (Cactus)             | Pulque                   | Silver Tequila / Mezcal       | Reposado / Añejo Tequila            |
-| Sugar Cane / Molasses      | Cane Wine                | White Rum / Cachaça           | Dark Rum                            |
-| Rice                       | Sake                     | Soju / Shochu                 | (Rarely aged in wood)               |
-| Potatoes                   | (N/A)                    | Vodka                         | (N/A)                               |
+| Grapes | Wine | Eau-de-vie / Pisco / Grappa | Cognac / Brandy |
+| Grains (Barley, Corn, Rye) | Beer | White Dog / Moonshine / Vodka | Whiskey / Scotch / Bourbon |
+| Agave (Cactus) | Pulque | Silver Tequila / Mezcal | Reposado / Añejo Tequila |
+| Sugar Cane / Molasses | Cane Wine | White Rum / Cachaça | Dark Rum |
+| Rice | Sake | Soju / Shochu | (Rarely aged in wood) |
+| Potatoes | (N/A) | Vodka | (N/A) |
 
----
+______________________________________________________________________
 
 ### III. Key Vocabulary
 

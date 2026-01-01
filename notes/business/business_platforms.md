@@ -20,6 +20,7 @@ General overview of various business platforms categorized by their primary func
   - Adobe Audience Manager, Oracle BlueKai, Lotame, Krux (now Salesforce), The Trade Desk
 
 - PIM - Privacy Information Management
+
   - Purpose: Manages comprehensive privacy compliance programs including data mapping, risk assessments, and privacy request automation.
   - OneTrust, TrustArc, DataGrail, Transcend, BigID
 
@@ -51,6 +52,7 @@ General overview of various business platforms categorized by their primary func
   - Salesforce, HubSpot, Microsoft Dynamics, Pipedrive, Zoho
 
 - ESP - Email Service Provider
+
   - Purpose: Delivers bulk email campaigns with features like templates, automation, analytics, and deliverability optimization.
   - Mailchimp, Constant Contact, SendGrid, Campaign Monitor, Klaviyo
 
@@ -72,6 +74,7 @@ General overview of various business platforms categorized by their primary func
   - New Relic, Datadog, AppDynamics, Dynatrace, Splunk
 
 - BI - Business Intelligence Platform
+
   - Purpose: Transforms raw business data into actionable insights through dashboards, reports, and data visualization tools.
   - Tableau, Power BI, Looker, Qlik Sense, Sisense
 
@@ -88,5 +91,6 @@ General overview of various business platforms categorized by their primary func
   - WordPress, Drupal, Contentful, Webflow, Squarespace
 
 - DAM - Digital Asset Management
+
   - Purpose: Centralizes storage, organization, and distribution of digital assets like images, videos, and brand materials for easy access and consistency.
   - Bynder, Widen, Canto, Adobe Experience Manager Assets, Brandfolder

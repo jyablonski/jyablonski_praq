@@ -12,12 +12,12 @@ The Example connects to 2 separate Tables, builds 2 separate Kafka Topics, and w
 ## Steps
 
 1. Run `docker-compose up`.
-2. Run `docker-compose logs -f kafka-connect` to follow logs for debugging purposes as well as to see if Debezium is sending CDC Messages.
-3. Run the PUT S3 Sink Connector script in your local terminal.
-4. Run the PUT Debezium Connector script in your local terminal.
-5. Connect to ksql in another terminal via `docker exec -it ksqldb ksql http://ksqldb:8088`.
+1. Run `docker-compose logs -f kafka-connect` to follow logs for debugging purposes as well as to see if Debezium is sending CDC Messages.
+1. Run the PUT S3 Sink Connector script in your local terminal.
+1. Run the PUT Debezium Connector script in your local terminal.
+1. Connect to ksql in another terminal via `docker exec -it ksqldb ksql http://ksqldb:8088`.
    1. Run `show connectors;` and `show topics;` to see if your stuff is running.
-6. Login to MySQL Workbench & start screwing around with records in the `movies` table to see if CDC works & stores to S3.
+1. Login to MySQL Workbench & start screwing around with records in the `movies` table to see if CDC works & stores to S3.
 
 ## Articles
 
@@ -196,7 +196,7 @@ CREATE SOURCE CONNECTOR s WITH (
 
 1. Single message transforms
    1. changes the data as it passes through
-   2. you can add additional columns or metadata onto the messages.
+   1. you can add additional columns or metadata onto the messages.
 
 Storage Class Formats: 1. `io.confluent.connect.s3.format.parquet.ParquetFormat` 2. `io.confluent.connect.s3.format.json.JsonFormat` 3. `io.confluent.connect.s3.format.avro.AvroFormat`
 

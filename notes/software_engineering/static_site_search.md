@@ -18,11 +18,12 @@ What it is: A static search library that generates a search index at build time 
 How it works:
 
 1. Build time: Crawls your static HTML files
-2. Generates compressed search index (chunked `.pff` files)
-3. Deploys as static files alongside your site
-4. Search runs client-side in browser (lazy-loads index chunks)
+1. Generates compressed search index (chunked `.pff` files)
+1. Deploys as static files alongside your site
+1. Search runs client-side in browser (lazy-loads index chunks)
 
 Architecture:
+
 ```
 npm install pagefind (contains Rust CLI + JS runtime)
   ↓
@@ -83,9 +84,9 @@ What it is: Hosted search-as-a-service platform with advanced features and infra
 How it works:
 
 1. Content indexed on Algolia's servers (via API or crawler)
-2. Your site makes API calls to Algolia for searches
-3. Algolia returns results in milliseconds
-4. React/JS components display results
+1. Your site makes API calls to Algolia for searches
+1. Algolia returns results in milliseconds
+1. React/JS components display results
 
 Pricing:
 
@@ -144,12 +145,14 @@ Two search options:
 - UI stays consistent (Starlight abstracts the component)
 
 Why Starlight is great:
+
 - Sensible defaults (Pagefind works out of the box)
 - Easy upgrade path (switch to Algolia with config change)
 - No need to build search UI yourself
 - Optimized for documentation use cases
 
 Configuration example:
+
 ```javascript
 // astro.config.mjs
 
@@ -176,16 +179,16 @@ export default defineConfig({
 
 ## Comparison Matrix
 
-| Feature            | Pagefind           | Algolia           | Starlight               |
+| Feature | Pagefind | Algolia | Starlight |
 | ------------------ | ------------------ | ----------------- | ----------------------- |
-| Cost               | Free               | Free tier / Paid  | Depends on choice       |
-| Infrastructure     | Self-hosted        | External service  | Self-hosted or external |
-| Setup complexity   | Low                | Medium            | Very low                |
-| Performance        | Good               | Excellent         | Depends on choice       |
-| Real-time indexing | No (build time)    | Yes               | Depends on choice       |
-| Privacy            | Full control       | External tracking | Depends on choice       |
-| Features           | Basic              | Advanced          | Depends on choice       |
-| Best for           | Small-medium sites | Large/commercial  | Documentation sites     |
+| Cost | Free | Free tier / Paid | Depends on choice |
+| Infrastructure | Self-hosted | External service | Self-hosted or external |
+| Setup complexity | Low | Medium | Very low |
+| Performance | Good | Excellent | Depends on choice |
+| Real-time indexing | No (build time) | Yes | Depends on choice |
+| Privacy | Full control | External tracking | Depends on choice |
+| Features | Basic | Advanced | Depends on choice |
+| Best for | Small-medium sites | Large/commercial | Documentation sites |
 
 ## Alternative Self-Hosted Options
 
@@ -245,12 +248,14 @@ Choose Meilisearch/Typesense if:
 ## Integration with Next.js + S3 Deployment
 
 Current workflow:
+
 ```bash
 npm run build          # Next.js static export to out/
 aws s3 sync out/ s3://bucket --delete
 ```
 
 With Pagefind:
+
 ```bash
 # package.json
 {

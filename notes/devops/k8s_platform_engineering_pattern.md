@@ -13,7 +13,7 @@ The pattern is sometimes called:
 
 It's a core practice within the broader Platform Engineering movement.
 
----
+______________________________________________________________________
 
 ### Why use it?
 
@@ -38,25 +38,25 @@ For the organization:
 - Consistent observability (all services get the same labels, making dashboards and alerts uniform)
 - Security and compliance controls applied uniformly
 
----
+______________________________________________________________________
 
 ### The tradeoff
 
 Flexibility decreases. If an app needs something the platform doesn't support, either the platform has to evolve or the app has to work around it. This is usually acceptable because most services fit the common pattern, and edge cases can be handled by extending the shared chart.
 
----
+______________________________________________________________________
 
 ### Core components
 
 1. Simplified App Config (`k8s_spec.yaml`) – The only infrastructure file app developers touch. Contains just the knobs they care about: replicas, resource limits, environment variables, feature flags for sidecars.
 
-2. Shared Base Chart (`spec-chart/`) – A Helm chart owned by the platform team that knows how to render all the Kubernetes resources a service might need: Deployment, Service, Ingress, HPA, PDB, ServiceAccount, ConfigMaps, sidecar containers, etc.
+1. Shared Base Chart (`spec-chart/`) – A Helm chart owned by the platform team that knows how to render all the Kubernetes resources a service might need: Deployment, Service, Ingress, HPA, PDB, ServiceAccount, ConfigMaps, sidecar containers, etc.
 
-3. Helmfile Template (`helmfile.yaml.gotmpl`) – The glue layer. Reads the app's `k8s_spec.yaml`, detects the target environment, computes derived values (image URIs, cluster context, environment-specific overrides), and assembles the final Helmfile release.
+1. Helmfile Template (`helmfile.yaml.gotmpl`) – The glue layer. Reads the app's `k8s_spec.yaml`, detects the target environment, computes derived values (image URIs, cluster context, environment-specific overrides), and assembles the final Helmfile release.
 
-4. Reusable GitHub Action – Wraps the entire deploy process (validate -> diff -> apply) so app repos just call one action with minimal inputs.
+1. Reusable GitHub Action – Wraps the entire deploy process (validate -> diff -> apply) so app repos just call one action with minimal inputs.
 
-5. Spec Validator – A tool (in this case, a Go program) that validates `spec.yaml` against a schema before deployment. Catches errors early with clear messages rather than cryptic Helm failures.
+1. Spec Validator – A tool (in this case, a Go program) that validates `spec.yaml` against a schema before deployment. Catches errors early with clear messages rather than cryptic Helm failures.
 
 ### How It Works End-to-End
 
@@ -64,23 +64,23 @@ Flexibility decreases. If an app needs something the platform doesn't support, e
 
    - This is the only infrastructure file they maintain. It contains application-specific configuration like resource limits, environment variables, replicas, and feature flags for optional sidecars. Environment-specific values can be defined using match rules.
 
-2. Developer pushes code and opens a PR
+1. Developer pushes code and opens a PR
 
    - CI runs tests, linting, and builds a Docker image tagged with the git SHA. The image is pushed to a container registry (e.g., ECR). Importantly, this image is built once and will be promoted through all environments unchanged.
 
-3. CI validates the `k8s_spec.yaml`
+1. CI validates the `k8s_spec.yaml`
 
    - A validator (custom tooling, JSON Schema, etc.) checks the spec against the platform's schema. This catches configuration errors early with clear messages, before any Helm or Kubernetes tooling runs.
 
-4. PR merges to main
+1. PR merges to main
 
    - This triggers the deployment workflow.
 
-5. The deployment action runs
+1. The deployment action runs
 
    - The reusable GitHub Action is invoked with inputs like namespace, spec path, and the image version (git SHA). The action sets up tooling (kubectl, Helm, Helmfile) and prepares environment variables that identify which repo/image to deploy.
 
-6. Helmfile template resolves the full configuration
+1. Helmfile template resolves the full configuration
 
 The `helmfile.yaml.gotmpl` template executes and does the heavy lifting:
 
@@ -95,15 +95,15 @@ The `helmfile.yaml.gotmpl` template executes and does the heavy lifting:
 
    - Before applying anything, the diff output shows exactly what Kubernetes resources will be created, modified, or deleted. This provides visibility and a safety check.
 
-8. `helmfile sync` applies the release
+1. `helmfile sync` applies the release
 
    - The shared base chart is rendered with all the assembled values and applied to the cluster. Helm manages the release lifecycle, including rollback capabilities if something fails.
 
-9. Post-deploy (optional)
+1. Post-deploy (optional)
 
    - The action can output metadata like deploy start time for linking to observability dashboards. Slack notifications, deployment annotations, and status updates can be wired in as additional steps.
 
----
+______________________________________________________________________
 
 ### How to recreate it
 
@@ -202,7 +202,7 @@ Phase 6: Iterate based on real needs
 
 As teams adopt the platform, they'll request features. Add them to the shared chart and spec schema. Common additions include: sidecar containers (Redis, etc.), cron jobs, multiple deployment targets, canary/blue-green configuration, custom health checks.
 
----
+______________________________________________________________________
 
 ### Key design principles
 
@@ -245,24 +245,24 @@ From the monitoring block, the shared chart emits:
 
 1. PrometheusRule (recording rules) — pre-computes error ratios and latency percentiles as named metrics, reducing query complexity in dashboards and alerts
 
-2. PrometheusRule (alerts) — multi-window burn rate alerts following the Google SRE model. A fast burn (14.4x) over a short window pages immediately; slower burns over longer windows create tickets
+1. PrometheusRule (alerts) — multi-window burn rate alerts following the Google SRE model. A fast burn (14.4x) over a short window pages immediately; slower burns over longer windows create tickets
 
-3. GrafanaDashboard CRD — a templated dashboard showing error budget remaining, burn rate, SLI trends over time, and request volume for context
+1. GrafanaDashboard CRD — a templated dashboard showing error budget remaining, burn rate, SLI trends over time, and request volume for context
 
-4. ServiceMonitor — ensures Prometheus scrapes the service's metrics endpoint with appropriate labels
+1. ServiceMonitor — ensures Prometheus scrapes the service's metrics endpoint with appropriate labels
 
 ### Standard dashboard panels
 
 Every generated dashboard includes:
 
-| Panel                  | Description                                           |
+| Panel | Description |
 | ---------------------- | ----------------------------------------------------- |
-| Error budget remaining | Percentage of budget left in the current window       |
-| Burn rate              | Current consumption rate relative to sustainable pace |
-| Availability over time | Rolling success rate with SLO target line             |
-| Latency percentiles    | p50, p95, p99 with threshold markers                  |
-| Request rate           | Traffic volume for context                            |
-| Recent SLO breaches    | Annotations marking threshold violations              |
+| Error budget remaining | Percentage of budget left in the current window |
+| Burn rate | Current consumption rate relative to sustainable pace |
+| Availability over time | Rolling success rate with SLO target line |
+| Latency percentiles | p50, p95, p99 with threshold markers |
+| Request rate | Traffic volume for context |
+| Recent SLO breaches | Annotations marking threshold violations |
 
 ### How alerting works
 
@@ -289,7 +289,7 @@ monitoring:
 
 These are applied alongside (not instead of) the generated resources, allowing teams to extend without forking the platform.
 
----
+______________________________________________________________________
 
 ### When not to use this
 

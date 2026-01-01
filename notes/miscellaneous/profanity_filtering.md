@@ -63,6 +63,7 @@ After running the text through the profanity filtering, there are various option
   - Mask vowels or partial: `"bitch"` → `"b*tch"`
 
 - Reject input (e.g., a user submitted an offensive review that you don't allow)
+
 - Flag for moderation (human review / QA to go take a look)
 
 ### Summary Workflow

@@ -16,29 +16,29 @@ The 2 main concepts of Recursion are a base csae and a recursive case
 Recursive Problems follow the 3 steps:
 
 1. Check if the current problem can be solved directly via the base case
-2. If base case is met, return the result directly
-3. If base case is not met, modify the problem slightly and call itself with a new, smaller problem (recursive case)
+1. If base case is met, return the result directly
+1. If base case is not met, modify the problem slightly and call itself with a new, smaller problem (recursive case)
 
 ## SRTBOT
 
 1. Subproblem definition
-2. Relate subproblem solutions recursively
-3. Topological order on subproblems to guarantee acyclic - DAGs
-4. Base Case of relation
+1. Relate subproblem solutions recursively
+1. Topological order on subproblems to guarantee acyclic - DAGs
+1. Base Case of relation
    1. Acts as a termination condition to prevent infinite recursion
-5. Orginal Problem: solve via subproblems
-6. Time Analysis
+1. Orginal Problem: solve via subproblems
+1. Time Analysis
 
 ## Fibonacci Example
 
 Fn = Fn - 1 + Fn - 2
 
-1. Subproblems: F(i) = fi - <= i <= n
-2. Relate: F(i) = F(i - 1) + F(i - 2)
-3. Topological Order: increasing i, for i = 1, 2 ... n
-4. Base Case: F(1) = F(2) = 1
-5. Original Problem: F(n)
-6. Time: T(n) = T(n - 1) + T(n - 2) + 1 (addition time) > Fn (grows exponentially, bad news bears)
+1. Subproblems: F(i) = fi - \<= i \<= n
+1. Relate: F(i) = F(i - 1) + F(i - 2)
+1. Topological Order: increasing i, for i = 1, 2 ... n
+1. Base Case: F(1) = F(2) = 1
+1. Original Problem: F(n)
+1. Time: T(n) = T(n - 1) + T(n - 2) + 1 (addition time) > Fn (grows exponentially, bad news bears)
 
 ```py
 #  the sequence begins: 0, 1, 1, 2, 3, 5, 8, 13, 21, and so on.

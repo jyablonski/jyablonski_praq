@@ -46,11 +46,11 @@ No internet connection required. The server performs the same calculation indepe
 When a user logs in with 100 million users in the system:
 
 1. User enters username and password
-2. Server looks up user account in database
-3. Server retrieves that specific user's MFA secret key (a field in the database record)
-4. Server runs TOTP algorithm (secret + current time)
-5. User enters code from their app
-6. Server compares codes - if they match, authentication succeeds
+1. Server looks up user account in database
+1. Server retrieves that specific user's MFA secret key (a field in the database record)
+1. Server runs TOTP algorithm (secret + current time)
+1. User enters code from their app
+1. Server compares codes - if they match, authentication succeeds
 
 Database storage: Each user has a unique secret key stored as a field in their account record, alongside username, password hash, email, etc.
 

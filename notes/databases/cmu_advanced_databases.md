@@ -93,7 +93,8 @@ Data Types
    - Floating point numbers are stored in a binary representation, typically using the IEEE 754 standard.
    - Floating point numbers have limited precision, which means that operations involving them can result in rounding errors.
 
-2. **Fixed Precision/Decimal Data Types**:
+1. **Fixed Precision/Decimal Data Types**:
+
    - These data types are designed to represent exact numeric values with a fixed precision and scale.
    - They are suitable for representing values where precision is crucial, such as monetary amounts or exact measurements.
    - Examples of fixed precision/decimal data types include DECIMAL, NUMERIC, and MONEY.
@@ -223,18 +224,19 @@ Databases latches protect the critical sections of the DBMS's internal data stru
    - Partitioning involves dividing the dataset into smaller, more manageable parts called segments. Each segment contains a subset of the dataset.
    - In the context of PAX storage, the data within a column is partitioned into multiple segments based on certain attributes or criteria. These attributes could be specific values, ranges of values, or other characteristics of the data.
 
-2. **Spreading it Across Multiple Segments**:
+1. **Spreading it Across Multiple Segments**:
 
    - Once the data is partitioned, it is spread across multiple segments. This means that different portions of the data are stored in different locations or storage devices.
    - Spreading the data across multiple segments helps distribute the workload and enables parallel processing. Each segment can be processed independently, allowing for better utilization of resources and improved performance.
 
-3. **Enhancing Query Performance**:
+1. **Enhancing Query Performance**:
 
    - By partitioning the data and spreading it across multiple segments, PAX storage aims to enhance query performance.
    - When a query is executed, the database system can often determine which segments contain relevant data based on the query criteria. This allows the system to access and process only the necessary segments, rather than the entire dataset.
    - Minimizing the amount of data that needs to be accessed and processed for a given query reduces the computational overhead and improves query execution times.
 
-4. **Minimizing Data Access and Processing**:
+1. **Minimizing Data Access and Processing**:
+
    - PAX storage minimizes the amount of data that needs to be accessed and processed for a given query by selectively accessing only the relevant segments.
    - Since each segment contains a subset of the dataset, the system can focus its resources on processing only those segments that are relevant to the query. This reduces the overall data access and processing overhead, leading to faster query performance.
 

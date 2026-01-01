@@ -18,7 +18,7 @@ The main purposes are:
 
 ## Example
 
-``` md
+```md
 ## [1.2.0] - 2024-12-29
 
 ### Features
@@ -44,7 +44,7 @@ The main purposes are:
 ### Documentation
 - add AUR installation instructions
 ```
-  
+
 ## Implementation Tools
 
 Conventional Commits + automated tools
@@ -97,10 +97,11 @@ Conventional commits are a standardized format for writing commit messages that 
 For PR titles it's just `type(scope): description`. Since Squash Merging and Trunk Based Development are objectively the right way to go now, this works great for generating changelogs from PR titles.
 
 - This means you don't have to follow rigid commit message rules for every single commit, just the PR title when merging
-- This makes sense since the PR is the logical unit of change that gets reviewed and merged. If you merge commit 50 commits from a PR into `main`, it would be a mess and not very useful to have all those individual commit messages in the changelog. You also would never revert just one of those commits after a merge, you'd revert the whole PR. 
+- This makes sense since the PR is the logical unit of change that gets reviewed and merged. If you merge commit 50 commits from a PR into `main`, it would be a mess and not very useful to have all those individual commit messages in the changelog. You also would never revert just one of those commits after a merge, you'd revert the whole PR.
   - There are no scenarios here where squash merging and trunk based development don't make sense.
 
 Common types:
+
 - `feat:` - New feature (triggers minor version bump)
 - `fix:` - Bug fix (triggers patch version bump)
 - `docs:` - Documentation changes

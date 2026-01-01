@@ -54,7 +54,7 @@ If you turn the boost off and try palm muting, it'll sound "boomy" and undefined
 - Noise Suppressor (NS): `ON`. Threshold `30`, Release `15` (Fast release for tight stops).
 - Parametric EQ: `OFF`. (Your core tone is already good; don't strangle it).
 
----
+______________________________________________________________________
 
 ## 5. How to Set Your Guitar (Crucial)
 
@@ -115,7 +115,7 @@ EMGs are quiet, but with `Gain 80` + `Booster` + `Lead Channel`, the amp will sc
 
 `Input (Guitar)` -> `NS (Detection)` -> `Booster` -> `Distortion (Preamp)` -> `Amp EQ` -> `Reverb` -> `Power Amp (Presence)` -> `Master Volume`
 
----
+______________________________________________________________________
 
 ### 1. Input: The Source (Guitar)
 

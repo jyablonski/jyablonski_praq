@@ -15,11 +15,11 @@ Helm effectively packages up all of the Deployment, Service, Load Balancer etc t
 
 1. Chart: A Helm chart is a collection of files that describe a Kubernetes application. It contains a directory structure with files such as `Chart.yaml` (chart metadata), `values.yaml` (default configuration values), and a set of Kubernetes manifest files that define the resources needed for the application.
 
-2. Template Engine: Helm uses Go templates to generate Kubernetes manifests based on user-provided values and the chart's templates. This allows users to parameterize their manifests, making charts highly customizable. Values can be specified in the `values.yaml` file or overridden at installation time.
+1. Template Engine: Helm uses Go templates to generate Kubernetes manifests based on user-provided values and the chart's templates. This allows users to parameterize their manifests, making charts highly customizable. Values can be specified in the `values.yaml` file or overridden at installation time.
 
-3. Release: When you install a Helm chart into a Kubernetes cluster, it creates a release. A release is an instance of a chart deployed on a Kubernetes cluster, with a specific configuration and a unique release name. You can manage releases, upgrade them, roll them back, or uninstall them using Helm commands.
+1. Release: When you install a Helm chart into a Kubernetes cluster, it creates a release. A release is an instance of a chart deployed on a Kubernetes cluster, with a specific configuration and a unique release name. You can manage releases, upgrade them, roll them back, or uninstall them using Helm commands.
 
-4. Repository: Helm charts can be distributed and shared through Helm repositories. A Helm repository is a collection of packaged charts along with an `index.yaml` file that contains metadata about the available charts. Public repositories like the official Helm Hub or private repositories can be used to distribute and consume charts.
+1. Repository: Helm charts can be distributed and shared through Helm repositories. A Helm repository is a collection of packaged charts along with an `index.yaml` file that contains metadata about the available charts. Public repositories like the official Helm Hub or private repositories can be used to distribute and consume charts.
 
 ## Files
 
@@ -157,9 +157,9 @@ You can leverage Helmfile with ArgoCD to keep all of your apps within the same H
 #### Pattern 1: Pre-rendered Manifests
 
 1. Keep your apps defined in a Helmfile
-2. Run `helmfile template` to render Helm charts into plain K8s manifests
-3. Commit the rendered manifests to git
-4. ArgoCD syncs the static manifests
+1. Run `helmfile template` to render Helm charts into plain K8s manifests
+1. Commit the rendered manifests to git
+1. ArgoCD syncs the static manifests
 
 - Pros: Simple ArgoCD setup, full visibility of what's deployed, works well with GitOps workflows
 - Cons: Git repo gets cluttered with generated YAML, need CI/CD to re-render on changes
@@ -169,9 +169,9 @@ You can leverage Helmfile with ArgoCD to keep all of your apps within the same H
 ArgoCD has native Helm support and can work directly with Helm charts:
 
 1. Keep your Helmfile for local development/testing
-2. Structure your repo so ArgoCD can find individual Helm charts
-3. Create ArgoCD Applications that point to the Helm charts directly
-4. ArgoCD renders the Helm charts at sync time
+1. Structure your repo so ArgoCD can find individual Helm charts
+1. Create ArgoCD Applications that point to the Helm charts directly
+1. ArgoCD renders the Helm charts at sync time
 
 - Pros: No pre-rendered manifests, cleaner git history
 - Cons: Less visibility into what's actually being deployed, ArgoCD needs to understand Helm
@@ -181,8 +181,8 @@ ArgoCD has native Helm support and can work directly with Helm charts:
 This is more advanced:
 
 1. Use Helmfile to generate ArgoCD Application manifests themselves
-2. Deploy a root ArgoCD helm chart that manages other apps
-3. Helmfile becomes your "control plane" for defining what apps exist
+1. Deploy a root ArgoCD helm chart that manages other apps
+1. Helmfile becomes your "control plane" for defining what apps exist
 
 ```yaml
 # In helmfile.yaml
@@ -253,8 +253,8 @@ services:
 ArgoCD supports custom config management plugins. You could:
 
 1. Install Helmfile as a plugin in ArgoCD
-2. ArgoCD runs `helmfile template` during sync
-3. Keep everything in Helmfile format
+1. ArgoCD runs `helmfile template` during sync
+1. Keep everything in Helmfile format
 
 This gives you the benefits of Helmfile's environment management while keeping ArgoCD as the deployment engine.
 

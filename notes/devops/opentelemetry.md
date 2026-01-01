@@ -5,10 +5,10 @@ OpenTelemetry is an open-source observability framework for cloud-native softwar
 #### Key Features of OpenTelemetry:
 
 1. **Tracing**: Helps track the flow of requests through various services in a distributed system.
-2. **Metrics**: Collects data about the performance of applications, such as latency, error rates, and resource usage.
-3. **Logs**: Records discrete events that occur during the execution of a program.
-4. **Interoperability**: Integrates with various backend observability systems like Prometheus, Jaeger, Zipkin, Datadog, and others.
-5. **Language Support**: Offers SDKs for multiple programming languages, including Java, Python, JavaScript, Go, and more.
+1. **Metrics**: Collects data about the performance of applications, such as latency, error rates, and resource usage.
+1. **Logs**: Records discrete events that occur during the execution of a program.
+1. **Interoperability**: Integrates with various backend observability systems like Prometheus, Jaeger, Zipkin, Datadog, and others.
+1. **Language Support**: Offers SDKs for multiple programming languages, including Java, Python, JavaScript, Go, and more.
 
 ### Example REST API Endpoint
 
@@ -34,7 +34,7 @@ Logs are discrete events that happen during the execution of the application. Th
 Traces represent the journey of a request through the system, providing insight into the flow and performance of each component involved.
 
 1. **Trace ID**: A unique identifier for the entire trace.
-2. **Span**: Represents a single unit of work within the trace. Spans can have parent-child relationships.
+1. **Span**: Represents a single unit of work within the trace. Spans can have parent-child relationships.
 
 ```json
 {
@@ -73,8 +73,8 @@ Traces represent the journey of a request through the system, providing insight 
 Metrics provide numerical data about the performance and usage of the system, often aggregated over time.
 
 1. **Counter**: A cumulative metric that represents a single monotonically increasing counter.
-2. **Gauge**: A metric that represents a single numerical value that can arbitrarily go up and down.
-3. **Histogram**: A metric that samples observations and counts them in configurable buckets.
+1. **Gauge**: A metric that represents a single numerical value that can arbitrarily go up and down.
+1. **Histogram**: A metric that samples observations and counts them in configurable buckets.
 
 #### Example of Counter Metric
 
@@ -202,13 +202,14 @@ P90, P95, and P99 are common percentiles used in performance monitoring to under
    - **Usage**: It indicates that 90% of your requests or users experience a response time that is less than or equal to this value.
    - **Example**: If P90 response time is 200ms, it means that 90% of the requests are completed in 200ms or less, and 10% take longer than 200ms.
 
-2. **P95 (95th Percentile)**:
+1. **P95 (95th Percentile)**:
 
    - **Definition**: The value below which 95% of the observations fall.
    - **Usage**: It highlights the response time experienced by the slowest 5% of requests. It's a more stringent measure compared to P90.
    - **Example**: If P95 response time is 300ms, it means that 95% of the requests are completed in 300ms or less, and 5% take longer than 300ms.
 
-3. **P99 (99th Percentile)**:
+1. **P99 (99th Percentile)**:
+
    - **Definition**: The value below which 99% of the observations fall.
    - **Usage**: It focuses on the tail end of the distribution, showing the response time for the slowest 1% of requests. This is useful for identifying outliers and understanding the worst-case performance.
    - **Example**: If P99 response time is 500ms, it means that 99% of the requests are completed in 500ms or less, and 1% take longer than 500ms.
@@ -216,8 +217,8 @@ P90, P95, and P99 are common percentiles used in performance monitoring to under
 ### Importance of Percentiles in Performance Monitoring
 
 1. **User Experience**: Percentiles give a more comprehensive picture of user experience compared to averages. Averages can be misleading, as they may be skewed by extreme outliers.
-2. **Performance Tuning**: Understanding the performance for different percentiles helps in identifying and addressing performance bottlenecks that affect a significant portion of users.
-3. **SLAs and SLOs**: Service Level Agreements (SLAs) and Service Level Objectives (SLOs) often use percentiles to define acceptable performance thresholds. For example, an SLA might specify that 95% of requests should complete within 300ms.
+1. **Performance Tuning**: Understanding the performance for different percentiles helps in identifying and addressing performance bottlenecks that affect a significant portion of users.
+1. **SLAs and SLOs**: Service Level Agreements (SLAs) and Service Level Objectives (SLOs) often use percentiles to define acceptable performance thresholds. For example, an SLA might specify that 95% of requests should complete within 300ms.
 
 ### Visual Example
 
@@ -230,16 +231,16 @@ Imagine the response times for an API endpoint in milliseconds: [50, 55, 60, 65,
 ### How to Calculate Percentiles
 
 1. **Sort the Data**: Arrange the response times in ascending order.
-2. **Rank Calculation**: Calculate the rank for the desired percentile using the formula `rank = (percentile / 100) * (number of values + 1)`.
-3. **Interpolation**: If the rank is not an integer, interpolate between the two closest ranks.
+1. **Rank Calculation**: Calculate the rank for the desired percentile using the formula `rank = (percentile / 100) * (number of values + 1)`.
+1. **Interpolation**: If the rank is not an integer, interpolate between the two closest ranks.
 
 #### Example with P95 Calculation:
 
 For the above dataset with 20 values:
 
 1. **Sort the Data**: Already sorted in the example.
-2. **Rank Calculation**: For P95, rank = (95/100) \* (20 + 1) = 19.95.
-3. **Interpolation**: The 19th value is 900ms, and the 20th value is 1000ms. Interpolating between these values, P95 is approximately 900 + 0.95 \* (1000 - 900) = 995ms.
+1. **Rank Calculation**: For P95, rank = (95/100) * (20 + 1) = 19.95.
+1. **Interpolation**: The 19th value is 900ms, and the 20th value is 1000ms. Interpolating between these values, P95 is approximately 900 + 0.95 * (1000 - 900) = 995ms.
 
 # Logs vs Traces vs Metrics
 
@@ -354,11 +355,12 @@ For the above dataset with 20 values:
 
    - Logs capture detailed information about specific events. They are not necessarily tied to traces but can be correlated using identifiers like request IDs.
 
-2. **Traces**:
+1. **Traces**:
 
    - Traces provide a high-level view of a single request's journey through the system, composed of multiple spans. Each span can contain logs and attributes but traces are not just collections of logs. They are structured to show the relationships and timing between different spans of work.
 
-3. **Metrics**:
+1. **Metrics**:
+
    - Metrics are aggregated data points that provide a summary of system performance and behavior. They are often derived from events and traces but are stored and analyzed separately. Metrics are used for monitoring trends over time rather than providing detailed, event-specific information.
 
 ### Example Workflow
@@ -367,9 +369,10 @@ For the above dataset with 20 values:
 
    - A log entry is created when the `GET /api/user/{id}` endpoint is called.
 
-2. **Trace Creation**:
+1. **Trace Creation**:
 
    - A trace is initiated for the request, with spans created for each significant operation (e.g., handling the HTTP request, querying the database).
 
-3. **Metric Aggregation**:
+1. **Metric Aggregation**:
+
    - Metrics are recorded for the number of requests, request duration, and database query performance. These metrics are aggregated over time to provide insights into the application's performance.

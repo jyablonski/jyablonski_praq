@@ -177,7 +177,7 @@ You can tag tests w/ `@smoke` etc to run subsets of e2e tests as needed.
 - This is ideal in CI workflows where you want fast feedback on critical paths after each commit, but not run the full suite.
 - When you merge to `main`, you can run the full suite to ensure everything is solid before deploying.
 
-``` typescript
+```typescript
 // tests/e2e/auth/login.spec.ts
 import { test, expect } from '@playwright/test';
 
@@ -206,7 +206,7 @@ test('shows validation errors for invalid credentials', async ({ page }) => {
 There are 2 strategies for running e2e tests in a CI / CD pipeline:
 
 1. Local Test Environment
-2. Deployed Environment (Staging, Production etc)
+1. Deployed Environment (Staging, Production etc)
 
 A local test environment is spun up as part of the CI process. This can be done using Docker Compose, Testcontainers, or similar tools to create a full stack environment that mimics production.
 
@@ -218,5 +218,5 @@ A deployed environment involves running e2e tests against a staging or productio
 
 The sweet spot is often a hybrid approach: run critical smoke tests against a local test environment on every PR, and run the full suite against a deployed staging environment on merges or scheduled runs.
 
-- You can also set up ephemeral staging environments per PR using tools like Vercel or Netlify for more realistic testing as needed. 
+- You can also set up ephemeral staging environments per PR using tools like Vercel or Netlify for more realistic testing as needed.
 - If you have a complex PR with significant changes, simply label the PR w/ `ephemeral` and CI can spin up a full staging environment for that PR only.

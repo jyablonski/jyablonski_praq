@@ -21,10 +21,10 @@ Client ID and Client Secret are unique identifiers per Client that's interacting
 
 1. Initial Authentication
    1. Client provides its Client ID, Client Secret, and any other user creds to the authorization server
-   2. The Authorization server returns an access token and a refresh token
-2. Accessing Resources
+   1. The Authorization server returns an access token and a refresh token
+1. Accessing Resources
    1. The Client is able to use the access token to access protected resources
-3. Token Expiration
+1. Token Expiration
    1. When the access token expires, the client uses the refresh token to request a new access token from the authorization server
 
 ## Why a Refresh Token

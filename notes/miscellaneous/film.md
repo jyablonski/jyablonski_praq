@@ -53,9 +53,9 @@ Digital soundtracks are encoded as patterns of dots or lines between the sprocke
 From edge to edge, a typical 35mm film strip contains:
 
 1. Sprocket holes (for transport)
-2. Optical soundtrack (wavy line for audio)
-3. Picture area (the actual image)
-4. More sprocket holes on the other side
+1. Optical soundtrack (wavy line for audio)
+1. Picture area (the actual image)
+1. More sprocket holes on the other side
 
 ## Why This System Worked So Well
 

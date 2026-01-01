@@ -8,10 +8,10 @@
 Concurrency means simultaneous occurrence. Python can achieve this in multiple ways for different use cases. Concurrency can mean starting 2 tasks at the same time, but this does not mean they're both running in parallel.
 
 Concurrency solves 2 main problems: CPU-bound and I/O-bound issues which slow down our programs.
-_ I/O problems cause the program to slow down because you're waiting for IO from some external/remote resource. Typically file system or network connections, you actually spend more time waiting for these than the time your program is executing its processing code.
-_ Solution is typically threading or Asyncio.
-_ CPU-bound problems are where the speed of your program is limited by the speed of your CPU.
-_ Solution is typically writing more efficient code, or rewriting portions of your Python code in C via Cython.
+\_ I/O problems cause the program to slow down because you're waiting for IO from some external/remote resource. Typically file system or network connections, you actually spend more time waiting for these than the time your program is executing its processing code.
+\_ Solution is typically threading or Asyncio.
+\_ CPU-bound problems are where the speed of your program is limited by the speed of your CPU.
+\_ Solution is typically writing more efficient code, or rewriting portions of your Python code in C via Cython.
 
 # Parallelism
 
@@ -22,12 +22,12 @@ Using multiple CPU Cores available on your PC to spawn multiple processes.
 Runs on a single processor and only one at a time. The OS knows about all of the threads and can interrupt it at any time to start doing something with another thread called `pre-emptive multitasking`.
 
 In `threading_prac_async.py`, to turn a synchronous program into async you have to add in `import concurrent.futures` and `import threading` and create a `concurrent.futures.ThreadPoolExecutor(max_workers=5)` pool of threads to use, each running concurrently. The executor controls how and when each of the threads will run. The context manager (`with x as executor:`) creates and destroys these resources for you.
-_ The `.map` method is available to run the passed in function, in this case `download_site`.
-_ The executor does a ton of shit for you, so you don't have to call `thread.start`, `thread.stop` etc.
-_ Each thread is creating its own `requests.Session()` object, which the creators of requests mention in their documentation.
-_ There is a `threading.lock` to ensure only one thread can access a block of code or a bit of memory at a time.
-_ `thread_local = threading.local()` called at the top looks like a global object, but it is actually specific to each individual thread.
-_ There's overhead with creating threads and having to wait on the starting and stopping of threads. If you have 20 urls, it's not necessarily best to use 20 threads. Might be best to use somewhere between 5-10 instead for maximum time savings. \* The example took ~15 seconds without threading and ~3.7 seconds with threading.
+\_ The `.map` method is available to run the passed in function, in this case `download_site`.
+\_ The executor does a ton of shit for you, so you don't have to call `thread.start`, `thread.stop` etc.
+\_ Each thread is creating its own `requests.Session()` object, which the creators of requests mention in their documentation.
+\_ There is a `threading.lock` to ensure only one thread can access a block of code or a bit of memory at a time.
+\_ `thread_local = threading.local()` called at the top looks like a global object, but it is actually specific to each individual thread.
+\_ There's overhead with creating threads and having to wait on the starting and stopping of threads. If you have 20 urls, it's not necessarily best to use 20 threads. Might be best to use somewhere between 5-10 instead for maximum time savings. * The example took ~15 seconds without threading and ~3.7 seconds with threading.
 
 The downside to threading here is it can cause small, cumbersome bugs that are hard to track and debug. You don't have direct control over the underlying processes.
 

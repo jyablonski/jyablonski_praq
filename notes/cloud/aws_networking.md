@@ -126,7 +126,7 @@ In CIDR notation, an IP address range is represented by the combination of an IP
 
 1. **IP Address**: The IP address specifies the starting address of the range. It can be any valid IPv4 or IPv6 address.
 
-2. **Prefix Length**: The prefix length specifies the number of bits in the network portion of the address. It determines the size of the address range and how many addresses are included in it. A larger prefix length corresponds to a smaller address range with fewer addresses, while a smaller prefix length corresponds to a larger address range with more addresses.
+1. **Prefix Length**: The prefix length specifies the number of bits in the network portion of the address. It determines the size of the address range and how many addresses are included in it. A larger prefix length corresponds to a smaller address range with fewer addresses, while a smaller prefix length corresponds to a larger address range with more addresses.
 
 For example, in IPv4 CIDR notation:
 
@@ -143,12 +143,13 @@ Here are examples of some of the most common sets of bits typically used in subn
    - This is a common subnet mask used for small to medium-sized networks.
    - Number of possible IP addresses: 256 (2^8)
 
-2. **/16 (255.255.0.0)**:
+1. **/16 (255.255.0.0)**:
 
    - This is a common subnet mask used for large networks or organizations.
    - Number of possible IP addresses: 65,536 (2^16)
 
-3. **/8 (255.0.0.0)**:
+1. **/8 (255.0.0.0)**:
+
    - This is a common subnet mask used for very large networks or Internet Service Providers (ISPs).
    - Number of possible IP addresses: 16,777,216 (2^24)
 
@@ -176,8 +177,8 @@ Subnet CIDR Block `10.0.1.0/24`
 Load Balancers distribute network traffic across multiple servers. They ensure no single server becomes overwhelmed, and help de-couple some responsibiltiies from a single-server setup.
 
 1. They perform SSL Termination, which means client requests come over the internet to the Load Balancer encrypted under HTTPS, then the Load Balancer can decrypt them and send them off some destination server as HTTP for the request to get processed. The EC2 Server then sends the response back to the Load Balancer where it can encrypt it again before sending the response back to the client
-2. They route traffic to various EC2 Servers and perform load balancing to ensure maximum performance and to not overload any 1 Server Instance hosting the App.
-3. They regularly check the health of the backend servers to make sure they don't send traffic to a dead or unavailable server.
+1. They route traffic to various EC2 Servers and perform load balancing to ensure maximum performance and to not overload any 1 Server Instance hosting the App.
+1. They regularly check the health of the backend servers to make sure they don't send traffic to a dead or unavailable server.
 
 There are different Load Balancing Algorithms available:
 

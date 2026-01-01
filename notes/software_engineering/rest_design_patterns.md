@@ -33,13 +33,13 @@ Naming conventions:
 
 ## HTTP Methods & Idempotency
 
-| Method | Purpose        | Idempotent | Safe |
+| Method | Purpose | Idempotent | Safe |
 | ------ | -------------- | ---------- | ---- |
-| GET    | Read           | Yes        | Yes  |
-| POST   | Create         | No         | No   |
-| PUT    | Full replace   | Yes        | No   |
-| PATCH  | Partial update | No\*       | No   |
-| DELETE | Remove         | Yes        | No   |
+| GET | Read | Yes | Yes |
+| POST | Create | No | No |
+| PUT | Full replace | Yes | No |
+| PATCH | Partial update | No\* | No |
+| DELETE | Remove | Yes | No |
 
 Idempotent means calling it multiple times produces the same result. This matters for retry logic and caching. PUT is idempotent because sending the same full resource representation repeatedly yields the same state. POST isn't because each call might create a new resource.
 
@@ -341,10 +341,10 @@ Not using appropriate status codes — returning 200 with `{"success": false}` m
 When discussing APIs in interviews:
 
 1. Start by identifying resources and their relationships
-2. Define the URL structure
-3. Specify request/response formats with examples
-4. Address pagination strategy for list endpoints
-5. Mention authentication approach
-6. Note caching headers for read-heavy endpoints
-7. Consider rate limiting and how you'd communicate limits
-8. Think about idempotency for write operations (idempotency keys for POST)
+1. Define the URL structure
+1. Specify request/response formats with examples
+1. Address pagination strategy for list endpoints
+1. Mention authentication approach
+1. Note caching headers for read-heavy endpoints
+1. Consider rate limiting and how you'd communicate limits
+1. Think about idempotency for write operations (idempotency keys for POST)

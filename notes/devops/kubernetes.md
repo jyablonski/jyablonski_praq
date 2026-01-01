@@ -24,7 +24,7 @@ Kubernetes is a powerful container orchestration platform used to deploy, manage
 
    - **Scheduler:** The scheduler assigns work to nodes, based on resource requirements, constraints, and other policies. It decides where to place new pods based on the available resources and optimization goals.
 
-2. **Node (Worker) Components:**
+1. **Node (Worker) Components:**
 
    - **Kubelet:** The Kubelet is an agent that runs on each node in the cluster. It is responsible for managing and maintaining the health of containers running on that node. It communicates with the API server and reports the node's status.
 
@@ -34,7 +34,7 @@ Kubernetes is a powerful container orchestration platform used to deploy, manage
 
    - **Pod:** A pod is the smallest deployable unit in Kubernetes. It can contain one or more containers that share the same network namespace and storage volumes. Pods are scheduled and run on nodes.
 
-3. **Add-Ons and Supporting Components:**
+1. **Add-Ons and Supporting Components:**
 
    - **Ingress Controller:** An Ingress controller manages external access to services within the cluster. It handles routing, load balancing, and SSL termination for incoming traffic.
 
@@ -56,26 +56,26 @@ Here's a breakdown of what Helm charts are for in the Kubernetes world:
 
 1. **Package Management**: Helm charts package all the Kubernetes resources needed to deploy an application, including pods, services, config maps, secrets, and more. This packaging simplifies application deployment by bundling everything into a single unit.
 
-2. **Configuration Management**: Helm charts allow you to parameterize your Kubernetes configurations. You can define values and templates within a chart, making it possible to customize deployments for different environments or use cases. This makes it easier to manage configurations for different stages of the development lifecycle (e.g., development, testing, production) without duplicating YAML files.
+1. **Configuration Management**: Helm charts allow you to parameterize your Kubernetes configurations. You can define values and templates within a chart, making it possible to customize deployments for different environments or use cases. This makes it easier to manage configurations for different stages of the development lifecycle (e.g., development, testing, production) without duplicating YAML files.
 
-3. **Version Control**: Helm charts can be versioned, which enables you to track changes to your application deployments over time. This is particularly useful when you need to roll back to a previous version or audit changes.
+1. **Version Control**: Helm charts can be versioned, which enables you to track changes to your application deployments over time. This is particularly useful when you need to roll back to a previous version or audit changes.
 
-4. **Reusability**: Helm charts can be shared and reused across different projects and organizations. This promotes best practices, reduces duplication of effort, and accelerates the deployment of applications in a consistent manner.
+1. **Reusability**: Helm charts can be shared and reused across different projects and organizations. This promotes best practices, reduces duplication of effort, and accelerates the deployment of applications in a consistent manner.
 
-5. **Dependency Management**: Helm supports dependencies between charts. This means you can create a chart that relies on other charts, simplifying complex application architectures by breaking them down into smaller, manageable components.
+1. **Dependency Management**: Helm supports dependencies between charts. This means you can create a chart that relies on other charts, simplifying complex application architectures by breaking them down into smaller, manageable components.
 
-6. **Upgrades and Rollbacks**: Helm simplifies the process of upgrading and rolling back applications. It tracks release history, making it easy to revert to a previous known good state if an upgrade introduces issues.
+1. **Upgrades and Rollbacks**: Helm simplifies the process of upgrading and rolling back applications. It tracks release history, making it easy to revert to a previous known good state if an upgrade introduces issues.
 
-7. **Community and Ecosystem**: Helm has a large and active community, which results in a rich ecosystem of available charts for popular applications and services. You can find Helm charts for databases, web servers, monitoring tools, and much more on the Helm Hub and other community repositories.
+1. **Community and Ecosystem**: Helm has a large and active community, which results in a rich ecosystem of available charts for popular applications and services. You can find Helm charts for databases, web servers, monitoring tools, and much more on the Helm Hub and other community repositories.
 
-8. **Customization and Templating**: Helm charts use Go templating to allow dynamic generation of Kubernetes resources based on user-defined values. This makes it easy to reuse charts with different configurations and adapt them to specific needs.
+1. **Customization and Templating**: Helm charts use Go templating to allow dynamic generation of Kubernetes resources based on user-defined values. This makes it easy to reuse charts with different configurations and adapt them to specific needs.
 
 In summary, Helm charts are a critical tool in the Kubernetes ecosystem for simplifying application deployment, configuration management, and version control. They help streamline the process of managing complex applications in Kubernetes and are widely used in Kubernetes deployments to promote consistency and repeatability.
 
 ## How to Use Helm
 
 1. `helm create nba-elt-rest-api`
-2. Edit the `values.yml` File
+1. Edit the `values.yml` File
 
 `values.yml`
 
@@ -145,19 +145,19 @@ Key features and capabilities of `eksctl` include:
 
 1. **Cluster Creation:** `eksctl` simplifies the process of creating an EKS cluster. It can create and configure the necessary AWS resources, such as Amazon Elastic Compute Cloud (EC2) instances for worker nodes and Amazon Virtual Private Cloud (VPC) components, and set up the EKS control plane.
 
-2. **Cluster Configuration:** You can use `eksctl` to customize the configuration of your EKS cluster, including the type and size of worker nodes, node groups, and VPC settings.
+1. **Cluster Configuration:** You can use `eksctl` to customize the configuration of your EKS cluster, including the type and size of worker nodes, node groups, and VPC settings.
 
-3. **Scaling:** `eksctl` allows you to easily scale the number of worker nodes in your cluster to meet the demands of your applications.
+1. **Scaling:** `eksctl` allows you to easily scale the number of worker nodes in your cluster to meet the demands of your applications.
 
-4. **High Availability:** It helps configure your EKS cluster for high availability by spreading worker nodes across multiple Availability Zones.
+1. **High Availability:** It helps configure your EKS cluster for high availability by spreading worker nodes across multiple Availability Zones.
 
-5. **Integration:** `eksctl` integrates with AWS Identity and Access Management (IAM) for setting up roles and permissions, as well as AWS CloudFormation for managing AWS resources.
+1. **Integration:** `eksctl` integrates with AWS Identity and Access Management (IAM) for setting up roles and permissions, as well as AWS CloudFormation for managing AWS resources.
 
-6. **Simplified CLI:** The `eksctl` command-line interface offers a simplified and user-friendly way to interact with EKS clusters, abstracting many of the complex AWS resource setup tasks.
+1. **Simplified CLI:** The `eksctl` command-line interface offers a simplified and user-friendly way to interact with EKS clusters, abstracting many of the complex AWS resource setup tasks.
 
-7. **Updates and Upgrades:** It assists with cluster updates and upgrades, such as upgrading the Kubernetes version or applying changes to the cluster configuration.
+1. **Updates and Upgrades:** It assists with cluster updates and upgrades, such as upgrading the Kubernetes version or applying changes to the cluster configuration.
 
-8. **Add-ons:** `eksctl` supports the addition of various Kubernetes add-ons like VPC CNI, and it can deploy them as part of cluster creation.
+1. **Add-ons:** `eksctl` supports the addition of various Kubernetes add-ons like VPC CNI, and it can deploy them as part of cluster creation.
 
 By using `eksctl`, developers and administrators can accelerate the setup and management of EKS clusters, making it easier to run containerized applications on AWS with Kubernetes. It abstracts much of the underlying AWS infrastructure complexity, allowing users to focus on their applications and workloads.
 
@@ -217,25 +217,25 @@ spec:
 
 1. `deployment.yaml` - Config files used to define and manage deployments. You typically specify a container image to run, give it a name, how many replicas it should have, and what port it will run on
 
-2. `service.yaml` - Config files used to specify what ports should be exposed on the pods running your application
+1. `service.yaml` - Config files used to specify what ports should be exposed on the pods running your application
 
-3. `ingress.yaml` - Config files used to define rules for routing eternal HTTP(S) traffic to your pods
+1. `ingress.yaml` - Config files used to define rules for routing eternal HTTP(S) traffic to your pods
 
 - ![image](https://github.com/jyablonski/jyablonski_praq/assets/16946556/568cfab1-2b6f-44d5-8c1d-ab9a8024ac35)
 
 1. `secrets.yaml` - Config file used to define sensitive data such as passwords, API Tokens, SSH keys etc in key value pairs to be used in your applications running in K8s via environment variables.
 
-2. `config_map.yaml` - Config file used to define non-sensitive data in key value pairs to be used in your applications running in K8s via environment variables.
+1. `config_map.yaml` - Config file used to define non-sensitive data in key value pairs to be used in your applications running in K8s via environment variables.
 
 ## Required Fields in K8s Files
 
 1. `apiVersion` - The Version of the Kubernetes API to create the object
 
-2. `kind` - The kind of Object to create `Deployment`, `Service` etc
+1. `kind` - The kind of Object to create `Deployment`, `Service` etc
 
-3. `metadata` - Data to uniquely identify the object like a `name`, `namespace` etc
+1. `metadata` - Data to uniquely identify the object like a `name`, `namespace` etc
 
-4. `spec` - The desired state for the object
+1. `spec` - The desired state for the object
 
 ## Service Accounts vs Worker Node Permissioning
 
@@ -676,13 +676,19 @@ spec:
 ## Admin Path
 
 - Below is an example of a K8s Ingress where you lock your REST APIs `/admin` endpoinmts to only ip addresses in your company's VPN. This is layer 4 because you're filtering traffic before it even reaches the ALB via only IP addresses, you're never reading HTTP requests here
+
 - This way the only way for the load balancer to even forward requests to the REST API in these cases is if they're on the company VPN. But, they would still have be logged in and authenticated which would be checked on the REST API's end
+
 - The Load Balancewr handles Layer 4 HTTP Routing, the
 
 - Layer 4: Client connects to ALB - security group allows/denies based on source IP
+
 - Layer 7: ALB terminates SSL, reads HTTP request
+
 - Layer 7: ALB checks: "Is this /admin/\* AND from VPN IP?"
+
 - Layer 7: Routes to appropriate target group based on path
+
 - Layer 7: Your app gets the request and does additional auth
 
 ```yaml
@@ -770,15 +776,15 @@ spec:
 What happens automatically:
 
 1. AWS Load Balancer Controller creates the ALB
-2. ExternalDNS watches the Ingress
-3. ExternalDNS gets the ALB DNS name (e.g., k8s-ingress-abc123.elb.amazonaws.com)
-4. ExternalDNS creates Route 53 A record: dashboard.yourdomain.com → ALB
-5. Done! Your app is accessible at dashboard.yourdomain.com
+1. ExternalDNS watches the Ingress
+1. ExternalDNS gets the ALB DNS name (e.g., k8s-ingress-abc123.elb.amazonaws.com)
+1. ExternalDNS creates Route 53 A record: dashboard.yourdomain.com → ALB
+1. Done! Your app is accessible at dashboard.yourdomain.com
 
 When you delete the Ingress:
 
 1. ExternalDNS automatically deletes the Route 53 record
-2. No orphaned DNS entries!
+1. No orphaned DNS entries!
 
 ## Sidecar Pattern in Kubernetes
 

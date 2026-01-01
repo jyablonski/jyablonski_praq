@@ -165,23 +165,23 @@ OpenID Connect (OIDC) and OAuth 2.0 (OAuth2) are related but serve different pur
 
 1. **Purpose:** OAuth2 is an authorization framework that allows one application to access the resources of another application on behalf of the user, without sharing the user's credentials. It is primarily used for securing APIs and granting limited access to resources.
 
-2. **Scenarios:** OAuth2 is commonly used for scenarios like enabling a mobile app to access a user's Google Drive files without the app having the user's Google password. It's also used for securing APIs for third-party access.
+1. **Scenarios:** OAuth2 is commonly used for scenarios like enabling a mobile app to access a user's Google Drive files without the app having the user's Google password. It's also used for securing APIs for third-party access.
 
-3. **Components:** OAuth2 has roles like the Resource Owner (the user), Client (the application making requests), Authorization Server (responsible for user authentication and consent), and Resource Server (where the user's data or resources are stored).
+1. **Components:** OAuth2 has roles like the Resource Owner (the user), Client (the application making requests), Authorization Server (responsible for user authentication and consent), and Resource Server (where the user's data or resources are stored).
 
-4. **Grant Types:** OAuth2 defines multiple grant types, such as Authorization Code, Implicit, Resource Owner Password Credentials, and Client Credentials, each suitable for different use cases.
+1. **Grant Types:** OAuth2 defines multiple grant types, such as Authorization Code, Implicit, Resource Owner Password Credentials, and Client Credentials, each suitable for different use cases.
 
-5. **Tokens:** OAuth2 generates access tokens that represent a user's permission to access certain resources for a specific period. These tokens are typically short-lived.
+1. **Tokens:** OAuth2 generates access tokens that represent a user's permission to access certain resources for a specific period. These tokens are typically short-lived.
 
 **OpenID Connect (OIDC):**
 
 1. **Purpose:** OIDC is an identity layer built on top of OAuth2. Its primary purpose is to provide a standardized way for applications to authenticate users and obtain their identity information (e.g., name, email) in a secure and interoperable manner.
 
-2. **Scenarios:** OIDC is commonly used in scenarios where a website or application wants to allow users to log in with their existing accounts from identity providers like Google, Facebook, or a company's own identity service.
+1. **Scenarios:** OIDC is commonly used in scenarios where a website or application wants to allow users to log in with their existing accounts from identity providers like Google, Facebook, or a company's own identity service.
 
-3. **Components:** OIDC extends OAuth2 by introducing an ID Token, which contains identity information about the user. It also adds an Identity Provider (a trusted party that authenticates users) as a new component.
+1. **Components:** OIDC extends OAuth2 by introducing an ID Token, which contains identity information about the user. It also adds an Identity Provider (a trusted party that authenticates users) as a new component.
 
-4. **Tokens:** OIDC introduces the ID Token in addition to access tokens and refresh tokens. The ID Token contains user information and is used for user authentication.
+1. **Tokens:** OIDC introduces the ID Token in addition to access tokens and refresh tokens. The ID Token contains user information and is used for user authentication.
 
 **Key Differences:**
 

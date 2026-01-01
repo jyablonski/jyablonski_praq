@@ -16,9 +16,9 @@ Asymptotic analysis uses mathematical notation to describe the upper and lower b
 
 1. **Big O (O)** Notation: Represents the upper bound or worst-case time complexity of an algorithm. It gives an upper limit on the growth rate of the algorithm's running time as the input size increases. For example, O(n) represents linear time complexity.
 
-2. **Omega (Ω)** Notation: Represents the lower bound or best-case time complexity of an algorithm. It gives a lower limit on the growth rate of the algorithm's running time. For example, Ω(n) represents linear time complexity.
+1. **Omega (Ω)** Notation: Represents the lower bound or best-case time complexity of an algorithm. It gives a lower limit on the growth rate of the algorithm's running time. For example, Ω(n) represents linear time complexity.
 
-3. **Theta (θ)** Notation: Represents both the upper and lower bounds, providing a tight bound on the algorithm's time complexity. For example, θ(n) represents that the algorithm has a linear time complexity, and its running time grows linearly with the input size.
+1. **Theta (θ)** Notation: Represents both the upper and lower bounds, providing a tight bound on the algorithm's time complexity. For example, θ(n) represents that the algorithm has a linear time complexity, and its running time grows linearly with the input size.
 
 Asymptotic analysis helps in classifying algorithms into broad categories based on their efficiency and scalability. It allows developers and researchers to make informed decisions about which algorithm to use based on the problem's requirements and the size of the input.
 
@@ -30,18 +30,18 @@ For example, an algorithm with O(n^2) time complexity may be efficient for small
 
 1. O(1) Constant Time
    1. Accessing an element from an Array by Index
-   2. Appending an Item to an Array
-   3. Accessing a value in a Dictionary by Key
-2. O(log(n)) Logarithmic Time
+   1. Appending an Item to an Array
+   1. Accessing a value in a Dictionary by Key
+1. O(log(n)) Logarithmic Time
    1. Binary Search
-3. O(n) Linear Time
+1. O(n) Linear Time
    1. Traversing through every element in an Array
-4. O(n log(n)) Linearithmic Time
+1. O(n log(n)) Linearithmic Time
    1. Merge Sort
-5. O(n^2) Quadratic Time
+1. O(n^2) Quadratic Time
    1. Bubble Sort
-   2. Selection Sort
-   3. Insertion Sort
+   1. Selection Sort
+   1. Insertion Sort
 
 ## Data Structures
 
@@ -53,19 +53,19 @@ Here are some key characteristics and features of array data structures:
 
 1. **Ordered Collection**: Arrays are ordered collections of elements, meaning that the elements are stored in a specific order based on their index.
 
-2. **Fixed Size**: In many programming languages, arrays have a fixed size, meaning the number of elements they can hold is determined when they are created and cannot be changed dynamically.
+1. **Fixed Size**: In many programming languages, arrays have a fixed size, meaning the number of elements they can hold is determined when they are created and cannot be changed dynamically.
 
-3. **Index-Based Access**: Elements in an array are accessed using their index, which is typically an integer value. The index allows for efficient and direct access to specific elements.
+1. **Index-Based Access**: Elements in an array are accessed using their index, which is typically an integer value. The index allows for efficient and direct access to specific elements.
 
-4. **Zero-Based Indexing**: In most programming languages, array indexing starts at 0. The first element is accessed using index 0, the second with index 1, and so on.
+1. **Zero-Based Indexing**: In most programming languages, array indexing starts at 0. The first element is accessed using index 0, the second with index 1, and so on.
 
-5. **Homogeneous Data Type**: In most cases, arrays store elements of the same data type, such as integers, floating-point numbers, characters, or custom objects.
+1. **Homogeneous Data Type**: In most cases, arrays store elements of the same data type, such as integers, floating-point numbers, characters, or custom objects.
 
-6. **Efficient Access**: Accessing elements in an array is efficient because you can access any element directly using its index.
+1. **Efficient Access**: Accessing elements in an array is efficient because you can access any element directly using its index.
 
-7. **Contiguous Memory Allocation**: Array elements are stored in contiguous memory locations, which allows for efficient memory access and faster iteration through the elements.
+1. **Contiguous Memory Allocation**: Array elements are stored in contiguous memory locations, which allows for efficient memory access and faster iteration through the elements.
 
-8. **Static or Dynamic Allocation**: Some programming languages allow for dynamic arrays, where the size can be changed dynamically during runtime, while others have static arrays with a fixed size.
+1. **Static or Dynamic Allocation**: Some programming languages allow for dynamic arrays, where the size can be changed dynamically during runtime, while others have static arrays with a fixed size.
 
 ### Set
 
@@ -103,19 +103,19 @@ Here's a high-level overview of how Python dictionaries are typically implemente
 1. **Hash Function:**
    Python uses a hash function to convert keys (e.g., strings, integers) into hash values, which are numerical representations of the keys. The hash function should distribute keys evenly to minimize collisions (different keys mapping to the same hash value).
 
-2. **Hash Table Structure:**
+1. **Hash Table Structure:**
    The hash table is an array (or a collection of arrays) with a fixed number of slots or buckets. Each slot can hold a key-value pair or a reference to a linked list or other data structure containing key-value pairs.
 
-3. **Hash Value to Index:**
+1. **Hash Value to Index:**
    The hash value obtained from the hash function is used to determine the index (position) in the hash table where the key-value pair will be stored. Typically, the hash value is transformed into a valid index within the array using a modulo operation with the size of the hash table.
 
-4. **Collision Handling:**
+1. **Collision Handling:**
    Collisions occur when two or more keys hash to the same index. To handle collisions, Python uses techniques like chaining or open addressing.
 
    - **Chaining:** Each bucket in the hash table contains a linked list or other data structure that stores all key-value pairs hashing to the same index. This allows multiple key-value pairs to coexist at the same index.
    - **Open Addressing:** When a collision occurs, the algorithm looks for the next available (unoccupied) slot in the hash table to store the key-value pair.
 
-5. **Insertion and Lookup:**
+1. **Insertion and Lookup:**
    To insert a key-value pair, the hash value is computed for the key, the appropriate index in the hash table is determined, and the key-value pair is stored in that location (either by adding to the linked list or occupying the slot).
    For lookups, the hash value of the key is computed again to find the index and retrieve the value associated with the key.
 
@@ -130,22 +130,22 @@ Here's a step-by-step description of the Breadth-First Search algorithm:
 1. **Start at a Source Node:**
    Begin with a designated source node (or starting point) in the graph or tree.
 
-2. **Explore Neighbors:**
+1. **Explore Neighbors:**
    Explore all the neighbors (adjacent nodes) of the source node first. These are the nodes directly connected to the source node.
 
-3. **Visit in Order of Discovery:**
+1. **Visit in Order of Discovery:**
    Visit the neighbors in the order in which they were discovered. This is typically achieved using a queue data structure to manage the order of exploration.
 
-4. **Queue the Neighbors:**
+1. **Queue the Neighbors:**
    Enqueue (add to the end of the queue) all the neighbors of the source node.
 
-5. **Process the Next Node:**
+1. **Process the Next Node:**
    Dequeue (remove from the front of the queue) the next node to be processed. This node becomes the new source node for further exploration.
 
-6. **Repeat the Process:**
+1. **Repeat the Process:**
    Repeat steps 2-5 for the newly selected source node (now at the front of the queue), exploring its neighbors and enqueueing any unvisited neighbors.
 
-7. **Terminate When Complete:**
+1. **Terminate When Complete:**
    Continue this process until all nodes have been visited, or until a specific condition or node is reached.
 
 BFS is typically implemented using a queue data structure, which ensures that nodes are processed in the order they were discovered. This property of BFS ensures that it explores nodes level by level, making it particularly useful for tasks like finding the shortest path in an unweighted graph, or traversing a tree or graph in a systematic way.
@@ -161,13 +161,13 @@ Here's a step-by-step description of the Depth-First Search algorithm:
 1. **Start at a Source Node:**
    Begin with a designated source node (or starting point) in the graph or tree.
 
-2. **Explore a Neighbor:**
+1. **Explore a Neighbor:**
    Choose a neighbor of the source node and explore it as deeply as possible.
 
-3. **Backtrack When Necessary:**
+1. **Backtrack When Necessary:**
    If you reach a node with no unvisited neighbors, backtrack to the previous node and explore any remaining unvisited neighbors from there.
 
-4. **Repeat the Process:**
+1. **Repeat the Process:**
    Continue this process, choosing the deepest unexplored node, until all nodes have been visited.
 
 DFS can be implemented using recursion or by using a stack (either explicitly or through the call stack). The algorithm effectively goes as deep as possible along each branch before backtracking, which is why it's called "depth-first."

@@ -1,8 +1,9 @@
 # Iterating
+
 1. Using `for i in nums` will give you the values
 
+1. Using `range()` in Loops will give you the index
 
-2. Using `range()` in Loops will give you the index
 ```py
 nums = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
@@ -56,7 +57,7 @@ for i in nums:
 
 3. Modulo Operator
 
-``` py
+```py
 my_value = 15
 
 my_value % 3 # remainder is 0

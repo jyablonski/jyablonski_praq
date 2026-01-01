@@ -7,17 +7,17 @@
 There are only 12 distinct pitches in Western music:
 
 1. A
-2. A# (A sharp) / Bb (B flat)
-3. B
-4. C
-5. C# (C sharp) / Db (D flat)
-6. D
-7. D# (D sharp) / Eb (E flat)
-8. E
-9. F
-10. F# (F sharp) / Gb (G flat)
-11. G
-12. G# (G sharp) / Ab (A flat)
+1. A# (A sharp) / Bb (B flat)
+1. B
+1. C
+1. C# (C sharp) / Db (D flat)
+1. D
+1. D# (D sharp) / Eb (E flat)
+1. E
+1. F
+1. F# (F sharp) / Gb (G flat)
+1. G
+1. G# (G sharp) / Ab (A flat)
 
 ### Drop D
 
@@ -136,10 +136,13 @@ All 12 power chords in Drop D:
 3-note chord built by stacking two intervals of a third on top of each other
 
 - Root, the foundation note
+
 - Third, determines if it's major or minor
+
 - Fifth, adds stability
 
 - When we say "C Major", we actually mean "C Major Triad"
+
 - Likewise when we say "C Minor", we actually mean "C Minor Triad"
 
 ## Major vs Minor Chords
@@ -259,7 +262,7 @@ D|--12--14---|  (D and E)
 
 - Root notes (A): Fret 10 on 2nd string (B), fret 12 on 3rd string (G), fret 12 on 5th string (A)
 
----
+______________________________________________________________________
 
 ### Position 4
 
@@ -274,7 +277,7 @@ D|--14--17---|  (E and G)
 
 - Root notes (A): fret 14 on the G string (A) and fret 12 on the A string (A).
 
----
+______________________________________________________________________
 
 ### Position 5
 

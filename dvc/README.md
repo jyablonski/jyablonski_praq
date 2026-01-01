@@ -10,13 +10,12 @@ DVC-tracked data can be added to a variety of storage systems referred to as "re
 
 - Remotes can be your local file system, or S3 etc.
 
-
 DVC stores information in a special `.dvc` file under `data/data.xml.dvc` which is a human readable metadata file as a placeholder for the original dataset which we dont want to check into git.
 
 - To recap, the original CSV file or whatever is added to the gitignore
 - The `.dvc` file is created as a placeholder to reference that CSV File.
 
-``` sh
+```sh
 dvc init
 
 # dvc init --subdir
@@ -27,10 +26,9 @@ dvc get https://github.com/iterative/dataset-registry \
 dvc add data/data.xml
 ```
 
-
 ## Local File System
 
-``` sh
+```sh
 mkdir /tmp/dvcstore
 
 # local route
@@ -59,14 +57,13 @@ git commit data/data.xml.dvc -m "Revert dataset updates"
 
 Once DVC-tracked data and models are stored remotely, they can be downloaded with dvc pull when needed (e.g. in other copies of this project). Usually, we run it after `git pull` or `git clone`.
 
-The Git <> DVC stuff kinda confuses me. I think we'll have to play around with this a bit more to understand the interaction there. 
-
+The Git \<> DVC stuff kinda confuses me. I think we'll have to play around with this a bit more to understand the interaction there.
 
 ## Data Pipelines
 
 [Guide](https://dvc.org/doc/start/data-pipelines/data-pipelines)
 
-``` sh
+```sh
 virtualenv venv && echo "venv" > .gitignore
 
 source venv/bin/activate
@@ -99,8 +96,7 @@ DVC Stages are processing steps in a Data Pipeline. 1 or more Stages create a Pi
 
 After running the dvc stage add block above, a `dvc.yaml` file is generated that includes info about the command we want to run, its dependencies, and outputs.
 
-
-``` yaml
+```yaml
 stages:
   prepare:
     cmd: python src/prepare.py data/data.xml

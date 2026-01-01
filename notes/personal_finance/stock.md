@@ -16,18 +16,18 @@ Stocks are traded on exchanges like the New York Stock Exchange (NYSE) or NASDAQ
 
 ## Terms
 
-1. Market Cap - Total value of all company shares (share price \* number of outstanding shares). Determines if a company is small, mid, or large cap
-2. Float - How many shares are available for public trading
-3. Volume - How many shares trade daily, higher volume usually means easier to buy & sell
-4. Bid / Ask Spread - The gap between what buyers offer and what sellers want, wider spread usually means higher trading costs
-5. Dividend Yield - Annual dividend divided by stock price
-6. Stock Splits - Company divides existing shares (2-for-1 split means you get 2 shares for every 1, but each worth half as much)
+1. Market Cap - Total value of all company shares (share price * number of outstanding shares). Determines if a company is small, mid, or large cap
+1. Float - How many shares are available for public trading
+1. Volume - How many shares trade daily, higher volume usually means easier to buy & sell
+1. Bid / Ask Spread - The gap between what buyers offer and what sellers want, wider spread usually means higher trading costs
+1. Dividend Yield - Annual dividend divided by stock price
+1. Stock Splits - Company divides existing shares (2-for-1 split means you get 2 shares for every 1, but each worth half as much)
    - So if you owned 100 shares at $200 each ($20,000 total), after the split you'd have 200 shares at $100 each (still $20,000 total).
    - This makes sense for companies to do if their stock is like $100 per share, psychologically it makes a lot more sense to buy if a stock is much cheaper like $50 per share rather than $100, even though the total value of stock isnt changing whatsoever.
    - More outstanding shares means more trading activity, which companies usually prefer
    - Stock splits don't create any real value - the total value of your holdings stays exactly the same. But they can affect psychology and trading patterns.
-7. Short Selling - Betting a stock will go down by borrowing and selling shares from a broker, and then buying them back later (hopefully when they're much cheaper) to return them to the broker
-8. Margin trading - borrowing money to buy more stocks than you could with cash alone
+1. Short Selling - Betting a stock will go down by borrowing and selling shares from a broker, and then buying them back later (hopefully when they're much cheaper) to return them to the broker
+1. Margin trading - borrowing money to buy more stocks than you could with cash alone
 
 ## Stock Compensation
 

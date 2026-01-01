@@ -2,7 +2,7 @@
 
 Instructor is a Python Package that is designed to simplify structured outputs from LLMs by enabling automatic parsing of model responses into Pydantic models that you've defined.
 
-Instead of handling raw JSON responses, Instructor ensures that these responses are structured directly in the Pydantic model you've defined. 
+Instead of handling raw JSON responses, Instructor ensures that these responses are structured directly in the Pydantic model you've defined.
 
 Pros:
 
@@ -10,7 +10,7 @@ Pros:
 - Reduces LLM hallucinations by enforcing strict response formatting
 - Ideal for structured applications like APIs, chatbots, and automation
 
-``` py
+```py
 import openai
 import instructor
 from pydantic import BaseModel

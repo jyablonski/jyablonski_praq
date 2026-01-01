@@ -1,12 +1,14 @@
 # DMS
+
 [AWS Doc 1](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Reference.DataTypes.html)
 
 [AWS Doc 2](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TableMapping.SelectionTransformation.Transformations.html)
 
 ## Postgres
-Postgres Enum Value Types are lost in the Migration, they just land as `varchar(255)`.  
 
-``` sql
+Postgres Enum Value Types are lost in the Migration, they just land as `varchar(255)`.
+
+```sql
 CREATE TYPE jacob_enum AS ENUM ('sad', 'ok', 'happy');
 
 CREATE TABLE public.jacob_test (
@@ -29,12 +31,14 @@ from public.jacob_test;
 ```
 
 ## MySQL
+
 Have to set 3 things:
+
 - Turn the `id` columns from `INT` to `AUTO_INCREMENT`
 - Set a Default Value on the Timestamp Columns
 - Turn the Enum Columns back into Enums instead of `varchar(255)`
 
-``` sql
+```sql
 ALTER TABLE jacob_db.DMS_jacob_test
 MODIFY COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
 
@@ -51,18 +55,21 @@ insert into jacob_db.DMS_jacob_test (name, is_deleted, is_active, current_mood)
 values ('test_v3', 0, 1, 'happy');
 
 ```
-Also will have to manually set indexes on the Tables, either manually or via Liquibase.  These are low row count though so I'm not as concerned with that.
+
+Also will have to manually set indexes on the Tables, either manually or via Liquibase. These are low row count though so I'm not as concerned with that.
 
 ## DMS Mapping
-Mapping Rules which perform the following functions:
-1. Selects only the `jacob_test` Table in the `public` Schema in the Source PostgreSQL Database
-2. Adds a Table Name prefix `DMS_` so that it appears like `DMS_jacob_test` in MySQL
-3. Specifies to change the data type of the `is_deleted` Column on `jacob_test` to a Boolean during the Migration
-   1. Without this, it lands in MySQL as a `varchar(5)`
-4. Specifies to change the data type of the `is_active` Column on `jacob_test` to a Boolean during the Migration
-5. Specifies the landing Schema in MySQL to be `jacob_db` for every table in the Migration
 
-``` json
+Mapping Rules which perform the following functions:
+
+1. Selects only the `jacob_test` Table in the `public` Schema in the Source PostgreSQL Database
+1. Adds a Table Name prefix `DMS_` so that it appears like `DMS_jacob_test` in MySQL
+1. Specifies to change the data type of the `is_deleted` Column on `jacob_test` to a Boolean during the Migration
+   1. Without this, it lands in MySQL as a `varchar(5)`
+1. Specifies to change the data type of the `is_active` Column on `jacob_test` to a Boolean during the Migration
+1. Specifies the landing Schema in MySQL to be `jacob_db` for every table in the Migration
+
+```json
 {
 	"rules": [
 		{

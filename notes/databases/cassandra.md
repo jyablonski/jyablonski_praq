@@ -33,27 +33,27 @@ Database concepts:
 Usecases:
 
 1. Logging / Messaging
-2. User Profile / Personalization Stores
-3. Shopping carts / e-Commerce Inventory
-4. Recommendation EDngines
+1. User Profile / Personalization Stores
+1. Shopping carts / e-Commerce Inventory
+1. Recommendation EDngines
 
 Downsides / Tradeoffs:
 
 1. No ACID Transactions
-2. Harder to model relational data, you need query-based data modeling where you design tables based on the read queries you expect to make
-3. Joins and aggreagations are limited, you typically need denormalization
+1. Harder to model relational data, you need query-based data modeling where you design tables based on the read queries you expect to make
+1. Joins and aggreagations are limited, you typically need denormalization
 
 How writes work:
 
 1. Compute the hash of the partition key to determine which node(s) to store the data on
-2. Write goes to multiple nodes depending on the replication factor
-3. Optionally acknowledge based on chosen consistency level
+1. Write goes to multiple nodes depending on the replication factor
+1. Optionally acknowledge based on chosen consistency level
 
 How reads work:
 
 1. Compute partition key to determine which node(s) to query
-2. Nodes return data, coordinator merges the results
-3. Optionally repair inconsistencies found during reads
+1. Nodes return data, coordinator merges the results
+1. Optionally repair inconsistencies found during reads
 
 ## Production Scaling
 
@@ -65,12 +65,12 @@ How reads work:
 
 As a consumer, here's a guide for choosing different consistency levels when making queries
 
-| Consistency Level (CL) | When to Use                                                                     | Pros                                                                                    | Cons / Trade-offs                                                 | Example Use Cases                                                         |
+| Consistency Level (CL) | When to Use | Pros | Cons / Trade-offs | Example Use Cases |
 | ---------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| ONE                    | Fast operations where availability is more important than consistency           | Very low latency; works even if some replicas are down                                  | Reads may be stale; not suitable for critical transactional data  | Logging events, click counters, telemetry, temporary caches               |
-| QUORUM                 | Balanced approach where correctness matters but some availability is acceptable | Ensures majority of replicas agree; tolerates some node failures; reasonably consistent | Slower than ONE; may have higher latency in multi-region clusters | User profiles, orders, ticket reservations, general CRUD operations       |
-| ALL                    | When absolute correctness is required and stale data is unacceptable            | Guarantees full consistency across all replicas                                         | High latency; fails if any replica is down; low availability      | Financial transactions, inventory systems, critical data updates          |
-| Other notes            | Read and write CLs can differ to tune consistency vs availability               | Following the R + W > RF rule can achieve strong consistency without ALL                | Needs careful design and understanding of replication factor      | Writes at ONE, reads at QUORUM for near-consistent reads with fast writes |
+| ONE | Fast operations where availability is more important than consistency | Very low latency; works even if some replicas are down | Reads may be stale; not suitable for critical transactional data | Logging events, click counters, telemetry, temporary caches |
+| QUORUM | Balanced approach where correctness matters but some availability is acceptable | Ensures majority of replicas agree; tolerates some node failures; reasonably consistent | Slower than ONE; may have higher latency in multi-region clusters | User profiles, orders, ticket reservations, general CRUD operations |
+| ALL | When absolute correctness is required and stale data is unacceptable | Guarantees full consistency across all replicas | High latency; fails if any replica is down; low availability | Financial transactions, inventory systems, critical data updates |
+| Other notes | Read and write CLs can differ to tune consistency vs availability | Following the R + W > RF rule can achieve strong consistency without ALL | Needs careful design and understanding of replication factor | Writes at ONE, reads at QUORUM for near-consistent reads with fast writes |
 
 ## ScyllaDB
 

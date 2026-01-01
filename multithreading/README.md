@@ -12,7 +12,7 @@ The `asyncio_python_example.py` file is a script which utilizes asynchronous cod
 - This has to encapsulate all logic inside a special `handle_endpoint` function to pull the data and write it to S3 afterwards
 - This cannot be done in separate functions, because then we wouldn't be able to use async code w/ it.
 
-``` py
+```py
 async with aiohttp.ClientSession() as session:
 
     # tasks is a list of tasks that correspond to querying each endpoint. 

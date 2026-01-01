@@ -20,7 +20,7 @@ Why we do this:
 - Efficient processing: Breaking text into subword units (tokens) balances vocabulary size with flexibility - the model can handle any word, even ones it's never seen, by combining token pieces
 - Example: "unbelievable" might be ["un", "believ", "able"] if it wasn't in training data
 
----
+______________________________________________________________________
 
 ### STEP 2: Convert tokens to embeddings
 
@@ -37,7 +37,7 @@ Why we do this:
 - Enables mathematical operations: You can do math on meanings (famous example: "king" - "man" + "woman" ≈ "queen")
 - Learned during training: The model learns what numbers best represent each token's meaning through exposure to billions of text examples
 
----
+______________________________________________________________________
 
 ### STEP 3: Process through the model layers
 
@@ -47,7 +47,7 @@ Why we do this overall:
 - To transform the input into a representation that can predict what should come next
 - Each layer refines understanding, going from simple patterns to complex reasoning
 
----
+______________________________________________________________________
 
 #### 3a. Self-attention mechanism
 
@@ -65,7 +65,7 @@ Why we do this:
 - Parallel processing: Unlike older models (RNNs), attention lets us look at all words simultaneously rather than sequentially
 - This is the "magic" of transformers: The model figures out which words should "pay attention" to which other words to understand meaning
 
----
+______________________________________________________________________
 
 #### 3b. Feed-forward neural network (matrix multiplication)
 
@@ -92,7 +92,7 @@ This is the most critical part of the process. It's basically simulating a human
 - A human brain has billions of neurons connected together
 - A neural network has billions of parameters (weights) in matrices
 
----
+______________________________________________________________________
 
 #### 3c. Output probabilities
 
@@ -111,7 +111,7 @@ Why we do this:
 - Enables sampling strategies: We can pick the most likely token (greedy), or sample from the distribution to get more creative/varied responses
 - Trained to maximize correct predictions: During training, the model learns to assign high probabilities to correct next tokens
 
----
+______________________________________________________________________
 
 ### STEP 4: Select the next token
 
@@ -128,7 +128,7 @@ Why we do this:
   - Sampling: More creative, varied responses (used for creative writing)
   - Temperature: Controls randomness - low temp = safer, high temp = more creative
 
----
+______________________________________________________________________
 
 ### STEP 5: Add the new token to the sequence
 
@@ -143,7 +143,7 @@ Why we do this:
 - Context for the next prediction: The model needs to see "Paris" when deciding what comes next (probably punctuation)
 - Autoregressive generation: Each token depends on all previous tokens - this is why generation is sequential
 
----
+______________________________________________________________________
 
 ### STEP 6: Repeat steps 3-5 for the next token
 
@@ -161,7 +161,7 @@ Why we do this:
 - Each token adds context: "Paris" makes it clear we're done with the answer, so punctuation is now most likely
 - Maintains consistency: By always feeding back the full sequence, the model remembers what it's already said
 
----
+______________________________________________________________________
 
 ### STEP 7: Stop when complete
 
@@ -177,7 +177,7 @@ Why we do this:
 - Max length prevents runaway: Safety mechanism if the model doesn't naturally stop
 - Natural endings: Model learns to end sentences/paragraphs appropriately through training
 
----
+______________________________________________________________________
 
 ### Key Insight:
 

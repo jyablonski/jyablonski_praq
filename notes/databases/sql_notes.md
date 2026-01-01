@@ -45,16 +45,16 @@ CREATE INDEX idx_status_created_at ON orders (status, created_at);
 ### SQL Query w/ no Index
 
 No indexes means the SQL DB has to do a `full table scan`. This is the process of having all data sitting in disk objects called blocks. All columns of the data you request are then read INTO memory, and then each record is traversed in the entire dataset and only the ones you want filtered back to you are returned.
-_ This is a costly operation, not only because of having to read the whole dataset but because of the disk -> memory transfer.
-_ All queries with non-indexed tables has to do this.
+\_ This is a costly operation, not only because of having to read the whole dataset but because of the disk -> memory transfer.
+\_ All queries with non-indexed tables has to do this.
 
 ### SQL Query w/ Index
 
 Alongside the data in disk there is a `b-tree` table with only the column you've indexed. This lookup table tells the DB where each record is, in the exact block and the exact index in the block it's in.
-_ This `b-tree` can also be sorted in some specific way.
-_ If you index on `first_name`, then that lookup can be sorted and if you want the name `Adam` you'll know that it's around the beginning of the dataset.
-_ Looks like it does binary search in this case. Start at the midpoint, do a > or < operation to see which way to go, and then traverse that half of the dataset. and repeat.
-_ This `b-tree` has to be STORED as well. So there is some costs / implications there and you likely only want a handful of indexes. But in general, this metadata is very useful when done correctly. \* `UPDATING` or `INSERTING` records into these tables means the indexes have to be updated or completely re-calculated.
+\_ This `b-tree` can also be sorted in some specific way.
+\_ If you index on `first_name`, then that lookup can be sorted and if you want the name `Adam` you'll know that it's around the beginning of the dataset.
+\_ Looks like it does binary search in this case. Start at the midpoint, do a > or < operation to see which way to go, and then traverse that half of the dataset. and repeat.
+\_ This `b-tree` has to be STORED as well. So there is some costs / implications there and you likely only want a handful of indexes. But in general, this metadata is very useful when done correctly. * `UPDATING` or `INSERTING` records into these tables means the indexes have to be updated or completely re-calculated.
 
 ## Partitioning
 
@@ -483,15 +483,15 @@ where is_active_int = 1;
 ## Scaling an OLTP Database
 
 1. Vertical Scaling (upgrading the Hardware on the existing Database Instance for more RAM or CPU)
-2. Horizontal Scaling (in the form of Read Replicas)
+1. Horizontal Scaling (in the form of Read Replicas)
    1. In this case, you could offload various read-only portions of your app to the Read Replica which could indirectly improve the performance of your writer instance, since it wouldn't have to be taking all of those read-only requests
-3. Caching
+1. Caching
    1. Using an in-memory Database like Redis which could cache recent requests so that subsequent requests can be read from Redis instead of the OLTP Database
-4. Optimizing Database Design
+1. Optimizing Database Design
    1. Utilize indexes where appropriate
-   2. Use Normalization to reduce data redundancy and improve data integrity
-   3. Write more efficient SQL queries to reduce unnecessary load on the OLTP Database
-5. Split the App + Database up into Microservices and Database-per-Microservice Architecture
+   1. Use Normalization to reduce data redundancy and improve data integrity
+   1. Write more efficient SQL queries to reduce unnecessary load on the OLTP Database
+1. Split the App + Database up into Microservices and Database-per-Microservice Architecture
    1. This isolates load and improves fault tolerance so if there's a failure it only affects that single microservice and database and not the entire app.
 
 ## Sharding an OLTP Database
@@ -518,11 +518,15 @@ Citus is an open source extension to Postgres that you can attach to turn Postgr
 The coordinator node is the central node in a Citus cluster. It handles:
 
 - Query parsing and planning.
+
 - Routing queries to the appropriate worker nodes.
+
 - Aggregating results from worker nodes.
+
 - Managing metadata about the distributed tables and their shards.
 
 - Unsharded Tables: All unsharded tables reside entirely on the coordinator node. Queries against these tables are handled just like a regular PostgreSQL database.
+
 - Sharded Tables: For tables that are distributed (sharded) using Citus, the coordinator node does not store the actual data. Instead, it keeps metadata and routes queries to the appropriate worker nodes.
 
 Worker nodes store the actual data for sharded tables. Each shard of a distributed table is stored on a worker node. They execute queries on the shards they store and return the results to the coordinator node.

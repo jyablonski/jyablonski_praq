@@ -16,13 +16,13 @@ Trino acts as a Federated Query Engine which allows you to combine data from mul
 
 1. The Coordinator
    1. Responsible for parsing, analyzing, planning, optimizing, and scheduling a query submitted by a client.
-   2. Interacts with the service provider interface to obtain available tables, statistics, and other information needed to carry out its tasks.
+   1. Interacts with the service provider interface to obtain available tables, statistics, and other information needed to carry out its tasks.
 
 ![image](https://github.com/jyablonski/python_aws/assets/16946556/56026562-99e6-49f7-ba47-312d1cc393b1)
 
 2. Worker Nodes
    1. Responsible for executing the tasks fed to them by the scheduler.
-   2. These tasks process rows from data sources which produce results that are returned back to the coordinator and ultimately back to the client.
+   1. These tasks process rows from data sources which produce results that are returned back to the coordinator and ultimately back to the client.
 
 ## Presto
 

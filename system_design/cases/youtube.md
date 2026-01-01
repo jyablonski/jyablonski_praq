@@ -1,12 +1,10 @@
 ## YouTube
 
-
 Core Requirements
 
 - Users should be able to upload videos
 - Users should be able to watch videos
 - Users should be able to subscribe to other users to view their videos
-
 
 Non-functional Requirements
 
@@ -17,7 +15,6 @@ Out of Scope
 
 - YouTube Live Streaming
 
-
 Core Entities
 
 - Users
@@ -26,11 +23,10 @@ Core Entities
 - Subscriptions
 - Client / Device Tracking
 
-
 API
 
-- POST /videos {videoBytes, videoMetadata}                 # upload a new video
-- GET /videos/:videoId -> videoBytes, videoMetadata        # watch a new video
+- POST /videos {videoBytes, videoMetadata} # upload a new video
+- GET /videos/:videoId -> videoBytes, videoMetadata # watch a new video
 - POST /users/:userId/subscriptions -> {subscribeToUserId} # new subscription
 - GET /users/:userId/subscriptions -> subscribedUserIds [] # get subscriptions
 
@@ -54,8 +50,7 @@ Database DDL
   - userId, email, createdAt
 - userSubscriptions
   - id PK, subscriberId, subscribedToId
-  - 1 row for every subscription in the system 
-
+  - 1 row for every subscription in the system
 
 Deep Dives (to handle edge cases, critical performance implications, improvements to the system that can be made)
 
@@ -69,8 +64,6 @@ Deep Dives (to handle edge cases, critical performance implications, improvement
 - Build your own CDN like Netflix, but this is a massive undertaking
 - build a chunker service to take a completed large file from a user from multi-part upload in s3, and build 2-10 second video clips of it that are stored back to S3. Then when users go to watch videos on youtube, we can immediately serve them content at a much faster pace by incrementally pulling & serving those chunks 1 at a time, as opposed to pulling an entire 5 GB video at once.
   - this chunking process is what enables your low latency non-functional requirements so videos can start playing for users much faster
-
-
 
 Napkin Math
 

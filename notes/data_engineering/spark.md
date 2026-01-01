@@ -6,21 +6,21 @@ Key features of Apache Spark include:
 
 1. **In-Memory Processing**: Apache Spark processes data in-memory, allowing for faster data processing and iterative analytics. It keeps data in memory rather than persisting it to disk after each operation, which enhances performance.
 
-2. **Distributed Computing**: Spark distributes data and computation across a cluster of machines, enabling parallel processing and efficient utilization of resources.
+1. **Distributed Computing**: Spark distributes data and computation across a cluster of machines, enabling parallel processing and efficient utilization of resources.
 
-3. **Versatile Data Processing**: Spark supports various data processing workloads, including batch processing, real-time streaming, machine learning, and graph processing. It provides a unified platform for these diverse workloads.
+1. **Versatile Data Processing**: Spark supports various data processing workloads, including batch processing, real-time streaming, machine learning, and graph processing. It provides a unified platform for these diverse workloads.
 
-4. **Resilient Distributed Datasets (RDDs)**: RDDs are the fundamental data structure in Spark that represents a distributed collection of objects. RDDs are fault-tolerant and can be operated on in parallel. They can be created from HDFS files, distributed over a cluster, and operated upon using transformations and actions.
+1. **Resilient Distributed Datasets (RDDs)**: RDDs are the fundamental data structure in Spark that represents a distributed collection of objects. RDDs are fault-tolerant and can be operated on in parallel. They can be created from HDFS files, distributed over a cluster, and operated upon using transformations and actions.
 
-5. **Streaming Data Processing**: Spark Streaming allows processing of real-time streaming data and integrates with various sources like Kafka, Flume, or TCP sockets. It processes data in micro-batches, making it suitable for real-time analytics.
+1. **Streaming Data Processing**: Spark Streaming allows processing of real-time streaming data and integrates with various sources like Kafka, Flume, or TCP sockets. It processes data in micro-batches, making it suitable for real-time analytics.
 
-6. **Machine Learning (MLlib)**: MLlib is Spark's machine learning library, providing a wide range of machine learning algorithms and tools for scalable machine learning tasks.
+1. **Machine Learning (MLlib)**: MLlib is Spark's machine learning library, providing a wide range of machine learning algorithms and tools for scalable machine learning tasks.
 
-7. **SQL and DataFrames**: Spark provides SQL and DataFrame APIs for working with structured data, making it easier for users familiar with SQL to query and manipulate data.
+1. **SQL and DataFrames**: Spark provides SQL and DataFrame APIs for working with structured data, making it easier for users familiar with SQL to query and manipulate data.
 
-8. **Integration with Hadoop Ecosystem**: Spark can run on Hadoop YARN, can read data from HDFS, and can integrate with Hadoop components like Hive and HBase.
+1. **Integration with Hadoop Ecosystem**: Spark can run on Hadoop YARN, can read data from HDFS, and can integrate with Hadoop components like Hive and HBase.
 
-9. **Ease of Use**: Spark offers user-friendly APIs in various programming languages like Scala, Java, Python, and R. It also provides interactive shells for easy experimentation and development.
+1. **Ease of Use**: Spark offers user-friendly APIs in various programming languages like Scala, Java, Python, and R. It also provides interactive shells for easy experimentation and development.
 
 ## Key Components
 
@@ -30,27 +30,27 @@ Key features of Apache Spark include:
 
    - It includes the fundamental data structures (like RDDs), parallel processing capabilities, and APIs for distributed computing.
 
-2. **Resilient Distributed Datasets (RDDs)**:
+1. **Resilient Distributed Datasets (RDDs)**:
 
    - RDDs are the primary data abstraction in Spark, representing an immutable, fault-tolerant distributed collection of objects.
 
    - They serve as the basis for distributed transformations and actions in Spark applications.
 
-3. **Spark SQL**:
+1. **Spark SQL**:
 
    - Provides a programming interface to work with structured data using SQL and supports querying data with SQL-like queries.
 
    - It also supports working with DataFrames, which are structured collections of data, similar to tables in a relational database.
 
-4. **Cluster Manager (e.g., Standalone, Apache Mesos, YARN)**:
+1. **Cluster Manager (e.g., Standalone, Apache Mesos, YARN)**:
 
    - Spark can run on various cluster management systems, including its standalone cluster manager, Apache Mesos, and Apache Hadoop YARN. These manage resources and scheduling across the cluster.
 
-5. **Driver Program and Executors**:
+1. **Driver Program and Executors**:
 
    - The driver program is the main application that runs the user's Spark job. Executors are processes launched by the driver on worker nodes to perform computations and store data for RDDs.
 
-6. **Spark Packages and Libraries**:
+1. **Spark Packages and Libraries**:
 
    - In addition to the core components, Spark has a vibrant ecosystem of libraries and packages developed by the community, addressing various use cases such as data connectors, visualization, integration with other systems, and more.
 
@@ -66,7 +66,7 @@ Key features of Apache Spark include:
 
    - However, RDDs lack the optimization capabilities that come with DataFrames and Datasets due to their unstructured nature.
 
-2. **DataFrame**:
+1. **DataFrame**:
 
    - DataFrame is a structured collection of data, similar to a table in a relational database or a spreadsheet. It has rows and columns.
 
@@ -78,7 +78,7 @@ Key features of Apache Spark include:
 
    - DataFrames can be created from various sources like structured data files, Hive tables, external databases, and RDDs.
 
-3. **Dataset**:
+1. **Dataset**:
 
    - Dataset is an extension of DataFrames introduced in Spark 1.6, aiming to combine the type safety of RDDs with the optimization and performance benefits of DataFrames.
 
@@ -91,6 +91,7 @@ Key features of Apache Spark include:
 **Key Differences**:
 
 - RDDs are the most basic and unstructured data abstraction in Spark.
+
 - DataFrames add structure to the data and provide an API similar to SQL tables.
 
 - Datasets provide the benefits of both RDDs (type safety, functional transformations) and DataFrames (optimization, query optimization).
@@ -113,31 +114,31 @@ Here's how partitions relate to tasks:
 
    - The number of partitions is determined during the dataset's creation and often depends on the input data source, the parallelism level desired, or any custom partitioning logic.
 
-2. **Task Execution**:
+1. **Task Execution**:
 
    - In Spark, tasks are units of work that are executed on each partition of the data in parallel across the cluster.
 
    - When a Spark job is triggered, tasks are created to process each partition of the data. Each task processes one partition independently.
 
-3. **Parallel Execution**:
+1. **Parallel Execution**:
 
    - In a typical Spark application, multiple tasks (corresponding to the number of partitions) are executed concurrently on different worker nodes in the cluster.
 
    - This parallel execution allows for efficient and distributed processing of the dataset, improving the overall performance and throughput of the application.
 
-4. **Task Per Partition**:
+1. **Task Per Partition**:
 
    - Each task operates on a single partition of the data, processing the elements within that partition using the specified transformations and actions.
 
    - The relationship between partitions and tasks is one-to-one: each partition is processed by exactly one task.
 
-5. **Task**:
+1. **Task**:
 
    - A task is the smallest unit of work in Spark. It represents a single unit of computation that is executed on a partition of data.
 
    - Tasks are created for each partition of the data and are sent to worker nodes for execution in parallel.
 
-6. **Job**:
+1. **Job**:
 
    - A job in Spark refers to a set of tasks that are launched in response to a Spark action, such as `collect()`, `count()`, or any other action that triggers computation and brings data from RDDs or DataFrames to the driver program.
 
@@ -145,7 +146,7 @@ Here's how partitions relate to tasks:
 
    - The set of tasks that comprise a job corresponds to the transformations that lead to the action being executed.
 
-7. **Stage**:
+1. **Stage**:
 
    - A stage is an intermediate computational step within a job. A job may be divided into multiple stages based on the presence of shuffling operations (e.g., `reduceByKey` or `join`), which require data to be shuffled across the cluster.
 
@@ -156,6 +157,7 @@ Here's how partitions relate to tasks:
 In summary:
 
 - **Task** is the smallest unit of work, representing computation on a single partition of data.
+
 - **Job** is a set of tasks triggered by a Spark action and is typically associated with one or more transformations.
 
 - **Stage** is an intermediate step in a job, defined by the presence of shuffling operations, and is constructed based on the transformations and partitions of data.
@@ -168,19 +170,19 @@ Here's a more detailed explanation of a shuffle in Spark:
 
    - Shuffling is needed when a transformation requires data from multiple partitions to be combined, such as during a group-by operation, a join, or an aggregation like a reduce operation.
 
-2. **Process of Shuffling**:
+1. **Process of Shuffling**:
 
    - When a shuffle is required, the data from various partitions is collected, sorted (if needed), and then distributed or "shuffled" across the nodes in the cluster based on the partitioning key or criteria.
 
    - Shuffling involves writing intermediate data to disk and transferring it over the network, making it a resource-intensive operation.
 
-3. **Stages Involving Shuffling**:
+1. **Stages Involving Shuffling**:
 
    - Shuffling usually creates a boundary between stages in a Spark application. The stage before the shuffle is often referred to as the "map stage," and the stage after the shuffle is the "reduce stage."
 
    - In the "map stage," data is mapped based on some criteria (e.g., keys for a join). In the "reduce stage," the shuffled and aggregated data is further processed.
 
-4. **Performance Implications**:
+1. **Performance Implications**:
 
    - Shuffling can be a performance bottleneck due to the need for extensive data movement and disk I/O, especially when dealing with large datasets.
 
@@ -200,15 +202,15 @@ Here's how it works:
 
    - PySpark uses Py4J, a popular library for connecting Python programs with Java objects, to facilitate communication between the Python environment and the JVM.
 
-2. **JVM Execution**:
+1. **JVM Execution**:
 
    - The actual Spark processing, including data processing, transformations, and actions, happens in the JVM. When you call PySpark methods or functions from Python, these requests are translated and executed in the JVM.
 
-3. **Python as a Driver Program**:
+1. **Python as a Driver Program**:
 
    - In a typical PySpark application, the Python code serves as the driver program, coordinating and orchestrating the Spark application's flow. However, the actual data processing occurs within the JVM.
 
-4. **Serialization and Deserialization**:
+1. **Serialization and Deserialization**:
 
    - Data serialization and deserialization are handled efficiently by the JVM, even though the initial call originates from Python. This helps in effective data exchange between the Python environment and the JVM.
 
@@ -220,27 +222,27 @@ Here are the main aspects and functionalities of `SparkSession` in PySpark:
 
    - `SparkSession` combines functionalities previously provided by `SQLContext` and `HiveContext`, simplifying the usage of Spark by consolidating various contexts into a single entry point.
 
-2. **DataFrame API**:
+1. **DataFrame API**:
 
    - `SparkSession` provides the DataFrame API, which allows for working with structured data in a tabular format, similar to a relational database or a spreadsheet.
 
-3. **SQL Execution**:
+1. **SQL Execution**:
 
    - Users can execute SQL queries directly on DataFrames registered as temporary tables, making it easy to leverage SQL for data processing.
 
-4. **Data Loading and Saving**:
+1. **Data Loading and Saving**:
 
    - `SparkSession` supports reading data from various sources (e.g., Parquet, CSV, JSON) and saving DataFrames to different formats.
 
-5. **Configuration and Properties**:
+1. **Configuration and Properties**:
 
    - Users can configure Spark properties and settings through the `SparkSession` object, allowing for customization and optimization of Spark application behavior.
 
-6. **Application Context**:
+1. **Application Context**:
 
    - `SparkSession` is designed to be a single point of entry for the application. When using `SparkSession`, the underlying SparkContext, SQLContext, and HiveContext are automatically created and managed, ensuring proper initialization and handling.
 
-7. **Resource Management**:
+1. **Resource Management**:
 
    - `SparkSession` helps manage resources, including memory allocation and cluster resources, providing better control over Spark application execution.
 
@@ -271,27 +273,27 @@ Here are the key aspects of Spark UDFs:
 
    - UDFs allow users to define their own custom logic or computations that need to be applied to each element or row in a column of the DataFrame or RDD.
 
-2. **Data Transformation**:
+1. **Data Transformation**:
 
    - UDFs are used to transform data at a row-wise level, often applying the same transformation to multiple rows or elements within a column.
 
-3. **Supported in Various Languages**:
+1. **Supported in Various Languages**:
 
    - Spark UDFs can be implemented using different programming languages supported by Spark, including Scala, Python, Java, and R.
 
-4. **Types of UDFs**:
+1. **Types of UDFs**:
 
    - UDFs can be either scalar functions, which operate on a single input item and return a single output item, or aggregate functions, which take multiple input items and return a single output.
 
-5. **Application to DataFrames and RDDs**:
+1. **Application to DataFrames and RDDs**:
 
    - UDFs can be applied to both DataFrames (structured, tabular data) and RDDs (distributed collections of data). However, UDFs in DataFrames are often preferred due to the Catalyst optimizer's optimization capabilities.
 
-6. **Usage in DataFrame Operations**:
+1. **Usage in DataFrame Operations**:
 
    - In DataFrames, UDFs can be applied using the `withColumn()` method to add a new column with the transformed data based on the UDF.
 
-7. **Python Example**:
+1. **Python Example**:
 
    - For instance, in PySpark, a simple Python UDF could be used to convert a DataFrame column to uppercase:
 
@@ -324,25 +326,25 @@ In Apache Spark, there can be performance differences between using Spark SQL (S
 
    - Non-SQL operations do not benefit from the Catalyst Optimizer's specific SQL-related optimizations.
 
-2. **Query Plan Execution**:
+1. **Query Plan Execution**:
 
    - SQL-based operations follow a declarative approach, where users define the desired results, and the Spark SQL engine generates an optimized query plan to achieve those results.
 
    - Non-SQL operations are more programmatic and imperative, requiring users to define the specific steps for data transformations and actions. While this provides flexibility, the engine may not be able to optimize the steps as effectively as with a declarative query plan.
 
-3. **Code Complexity and Efficiency**:
+1. **Code Complexity and Efficiency**:
 
    - SQL-based operations often lead to more concise and readable code, reducing the potential for human error and improving development efficiency.
 
    - Non-SQL operations, especially complex ones, may require more code and be harder to optimize manually, potentially impacting efficiency and introducing more room for optimization errors.
 
-4. **Data Locality and Shuffling**:
+1. **Data Locality and Shuffling**:
 
    - Depending on the nature of the operations, SQL-based operations can sometimes introduce additional shuffling of data, which could affect performance.
 
    - Non-SQL operations allow for more fine-grained control over data processing, potentially enabling optimizations that reduce or eliminate shuffling.
 
-5. **Complexity of Operations**:
+1. **Complexity of Operations**:
 
    - The complexity and nature of the operations can significantly impact performance. Some operations may be more naturally expressed and optimized using SQL, while others may be better suited to programmatic approaches.
 
@@ -388,4 +390,4 @@ spark is a distributed in-memory processing framework for working with big data.
 - Caching stores computed results in memory to avoid recomputation when a DataFrame is used multiple times in a job.
 - parquet is a preferred file format because it is columnar focused, has a strict data type schema, and has good compression ratios for efficient storage.
 - predicate pushdown involves pushing filters down to the data source level when possible so you only read in the minimal amount of data you need.
-  - Example: select from parquet file where date = '2025-01-01` - spark can read parquet metadata and skip entire row groups based on min max statistics, so it doesnt need to read in the whole file and then do the filter in memory, it can apply the filter when it fetches the data
+  - Example: select from parquet file where date = '2025-01-01\` - spark can read parquet metadata and skip entire row groups based on min max statistics, so it doesnt need to read in the whole file and then do the filter in memory, it can apply the filter when it fetches the data

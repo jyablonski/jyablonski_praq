@@ -13,7 +13,7 @@ class Config:
 
 This becomes the contract between the data generation, training, and inference steps.
 
----
+______________________________________________________________________
 
 2. Generate/Load Training Data
 
@@ -29,7 +29,7 @@ def generate_data(config: Config) -> tuple[pl.DataFrame, pl.DataFrame, pl.DataFr
 
 Keep these separate—you'll join them for training but the inference wrapper needs to do that join dynamically.
 
----
+______________________________________________________________________
 
 3. Build the Preprocessing + Model Pipeline
 
@@ -56,7 +56,7 @@ sk_pipeline = Pipeline([
 
 Key methods: `sk_pipeline.fit(X, y)` learns preprocessing params + model weights. `sk_pipeline.predict()` or `predict_proba()` transforms then predicts in one call.
 
----
+______________________________________________________________________
 
 4. Create the PyFunc Wrapper
 
@@ -83,7 +83,7 @@ class YourModelWrapper(mlflow.pyfunc.PythonModel):
 
 The wrapper's job: accept minimal input -> enrich -> predict -> format. The sklearn pipeline inside handles the transform.
 
----
+______________________________________________________________________
 
 5. Log Everything to MLflow
 
@@ -108,7 +108,7 @@ with mlflow.start_run() as run:
 
 Key methods: `mlflow.sklearn.save_model()` for the pipeline, `mlflow.pyfunc.log_model()` for the wrapper that uses it.
 
----
+______________________________________________________________________
 
 6. Register and Promote the Model
 
@@ -127,7 +127,7 @@ client.transition_model_version_stage(
 )
 ```
 
----
+______________________________________________________________________
 
 7. Load and Serve
 
@@ -145,7 +145,7 @@ def predict(session_data: dict):
 
 Key method: `mlflow.pyfunc.load_model()` returns an object with a `.predict()` that routes to your wrapper's predict.
 
----
+______________________________________________________________________
 
 Summary of the flow:
 
@@ -224,7 +224,7 @@ The sklearn `Pipeline` guarantees preprocessing consistency. The `pyfunc` wrappe
 - `model = mlflow.pyfunc.load_model("models:/model_name/Production")`
 - Call `model.predict(input_df)` — wrapper handles enrichment and preprocessing automatically
 
----
+______________________________________________________________________
 
 **Key point to emphasize:** The sklearn `Pipeline` guarantees preprocessing travels with the model. The `pyfunc` wrapper guarantees your production logic (feature lookups, output formatting) travels with it too.
 

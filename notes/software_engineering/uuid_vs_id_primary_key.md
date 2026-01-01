@@ -31,9 +31,11 @@ Autoincrementing IDs
 ## UUID v7: Quick Reference
 
 ### What Is It?
+
 Time-ordered UUIDs (RFC 9562, 2024) that combine auto-increment benefits with UUID flexibility.
 
 Structure:
+
 ```
 018e8c5a-5e3f-7000-8000-000000000000
 └──timestamp──┘ └─ random/counter ──┘
@@ -42,17 +44,20 @@ Structure:
 ### Why Use UUID v7?
 
 Solves UUID v4 problems:
+
 - ✅ Sequential insertion (no B-tree fragmentation)
 - ✅ Better INSERT performance
 - ✅ Sortable by creation time
 
 Keeps UUID benefits:
+
 - ✅ Generate anywhere without coordination
 - ✅ No collision risk in distributed systems
 - ✅ Client-side generation
 - ✅ Merge/shard friendly
 
 Tradeoffs:
+
 - ❌ 4x storage vs INT (16 bytes vs 4)
 - ❌ Index size multiplies across all FKs and indexes
 - ❌ Needs extension or app-level generation
@@ -80,6 +85,7 @@ Best practice: Don't migrate existing tables
 - ✅ Mixed state: Totally fine and common
 
 Only migrate if:
+
 - Actually hitting ID exhaustion
 - Need to shard/merge that specific table
 - Already doing major refactor
@@ -87,15 +93,17 @@ Only migrate if:
 ### Decision Framework
 
 Use UUID v7 for:
+
 - Distributed systems / microservices
 - New projects expecting to scale
 - Client-side entity creation needs
 
 Use auto-increment for:
+
 - Single monolith, single database
 - Performance absolutely critical
 - Existing tables (migration rarely worth it)
 
----
+______________________________________________________________________
 
 Bottom line: Storage is cheap, complexity is expensive. UUID v7 is the modern default for new work. Don't stress about migrating legacy tables.

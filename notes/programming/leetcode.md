@@ -9,8 +9,8 @@ Sorting is a fundamental technique in computer science that involves arranging t
 Idea: Repeatedly swap adjacent elements if they are in the wrong order. Largest elements "bubble" to the end.
 
 1. Iterate through all elements with i
-2. Go left to right of remaining unsorted elements with j
-3. Sort elements directly next to each other
+1. Go left to right of remaining unsorted elements with j
+1. Sort elements directly next to each other
 
 ```python
 def bubble_sort(arr):
@@ -33,7 +33,7 @@ bubble_sort(array)
 - Space: O(1)
 - Simple but inefficient
 
----
+______________________________________________________________________
 
 ### 2. Selection Sort
 
@@ -54,7 +54,7 @@ def selection_sort(arr):
 - Space: O(1)
 - Better than bubble, still bad for large lists
 
----
+______________________________________________________________________
 
 ### 3. Insertion Sort
 
@@ -75,7 +75,7 @@ def insertion_sort(arr):
 - Space: O(1)
 - Good for small or nearly sorted data
 
----
+______________________________________________________________________
 
 ## Efficient Sorting Algorithms
 
@@ -109,7 +109,7 @@ def merge(left, right):
 - Space: O(n)
 - Very stable and consistent
 
----
+______________________________________________________________________
 
 ### 5. Quick Sort (Divide & Conquer)
 
@@ -129,7 +129,7 @@ def quick_sort(arr):
 - Space: O(log n) average (call stack)
 - Very fast in practice, but unstable
 
----
+______________________________________________________________________
 
 ### 7. Counting Sort
 
@@ -176,15 +176,15 @@ sorted_words = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
 
 ### Summary Table
 
-| Algorithm      | Time (Best) | Time (Worst) | Space    | Stable | Notes                     |
+| Algorithm | Time (Best) | Time (Worst) | Space | Stable | Notes |
 | -------------- | ----------- | ------------ | -------- | ------ | ------------------------- |
-| Bubble Sort    | O(n)        | O(n²)        | O(1)     | Yes    | Educational only          |
-| Selection Sort | O(n²)       | O(n²)        | O(1)     | No     | Rarely used               |
-| Insertion Sort | O(n)        | O(n²)        | O(1)     | Yes    | Great for small inputs    |
-| Merge Sort     | O(n log n)  | O(n log n)   | O(n)     | Yes    | Always safe choice        |
-| Quick Sort     | O(n log n)  | O(n²)        | O(log n) | No     | Fastest in practice       |
-| Heap Sort      | O(n log n)  | O(n log n)   | O(1)     | No     | Good worst-case guarantee |
-| Counting Sort  | O(n + k)    | O(n + k)     | O(k)     | Yes    | Non-comparison based      |
+| Bubble Sort | O(n) | O(n²) | O(1) | Yes | Educational only |
+| Selection Sort | O(n²) | O(n²) | O(1) | No | Rarely used |
+| Insertion Sort | O(n) | O(n²) | O(1) | Yes | Great for small inputs |
+| Merge Sort | O(n log n) | O(n log n) | O(n) | Yes | Always safe choice |
+| Quick Sort | O(n log n) | O(n²) | O(log n) | No | Fastest in practice |
+| Heap Sort | O(n log n) | O(n log n) | O(1) | No | Good worst-case guarantee |
+| Counting Sort | O(n + k) | O(n + k) | O(k) | Yes | Non-comparison based |
 
 ## Dictionaries
 
@@ -252,13 +252,13 @@ Recursion is a programming technique where a function calls itself to solve a pr
 Instead of using loops, recursion solves problems by:
 
 1. Breaking a big problem into smaller subproblems of the same type
-2. Solving the smallest case directly (base case)
-3. Building up the solution from there
+1. Solving the smallest case directly (base case)
+1. Building up the solution from there
 
 Every recursive function needs two parts:
 
 1. Base Case - The stopping condition (prevents infinite recursion)
-2. Recursive Case - The function calling itself with a simpler input
+1. Recursive Case - The function calling itself with a simpler input
 
 ```py
 def countdown(n):
@@ -326,7 +326,7 @@ Dynamic Programming (a strategy)
 Dynamic Programming (DP) is a powerful technique used in computer science to solve optimization problems and combinatorial problems by breaking them down into smaller overlapping subproblems, solving each subproblem just once, and storing the result for future reuse.
 
 1. Dynamic programming = recursion + memoization
-2. Dynamic programming = building up solutions bottom-up using a table (tabulation)
+1. Dynamic programming = building up solutions bottom-up using a table (tabulation)
 
 To apply DP, your problem must have:
 
@@ -372,7 +372,7 @@ def fib(n):
    - Given weights and values of items, find the maximum value that can be carried in a knapsack of a given capacity.
    - DP builds a table where each entry represents the maximum value for a given weight limit.
 
-3. The climbing stairs problem can be solved with recursion, but it would take o(n^2) time and a lot of repeat work has to be done. A better solution is DP.
+1. The climbing stairs problem can be solved with recursion, but it would take o(n^2) time and a lot of repeat work has to be done. A better solution is DP.
 
 - DP makes sense when the problem has optimal substructure, which is to say if an optimal solution to the problem contains optimal solutions to subproblems.
 - If we know the number of ways to climb 3 steps and 4 steps, then we can add those together to get the number of ways we can get to 5 steps
@@ -436,10 +436,10 @@ The other solution is to use a bottom up approach by using the previous 2 series
 Backtracking is an algorithmic technique used for solving problems incrementally by trying out possible solutions and abandoning ("backtracking") as soon as you realize the current path doesn’t lead to a valid or optimal solution.
 
 1. Start at the root of the decision tree (an empty path or starting point).
-2. Recursively build a potential solution by choosing one option at a time.
-3. If a partial solution violates the problem constraints, backtrack (undo the last choice).
-4. If you reach a complete and valid solution, record it.
-5. Repeat this process until all possible paths have been explored or a solution is found.
+1. Recursively build a potential solution by choosing one option at a time.
+1. If a partial solution violates the problem constraints, backtrack (undo the last choice).
+1. If you reach a complete and valid solution, record it.
+1. Repeat this process until all possible paths have been explored or a solution is found.
 
 Backtracking is particularly useful for problems involving permutations, combinations, subsets, and other scenarios where you need to explore all possible configurations.
 
@@ -546,7 +546,7 @@ The sliding window technique is a powerful method for solving problems that invo
 There are two main types of sliding window techniques:
 
 1. **Fixed-size Sliding Window**: The window size is constant, and you slide the window across the array.
-2. **Variable-size Sliding Window**: The window size can change based on certain conditions, expanding or contracting as needed.
+1. **Variable-size Sliding Window**: The window size can change based on certain conditions, expanding or contracting as needed.
 
 It's useful for problems involving:
 
@@ -713,8 +713,8 @@ if not node.left and not node.right:
 DFS Types
 
 1. Preorder - Process each node as you come across it (root -> left -> right)
-2. Inorder - Go down to leaf nodes before you start processing nodes, and then backtrack and process nodes as you come across them (left -> root -> right)
-3. Postorder - Go left, then right, and then current node
+1. Inorder - Go down to leaf nodes before you start processing nodes, and then backtrack and process nodes as you come across them (left -> root -> right)
+1. Postorder - Go left, then right, and then current node
 
 ## Examples
 

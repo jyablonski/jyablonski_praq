@@ -185,7 +185,7 @@ Good for:
 
 Overkill for:
 
-- Simple one-off API calls (<1000 records)
+- Simple one-off API calls (\<1000 records)
 - Ad-hoc data exploration
 - When you need full control over pagination logic
 - Performance-critical applications (adds overhead)

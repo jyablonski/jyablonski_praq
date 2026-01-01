@@ -8,17 +8,17 @@ Here are some key aspects of investing:
 
 1. Types of Investments: There are various types of investments, including stocks, bonds, mutual funds, exchange-traded funds (ETFs), real estate, commodities, and alternative investments like hedge funds or private equity. Each type of investment has its own characteristics, risk profile, and potential returns.
 
-2. Risk Management: Managing risk is an essential part of investing. Diversification, or spreading investments across different asset classes and securities, is a common risk management strategy that aims to reduce the impact of any single investment's performance on the overall portfolio.
+1. Risk Management: Managing risk is an essential part of investing. Diversification, or spreading investments across different asset classes and securities, is a common risk management strategy that aims to reduce the impact of any single investment's performance on the overall portfolio.
 
-3. Time Horizon: Investors often have different time horizons for their investments, ranging from short-term goals (e.g., saving for a vacation) to long-term goals (e.g., retirement savings). The appropriate investment strategy may vary depending on the time horizon and financial objectives.
+1. Time Horizon: Investors often have different time horizons for their investments, ranging from short-term goals (e.g., saving for a vacation) to long-term goals (e.g., retirement savings). The appropriate investment strategy may vary depending on the time horizon and financial objectives.
 
-4. Return on Investment (ROI): ROI measures the profitability of an investment relative to its cost. It is calculated as the gain or loss from the investment divided by the initial investment amount, expressed as a percentage. Investors typically aim for a positive ROI, although the desired level of return may vary based on individual goals and risk tolerance.
+1. Return on Investment (ROI): ROI measures the profitability of an investment relative to its cost. It is calculated as the gain or loss from the investment divided by the initial investment amount, expressed as a percentage. Investors typically aim for a positive ROI, although the desired level of return may vary based on individual goals and risk tolerance.
 
-5. Asset Allocation: Asset allocation refers to the distribution of investments across different asset classes (e.g., stocks, bonds, cash) within a portfolio. Asset allocation is a key determinant of investment risk and return, and it should be aligned with an investor's goals, risk tolerance, and time horizon.
+1. Asset Allocation: Asset allocation refers to the distribution of investments across different asset classes (e.g., stocks, bonds, cash) within a portfolio. Asset allocation is a key determinant of investment risk and return, and it should be aligned with an investor's goals, risk tolerance, and time horizon.
 
-6. Market Analysis: Investors often conduct market analysis to identify investment opportunities and make informed decisions. This may involve analyzing economic indicators, company financial statements, market trends, and other factors that can impact investment performance.
+1. Market Analysis: Investors often conduct market analysis to identify investment opportunities and make informed decisions. This may involve analyzing economic indicators, company financial statements, market trends, and other factors that can impact investment performance.
 
-7. Monitoring and Adjusting: Investing is an ongoing process that requires monitoring the performance of investments and making adjustments as needed. Market conditions, economic factors, and individual circumstances may change over time, necessitating adjustments to investment strategies.
+1. Monitoring and Adjusting: Investing is an ongoing process that requires monitoring the performance of investments and making adjustments as needed. Market conditions, economic factors, and individual circumstances may change over time, necessitating adjustments to investment strategies.
 
 Overall, investing is a fundamental component of financial planning and wealth management, providing opportunities for individuals to grow their assets and achieve their financial goals over the long term. However, it's important for investors to conduct thorough research, consider their risk tolerance, and seek professional advice if needed to make informed investment decisions.
 
@@ -32,20 +32,20 @@ The Federal Funds Rate is the interest rate banks charge each other for overnigh
 When the Fed lowers rates (gas pedal):
 
 1. They're trying to stimulate economic growth and encourage borrowing + spending by making it cheaper
-2. Because borrowing is now cheaper, people & businesses can take more loans, buy more houses, cars, and invest
-3. Loans for mortgages, cars, and credit card interest all go down
-4. HYSA Rates go down since banks earn less interest on their reserves, so they pay consumers less for their savings. banks want to be lending out money and not holding onto savings reserves
-5. Bond prices go up, old bonds on a higher interest rate are worth more
-6. Stock market rises because business can borrow & invest more into their companies growth
+1. Because borrowing is now cheaper, people & businesses can take more loans, buy more houses, cars, and invest
+1. Loans for mortgages, cars, and credit card interest all go down
+1. HYSA Rates go down since banks earn less interest on their reserves, so they pay consumers less for their savings. banks want to be lending out money and not holding onto savings reserves
+1. Bond prices go up, old bonds on a higher interest rate are worth more
+1. Stock market rises because business can borrow & invest more into their companies growth
 
 When the Fed raises rates (brake pedal):
 
 1. They're trying to slow down inflation and reduce spending by making borrowing more expensive
-2. Since borrowing is now more expensive, people and businesses borrow less which slows down demand and growth, but also inflation
-3. Loans get more expensive for everything
-4. HYSA Rates go up since banks earn more on reserves.
-5. Bond prices go down, old bonds on a lower interest rate are worth less
-6. Stock market may fall because businesses are borrowing less and less incentivized to grow
+1. Since borrowing is now more expensive, people and businesses borrow less which slows down demand and growth, but also inflation
+1. Loans get more expensive for everything
+1. HYSA Rates go up since banks earn more on reserves.
+1. Bond prices go down, old bonds on a lower interest rate are worth less
+1. Stock market may fall because businesses are borrowing less and less incentivized to grow
 
 ## Roth IRA
 
@@ -53,17 +53,17 @@ A Roth IRA (Individual Retirement Account) is a type of retirement savings accou
 
 1. Tax Treatment: Contributions to a Roth IRA are made with after-tax dollars, meaning you contribute money that has already been taxed. However, qualified withdrawals from a Roth IRA, including both contributions and earnings, are tax-free. This tax treatment is different from traditional IRAs, where contributions are typically tax-deductible but withdrawals are taxed as ordinary income.
 
-2. Income Limits: Roth IRAs have income eligibility limits for contributing directly to the account. These limits are based on modified adjusted gross income (MAGI) and are set by the IRS. If your income exceeds the limit, you may be restricted or ineligible to contribute directly to a Roth IRA, although there are ways to potentially work around these limits through strategies like the backdoor Roth IRA.
+1. Income Limits: Roth IRAs have income eligibility limits for contributing directly to the account. These limits are based on modified adjusted gross income (MAGI) and are set by the IRS. If your income exceeds the limit, you may be restricted or ineligible to contribute directly to a Roth IRA, although there are ways to potentially work around these limits through strategies like the backdoor Roth IRA.
 
-3. Contribution Limits: The IRS sets annual contribution limits for Roth IRAs. As of 2025, the contribution limit is $7,000 per year for individuals under age 50. These limits may be adjusted periodically for inflation.
+1. Contribution Limits: The IRS sets annual contribution limits for Roth IRAs. As of 2025, the contribution limit is $7,000 per year for individuals under age 50. These limits may be adjusted periodically for inflation.
 
-4. Investment Options: Within a Roth IRA, you can typically invest in a wide range of assets, including stocks, bonds, mutual funds, exchange-traded funds (ETFs), and other securities. This allows you to create a diversified investment portfolio tailored to your risk tolerance and investment goals.
+1. Investment Options: Within a Roth IRA, you can typically invest in a wide range of assets, including stocks, bonds, mutual funds, exchange-traded funds (ETFs), and other securities. This allows you to create a diversified investment portfolio tailored to your risk tolerance and investment goals.
 
-5. Withdrawal Rules: Unlike traditional IRAs, Roth IRAs offer more flexibility when it comes to withdrawals. You can generally withdraw your contributions (but not earnings) at any time and for any reason without facing taxes or penalties. However, to qualify for tax-free withdrawals of earnings, you must meet certain requirements, including being at least age 59½ and having held the account for at least five years.
+1. Withdrawal Rules: Unlike traditional IRAs, Roth IRAs offer more flexibility when it comes to withdrawals. You can generally withdraw your contributions (but not earnings) at any time and for any reason without facing taxes or penalties. However, to qualify for tax-free withdrawals of earnings, you must meet certain requirements, including being at least age 59½ and having held the account for at least five years.
 
-6. No Required Minimum Distributions (RMDs): Roth IRAs are not subject to required minimum distributions (RMDs) during the account holder's lifetime. This means you are not required to take withdrawals from the account once you reach a certain age, unlike traditional IRAs and employer-sponsored retirement plans like 401(k)s.
+1. No Required Minimum Distributions (RMDs): Roth IRAs are not subject to required minimum distributions (RMDs) during the account holder's lifetime. This means you are not required to take withdrawals from the account once you reach a certain age, unlike traditional IRAs and employer-sponsored retirement plans like 401(k)s.
 
-7. Estate Planning Benefits: Roth IRAs can offer estate planning benefits, as they can be passed on to heirs tax-free, subject to certain rules and regulations.
+1. Estate Planning Benefits: Roth IRAs can offer estate planning benefits, as they can be passed on to heirs tax-free, subject to certain rules and regulations.
 
 ### Backdoor Roth IRA
 
@@ -75,12 +75,12 @@ If you make >= $150k MAGI (income - deductibles like 401k/HSA contributions), yo
 Steps:
 
 1. Open a Traditional IRA (if you don't have one already)
-2. Transfer money from HYSA into this IRA to the max limit ($7,000 for 2025/2026)
-3. Wait 1-2 business days for the funds to settle, leaving the funds in cash/money market (don't invest them)
-4. Convert the Traditional IRA funds to your existing Roth IRA, converting the full balance
-5. Select "no" on taxes withheld
-6. Invest the funds once they're in your Roth IRA
-7. File Form 8606 with your taxes to report the non-deductible contribution and conversion
+1. Transfer money from HYSA into this IRA to the max limit ($7,000 for 2025/2026)
+1. Wait 1-2 business days for the funds to settle, leaving the funds in cash/money market (don't invest them)
+1. Convert the Traditional IRA funds to your existing Roth IRA, converting the full balance
+1. Select "no" on taxes withheld
+1. Invest the funds once they're in your Roth IRA
+1. File Form 8606 with your taxes to report the non-deductible contribution and conversion
 
 ## 401k
 
@@ -90,17 +90,17 @@ Here are some key features and aspects of a 401(k) plan:
 
 1. Employee Contributions: In a 401(k) plan, employees can elect to contribute a portion of their pre-tax salary to their retirement savings account. These contributions are deducted directly from their paycheck and deposited into the 401(k) account before income taxes are withheld. This means that contributions reduce the employee's taxable income for the year in which they are made, potentially lowering their current tax liability.
 
-2. Employer Contributions: Many employers offer matching contributions to their employees' 401(k) accounts as part of their benefits package. The employer may match a percentage of the employee's contributions up to a certain limit, which can vary depending on the employer's plan rules. Employer contributions are typically subject to a vesting schedule, which determines when employees become entitled to the employer's contributions.
+1. Employer Contributions: Many employers offer matching contributions to their employees' 401(k) accounts as part of their benefits package. The employer may match a percentage of the employee's contributions up to a certain limit, which can vary depending on the employer's plan rules. Employer contributions are typically subject to a vesting schedule, which determines when employees become entitled to the employer's contributions.
 
-3. Tax-Deferred Growth: Within a 401(k) plan, contributions and investment earnings grow tax-deferred until withdrawals are made. This means that participants do not pay taxes on their contributions or investment gains while they remain in the 401(k) account. Taxes are deferred until distributions are taken from the account, typically during retirement.
+1. Tax-Deferred Growth: Within a 401(k) plan, contributions and investment earnings grow tax-deferred until withdrawals are made. This means that participants do not pay taxes on their contributions or investment gains while they remain in the 401(k) account. Taxes are deferred until distributions are taken from the account, typically during retirement.
 
-4. Investment Options: 401(k) plans offer a range of investment options for participants to choose from, including mutual funds, exchange-traded funds (ETFs), target-date funds, company stock, and other investment vehicles. Participants can typically select their preferred investment options based on their risk tolerance, investment goals, and time horizon.
+1. Investment Options: 401(k) plans offer a range of investment options for participants to choose from, including mutual funds, exchange-traded funds (ETFs), target-date funds, company stock, and other investment vehicles. Participants can typically select their preferred investment options based on their risk tolerance, investment goals, and time horizon.
 
-5. Contribution Limits: The IRS sets annual contribution limits for 401(k) plans, which may be adjusted periodically for inflation. As of 2022, the annual contribution limit for employees under age 50 is $20,500, while employees age 50 and older can make additional catch-up contributions of up to $6,500, for a total of $27,000.
+1. Contribution Limits: The IRS sets annual contribution limits for 401(k) plans, which may be adjusted periodically for inflation. As of 2022, the annual contribution limit for employees under age 50 is $20,500, while employees age 50 and older can make additional catch-up contributions of up to $6,500, for a total of $27,000.
 
-6. Withdrawal Rules: Withdrawals from a 401(k) plan are generally subject to certain rules and restrictions. Participants may face penalties for early withdrawals (before age 59½), although there are exceptions for certain qualifying events such as disability, death, or financial hardship. Required minimum distributions (RMDs) typically begin once the participant reaches age 72, although RMDs are temporarily suspended for the tax year 2020 and later due to the SECURE Act.
+1. Withdrawal Rules: Withdrawals from a 401(k) plan are generally subject to certain rules and restrictions. Participants may face penalties for early withdrawals (before age 59½), although there are exceptions for certain qualifying events such as disability, death, or financial hardship. Required minimum distributions (RMDs) typically begin once the participant reaches age 72, although RMDs are temporarily suspended for the tax year 2020 and later due to the SECURE Act.
 
-7. Portability: Participants can often roll over their 401(k) account balance into another qualified retirement plan, such as an Individual Retirement Account (IRA), when changing jobs or retiring. This allows participants to maintain control over their retirement savings and continue to benefit from tax-deferred growth.
+1. Portability: Participants can often roll over their 401(k) account balance into another qualified retirement plan, such as an Individual Retirement Account (IRA), when changing jobs or retiring. This allows participants to maintain control over their retirement savings and continue to benefit from tax-deferred growth.
 
 Overall, a 401(k) plan is a valuable tool for retirement savings, offering tax advantages, employer contributions, and a variety of investment options to help individuals build a nest egg for retirement. It's important for participants to understand the features and rules of their specific 401(k) plan and to make informed decisions about contributions, investments, and retirement planning.
 
@@ -114,9 +114,9 @@ Here are some key features and aspects of mutual funds:
 
 1. Diversification: One of the primary benefits of mutual funds is diversification. By pooling money from multiple investors, mutual funds can invest in a wide range of securities across different asset classes, sectors, and geographic regions. This diversification helps spread investment risk and reduce the impact of poor performance from any single security on the overall portfolio.
 
-2. Professional Management: Mutual funds are managed by professional portfolio managers or investment teams who are responsible for selecting and managing the fund's investments. These managers conduct research, analysis, and investment decisions based on the fund's investment objectives and strategies.
+1. Professional Management: Mutual funds are managed by professional portfolio managers or investment teams who are responsible for selecting and managing the fund's investments. These managers conduct research, analysis, and investment decisions based on the fund's investment objectives and strategies.
 
-3. Variety of Investment Objectives: Mutual funds are available with a wide range of investment objectives, catering to different investor needs and preferences. Common types of mutual funds include:
+1. Variety of Investment Objectives: Mutual funds are available with a wide range of investment objectives, catering to different investor needs and preferences. Common types of mutual funds include:
 
    - Equity Funds: Invest primarily in stocks and aim for long-term capital appreciation.
    - Bond Funds: Invest primarily in bonds and aim for income generation and capital preservation.
@@ -126,11 +126,11 @@ Here are some key features and aspects of mutual funds:
    - Sector Funds: Focus on specific sectors or industries, such as technology, healthcare, or energy.
    - Target-Date Funds: Adjust asset allocation over time based on the investor's target retirement date.
 
-4. Liquidity: Mutual funds offer liquidity, allowing investors to buy or sell shares on any business day at the fund's net asset value (NAV), which is calculated at the end of each trading day. This provides flexibility for investors to access their investment funds when needed.
+1. Liquidity: Mutual funds offer liquidity, allowing investors to buy or sell shares on any business day at the fund's net asset value (NAV), which is calculated at the end of each trading day. This provides flexibility for investors to access their investment funds when needed.
 
-5. Regulation and Transparency: Mutual funds are regulated investment vehicles subject to oversight by regulatory authorities, such as the U.S. Securities and Exchange Commission (SEC). They are required to provide investors with regular disclosures of their investment holdings, performance, fees, and other relevant information, enhancing transparency and investor protection.
+1. Regulation and Transparency: Mutual funds are regulated investment vehicles subject to oversight by regulatory authorities, such as the U.S. Securities and Exchange Commission (SEC). They are required to provide investors with regular disclosures of their investment holdings, performance, fees, and other relevant information, enhancing transparency and investor protection.
 
-6. Fees and Expenses: Mutual funds charge fees and expenses to cover operating costs, management fees, and other expenses associated with managing the fund. Common fees include the expense ratio, which represents the annual percentage of the fund's assets deducted to cover operating expenses. It's important for investors to consider fees and expenses when evaluating mutual funds, as they can impact investment returns over time.
+1. Fees and Expenses: Mutual funds charge fees and expenses to cover operating costs, management fees, and other expenses associated with managing the fund. Common fees include the expense ratio, which represents the annual percentage of the fund's assets deducted to cover operating expenses. It's important for investors to consider fees and expenses when evaluating mutual funds, as they can impact investment returns over time.
 
 Overall, mutual funds provide individual investors with a convenient and accessible way to invest in a diversified portfolio of securities managed by professional investment managers. They offer benefits such as diversification, professional management, liquidity, and a variety of investment options, making them popular investment choices for investors seeking exposure to different asset classes and investment strategies.
 
@@ -145,15 +145,15 @@ Here are some key features and aspects of index funds:
 
 1. Passive Management: Index funds are passively managed investment vehicles, meaning they aim to replicate the performance of the underlying index rather than actively trying to outperform the market. This passive approach typically results in lower management fees and expenses compared to actively managed funds, as there is less need for research, analysis, and trading activity.
 
-2. Diversification: Index funds offer broad diversification by holding a portfolio of securities that represent a specific market index. This diversification helps reduce individual stock or sector-specific risk, as the fund's performance is tied to the overall performance of the index.
+1. Diversification: Index funds offer broad diversification by holding a portfolio of securities that represent a specific market index. This diversification helps reduce individual stock or sector-specific risk, as the fund's performance is tied to the overall performance of the index.
 
-3. Low Turnover: Because index funds aim to replicate the composition of the underlying index, they generally have lower portfolio turnover compared to actively managed funds. This can result in lower transaction costs and tax efficiency, as capital gains taxes are incurred only when securities are bought or sold within the fund.
+1. Low Turnover: Because index funds aim to replicate the composition of the underlying index, they generally have lower portfolio turnover compared to actively managed funds. This can result in lower transaction costs and tax efficiency, as capital gains taxes are incurred only when securities are bought or sold within the fund.
 
-4. Transparent and Objective: The composition of the underlying index is typically transparent and publicly available, providing investors with visibility into the securities held by the index fund. Additionally, index funds follow a rules-based approach to replicate the index's composition, which helps ensure objectivity and consistency in the fund's investment strategy.
+1. Transparent and Objective: The composition of the underlying index is typically transparent and publicly available, providing investors with visibility into the securities held by the index fund. Additionally, index funds follow a rules-based approach to replicate the index's composition, which helps ensure objectivity and consistency in the fund's investment strategy.
 
-5. Cost-Effective: Index funds are known for their low expense ratios, which are the annual fees charged by the fund to cover operating expenses. Because index funds require less active management and research compared to actively managed funds, they typically have lower expense ratios, making them cost-effective investment options for investors seeking broad market exposure.
+1. Cost-Effective: Index funds are known for their low expense ratios, which are the annual fees charged by the fund to cover operating expenses. Because index funds require less active management and research compared to actively managed funds, they typically have lower expense ratios, making them cost-effective investment options for investors seeking broad market exposure.
 
-6. Wide Range of Options: There are index funds available for various market segments, asset classes, and investment strategies, allowing investors to choose funds that align with their investment objectives and risk tolerance. Common types of index funds include those tracking domestic and international stock markets, bond markets, and specific sectors or industries.
+1. Wide Range of Options: There are index funds available for various market segments, asset classes, and investment strategies, allowing investors to choose funds that align with their investment objectives and risk tolerance. Common types of index funds include those tracking domestic and international stock markets, bond markets, and specific sectors or industries.
 
 Overall, index funds offer investors a straightforward and cost-effective way to gain exposure to a broad market index and participate in the overall performance of the market. They are popular investment options for long-term investors seeking diversified exposure to various asset classes while keeping costs low.
 
@@ -168,7 +168,8 @@ The NASDAQ Composite and the S&P 500 are both widely followed stock market indic
    - The NASDAQ Composite is often associated with growth-oriented and innovative companies, as the index tends to have a higher concentration of high-growth, high-volatility stocks compared to other indices like the S&P 500.
    - The NASDAQ Composite is market-capitalization-weighted, meaning that larger companies have a greater impact on the index's performance.
 
-2. S&P 500:
+1. S&P 500:
+
    - The S&P 500, formally known as the Standard & Poor's 500, is an index that tracks the performance of 500 large-cap stocks listed on stock exchanges in the United States. These stocks are selected by the Index Committee at S&P Dow Jones Indices based on criteria such as market capitalization, liquidity, and financial viability.
    - The S&P 500 represents a broad cross-section of the U.S. stock market, covering companies from various sectors including technology, healthcare, finance, consumer discretionary, industrials, and more. However, compared to the NASDAQ Composite, the S&P 500 has a more balanced representation of sectors, with a lower concentration in technology.
    - The S&P 500 is often considered a benchmark for the overall performance of the U.S. stock market and is widely used by investors, financial professionals, and fund managers to evaluate investment returns and market trends.
@@ -188,7 +189,8 @@ Stocks and bonds are two primary types of investment securities that individuals
    - Stocks are typically classified into two main categories: common stocks and preferred stocks. Common stocks represent the majority of publicly traded stocks and usually come with voting rights at shareholder meetings. Preferred stocks generally offer fixed dividends but may have limited or no voting rights.
    - Investors often buy stocks with the expectation of achieving long-term growth and building wealth over time. However, stocks can also provide income through dividend payments, although not all stocks pay dividends.
 
-2. Bonds:
+1. Bonds:
+
    - Bonds are debt securities issued by governments, municipalities, corporations, or other entities to raise capital. When an investor buys a bond, they are essentially lending money to the issuer in exchange for regular interest payments, known as coupon payments, and the return of the principal amount at maturity.
    - Bonds are considered to be relatively safer investments compared to stocks because they typically offer a fixed income stream and have a defined maturity date when the principal amount is repaid. However, bond prices can still fluctuate in response to changes in interest rates, credit ratings, and other factors.
    - The potential return on bonds comes primarily from the interest payments received over the life of the bond. The interest rate, or coupon rate, is determined at the time of issuance and remains fixed throughout the bond's term.
@@ -254,7 +256,7 @@ Selling vs. Withdrawing
 - The Trigger: The IRS taxes the _transaction_ (closing the position), not the transfer of money to your bank.
 - Example: If you sell your stock on Dec 31st but don't transfer the cash to your bank until Jan 2nd, you still owe the taxes for the year you hit "Sell."
 
----
+______________________________________________________________________
 
 ### 2. ETFs vs. Mutual Funds (in Brokerage Accounts)
 
@@ -262,27 +264,27 @@ Why ETFs (VOO / IVV) are better for this account:
 
 Mutual funds have a flaw where other investors leaving the fund can force a tax bill on _you_. ETFs use a loophole to prevent this.
 
-| Tax Type                    | Will you pay this while holding? | Why?                                                                                  |
+| Tax Type | Will you pay this while holding? | Why? |
 | :-------------------------- | :------------------------------- | :------------------------------------------------------------------------------------ |
-| Capital Gains Distributions | No (Usually)                     | ETFs use "In-Kind" redemptions to wash away capital gains tax liability for the fund. |
-| Dividend Tax                | Yes                              | Unavoidable. The IRS taxes dividends the moment they are paid.                        |
-| Capital Gains Tax           | No                               | You only pay this on your _own_ profit when you eventually sell the ETF in 10+ years. |
+| Capital Gains Distributions | No (Usually) | ETFs use "In-Kind" redemptions to wash away capital gains tax liability for the fund. |
+| Dividend Tax | Yes | Unavoidable. The IRS taxes dividends the moment they are paid. |
+| Capital Gains Tax | No | You only pay this on your _own_ profit when you eventually sell the ETF in 10+ years. |
 
 Top Picks (S&P 500 ETFs):
 
 - VOO (Vanguard) or IVV (iShares).
 - Both are the "Gold Standard": Low fees (0.03%), high safety, tax-efficient.
 
----
+______________________________________________________________________
 
 ### 3. Ordinary vs. Qualified Dividends
 
 The Two Tax Buckets:
 
-1.  Ordinary Dividends: Taxed at your regular income tax rate (10%–37%).
-    - _Viewed as:_ "Quick cash" or interest (like a savings account).
-2.  Qualified Dividends: Taxed at the Long-Term Capital Gains rate (0% / 15% / 20%).
-    - _Viewed as:_ A reward for long-term investing. Most people pay 15%.
+1. Ordinary Dividends: Taxed at your regular income tax rate (10%–37%).
+   - _Viewed as:_ "Quick cash" or interest (like a savings account).
+1. Qualified Dividends: Taxed at the Long-Term Capital Gains rate (0% / 15% / 20%).
+   - _Viewed as:_ A reward for long-term investing. Most people pay 15%.
 
 How to get the "Good" Rate (The 60-Day Rule):
 To ensure your dividends are "Qualified," you must meet this holding period:

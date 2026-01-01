@@ -40,11 +40,11 @@ Service Level Indicators (SLIs) are specific metrics used to measure the perform
 
 ### Example
 
-| Layer | Example                                         |
+| Layer | Example |
 | ----- | ----------------------------------------------- |
-| SLI   | Measured latency p99 = 180ms; error rate = 0.3% |
-| SLO   | p99 latency < 200ms; error rate < 0.5%          |
-| SLA   | "99.9% availability per month or 10% credit"    |
+| SLI | Measured latency p99 = 180ms; error rate = 0.3% |
+| SLO | p99 latency < 200ms; error rate < 0.5% |
+| SLA | "99.9% availability per month or 10% credit" |
 
 The relationship flows upward: you measure SLIs, set internal SLOs against them (with error budgets for when you can deploy risky changes vs. focus on reliability), and your SLA is the external promise you're confident you can keep because your SLOs have margin built in.
 
@@ -66,11 +66,11 @@ They allow you to make data-driven decisions about trade-offs between reliabilit
 
 ## What Services need Each
 
-| Layer | When you need it                                                   |
+| Layer | When you need it |
 | ----- | ------------------------------------------------------------------ |
-| SLIs  | Always - if it runs, measure it                                    |
-| SLOs  | When someone depends on the service                                |
-| SLAs  | When there's a contractual/business relationship with consequences |
+| SLIs | Always - if it runs, measure it |
+| SLOs | When someone depends on the service |
+| SLAs | When there's a contractual/business relationship with consequences |
 
 ## SLI Metrics
 

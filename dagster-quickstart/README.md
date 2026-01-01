@@ -1,6 +1,6 @@
 # Dagster
 
-``` sh
+```sh
 uvx -U create-dagster project dagster-quickstart
 uv add pandas
 

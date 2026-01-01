@@ -6,21 +6,21 @@ Core Services:
 
 1. CDN - When users visit your app, instead of connecting directly to your server (which is probably in 1 location), they connect to Cloudflare's nearest data center of their 300+ global locations. From here Cloudflare caches static content like images, CSS, and JS and serves it to the user, reducing load times
 
-2. DDOS Protection - Cloudflare absorbs and filters out malicious traffic trying to overwhelm your servers. Without it, a DDOS attack could knock your application servers offline by flooding them with requests
+1. DDOS Protection - Cloudflare absorbs and filters out malicious traffic trying to overwhelm your servers. Without it, a DDOS attack could knock your application servers offline by flooding them with requests
 
-3. DNS Management - Cloudflare acts as your DNS provider, translating domain names (yourapp.com) into IP addresses. Their DNS is one of the fastest globally, and they include security features to protect against DNS-based attacks
+1. DNS Management - Cloudflare acts as your DNS provider, translating domain names (yourapp.com) into IP addresses. Their DNS is one of the fastest globally, and they include security features to protect against DNS-based attacks
 
-4. Web Application Firewall (WAF) - This filters out malicious HTTP requests before they reach your application, blocking SQL injection attempts, cross-site scripting, and other web exploits
+1. Web Application Firewall (WAF) - This filters out malicious HTTP requests before they reach your application, blocking SQL injection attempts, cross-site scripting, and other web exploits
 
-5. SSL/TLS Encryption - Cloudflare provides free SSL certificates and handles the encryption between users and your site, ensuring secure HTTPS connections without you needing to manage certificates yourself.
+1. SSL/TLS Encryption - Cloudflare provides free SSL certificates and handles the encryption between users and your site, ensuring secure HTTPS connections without you needing to manage certificates yourself.
 
 When you use Cloudflare:
 
 1. You point your domain's DNS to Cloudflare
-2. Cloudflare becomes the "front door" to your application
-3. All traffic flows through them first
-4. They apply security rules, serve cached content, and optimize connections
-5. Only legitimate, clean traffic reaches your actual servers
+1. Cloudflare becomes the "front door" to your application
+1. All traffic flows through them first
+1. They apply security rules, serve cached content, and optimize connections
+1. Only legitimate, clean traffic reaches your actual servers
 
 By default, it automatically caches a handful of files and objects such as:
 
@@ -45,8 +45,8 @@ jyablonski.dev (Route53 DNS)
 The actual process involves:
 
 1. Create a Cloudflare account
-2. Add `jyablonski.dev` as a site
-3. Cloudflare will scan your existing DNS records from Route53
+1. Add `jyablonski.dev` as a site
+1. Cloudflare will scan your existing DNS records from Route53
    - You can either import the ones it scans, or create new DNS records manually
    - It'll look something like below
 
@@ -64,7 +64,8 @@ CNAME   api                 your-alb-123.us-east-1.elb.amazonaws.com
    - Before: `ns-123.awsdns-12.com`
    - After: `ns1.cloudflare.com`
 
-5. Configure Cloudflare Settings
+1. Configure Cloudflare Settings
+
    - Some settings you configure are proxy status, SSL/TLS mode, caching rules, security rules like WAF and rate limiting etc
    - Cloudflare's orange cloud option for the proxy status means you get CDN, security, caching benefits etc. This is typically what you want.
 
@@ -114,15 +115,15 @@ Cloudflare uses Anycast - a routing technique where the same IP address (like 10
 When Cloudflare is setup & it starts taking user requests, here's what happens:
 
 1. User types `https://jyablonski.dev` from NYC
-2. DNS lookup goes to Cloudflare nameservers
-3. Cloudflare returns an IP `104.26.10.123` (Cloudflare's Anycast IP)
-4. User connects to: `104.26.10.123` (Cloudflare edge server in NYC)
+1. DNS lookup goes to Cloudflare nameservers
+1. Cloudflare returns an IP `104.26.10.123` (Cloudflare's Anycast IP)
+1. User connects to: `104.26.10.123` (Cloudflare edge server in NYC)
    - Note: for all subsequent steps, your backend architecture interacts with this specific Cloudflare edge server for the remainder of the flow
-5. Cloudflare returns any cacheable content to the user that's available at that edge location
-6. Cloudflare reaches out to ALB to fetch any other content it needs
-7. ALB reaches out to backend servers on EC2 to get whatever content
-8. ALB returns results back to Cloudflare
-9. Cloudflare returns results back to the user
+1. Cloudflare returns any cacheable content to the user that's available at that edge location
+1. Cloudflare reaches out to ALB to fetch any other content it needs
+1. ALB reaches out to backend servers on EC2 to get whatever content
+1. ALB returns results back to Cloudflare
+1. Cloudflare returns results back to the user
 
 Cloudflare also forwards request headers along to the origin servers, like the real user IP, user's country etc.
 
@@ -131,5 +132,5 @@ Cloudflare also forwards request headers along to the origin servers, like the r
 ## Gotchas
 
 1. WebSocket Connections require additional setup & configuration in Cloudflare
-2. ALB Health checks still work normally - they bypass Cloudflare
-3. Cloudflare IPs will show up in your application logs, not user IPs
+1. ALB Health checks still work normally - they bypass Cloudflare
+1. Cloudflare IPs will show up in your application logs, not user IPs

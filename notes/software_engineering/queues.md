@@ -13,7 +13,7 @@ Queue Definition: A generic container for messages (data) sent between a Produce
 - Load Leveling (Backpressure): If 10,000 requests come in at once, the queue buffers them so consumers can process them at a safe rate without crashing.
 - Scalability: You can easily add more Consumer instances to process the queue faster.
 
----
+______________________________________________________________________
 
 ## Important Protocols & Mechanisms
 
@@ -28,16 +28,16 @@ An open standard application layer protocol for message-oriented middleware.
 
 Since networks are unreliable, we cannot assume a message was processed just because it was sent.
 
-1.  Reserve: Consumer picks up a message. The broker makes it "invisible" to other consumers but keeps it in storage.
-2.  Process: Consumer executes the business logic.
-3.  Ack (Positive): Consumer tells Broker "Done." Broker deletes the message.
-4.  Nack (Negative) / Timeout: If the Consumer crashes or takes too long (Visibility Timeout), the Broker puts the message back into the queue to be retried by someone else.
+1. Reserve: Consumer picks up a message. The broker makes it "invisible" to other consumers but keeps it in storage.
+1. Process: Consumer executes the business logic.
+1. Ack (Positive): Consumer tells Broker "Done." Broker deletes the message.
+1. Nack (Negative) / Timeout: If the Consumer crashes or takes too long (Visibility Timeout), the Broker puts the message back into the queue to be retried by someone else.
 
 ### Dead Letter Queues (DLQ)
 
 A "safety net" queue. If a message fails processing x times (or is malformed), it is moved to a DLQ. This prevents a "poison pill" message from blocking the queue forever. Engineers monitor the DLQ to debug why messages are failing.
 
----
+______________________________________________________________________
 
 ## Critical Concepts
 
@@ -51,18 +51,18 @@ When designing a system, you must choose a guarantee:
 
 ### B. Ordering
 
-1.  Standard Queues (Best-Effort FIFO)
+1. Standard Queues (Best-Effort FIFO)
 
-    - Behavior: The system attempts to process messages in order, but exact order is not guaranteed.
-    - Why use it: Maximum throughput and lower cost.
-    - Reality: 99% of messages are FIFO, but 1% might arrive out of order or be delivered twice.
-    - NOT LIFO: It never intentionally prioritizes the newest items; it just gets "messy" sometimes.
+   - Behavior: The system attempts to process messages in order, but exact order is not guaranteed.
+   - Why use it: Maximum throughput and lower cost.
+   - Reality: 99% of messages are FIFO, but 1% might arrive out of order or be delivered twice.
+   - NOT LIFO: It never intentionally prioritizes the newest items; it just gets "messy" sometimes.
 
-2.  Strict FIFO Queues
+1. Strict FIFO Queues
 
-    - Behavior: Guaranteed to process messages in the exact order they were received.
-    - Why use it: Essential for operations where order matters (e.g., banking transactions: you must "Deposit" before you "Withdraw").
-    - Trade-off: Lower throughput (speed limit) because the system has to block and wait to ensure order.
+   - Behavior: Guaranteed to process messages in the exact order they were received.
+   - Why use it: Essential for operations where order matters (e.g., banking transactions: you must "Deposit" before you "Withdraw").
+   - Trade-off: Lower throughput (speed limit) because the system has to block and wait to ensure order.
 
 ### C. Fanout vs. Direct
 
@@ -70,7 +70,7 @@ When designing a system, you must choose a guarantee:
 - Fanout (Pub/Sub): One message is copied to multiple queues so different services can react to the same event (e.g., A "UserSignup" event triggers an Email Service AND a Analytics Service).
   - Think new message goes to an SNS Topic, which fans out to multiple SQS Queues
 
----
+______________________________________________________________________
 
 ## Technology Landscape: Queue vs. Stream
 
@@ -93,15 +93,15 @@ RabbitMQ is a self-hosted option that stores messages in memory or disk (if memo
 - Use Case: Real-time data ingestion, Replayability (e.g., "Reprocess yesterday's data with new logic"), Event Sourcing.
 - Dumb Broker / Smart Consumer: The consumer manages its own state.
 
----
+______________________________________________________________________
 
 ### Comparison Cheat Sheet
 
-| Tool         | Type   | Managed?        | Best For...                                                               |
+| Tool | Type | Managed? | Best For... |
 | :----------- | :----- | :-------------- | :------------------------------------------------------------------------ |
-| AWS SQS      | Queue  | Fully Managed   | The "Easy Button." Cloud-native, serverless apps.                         |
-| RabbitMQ     | Queue  | Self or Managed | Complex routing logic, strictly on-prem requirements, low latency.        |
-| Apache Kafka | Stream | Self or Managed | High-scale data pipelines, activity tracking, replaying history.          |
-| Redis        | Queue  | Self or Managed | Extremely fast, simple, ephemeral messaging (if data loss is acceptable). |
+| AWS SQS | Queue | Fully Managed | The "Easy Button." Cloud-native, serverless apps. |
+| RabbitMQ | Queue | Self or Managed | Complex routing logic, strictly on-prem requirements, low latency. |
+| Apache Kafka | Stream | Self or Managed | High-scale data pipelines, activity tracking, replaying history. |
+| Redis | Queue | Self or Managed | Extremely fast, simple, ephemeral messaging (if data loss is acceptable). |
 
----
+______________________________________________________________________

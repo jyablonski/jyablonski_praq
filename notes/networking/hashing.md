@@ -18,11 +18,11 @@ You can hash almost anything - strings, integers, booleans, or even complex obje
 
 1. Hash Tables / Hash Maps - Fast lookup, insert, delete in `O(1)` average time.
 
-2. Checksums and Fingerprints - Detecting changes to data (e.g., MD5, SHA-256).
+1. Checksums and Fingerprints - Detecting changes to data (e.g., MD5, SHA-256).
 
-3. Data Partitioning in Distributed Systems - Deciding which server or node stores a given piece of data.
+1. Data Partitioning in Distributed Systems - Deciding which server or node stores a given piece of data.
 
-4. Cryptography - Securing passwords, verifying integrity, digital signatures.
+1. Cryptography - Securing passwords, verifying integrity, digital signatures.
 
 ## Simple Hashing
 
@@ -74,6 +74,7 @@ In distributed systems (e.g., a cache like Memcached), you want to:
 Consistent Hashing uses a (conceptual) hash ring (0 to 2³² - 1), where both nodes and keys are hashed to points on the ring.
 
 - A key is stored in the first node clockwise from its position on the ring.
+
 - When a node joins or leaves:
 
   - Only a fraction of keys are affected.
@@ -84,6 +85,7 @@ You still use a hash function to place each key somewhere on the ring, but you a
 Keys are assigned to the next node in the ring moving clockwise. Example:
 
 - Key `K` hashes to position 1234.
+
 - Nodes:
 
   - Node A → 1000
@@ -128,25 +130,25 @@ Suppose you have some request to see if user `user123` exists or not.
 - `nodes = [100, 500, 1000, 1500, 2000, 2500, 3000, 3500]` - could be 8 vnodes over 2 servers, or 8 servers.
 
 1. Compute the hash of the key `hash("user123") = 1789`
-2. Perform binary search on the sorted nodes to find the first node hash that is greater than or equal to the key hash output
-3. Store the `1789` hash at the `2000` node
+1. Perform binary search on the sorted nodes to find the first node hash that is greater than or equal to the key hash output
+1. Store the `1789` hash at the `2000` node
 
 ### Summary Table
 
-| Feature        | Simple Hashing             | Consistent Hashing               |
+| Feature | Simple Hashing | Consistent Hashing |
 | -------------- | -------------------------- | -------------------------------- |
-| Used in        | Hash tables, basic caching | Distributed caches, sharding     |
-| Scalability    | Poor                       | Good                             |
-| Key remapping  | Many keys change on resize | Minimal keys change              |
-| Load balancing | Can be uneven              | More balanced with virtual nodes |
-| Implementation | Easy                       | More complex                     |
+| Used in | Hash tables, basic caching | Distributed caches, sharding |
+| Scalability | Poor | Good |
+| Key remapping | Many keys change on resize | Minimal keys change |
+| Load balancing | Can be uneven | More balanced with virtual nodes |
+| Implementation | Easy | More complex |
 
 ## Real-World Systems Using Consistent Hashing
 
-| System          | Use Case                           |
+| System | Use Case |
 | --------------- | ---------------------------------- |
-| Cassandra       | Partitioning rows across nodes     |
-| Kafka           | Mapping partitions to brokers      |
-| Redis Cluster   | Distributing keys to shards        |
+| Cassandra | Partitioning rows across nodes |
+| Kafka | Mapping partitions to brokers |
+| Redis Cluster | Distributing keys to shards |
 | Amazon DynamoDB | Behind the scenes for partitioning |
-| Ringpop (Uber)  | Service discovery and routing      |
+| Ringpop (Uber) | Service discovery and routing |

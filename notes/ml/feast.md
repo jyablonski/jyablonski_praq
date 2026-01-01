@@ -18,19 +18,19 @@ Feast solves exactly one hard problem: Latency at Inference Time.
 - Without Feast: Your model is live behind an API. A user clicks "checkout." You need to calculate `fraud_score`. To do this, you need their `last_50_transactions_avg`. Querying Snowflake for this takes 2-5 seconds. The user leaves.
 - With Feast: Feast automatically syncs that `last_50_transactions_avg` from Snowflake into Redis (or DynamoDB). The API queries Redis and gets the value in 5 milliseconds.
 
-If you do not have a real-time inference requirement (latency \< 100ms), you generally do not need Feast.
+If you do not have a real-time inference requirement (latency < 100ms), you generally do not need Feast.
 
----
+______________________________________________________________________
 
 ### 2. Feast Architecture: The "Dual-Store" Concept
 
 Feast does not compute features (dbt does that). Feast acts as the _transport layer_ to move features from your warehouse to your app.
 
-1.  Offline Store (Snowflake): This is your "Source of Truth." It holds petabytes of history. You use this for Training models (because you need history).
-2.  Online Store (Redis/DynamoDB): This is your "Cache." It holds _only the latest value_ for each user. You use this for Serving predictions.
-3.  The Registry: A file (`registry.db` or S3 object) that maps feature names ("user_age") to their physical location (Snowflake Table X, Column Y).
+1. Offline Store (Snowflake): This is your "Source of Truth." It holds petabytes of history. You use this for Training models (because you need history).
+1. Online Store (Redis/DynamoDB): This is your "Cache." It holds _only the latest value_ for each user. You use this for Serving predictions.
+1. The Registry: A file (`registry.db` or S3 object) that maps feature names ("user_age") to their physical location (Snowflake Table X, Column Y).
 
----
+______________________________________________________________________
 
 ### 3. The Workflow: From dbt to Production
 
@@ -121,9 +121,9 @@ features = store.get_online_features(
 The key point here is the API needs to use Feast SDK to fetch features from Redis. If you are using Feast in the Producer Service to push data to Redis, you also need to use Feast in the Consumer Service to read from Redis.
 
 - The data is written to Redis in a specific way, optimized for speed, that only the Feast SDK knows how to use.
-- Trying to reproduce this logic manually is dumb as fuck so don't do that bruh`
+- Trying to reproduce this logic manually is dumb as fuck so don't do that bruh\`
 
----
+______________________________________________________________________
 
 ### 4. Production Best Practices & Gotchas
 
@@ -137,9 +137,9 @@ The key point here is the API needs to use Feast SDK to fetch features from Redi
 
 - Risk: Developers define a TTL (Time To Live) of "Infinite" or add massive text features to the online store.
 - Best Practice:
-  1.  Only materialize features needed for _online_ inference.
-  2.  Set aggressive TTLs (e.g., if the model only cares about the last 24h of clicks, don't store 30 days in Redis).
-  3.  Use `Entity` types to filter. Don't sync "Guest Users" to Redis if you only predict for "Subscribers."
+  1. Only materialize features needed for _online_ inference.
+  1. Set aggressive TTLs (e.g., if the model only cares about the last 24h of clicks, don't store 30 days in Redis).
+  1. Use `Entity` types to filter. Don't sync "Guest Users" to Redis if you only predict for "Subscribers."
 
 #### C. The "Repo" Structure
 
@@ -166,7 +166,7 @@ You can run Feast in two modes: "SDK Mode" (easier, no extra server) or "Service
 
 Here is the breakdown of how it actually runs in your infrastructure.
 
----
+______________________________________________________________________
 
 ### Option 1: SDK Mode (The "Library" Approach)
 
@@ -174,9 +174,9 @@ _Best for: Getting started, smaller teams, lower complexity._
 
 In this mode, Feast is just a Python package (`uv add feast`) that you install inside your existing API service. There is no separate "Feast Server" running 24/7.
 
-1.  Your API (Inference Service): You import the Feast SDK code directly into your Flask/FastAPI app.
-2.  The Connection: Your API connects directly to Redis (Online Store) to fetch features.
-3.  The Registry: Your API reads a `registry.db` file (usually stored in S3) on startup to know which Redis keys map to which features.
+1. Your API (Inference Service): You import the Feast SDK code directly into your Flask/FastAPI app.
+1. The Connection: Your API connects directly to Redis (Online Store) to fetch features.
+1. The Registry: Your API reads a `registry.db` file (usually stored in S3) on startup to know which Redis keys map to which features.
 
 Pros: No new Kubernetes services to manage.
 
@@ -188,13 +188,13 @@ _Best for: Large scale, multiple teams, strict security._
 
 In this mode, you deploy a separate Feast Feature Server (using the official Helm chart). This is a lightweight Python/Go HTTP server that runs 24/7.
 
-1.  Feast Server: It sits in front of Redis. It handles all the connections, authentication, and decoding.
-2.  Your API: It makes a simple HTTP request (`POST /get-online-features`) to the Feast Server. It knows nothing about Redis.
+1. Feast Server: It sits in front of Redis. It handles all the connections, authentication, and decoding.
+1. Your API: It makes a simple HTTP request (`POST /get-online-features`) to the Feast Server. It knows nothing about Redis.
 
 Pros: Decoupling. You can swap Redis for DynamoDB without touching your ML model code.
 Cons: You have to manage a Deployment/Service in Kubernetes.
 
----
+______________________________________________________________________
 
 ### The Architecture Visualization
 
@@ -206,7 +206,7 @@ Regardless of which mode you choose, you need a place to store the Registry.
 - Where it lives: In production, do not use a local file. Point Feast to an S3 Bucket (e.g., `s3://my-corp-ml-registry/`) or a PostgreSQL table.
 - Why: Airflow (the writer) needs to update it, and your API (the reader) needs to read it. They use S3 as the handover point.
 
----
+______________________________________________________________________
 
 ### Your Airflow Role: The "Heartbeat"
 
@@ -237,71 +237,71 @@ The Airflow DAG:
 
 ### Summary: How to Start
 
-1.  Day 1 (SDK Mode):
+1. Day 1 (SDK Mode):
 
-    - `pip install feast` in your API container.
-    - Configure `feature_store.yaml` to point to S3 (registry) and Redis (online).
-    - Create an Airflow DAG to run `feast materialize-incremental`.
-    - Result: You are in production with no extra servers.
+   - `pip install feast` in your API container.
+   - Configure `feature_store.yaml` to point to S3 (registry) and Redis (online).
+   - Create an Airflow DAG to run `feast materialize-incremental`.
+   - Result: You are in production with no extra servers.
 
-2.  Day 100 (Service Mode):
+1. Day 100 (Service Mode):
 
-    - You notice your API pods are consuming too much memory maintaining Redis connections.
-    - You deploy the Feast Helm Chart to your cluster.
-    - You change your API code to hit `http://feast-server` instead of Redis.
+   - You notice your API pods are consuming too much memory maintaining Redis connections.
+   - You deploy the Feast Helm Chart to your cluster.
+   - You change your API code to hit `http://feast-server` instead of Redis.
 
 ## Production Flow
 
-### 1\. What does the data look like in Redis?
+### 1. What does the data look like in Redis?
 
 The data in Redis is optimized for speed, so it doesn't look like a SQL table or a JSON object.
 
 If you inspected Redis, you wouldn't see readable columns. You would see something like this:
 
-| Component  | What it looks like (Simplified)                                         |
+| Component | What it looks like (Simplified) |
 | :--------- | :---------------------------------------------------------------------- |
-| Redis Key  | `\x02user_101` (Binary prefix + Entity ID)                              |
-| Redis Type | `HASH`                                                                  |
-| Fields     | `_ts:article_recs` (Timestamp), `f28a:avg_clicks` (Hashed Feature Name) |
-| Values     | `\x08\x96\x01` (Protocol Buffer Binary)                                 |
+| Redis Key | `\x02user_101` (Binary prefix + Entity ID) |
+| Redis Type | `HASH` |
+| Fields | `_ts:article_recs` (Timestamp), `f28a:avg_clicks` (Hashed Feature Name) |
+| Values | `\x08\x96\x01` (Protocol Buffer Binary) |
 
 Why this mess instead of JSON?
 
 - Speed: Parsing JSON takes CPU time. Protocol Buffers (Protobuf) are binary, so they are instant to read.
 - Networking: Fetching 20 separate keys is slow. Feast stores features from the same "Feature View" together so it can grab them all in a single HMGET (Hash Multi-Get) command. This is how it achieves 1-3ms latency.
 
-### 2\. The Production Workflow (The "Request Loop")
+### 2. The Production Workflow (The "Request Loop")
 
 Your description of the flow is 100% correct. Here is the standard architecture diagram for that request:
 
 Step-by-Step Walkthrough:
 
-1.  The Trigger: User lands on the homepage.
-2.  The Request: Frontend calls your API:
-    - `POST /recommendations`
-    - Payload: `{ "user_id": "101", "current_location": "NY", "device": "mobile" }`
-    - Pass whatever context here that can increase accuracy and performance of the ML model
-3.  The Fetch (Feast SDK):
-    - Your API code says: _"I have User 101. Give me their history."_
-    - ```python
-        # This takes ~5ms
-        features = store.get_online_features(
-            features=["user_stats:clicks_7d", "user_stats:favorite_category"],
-            entity_rows=[{"user_id": "101"}]
-        ).to_dict()
-      ```
-4.  The Merge (Crucial Step):
-    - Your API now has two types of data:
-      - Context Features (from Feast): `clicks_7d=50`, `favorite_category=tech` (Historical context).
-      - Request Features (from Frontend): `location=NY`, `device=mobile` (Current context).
-    - It merges these into a single vector: `[50, "tech", "NY", "mobile"]`.
-5.  The Inference:
-    - The API passes this vector to your ML model (e.g., `model.predict()`).
-6.  The Response:
-    - The model returns `["Article_A", "Article_B"]`.
-    - Your API sends this JSON back to the frontend.
+1. The Trigger: User lands on the homepage.
+1. The Request: Frontend calls your API:
+   - `POST /recommendations`
+   - Payload: `{ "user_id": "101", "current_location": "NY", "device": "mobile" }`
+   - Pass whatever context here that can increase accuracy and performance of the ML model
+1. The Fetch (Feast SDK):
+   - Your API code says: _"I have User 101. Give me their history."_
+   - ```python
+       # This takes ~5ms
+       features = store.get_online_features(
+           features=["user_stats:clicks_7d", "user_stats:favorite_category"],
+           entity_rows=[{"user_id": "101"}]
+       ).to_dict()
+     ```
+1. The Merge (Crucial Step):
+   - Your API now has two types of data:
+     - Context Features (from Feast): `clicks_7d=50`, `favorite_category=tech` (Historical context).
+     - Request Features (from Frontend): `location=NY`, `device=mobile` (Current context).
+   - It merges these into a single vector: `[50, "tech", "NY", "mobile"]`.
+1. The Inference:
+   - The API passes this vector to your ML model (e.g., `model.predict()`).
+1. The Response:
+   - The model returns `["Article_A", "Article_B"]`.
+   - Your API sends this JSON back to the frontend.
 
-### 3\. Key Takeaway: "Request Data" vs "Feature Store Data"
+### 3. Key Takeaway: "Request Data" vs "Feature Store Data"
 
 A common "Gotcha" here is thinking Feast handles _everything_.
 

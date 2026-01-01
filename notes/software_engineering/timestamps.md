@@ -12,11 +12,12 @@ A **timestamp** is a precise point in time, represented by a date and a time of 
 
    - Example: `2024-05-16`
 
-2. **Time**: Represents the hours, minutes, and seconds, often including fractions of a second.
+1. **Time**: Represents the hours, minutes, and seconds, often including fractions of a second.
 
    - Example: `10:00:00` or `10:00:00.123`
 
-3. **Time Zone (optional)**: Indicates the time offset from UTC (Coordinated Universal Time).
+1. **Time Zone (optional)**: Indicates the time offset from UTC (Coordinated Universal Time).
+
    - Example: `+02:00` (two hours ahead of UTC)
 
 ## Types of Timestamps in SQL
@@ -27,7 +28,8 @@ A **timestamp** is a precise point in time, represented by a date and a time of 
    - **Use Case**: Suitable for applications where the time zone is implied or irrelevant, and consistent across all usage scenarios.
    - **Example**: `2024-05-16 10:00:00`
 
-2. **`timestamptz`** (or `timestamp with time zone`):
+1. **`timestamptz`** (or `timestamp with time zone`):
+
    - **Description**: Stores the date and time along with time zone information. Internally, it is stored in UTC and converted to the local time zone of the client upon retrieval.
    - **Use Case**: Ideal for applications dealing with multiple time zones, ensuring that times are accurately compared and displayed according to user or system preferences.
    - **Example**: `2024-05-16 10:00:00+02`
@@ -71,7 +73,8 @@ The storage of timestamps in a database involves specific internal representatio
    - **Precision**: PostgreSQL supports fractional seconds with up to six digits of precision.
    - **Storage Size**: It typically requires 8 bytes of storage.
 
-2. **`timestamptz` (or `timestamp with time zone`)**:
+1. **`timestamptz` (or `timestamp with time zone`)**:
+
    - **Internal Representation**: This type stores the date and time as an absolute moment in time, including time zone conversion. Internally, PostgreSQL stores this as a 64-bit integer representing the number of microseconds from the PostgreSQL epoch (UTC). When a `timestamptz` value is inserted, it is converted to UTC and stored. When queried, it is converted back to the client's local time zone.
    - **Precision**: Like `timestamp`, it supports fractional seconds with up to six digits of precision.
    - **Storage Size**: It also typically requires 8 bytes of storage.
@@ -125,7 +128,8 @@ Unix epoch timestamps are closely related to the `timestamp` and `timestamptz` d
 
    - Unix epoch timestamps are typically stored as integers or floating-point numbers, representing the number of seconds or milliseconds since the Unix epoch.
 
-2. **Conversion**:
+1. **Conversion**:
+
    - SQL databases often provide functions to convert between Unix epoch timestamps and SQL `timestamp` or `timestamptz` data types.
 
 ### Practical Use in SQL

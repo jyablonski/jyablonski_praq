@@ -214,18 +214,18 @@ The process works by:
 - I tried doing this on Linux, but ran into issues around running the `.exe` file later on and it borked the Motherboard. Don't do this on Linux.
 
 2. Ensure the USB Stick is formatted as FAT32 so the Motherboard can understand it
-3. Go to your Motherboard's Page and download the latest BIOS Update
-4. Extract the BIOS Update Folder you just downloaded
+1. Go to your Motherboard's Page and download the latest BIOS Update
+1. Extract the BIOS Update Folder you just downloaded
 
 - This will download 2 files: an `.exe` file and a `.CAP` file w/ the actual BIOS Update
 
 5. Run the `.exe` File inside, which will rename the CAP File to something the Motherboard can understand
-6. Place the renamed CAP file into the USB Folder
-7. Take the USB Stick and plug it into the dedicated USB Port for BIOS Flashback
-8. Plug in Power and flip the switch on the PSU, but do NOT power the PC on
-9. With Power and USB Stick plugged in, Press and hold the BIOS Flashback button for 10 seconds until lights start flashing on the button
-10. The Motherboard will begin updating and lights will continue flashing until the update is complete
-11. After the lights stop flashing, waiting 3 minutes and then unplug the USB and power the PC on and finish the update process.
+1. Place the renamed CAP file into the USB Folder
+1. Take the USB Stick and plug it into the dedicated USB Port for BIOS Flashback
+1. Plug in Power and flip the switch on the PSU, but do NOT power the PC on
+1. With Power and USB Stick plugged in, Press and hold the BIOS Flashback button for 10 seconds until lights start flashing on the button
+1. The Motherboard will begin updating and lights will continue flashing until the update is complete
+1. After the lights stop flashing, waiting 3 minutes and then unplug the USB and power the PC on and finish the update process.
 
 ## CPU Undervolting
 

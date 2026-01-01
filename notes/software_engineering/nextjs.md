@@ -17,7 +17,7 @@ These files are typically found in the root of a Next.js project.
 - `.env` / `.env.local` – Stores environment variables (e.g., API keys, database URLs).
 - `tsconfig.json` (if using TypeScript) – TypeScript configuration file.
 
----
+______________________________________________________________________
 
 ## 2. Directories
 
@@ -40,7 +40,7 @@ app/
 │   ├── route.js  # API endpoint (Replaces `pages/api`)
 ```
 
----
+______________________________________________________________________
 
 ### c) `public/` (Static Assets)
 
@@ -53,7 +53,7 @@ Example:
 /public/logo.png → Accessible at `https://yourdomain.com/logo.png`
 ```
 
----
+______________________________________________________________________
 
 ### d) `components/` (Reusable Components)
 
@@ -68,7 +68,7 @@ components/
 ├── Footer.tsx
 ```
 
----
+______________________________________________________________________
 
 ### e) `styles/` (Global & Component Styles)
 
@@ -85,7 +85,7 @@ styles/
 ├── Home.module.css # Scoped styles for Home component
 ```
 
----
+______________________________________________________________________
 
 ### f) `api/` (Serverless API Routes)
 
@@ -108,7 +108,7 @@ export async function GET() {
 }
 ```
 
----
+______________________________________________________________________
 
 ### g) `middleware.js` (Optional)
 
@@ -125,20 +125,20 @@ export function middleware(req) {
 }
 ```
 
----
+______________________________________________________________________
 
 ## 3. Special Files
 
 Some files have special meanings in Next.js:
 
-| File Name      | Purpose                                             |
+| File Name | Purpose |
 | -------------- | --------------------------------------------------- |
-| `layout.js`    | Defines shared layout for nested pages (App Router) |
-| `page.js`      | Defines a page in the App Router (`/route`)         |
-| `loading.js`   | Creates a loading state for a route                 |
-| `error.js`     | Handles errors within a route                       |
-| `not-found.js` | Custom 404 page                                     |
-| `head.js`      | Defines metadata (title, description)               |
-| `route.js`     | API handler in App Router (`/api/...`)              |
-| `_app.js`      | Customizes global app behavior (for `pages/` only)  |
-| `_document.js` | Custom HTML document structure (for `pages/` only)  |
+| `layout.js` | Defines shared layout for nested pages (App Router) |
+| `page.js` | Defines a page in the App Router (`/route`) |
+| `loading.js` | Creates a loading state for a route |
+| `error.js` | Handles errors within a route |
+| `not-found.js` | Custom 404 page |
+| `head.js` | Defines metadata (title, description) |
+| `route.js` | API handler in App Router (`/api/...`) |
+| `_app.js` | Customizes global app behavior (for `pages/` only) |
+| `_document.js` | Custom HTML document structure (for `pages/` only) |

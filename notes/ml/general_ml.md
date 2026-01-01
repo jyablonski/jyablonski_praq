@@ -3,18 +3,18 @@
 High level flow:
 
 1. Load/Generate Data
-2. Prepare Features
-3. Split Data
-4. Train Model (with MLflow tracking)
-5. Evaluate
-6. Save to MLflow
+1. Prepare Features
+1. Split Data
+1. Train Model (with MLflow tracking)
+1. Evaluate
+1. Save to MLflow
 
 **Must-have methods:**
 
 1. `load_data()` or `generate_data()`
-2. `prepare_features()` - transforms + returns encoders
-3. `train_model()` - wrapped in `mlflow.start_run()`
-4. `main()` - orchestrates everything
+1. `prepare_features()` - transforms + returns encoders
+1. `train_model()` - wrapped in `mlflow.start_run()`
+1. `main()` - orchestrates everything
 
 **MLflow essentials:**
 
@@ -39,7 +39,7 @@ Common Input Transformation Pipeline:
    - Numerical data (integers, floats)
    - Text data (strings, documents)
 
-2. Feature engineering - Transform raw inputs into model-ready features:
+1. Feature engineering - Transform raw inputs into model-ready features:
 
    - One-hot encoding: Converts categorical data into binary vectors
      - Categorical value -> Binary columns (1 = present, 0 = absent)
@@ -50,7 +50,8 @@ Common Input Transformation Pipeline:
    - Embedding: Converts high-dimensional categorical data to dense vectors (for text, IDs)
    - Binning: Groups continuous values into discrete buckets
 
-3. Combine features - Concatenate all transformed features into a single vector
+1. Combine features - Concatenate all transformed features into a single vector
+
    - Creates the final input that gets fed into the model
    - Example: `[categorical_features + numerical_features + text_features]`
 
@@ -75,7 +76,7 @@ Prediction Pipeline:
    - Regression: Continuous numerical values
    - Multi-label classification: Probability scores for multiple labels simultaneously
 
-2. Post-processing - Transform raw outputs into actionable results:
+1. Post-processing - Transform raw outputs into actionable results:
 
    - Thresholding: Convert probabilities to binary decisions (e.g., >0.5 = positive class)
    - Argmax: Select the class with highest probability
@@ -83,7 +84,8 @@ Prediction Pipeline:
    - Filtering: Remove invalid/unwanted predictions
    - Sorting/Ranking: Order results by confidence/relevance
 
-3. Return format - Convert to API-friendly format:
+1. Return format - Convert to API-friendly format:
+
    - Map from internal representation (indices, vectors) back to human-readable labels
    - Format as JSON, list, or structured object
 
@@ -108,12 +110,12 @@ Example - Article Recommendation System:
 Training loop:
 
 1. Take 32 samples (batch_size)
-2. Make predictions
-3. Calculate error
-4. Update weights by 0.001 (learning_rate)
-5. Repeat for all batches
-6. That's 1 epoch
-7. Do this 50 times (epochs)
+1. Make predictions
+1. Calculate error
+1. Update weights by 0.001 (learning_rate)
+1. Repeat for all batches
+1. That's 1 epoch
+1. Do this 50 times (epochs)
 
 ### model_type: "pytorch_nn"
 
@@ -210,11 +212,11 @@ Goal: Learn patterns from historical data
 Process:
 
 1. Load large dataset (thousands/millions of samples)
-2. Apply feature transformations and fit encoders/scalers
-3. Feed batches through model repeatedly (epochs)
-4. Calculate loss, backpropagate, update weights
-5. Validate performance on held-out data
-6. Save trained model + all preprocessing artifacts
+1. Apply feature transformations and fit encoders/scalers
+1. Feed batches through model repeatedly (epochs)
+1. Calculate loss, backpropagate, update weights
+1. Validate performance on held-out data
+1. Save trained model + all preprocessing artifacts
 
 Characteristics:
 
@@ -231,14 +233,14 @@ Goal: Make predictions on new, unseen data
 Process:
 
 1. Receive single request (one user, one data point)
-2. Apply same feature transformations (using saved encoders/scalers)
-3. Single forward pass through model (no training)
-4. Post-process output to human-readable format
-5. Return prediction immediately
+1. Apply same feature transformations (using saved encoders/scalers)
+1. Single forward pass through model (no training)
+1. Post-process output to human-readable format
+1. Return prediction immediately
 
 Characteristics:
 
-- Computationally cheap (<5-50ms per request)
+- Computationally cheap (\<5-50ms per request)
 - Often runs on CPU
 - No labels needed (just inputs)
 - Single execution per request
@@ -273,9 +275,9 @@ A model artifact is the complete package needed to make predictions, not just th
 Components:
 
 1. Trained model - Neural network with learned weights
-2. Preprocessors - Encoders, scalers, tokenizers (already fitted)
-3. Metadata - Input/output schema, feature names, model version
-4. Code/dependencies - Sometimes the model class definition itself
+1. Preprocessors - Encoders, scalers, tokenizers (already fitted)
+1. Metadata - Input/output schema, feature names, model version
+1. Code/dependencies - Sometimes the model class definition itself
 
 ### Why Preprocessors Must Be Saved
 
@@ -597,10 +599,10 @@ Both losses are high and not improving -> Model too simple!
 ### Practical Tips
 
 1. Start simple: Small model, few epochs
-2. Monitor validation loss: Your early warning system
-3. Use dropout: Default 0.2-0.5 between layers
-4. Early stopping: Stop when val_loss stops improving for N epochs
-5. More data > bigger model: Always collect more data if possible
+1. Monitor validation loss: Your early warning system
+1. Use dropout: Default 0.2-0.5 between layers
+1. Early stopping: Stop when val_loss stops improving for N epochs
+1. More data > bigger model: Always collect more data if possible
 
 Key Point: The goal isn't perfect training accuracy - it's good performance on data the model has never seen. A model with 95% training accuracy and 60% validation accuracy is worse than one with 85% on both.
 
@@ -616,7 +618,7 @@ Example - Article Recommendation:
 
 Pros:
 
-- Fast: <5ms inference, can handle thousands of requests/second
+- Fast: \<5ms inference, can handle thousands of requests/second
 - Cheap: Pennies per million predictions once trained
 - Consistent: Same input = same output, deterministic
 - Controllable: You define features, tune exactly how it behaves
@@ -632,7 +634,7 @@ Cons:
 - Retraining needed: Must retrain when patterns change
 - Can't handle novel inputs: Trained on 50 articles, can't recommend article 51
 
----
+______________________________________________________________________
 
 ### LLM Classification (GPT-4, Claude, etc.)
 
@@ -655,14 +657,14 @@ Cons:
 - Black box: Harder to debug why it made a decision
 - Overkill: Using a sledgehammer to crack a nut
 
----
+______________________________________________________________________
 
 ## When to Use Each
 
 Use Traditional ML when:
 
 - High volume (>1000 requests/sec)
-- Low latency required (<50ms)
+- Low latency required (\<50ms)
 - Clear, structured input (IDs, numbers, categories)
 - Task is well-defined and stable
 - Budget-constrained
@@ -671,7 +673,7 @@ Use Traditional ML when:
 
 Use LLM when:
 
-- Low volume (<100 requests/min)
+- Low volume (\<100 requests/min)
 - Complex reasoning needed
 - Unstructured text input
 - Task changes frequently
@@ -685,7 +687,7 @@ Hybrid Approach:
 - LLM for edge cases (complex, needs reasoning)
 - Example: Spam filter (ML blocks 95%, LLM reviews borderline cases)
 
----
+______________________________________________________________________
 
 ## Cost Comparison Example
 

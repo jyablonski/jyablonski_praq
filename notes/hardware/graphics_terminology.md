@@ -36,11 +36,11 @@ For a Linux gamer, these technologies are interconnected as follows:
 
 1. **Running Windows Games**: Many popular games are developed for Windows and use DirectX. To play these on Linux, gamers typically rely on Wine, which provides the necessary compatibility layer. However, to handle DirectX's graphics calls, Wine uses DXVK to translate these calls to Vulkan, enabling efficient execution on Linux.
 
-2. **Native Linux Games**: Games developed for Linux often use Vulkan due to its cross-platform nature and performance advantages. These games can run natively on Linux without the need for translation layers.
+1. **Native Linux Games**: Games developed for Linux often use Vulkan due to its cross-platform nature and performance advantages. These games can run natively on Linux without the need for translation layers.
 
-3. **Display Servers**: Wayland is gradually replacing X11 as the default display server protocol on many Linux distributions. While this transition is ongoing, some games and applications may still rely on X11, either directly or through a compatibility layer like XWayland.
+1. **Display Servers**: Wayland is gradually replacing X11 as the default display server protocol on many Linux distributions. While this transition is ongoing, some games and applications may still rely on X11, either directly or through a compatibility layer like XWayland.
 
-4. **Proton**: Developed by Valve, Proton is a tool integrated with Steam Play that allows Windows games to run on Linux. Proton incorporates both Wine and DXVK to provide a seamless experience for gamers, leveraging Vulkan for high performance.
+1. **Proton**: Developed by Valve, Proton is a tool integrated with Steam Play that allows Windows games to run on Linux. Proton incorporates both Wine and DXVK to provide a seamless experience for gamers, leveraging Vulkan for high performance.
 
 ### Practical Scenario for a Linux Gamer
 

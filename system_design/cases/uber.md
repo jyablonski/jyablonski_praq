@@ -3,42 +3,42 @@
 1. Business / Product Use Case + Requirements Gathering
    1. What's this data for? Who needs it? Who are the stakeholders gonna be for it?
       1. Maybe I'm just ingesting it for another Software Engineering Team to use it and have some business function for it
-   2. Having some idea about how that all flows together is necessary here
-   3. Project Timeline ?
-   4. Budget for the System / Pipeline ?
-2. What SLAs are we thinking about for it
+   1. Having some idea about how that all flows together is necessary here
+   1. Project Timeline ?
+   1. Budget for the System / Pipeline ?
+1. What SLAs are we thinking about for it
    1. Does all data need to be ingested by some certain time in the morning ?
-   2. Daily / Hourly / Real Time ?
-3. Figure out how the API offers data scrapes
+   1. Daily / Hourly / Real Time ?
+1. Figure out how the API offers data scrapes
    1. For full backfills are various endpoints paginated so I can loop through by something like a page number or offset myself?
-   2. For incremental runs can I query endpoints and pass in a date or timestamp to filter results by ?
-4. Figure out what Endpoints can be scraped from the API
-5. Develop a script that pulls data from each endpoint that is required
+   1. For incremental runs can I query endpoints and pass in a date or timestamp to filter results by ?
+1. Figure out what Endpoints can be scraped from the API
+1. Develop a script that pulls data from each endpoint that is required
    1. Add in functionality to do backfills or incremental runs, maybe use an environment variable called `run_type` to determine this
-   2. You'd have to see what the performance is like, maybe you'd need `asyncio` to really push the performance and speed of the script to meet your SLA. Or maybe that's not necessary
-   3. Might be able to use a 3rd Party Package that's already been built for the API. otherwise, will likely need to build your own in-house tooling. Often a OOP approach is preferred here so you only have to setup credentials once to the REST API and then you can put all the scrape methods onto that same class.
-6. Loop through the endpoints and write data out to S3 as the script pulls data.
+   1. You'd have to see what the performance is like, maybe you'd need `asyncio` to really push the performance and speed of the script to meet your SLA. Or maybe that's not necessary
+   1. Might be able to use a 3rd Party Package that's already been built for the API. otherwise, will likely need to build your own in-house tooling. Often a OOP approach is preferred here so you only have to setup credentials once to the REST API and then you can put all the scrape methods onto that same class.
+1. Loop through the endpoints and write data out to S3 as the script pulls data.
    1. To avoid OOM issues you can either have the script write data out in chunks for each endpoint, or if the data is small enough you can just write 1 file out for each endpoint
-   2. Parquet, CSV, or JSON can all work here in theory.
-   3. Data from the REST API is returned as JSON but you could pull it into memory, get it into a Pandas or Polars DataFrame structure, then write it out to S3 as a Parquet. Or you can go straight from python dictionary -> json.dumps to S3.
-7. Package your dependencies up in a tool like poetry
-8. Create a docker image of your script + dependencies
-9. Run the docker image in a container on ECS that is scheduled & orchestrated by Airflow
+   1. Parquet, CSV, or JSON can all work here in theory.
+   1. Data from the REST API is returned as JSON but you could pull it into memory, get it into a Pandas or Polars DataFrame structure, then write it out to S3 as a Parquet. Or you can go straight from python dictionary -> json.dumps to S3.
+1. Package your dependencies up in a tool like poetry
+1. Create a docker image of your script + dependencies
+1. Run the docker image in a container on ECS that is scheduled & orchestrated by Airflow
    1. Airflow can pass in environment variables to the ECS task
-10. Follow up Task could load data from S3 into Database / Data Warehouse
-11. Assess API Data Quality
-12. Keep track of primary keys, modified timestamps, duplicates, nulls etc things like that.
-13. If it's really bad you may wanna invest dev time into building a lot of checks and data quality tests.
-14. If it's pretty good then maybe you can be more lenient at this step.
-15. Also depends if you're paying for this API or if it's free; you might have dedicated support you can reach out to to help you debug the issue, or maybe you're on your own
-16. Ultimately you need to start ingesting it and having a look at the data yourself to know for sure
-17. Add Various logging into the Script, write errors out to Slack and/or trigger PagerDuty Alerts if the Script is unable to pull what it needs
-18. Write Unit + Integration Tests and mock out any HTTP Network Calls and AWS / S3 API Calls
+1. Follow up Task could load data from S3 into Database / Data Warehouse
+1. Assess API Data Quality
+1. Keep track of primary keys, modified timestamps, duplicates, nulls etc things like that.
+1. If it's really bad you may wanna invest dev time into building a lot of checks and data quality tests.
+1. If it's pretty good then maybe you can be more lenient at this step.
+1. Also depends if you're paying for this API or if it's free; you might have dedicated support you can reach out to to help you debug the issue, or maybe you're on your own
+1. Ultimately you need to start ingesting it and having a look at the data yourself to know for sure
+1. Add Various logging into the Script, write errors out to Slack and/or trigger PagerDuty Alerts if the Script is unable to pull what it needs
+1. Write Unit + Integration Tests and mock out any HTTP Network Calls and AWS / S3 API Calls
 
 IMPORTANT STOPPING POINT
 
 1. From here the rest of the steps depend on what the goal is.
-2. You could perform dimensional data modeling to turn that raw source data into fact / dim tables and eventually aggregate it up or transform it as needed.
+1. You could perform dimensional data modeling to turn that raw source data into fact / dim tables and eventually aggregate it up or transform it as needed.
 
 Let's say you encounter a Spark pipeline performing poorly, how do you go about identifying the issues and optimizing?
 How do you manage the complexity of a pipeline with tons of transformations?
@@ -94,29 +94,29 @@ API
 
 1. Fare Estimate
    1. Endpoint for when Users request a price estimate for a ride.
-   2. Takes a pickup and destination location
-   3. `POST /fare-estimates` {pickupLocation, destination}`
-   4. Returns {ride_id, estimated_price, estimated_pickup_time}
-2. Ride Request
+   1. Takes a pickup and destination location
+   1. `POST /fare-estimates` {pickupLocation, destination}\`
+   1. Returns {ride_id, estimated_price, estimated_pickup_time}
+1. Ride Request
    1. Endpoint for when Users request a ride.
-   2. Takes a Ride ID returned from the Fare Estimate
-   3. `PATCH /rides/:rideId`, passing in the ride_id returned from the Fare Estimate
-   4. Patch because we might edit the Fare Estimate row and turn it from `is_booked` from false to true or something
-3. Driver Location Update Request
+   1. Takes a Ride ID returned from the Fare Estimate
+   1. `PATCH /rides/:rideId`, passing in the ride_id returned from the Fare Estimate
+   1. Patch because we might edit the Fare Estimate row and turn it from `is_booked` from false to true or something
+1. Driver Location Update Request
    1. Endpoint that is continuously called by Drivers on the clock to get their location update.
-   2. Takes a Lat Long
-   3. `POST /drivers/:driverId/location` {latitude, longitude}
+   1. Takes a Lat Long
+   1. `POST /drivers/:driverId/location` {latitude, longitude}
    - Better to make this per-driver (/drivers/:id/location) to avoid needing to pull it from auth headers.
-4. Driver Accept Ride Request
+1. Driver Accept Ride Request
    1. Endpoint that allows Drivers to accept or deny a ride request.
-   2. Takes a Ride ID and a true / false value for yes or no
-   3. If accepted, returns Lat / Long coordinates for pickup.
-   4. `POST /rides/:rideId/acceptance` {accepted: true}
+   1. Takes a Ride ID and a true / false value for yes or no
+   1. If accepted, returns Lat / Long coordinates for pickup.
+   1. `POST /rides/:rideId/acceptance` {accepted: true}
    - Backend extracts driverId from the authenticated user (JWT, session).
-5. Update Ride Status
+1. Update Ride Status
    1. Endpoint that updates Ride Status for a specific Ride ID
-   2. Status -> "picked_up_rider" | "completed"
-   3. `PATCH /rides/:rideId/status` {status: picked_up_rider}
+   1. Status -> "picked_up_rider" | "completed"
+   1. `PATCH /rides/:rideId/status` {status: picked_up_rider}
    - Potential Status values: "requested" → "accepted" → "picked_up_rider" → "completed"
 
 High Level Design

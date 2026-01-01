@@ -14,22 +14,22 @@
 
 **Common operations:**
 
-| Flag   | Meaning                    | Example             |
+| Flag | Meaning | Example |
 | ------ | -------------------------- | ------------------- |
-| `-S`   | Sync/install package       | `pacman -S firefox` |
-| `-R`   | Remove package             | `pacman -R firefox` |
-| `-Q`   | Query installed packages   | `pacman -Q`         |
-| `-Syu` | Sync, refresh, upgrade all | `pacman -Syu`       |
+| `-S` | Sync/install package | `pacman -S firefox` |
+| `-R` | Remove package | `pacman -R firefox` |
+| `-Q` | Query installed packages | `pacman -Q` |
+| `-Syu` | Sync, refresh, upgrade all | `pacman -Syu` |
 
 **Useful modifiers:**
 
-| Flag   | Meaning                                | Example               |
+| Flag | Meaning | Example |
 | ------ | -------------------------------------- | --------------------- |
-| `-Ss`  | Search for package                     | `pacman -Ss spotify`  |
-| `-Qs`  | Search installed packages              | `pacman -Qs nvidia`   |
-| `-Si`  | Info about a package                   | `pacman -Si firefox`  |
-| `-Rs`  | Remove package + orphaned dependencies | `pacman -Rs firefox`  |
-| `-Rns` | Remove + dependencies + config files   | `pacman -Rns firefox` |
+| `-Ss` | Search for package | `pacman -Ss spotify` |
+| `-Qs` | Search installed packages | `pacman -Qs nvidia` |
+| `-Si` | Info about a package | `pacman -Si firefox` |
+| `-Rs` | Remove package + orphaned dependencies | `pacman -Rs firefox` |
+| `-Rns` | Remove + dependencies + config files | `pacman -Rns firefox` |
 
 ## Install Media
 
@@ -51,7 +51,7 @@
 
 3. Plug USB Drive into new PC and get into the BIOS menu by spamming delete or f12 keys.
 
-4. Once in BIOS, select the USB drive as the boot device
+1. Once in BIOS, select the USB drive as the boot device
 
 - Look for "Boot Menu" or "Boot Order" in your BIOS
 - Select your USB drive (might show as the manufacturer name or "UEFI: USB")
@@ -424,7 +424,6 @@ reboot
 - [ ] Steam launches and sees game drive
 - [ ] SSH key works: `ssh -T git@github.com`
 - [ ] zsh plugins working (type a command, should see suggestions)
-
 
 ## Full Package List
 

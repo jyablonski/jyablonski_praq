@@ -2,61 +2,64 @@
 
 Napkin math is a core skill in system design interviews. It shows that you can reason about scale, cost, performance, and feasibility quickly—before writing code or choosing tools.
 
-| Unit | Power of 10 | Bytes (approx)        |
+| Unit | Power of 10 | Bytes (approx) |
 | ---- | ----------- | --------------------- |
-| KB   | 10³         | 1,000                 |
-|      | 10⁴         | 10,000                |
-|      | 10⁵         | 100,000               |
-| MB   | 10⁶         | 1,000,000             |
-|      | 10⁷         | 10,000,000            |
-|      | 10⁸         | 100,000,000           |
-| GB   | 10⁹         | 1,000,000,000         |
-|      | 10¹⁰        | 10,000,000,000        |
-|      | 10¹¹        | 100,000,000,000       |
-| TB   | 10¹²        | 1,000,000,000,000     |
-|      | 10¹³        | 10,000,000,000,000    |
-|      | 10¹⁴        | 100,000,000,000,000   |
-| PB   | 10¹⁵        | 1,000,000,000,000,000 |
+| KB | 10³ | 1,000 |
+| | 10⁴ | 10,000 |
+| | 10⁵ | 100,000 |
+| MB | 10⁶ | 1,000,000 |
+| | 10⁷ | 10,000,000 |
+| | 10⁸ | 100,000,000 |
+| GB | 10⁹ | 1,000,000,000 |
+| | 10¹⁰ | 10,000,000,000 |
+| | 10¹¹ | 100,000,000,000 |
+| TB | 10¹² | 1,000,000,000,000 |
+| | 10¹³ | 10,000,000,000,000 |
+| | 10¹⁴ | 100,000,000,000,000 |
+| PB | 10¹⁵ | 1,000,000,000,000,000 |
 
-
-| Description              | Value                      | Approx   |
+| Description | Value | Approx |
 | ------------------------ | -------------------------- | -------- |
-| 1 Mbps                   | 10^6 bits/sec = 125 KB/sec |          |
-| 1 Gbps                   | 10^9 bits/sec = 125 MB/sec |          |
-| TCP packet size          | \~1.5 KB                   |          |
-| Ethernet frame           | 1500 bytes                 | \~1.5 KB |
-| HTTP request size (JSON) | \~1–10 KB                  |          |
-| Image upload             | \~100 KB – 5 MB            |          |
-| Video chunk (HLS/DASH)   | \~2–5 MB per 10 sec        |          |
-
+| 1 Mbps | 10^6 bits/sec = 125 KB/sec | |
+| 1 Gbps | 10^9 bits/sec = 125 MB/sec | |
+| TCP packet size | ~1.5 KB | |
+| Ethernet frame | 1500 bytes | ~1.5 KB |
+| HTTP request size (JSON) | ~1–10 KB | |
+| Image upload | ~100 KB – 5 MB | |
+| Video chunk (HLS/DASH) | ~2–5 MB per 10 sec | |
 
 Other constants
 
 - 1 day = 86,400 sec ~ 10^5
+
 - 1 month = ~30 days
+
 - 1 year = ~10^7 sec (approx.)
 
-
 - 10^3 = 1,000
+
 - 10^6 = 1,000,000 (1 million)
+
 - 10^9 = 1,000,000,000 (1 billion)
+
 - 10^12 = 1,000,000,000,000 (1 trillion)
+
 - The Exponent is how many zeroes to add
 
-- 1 KB  ~ 10^3 bytes
-- 10 KB ~ 10^4 bytes
-- KB, MB, GB etc all go to 1,024 bytes, but this is approximately equal to 10^3 or 1000 so just use that instead for quick math
+- 1 KB ~ 10^3 bytes
 
+- 10 KB ~ 10^4 bytes
+
+- KB, MB, GB etc all go to 1,024 bytes, but this is approximately equal to 10^3 or 1000 so just use that instead for quick math
 
 ## Scenarios
 
 ### Scenario 1
 
 1. 100 million users
-2. 10 KB (10^4) per user profile
+1. 10 KB (10^4) per user profile
 
 Total storage needed would be 10^4 * 10^8 = 10^12 bytes, or 1 TB storage for user profiles
-
 
 ### Scenario 2
 
@@ -93,8 +96,6 @@ total writes per second = 2 * 10^8 / 10^5 = 2 * 10^3 or 2000 writes / second
 
 - there are 86,400 seconds in a day, whihc can be rounded up to 10^5 (100,000) for napkin math on these problems
 
-
-
 ## Postgres Facts
 
 The number of reads + writes that OLTP Databases like Postgres can handle varies wildly depending on hardware, configuration, workfload, and schema design.
@@ -124,17 +125,22 @@ This is compounded when you enable logical replication
 Physical vs. logical replication are two different ways PostgreSQL replicates data from a primary (master) to replicas (standbys). They serve different use cases and have different trade-offs.
 
 - Physical replication copies the exact bytes from WAL on the primary database and sends them to the replica database
+
 - The replicas are read-only and are typically used for better scaling your read workloads, and failover and high-availability setups
+
 - TLDR the replica can read raw binary bytes from the WAL and apply the database changes using them
 
 - Logical replication involves reading WAL changes and decoding them into logical changes like `INSERT into table x`
+
 - Used when subscribers cannot understand physical replication raw binary bytes
+
 - Subscribers can have different schemas or even different PostgreSQL versions.
+
 - Supports more flexibile replication
+
 - More CPU intensive
 
-
-``` sql
+```sql
 -- 10kb per user
 CREATE TABLE users_light (
   id UUID PRIMARY KEY,                                -- 16 bytes
@@ -173,9 +179,9 @@ Python better for fast prototyping or if the team only has familiarity with Pyth
 Go is better for high throughput (10,000+ requests per second (RPS)) and systems that require high performance
 
 1. Basic Web Server - 10-100k RPS for static content. 1k-10k for dynamic content, 100-1k for database-heavy content
-2. Go (Gin/Echo framework): 15,000 - 30,000 req/sec. 5-15 ms latency. Go uses 2-3x less memory than Python
-3. FastAPI (with Uvicorn): 8,000 - 15,000 req/sec. 20-50 ms latency
-4. FastAPI (async): 10,000 - 18,000 req/sec. 10-25 ms latency
+1. Go (Gin/Echo framework): 15,000 - 30,000 req/sec. 5-15 ms latency. Go uses 2-3x less memory than Python
+1. FastAPI (with Uvicorn): 8,000 - 15,000 req/sec. 20-50 ms latency
+1. FastAPI (async): 10,000 - 18,000 req/sec. 10-25 ms latency
 
 gRPC Go servers have nearly 50-80% higher throughput than REST.
 
@@ -190,5 +196,5 @@ gRPC Go servers have nearly 50-80% higher throughput than REST.
 ## Storage Performance
 
 1. Redis - between 100k and 1 million WPS. 0.1 - 1ms latency
-2. SSD Storage - 10-100k random WPS. 0.1 - 1ms latency
-3. HDD Storage - 100-1000 random WPS. 5 - 15ms latency
+1. SSD Storage - 10-100k random WPS. 0.1 - 1ms latency
+1. HDD Storage - 100-1000 random WPS. 5 - 15ms latency

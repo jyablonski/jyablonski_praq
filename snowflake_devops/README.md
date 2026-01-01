@@ -1,6 +1,6 @@
-# Snowflake 
+# Snowflake
 
-``` sql
+```sql
 use database dev;
 use role accountadmin;
 use warehouse compute_wh;
@@ -15,7 +15,7 @@ CREATE OR REPLACE GIT REPOSITORY dev.public.jyablonski_repo
   ORIGIN = 'https://github.com/jyablonski/jyablonski_praq.git';
 ```
 
-``` sh
+```sh
 snow git execute \
     "@jyablonski_repo/branches/jacob/snowflake_devops/migrations/*" \
     -D "environment='dev'"
@@ -23,12 +23,12 @@ snow git execute \
 
 - Set environment variables in `~/.bashrc` or `~/.zshrc`
 
-``` sh
+```sh
 export SNOWFLAKE_USER=example_user
 export SNOWFLAKE_PASSWORD=zzzpassword123!
 ```
 
-``` sh
+```sh
 
 # performs a dry run to show what migrations will be ran & their raw sql
 liquibase update-sql --username=jyablonski --password=example
@@ -56,8 +56,7 @@ liquibase rollbackCount 1 \
   --url=stopthecap
 ```
 
-
-``` sql
+```sql
 -- liquibase formatted sql
 
 -- changeset git_username:20250421_test_table_name

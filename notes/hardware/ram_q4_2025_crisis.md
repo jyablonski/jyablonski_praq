@@ -1,15 +1,15 @@
-# RAM <> AI Q4 2025 Crisis
+# RAM \<> AI Q4 2025 Crisis
 
 ### 1. The Three Types of Memory
 
 While all RAM is built from the the same raw silicon wafers, it is engineered into 3 distinct architectures based on the job it needs to do.
 
-| Type          | System RAM (DDR5)                                                                             | Video RAM (GDDR6/7)                                                      | AI Memory (HBM3)                                                                       |
+| Type | System RAM (DDR5) | Video RAM (GDDR6/7) | AI Memory (HBM3) |
 | :------------ | :-------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------- | :------------------------------------------------------------------------------------- |
-| Primary Goal  | Latency (Responsiveness)                                                                      | Throughput (Graphics)                                                    | Massive Volume (AI Models)                                                             |
-| Analogy       | A Ferrari (fast delivery of small packages).                                                  | A Freight Train (bulk delivery of textures/pixels).                      | A Container Ship (moving entire cities of data at once).                               |
-| Architecture  | Narrow Road. Uses a 64-bit bus to send small, distinct operational data to the CPU instantly. | Wide Road. Uses a 256-384 bit bus to flood the GPU with visual data.     | Superhighway. Uses a 5,120+ bit bus to keep massive AI models active in memory.        |
-| Physical Form | Planar. Chips sit flat on a stick (DIMM) you plug into the motherboard.                       | Planar (Soldered). Chips sit flat, soldered permanently next to the GPU. | 3D Stacked. Chips are ground paper-thin and stacked 8-12 high directly on the GPU die. |
+| Primary Goal | Latency (Responsiveness) | Throughput (Graphics) | Massive Volume (AI Models) |
+| Analogy | A Ferrari (fast delivery of small packages). | A Freight Train (bulk delivery of textures/pixels). | A Container Ship (moving entire cities of data at once). |
+| Architecture | Narrow Road. Uses a 64-bit bus to send small, distinct operational data to the CPU instantly. | Wide Road. Uses a 256-384 bit bus to flood the GPU with visual data. | Superhighway. Uses a 5,120+ bit bus to keep massive AI models active in memory. |
+| Physical Form | Planar. Chips sit flat on a stick (DIMM) you plug into the motherboard. | Planar (Soldered). Chips sit flat, soldered permanently next to the GPU. | 3D Stacked. Chips are ground paper-thin and stacked 8-12 high directly on the GPU die. |
 
 ### 2. The Economic Crisis (Q4 2025)
 

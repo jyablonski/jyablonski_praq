@@ -2,7 +2,7 @@
 
 A product concept for shared anti-cheat infrastructure across the gaming industry.
 
----
+______________________________________________________________________
 
 ## Executive Summary
 
@@ -10,7 +10,7 @@ The gaming industry lacks coordinated infrastructure for sharing cheater intelli
 
 The most viable path to market is through existing anti-cheat providers (Easy Anti-Cheat, BattlEye) who already have contractual relationships with hundreds of publishers and detection infrastructure running on user machines.
 
----
+______________________________________________________________________
 
 ## The Problem
 
@@ -28,7 +28,7 @@ The most viable path to market is through existing anti-cheat providers (Easy An
 - No cumulative consequence for repeat offenders
 - Cheaters treat bans as minor inconveniences rather than meaningful penalties
 
----
+______________________________________________________________________
 
 ## Proposed Solution
 
@@ -39,20 +39,20 @@ A centralized registry operated by a trusted third party (ideally an existing an
 ### Basic Flow
 
 1. Publisher integrates with registry (via existing anti-cheat SDK)
-2. Anti-cheat detects cheating locally or server-side
-3. Publisher reports flagged identity to central registry with metadata:
+1. Anti-cheat detects cheating locally or server-side
+1. Publisher reports flagged identity to central registry with metadata:
    - Identity cluster (hashed email, hardware fingerprint, phone if available)
    - Cheat type detected
    - Confidence level
    - Detection methodology tier
-4. Registry stores record and updates identity graph
-5. Other publishers query registry at key moments:
+1. Registry stores record and updates identity graph
+1. Other publishers query registry at key moments:
    - Account creation
    - Matchmaking queue entry
    - Ranked/competitive mode access
-6. Each publisher decides independently how to act on returned risk signals
+1. Each publisher decides independently how to act on returned risk signals
 
----
+______________________________________________________________________
 
 ## Identity Resolution
 
@@ -62,12 +62,12 @@ The core technical challenge is linking identities across games when cheaters us
 
 Rather than storing discrete identifiers, the system builds identity clusters linking related signals:
 
-| Layer      | Identifier Type                             | Evasion Difficulty | Notes                             |
+| Layer | Identifier Type | Evasion Difficulty | Notes |
 | ---------- | ------------------------------------------- | ------------------ | --------------------------------- |
-| Email      | Account email address                       | Trivial            | Burner emails are free            |
-| Hardware   | CPU, GPU, disk serials, BIOS ID, RAM config | Moderate           | Spoofing possible but error-prone |
-| Phone      | Verified phone number                       | Moderate-High      | Requires new SIM or VOIP          |
-| Behavioral | Mouse movement, timing patterns, play style | High               | Difficult to consciously mask     |
+| Email | Account email address | Trivial | Burner emails are free |
+| Hardware | CPU, GPU, disk serials, BIOS ID, RAM config | Moderate | Spoofing possible but error-prone |
+| Phone | Verified phone number | Moderate-High | Requires new SIM or VOIP |
+| Behavioral | Mouse movement, timing patterns, play style | High | Difficult to consciously mask |
 
 ### Identity Matching Logic
 
@@ -94,17 +94,17 @@ Beyond simple HWID, comprehensive fingerprinting can include:
 
 Sophisticated cheaters can spoof individual components, but consistently spoofing all identifiers without errors is difficult. A single slip links their identities permanently.
 
----
+______________________________________________________________________
 
 ## Classification Tiers
 
 Not all detections carry equal weight. A tiered classification system allows consuming publishers to set appropriate thresholds.
 
-| Tier       | Definition                                                                        | Example Sources                                       | Recommended Action                        |
+| Tier | Definition | Example Sources | Recommended Action |
 | ---------- | --------------------------------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------- |
-| Verified   | Detection process audited, documented low false-positive rate, legally defensible | Valve VAC, Riot Vanguard, audited EAC implementations | Act on single flag                        |
-| Standard   | Reputable detection methods, no formal audit                                      | Mid-size studio using EAC/BattlEye defaults           | Review manually or require 2+ flags       |
-| Unverified | Self-reported, no process validation                                              | Indie developer with custom detection                 | Informational only, require corroboration |
+| Verified | Detection process audited, documented low false-positive rate, legally defensible | Valve VAC, Riot Vanguard, audited EAC implementations | Act on single flag |
+| Standard | Reputable detection methods, no formal audit | Mid-size studio using EAC/BattlEye defaults | Review manually or require 2+ flags |
+| Unverified | Self-reported, no process validation | Indie developer with custom detection | Informational only, require corroboration |
 
 ### Confidence Scoring Heuristics
 
@@ -114,7 +114,7 @@ Not all detections carry equal weight. A tiered classification system allows con
 - Pattern of flags followed by new accounts on same hardware: Escalate confidence
 - Recent flags weighted more heavily than old flags
 
----
+______________________________________________________________________
 
 ## Publisher Integration
 
@@ -138,7 +138,7 @@ Publishers would access a dashboard to:
 - Configure integration points (account creation, matchmaking, etc.)
 - Export analytics on flag volume and types
 
----
+______________________________________________________________________
 
 ## Data and Privacy Considerations
 
@@ -153,9 +153,9 @@ Publishers would access a dashboard to:
 The cleanest approach is **contractual privity through publishers**:
 
 1. Registry never collects data directly from users
-2. Publishers share data under their existing Terms of Service (which typically grant broad rights for anti-cheat purposes)
-3. Registry operates as a data processor, not controller
-4. Users' legal relationship remains with the original publisher
+1. Publishers share data under their existing Terms of Service (which typically grant broad rights for anti-cheat purposes)
+1. Registry operates as a data processor, not controller
+1. Users' legal relationship remains with the original publisher
 
 This structure requires:
 
@@ -171,7 +171,7 @@ This structure requires:
 - Maintain audit logs for all flag events
 - Establish clear liability and indemnification structure with publishers
 
----
+______________________________________________________________________
 
 ## Appeals and Corrections
 
@@ -187,9 +187,9 @@ Incorrect flags have real consequences—users lose access to games they paid fo
 ### Proposed Process
 
 1. User submits appeal through original publisher
-2. Publisher reviews detection evidence
-3. If publisher overturns, they notify registry to update/remove flag
-4. Registry propagates correction to other publishers who acted on the flag
+1. Publisher reviews detection evidence
+1. If publisher overturns, they notify registry to update/remove flag
+1. Registry propagates correction to other publishers who acted on the flag
 
 ### Safeguards
 
@@ -198,7 +198,7 @@ Incorrect flags have real consequences—users lose access to games they paid fo
 - Time-limited flags that expire without corroboration
 - Statistical monitoring for publishers with anomalously high flag rates
 
----
+______________________________________________________________________
 
 ## Path to Market
 
@@ -234,7 +234,7 @@ For publishers:
 - **Regulatory mandate**: Governments could require identity verification or ban portability (more likely in EU/Asia than US)
 - **Industry consortium**: Publishers voluntarily coordinate, though competitive dynamics make this difficult
 
----
+______________________________________________________________________
 
 ## Limitations and Scope
 
@@ -255,7 +255,7 @@ For publishers:
 
 The 95% of cheaters who are lazy or unsophisticated cause the most damage to player experience. Catching them represents the highest-value opportunity. Sophisticated evasion will always be possible, but making it expensive and unreliable significantly raises the barrier.
 
----
+______________________________________________________________________
 
 ## Summary
 

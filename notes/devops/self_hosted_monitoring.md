@@ -15,17 +15,18 @@ Logs are what happened, traces are how they happened.
    - **Prometheus** is a monitoring and alerting toolkit originally developed by SoundCloud, now a part of the Cloud Native Computing Foundation (CNCF). It collects metrics from monitored targets by scraping HTTP endpoints. By default, Prometheus stores time-series data locally on disk for a limited retention period - typically 15 days.
    - **Thanos** is an open-source project that adds long-term storage capabilities to Prometheus. It allows for seamless querying of historical data across multiple Prometheus servers and provides downsampling and retention policies.
 
-2. **Vector ships logs to Quickwit:**
+1. **Vector ships logs to Quickwit:**
 
    - **Vector** is a high-performance, open-source observability data router. It can collect, transform, and route logs, metrics, and traces to various destinations.
    - **Quickwit** seems to be the destination for logs in this setup. Quickwit is an open-source search engine that provides fast and scalable full-text search capabilities. It can index and make logs searchable.
 
-3. **Traces via Jaeger to Quickwit:**
+1. **Traces via Jaeger to Quickwit:**
 
    - **Jaeger** is an open-source, end-to-end distributed tracing system. It is used for monitoring and troubleshooting microservices-based distributed systems.
    - Traces from Jaeger are also directed to Quickwit for storage and indexing, alongside logs from Vector.
 
-4. **Grafana as the UI:**
+1. **Grafana as the UI:**
+
    - **Grafana** is a popular open-source platform for monitoring and observability. It allows you to query, visualize, alert on, and understand metrics from multiple sources, including Prometheus and Thanos.
    - Grafana serves as the user interface in your setup, providing a unified view for metrics, logs (via Quickwit), and traces.
 
@@ -238,7 +239,7 @@ Object storage (S3, GCS, etc.) has become the best-practice backend for all thre
 All three tools (Thanos, Loki, Tempo) have built-in support for object storage backends, making it easy to configure and use them in your monitoring stack. Their write patterns typically look like:
 
 1. Data is buffered in memory or on local disk for a short period of time.
-2. Data is then batched and written to the object storage backend in larger chunks.
-3. Metadata and indexes are updated to reflect the new data stored in the object storage.
+1. Data is then batched and written to the object storage backend in larger chunks.
+1. Metadata and indexes are updated to reflect the new data stored in the object storage.
 
 This approach allows for efficient and cost-effective storage of large volumes of monitoring data, while still providing fast access and query capabilities when needed.

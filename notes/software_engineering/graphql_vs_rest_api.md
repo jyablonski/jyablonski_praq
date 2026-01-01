@@ -10,6 +10,7 @@ GraphQL and REST are two different approaches to building APIs, each with its ow
   - **Flexible Queries**: Clients specify exactly what data they need, and the server responds with only that data. This avoids over-fetching (retrieving more data than necessary) and under-fetching (retrieving insufficient data).
 
 - **REST**:
+
   - **Multiple Endpoints**: REST APIs typically have multiple endpoints, each representing a resource.
   - **Fixed Responses**: Each endpoint returns a fixed set of data. This can lead to over-fetching or under-fetching since clients may receive more data than needed or require multiple requests to get all necessary data.
 
@@ -21,6 +22,7 @@ GraphQL and REST are two different approaches to building APIs, each with its ow
   - **Nested Queries**: GraphQL allows clients to request nested and related data in a single query.
 
 - **REST**:
+
   - **No Fixed Schema**: REST APIs do not require a schema. The structure of the response is defined by the server's implementation.
   - **Resource-Based**: Each resource is typically represented by a URL, and relationships are managed via additional requests or embedding data within resources.
 
@@ -32,6 +34,7 @@ GraphQL and REST are two different approaches to building APIs, each with its ow
   - **Subscriptions**: GraphQL supports real-time data updates through subscriptions.
 
 - **REST**:
+
   - **HTTP Methods**: REST relies on standard HTTP methods for operations: GET (read), POST (create), PUT/PATCH (update), DELETE (delete).
 
 ### 4. **Versioning**
@@ -48,6 +51,7 @@ GraphQL and REST are two different approaches to building APIs, each with its ow
   - **Unified Error Format**: GraphQL responses include both data and errors in a structured format, allowing clients to handle partial successes and failures gracefully.
 
 - **REST**:
+
   - **HTTP Status Codes**: REST APIs use standard HTTP status codes for error handling, and the error details are often included in the response body.
 
 ### 6. **Tooling and Ecosystem**
@@ -58,6 +62,7 @@ GraphQL and REST are two different approaches to building APIs, each with its ow
   - **Tooling**: Tools like GraphiQL, Apollo Client, and Relay provide robust development and debugging support.
 
 - **REST**:
+
   - **Widespread Adoption**: REST has been around for longer and has extensive tooling and community support.
   - **Tools**: Tools like Postman, Swagger (OpenAPI), and various client libraries provide strong support for REST API development and testing.
 
@@ -69,6 +74,7 @@ GraphQL and REST are two different approaches to building APIs, each with its ow
   - **Complex Queries**: Can potentially lead to performance issues if not properly managed, as complex queries might be resource-intensive.
 
 - **REST**:
+
   - **Simple Operations**: Each endpoint is generally optimized for specific operations, which can lead to straightforward performance optimization.
   - **Multiple Requests**: Clients may need to make multiple requests to different endpoints to gather related data, potentially increasing latency.
 
@@ -80,6 +86,7 @@ GraphQL and REST are two different approaches to building APIs, each with its ow
   - **Server-Side Caching**: Can be challenging since a single endpoint handles all operations, requiring more sophisticated caching strategies.
 
 - **REST**:
+
   - **HTTP Caching**: Leverages standard HTTP caching mechanisms (e.g., ETags, Cache-Control headers) more easily, as each endpoint represents a resource.
 
 ### Use Cases
@@ -90,6 +97,7 @@ GraphQL and REST are two different approaches to building APIs, each with its ow
   - Often used in modern web and mobile applications where front-end developers need precise control over the data they retrieve.
 
 - **REST**:
+
   - Ideal for simpler, resource-based APIs where standard CRUD operations suffice.
   - Commonly used in microservices architectures, public APIs, and scenarios where standardization and ease of use are priorities.
 

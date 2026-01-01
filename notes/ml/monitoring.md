@@ -5,12 +5,12 @@
 Model monitoring tracks three critical dimensions:
 
 1. Model Performance - Technical metrics (F1, precision, accuracy)
-2. Business Metrics - Real-world impact (CTR, sales, revenue)
-3. Operational Metrics - System health (predictions/day, latency, errors)
+1. Business Metrics - Real-world impact (CTR, sales, revenue)
+1. Operational Metrics - System health (predictions/day, latency, errors)
 
 Why monitor? Models degrade over time due to data drift, concept drift, and changing user behavior. Monitoring catches problems before they impact users.
 
----
+______________________________________________________________________
 
 ## The Three Pillars of ML Monitoring
 
@@ -32,7 +32,7 @@ When to track:
 - On validation/test sets
 - On production data (when ground truth is available)
 
----
+______________________________________________________________________
 
 ### 2. Business Metrics Monitoring
 
@@ -52,7 +52,7 @@ When to track:
 - Before/after model deployments
 - A/B tests between model versions
 
----
+______________________________________________________________________
 
 ### 3. Operational Metrics Monitoring
 
@@ -71,7 +71,7 @@ When to track:
 - Real-time in production
 - Alert on anomalies
 
----
+______________________________________________________________________
 
 ## Monitoring Architecture
 
@@ -100,7 +100,7 @@ When to track:
 └──────────────────┘
 ```
 
----
+______________________________________________________________________
 
 ## 1. Model Performance Monitoring
 
@@ -286,7 +286,7 @@ def check_for_degradation():
         )
 ```
 
----
+______________________________________________________________________
 
 ## 2. Business Metrics Monitoring
 
@@ -417,7 +417,7 @@ improvement = (ml_ctr - baseline_ctr) / baseline_ctr
 print(f"ML model improved CTR by {improvement*100:.0f}%")  # 50% improvement
 ```
 
----
+______________________________________________________________________
 
 ## 3. Operational Metrics Monitoring
 
@@ -520,7 +520,7 @@ def monitor_input_data():
         send_alert(f"⚠️ Unusual time_on_site: {avg_time:.0f}s")
 ```
 
----
+______________________________________________________________________
 
 ## Monitoring Dashboards
 
@@ -563,7 +563,7 @@ histogram_quantile(0.95, prediction_latency_seconds_bucket)
 rate(prediction_errors_total[5m]) / rate(predictions_total[5m])
 ```
 
----
+______________________________________________________________________
 
 ## Alerting Rules
 
@@ -614,7 +614,7 @@ if error_rate > 0.05:  # >5% errors
     )
 ```
 
----
+______________________________________________________________________
 
 ## Data Drift Detection
 
@@ -673,7 +673,7 @@ def detect_prediction_drift():
         )
 ```
 
----
+______________________________________________________________________
 
 ## Complete Monitoring Pipeline
 
@@ -761,7 +761,7 @@ detect_drift_task = PythonOperator(
 [calculate_metrics_task, calculate_ctr_task, detect_drift_task] >> check_degradation_task
 ```
 
----
+______________________________________________________________________
 
 ## Best Practices
 
@@ -805,24 +805,24 @@ Begin with the basics:
 - Automated report generation
 - Manual analysis only for anomalies
 
----
+______________________________________________________________________
 
 ## Summary
 
 The three pillars:
 
 1. Model Performance - F1, precision, recall -> Are predictions accurate?
-2. Business Metrics - CTR, revenue, conversions -> Is the model driving value?
-3. Operational Metrics - Volume, latency, errors -> Is the system healthy?
+1. Business Metrics - CTR, revenue, conversions -> Is the model driving value?
+1. Operational Metrics - Volume, latency, errors -> Is the system healthy?
 
 Key implementation steps:
 
 1. Log every prediction with metadata
-2. Collect ground truth asynchronously
-3. Calculate metrics daily
-4. Alert on degradation
-5. Visualize in dashboards
-6. Review weekly
+1. Collect ground truth asynchronously
+1. Calculate metrics daily
+1. Alert on degradation
+1. Visualize in dashboards
+1. Review weekly
 
 Tools:
 

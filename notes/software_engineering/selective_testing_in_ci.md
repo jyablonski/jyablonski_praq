@@ -95,10 +95,10 @@ Pants infers dependencies from imports automatically, so most BUILD files are ju
 ### Adoption Path
 
 1. Install Pants
-2. Run `pants tailor` to auto-generate BUILD files based on your existing structure
-3. Verify `pants test ::` produces the same results as your current test runner
-4. Update CI to use `pants test --changed-since=origin/main` for PR builds
-5. Keep `pants test ::` for merges to main
+1. Run `pants tailor` to auto-generate BUILD files based on your existing structure
+1. Verify `pants test ::` produces the same results as your current test runner
+1. Update CI to use `pants test --changed-since=origin/main` for PR builds
+1. Keep `pants test ::` for merges to main
 
 ### Example CI Configuration (GitHub Actions)
 

@@ -10,7 +10,7 @@ Training -> Staging -> Production -> (Archived)
 
 Key Concept: Never deploy directly to production. Always test in staging first.
 
----
+______________________________________________________________________
 
 ## Model Lifecycle Stages
 
@@ -39,7 +39,7 @@ Key Concept: Never deploy directly to production. Always test in staging first.
 - Kept for reference/rollback
 - Can be restored if needed
 
----
+______________________________________________________________________
 
 ## MLflow Model Registry
 
@@ -67,7 +67,7 @@ Benefits:
 - Model lineage: See which run produced this model
 - Annotations: Add notes, tags, descriptions
 
----
+______________________________________________________________________
 
 ## Model Registration Workflow
 
@@ -98,7 +98,7 @@ with mlflow.start_run(run_name="train_article_recommender"):
 
 At this point: Model is logged but NOT registered.
 
----
+______________________________________________________________________
 
 ### Step 2: Register Model
 
@@ -122,7 +122,7 @@ What happens:
 - Stored in Model Registry
 - Stage defaults to "None"
 
----
+______________________________________________________________________
 
 ### Step 3: Transition to Staging
 
@@ -141,7 +141,7 @@ client.transition_model_version_stage(
 print("Model transitioned to Staging")
 ```
 
----
+______________________________________________________________________
 
 ### Step 4: Test in Staging
 
@@ -161,7 +161,7 @@ Staging Checklist:
 - [ ] Ran for at least 48 hours
 - [ ] No data quality issues
 
----
+______________________________________________________________________
 
 ### Step 5: Promote to Production
 
@@ -183,7 +183,7 @@ client.transition_model_version_stage(
 print("Model promoted to Production!")
 ```
 
----
+______________________________________________________________________
 
 ## Loading Models by Stage
 
@@ -211,7 +211,7 @@ Key Points:
 - When you promote a new version, API automatically uses it on next restart
 - No code changes needed to update model
 
----
+______________________________________________________________________
 
 ## A/B Testing: Staging vs Production
 
@@ -254,7 +254,7 @@ After 1-2 weeks:
 - If staging performs better -> promote to production
 - If staging performs worse -> discard
 
----
+______________________________________________________________________
 
 ## Automated Promotion Logic
 
@@ -380,7 +380,7 @@ check_promotion = PythonOperator(
 )
 ```
 
----
+______________________________________________________________________
 
 ## Rollback Strategy
 
@@ -465,7 +465,7 @@ def check_for_auto_rollback():
 schedule.every().hour.do(check_for_auto_rollback)
 ```
 
----
+______________________________________________________________________
 
 ## Model Versioning Best Practices
 
@@ -523,7 +523,7 @@ def log_production_deployment(version):
     print(f"Logged deployment of v{version} to production")
 ```
 
----
+______________________________________________________________________
 
 ## Multi-Model Management
 
@@ -556,7 +556,7 @@ def check_all_models_for_promotion():
                 promote_to_production(model_name, config['staging_version'])
 ```
 
----
+______________________________________________________________________
 
 ## Staging Environment Setup
 
@@ -620,7 +620,7 @@ def recommend():
         return recommend_production()
 ```
 
----
+______________________________________________________________________
 
 ## Monitoring During Transitions
 
@@ -675,7 +675,7 @@ def post_deployment_health_check(version, hours_since_deployment):
 # 1 hour, 6 hours, 24 hours, 7 days
 ```
 
----
+______________________________________________________________________
 
 ## Complete Promotion Workflow
 
@@ -728,17 +728,17 @@ def complete_model_lifecycle():
         print("❌ Model did not meet promotion criteria")
 ```
 
----
+______________________________________________________________________
 
 ## Summary
 
 Model Lifecycle:
 
 1. Train -> Log to MLflow
-2. Register -> Get version number
-3. Staging -> Test with limited traffic
-4. Production -> Serve real users
-5. Archived -> Keep for rollback
+1. Register -> Get version number
+1. Staging -> Test with limited traffic
+1. Production -> Serve real users
+1. Archived -> Keep for rollback
 
 Key Operations:
 
@@ -754,7 +754,7 @@ Best Practices:
 - Set clear promotion criteria
 - Monitor closely after promotion
 - Keep rollback plan ready
-- Automate promotion/rollback"1`
+- Automate promotion/rollback"1\`
 - Log all deployments
 - Use A/B testing when possible
 

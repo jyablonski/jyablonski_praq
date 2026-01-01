@@ -14,18 +14,18 @@ gRPC uses Protobuf as the serialization format, which is:
 It's a competitor to REST and has major advantages at scale over its counterpart:
 
 1. Performance & efficiency due to HTTP/2 and Protobuf
-2. Strongly Typed contracts / endpints through the .proto files
-3. Auto-generated code to reduce boilerplate
-4. Backwards-compatability w/ how the fields & their field numbers are setup
+1. Strongly Typed contracts / endpints through the .proto files
+1. Auto-generated code to reduce boilerplate
+1. Backwards-compatability w/ how the fields & their field numbers are setup
 
 But, it also has disadvantages over REST:
 
 1. Less human readable, debugging is a bit trickier
-2. Testing is more difficult compared to REST w/ curl or Postman
-3. gRPC doesn't work natively in browsers because they don't support HTTP/2, so you need gRPC-web which is an additional proxy layer that adds complexity
-4. Steeper learning curve with protocol buffers and the proto files
-5. gRPC is optimized for internal service to service communication and not so much for public-facing APIs
-6. For lightweight services where speed isn't critical or where human-readability (JSON) is important, the binary efficiency of gRPC might not justify the added complexity.
+1. Testing is more difficult compared to REST w/ curl or Postman
+1. gRPC doesn't work natively in browsers because they don't support HTTP/2, so you need gRPC-web which is an additional proxy layer that adds complexity
+1. Steeper learning curve with protocol buffers and the proto files
+1. gRPC is optimized for internal service to service communication and not so much for public-facing APIs
+1. For lightweight services where speed isn't critical or where human-readability (JSON) is important, the binary efficiency of gRPC might not justify the added complexity.
 
 ## Internals
 
@@ -90,7 +90,8 @@ The gRPC stub handles all the network communication and data serialization, but 
    - The stub **serializes** the request and sends it over the network.
    - It **waits** for the server's response, then **deserializes** it into a usable object.
 
-2. **Server Side:**
+1. **Server Side:**
+
    - The **server stub** (generated from the `.proto` file) **receives** the request and deserializes it.
    - It **calls the appropriate method** in your service implementation class.
    - You write the logic to **process the request** and **return a response**.
@@ -104,7 +105,7 @@ Web browsers don't natively support gRPC since it uses HTTP/2 and a binary forma
    - You need a gRPC Web proxy (like Envoy) to convert web requests to regular gRPC Requests that your backend can understand
    - Browser (gRPC-Web) --> Envoy Proxy --> gRPC Server
    - The proxy keeps the Protobuf binary format intact but wraps it in an HTTP/1.1 or HTTP/2-compatible way.
-2. REST Gateway which exposes your gRPC services as RESTful APIs by gRPC - JSON transcoding to translate REST requests to gRPC methods
+1. REST Gateway which exposes your gRPC services as RESTful APIs by gRPC - JSON transcoding to translate REST requests to gRPC methods
    - This uses Envoy or a grpc-gateway to convert REST calls (example: `GET users/123`) into gRPC
    - Browser (HTTP/JSON) --> Envoy Proxy / grpc-gateway --> gRPC Server
    - No changes needed on the frontend since you make standard HTTP requests, but JSON serialization adds overhead compared to Protobuf.

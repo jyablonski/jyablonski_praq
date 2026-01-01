@@ -32,13 +32,13 @@ It offers a handful of incredibly advanced features:
 - It includes Python Version Management to automatically download and instasll Python versions to use in your projects. This means no more need for 3rd party tools like `pyenv` or `asdf`
 - It works with `pyproject.toml` by default
 
-| Functionality                   | Traditional Tool(s)           | `uv` Replacement                            |
+| Functionality | Traditional Tool(s) | `uv` Replacement |
 | ------------------------------- | ----------------------------- | ------------------------------------------- |
-| Installing packages             | `pip`                         | `uv pip install`                            |
-| Creating virtual environments   | `virtualenv`, `venv`          | `uv venv`                                   |
-| Managing dependencies/lockfiles | `pip-tools`, `poetry install` | `uv pip compile`, `uv pip install`          |
-| Running CLI apps globally       | `pipx`                        | `uvx`                                       |
-| Managing Python versions        | `pyenv`, `asdf`, `rye`        | `uv` (built-in `python` version management) |
+| Installing packages | `pip` | `uv pip install` |
+| Creating virtual environments | `virtualenv`, `venv` | `uv venv` |
+| Managing dependencies/lockfiles | `pip-tools`, `poetry install` | `uv pip compile`, `uv pip install` |
+| Running CLI apps globally | `pipx` | `uvx` |
+| Managing Python versions | `pyenv`, `asdf`, `rye` | `uv` (built-in `python` version management) |
 
 ## Wheels
 

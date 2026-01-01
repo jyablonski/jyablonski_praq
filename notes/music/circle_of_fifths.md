@@ -4,7 +4,7 @@ The Circle of Fifths is essentially the Periodic Table for music. It is a visual
 
 It is organized like a clock. At the very top (12:00) is C Major, which has no sharps or flats. From there, the circle splits into two directions.
 
----
+______________________________________________________________________
 
 ### 1. The Right Side: Moving by Fifths (Sharps)
 
@@ -26,7 +26,7 @@ When you move counter-clockwise from C, you are descending by a fifth (which is 
 - 10:00 - Bb Major: A perfect fourth up from F is Bb. It has 2 Flats.
 - 9:00 - Eb Major: A perfect fourth up from Bb is Eb. It has 3 Flats.
 
----
+______________________________________________________________________
 
 ### 3. The Order of Sharps and Flats
 
@@ -49,7 +49,7 @@ The flats are added in the reverse order: B, E, A, D, G, C, F.
 - No Flats are skipped; they are always the first n flats in this order.
 - _Example:_ Eb Major has 3 flats. They will be Bb, Eb, and Ab.
 
----
+______________________________________________________________________
 
 ### 4. The Inner Circle: Relative Minors
 
@@ -64,7 +64,7 @@ Example:
 - Go down 3 semitones to A Minor.
 - Therefore, A Minor is located directly under C Major on the inner ring.
 
----
+______________________________________________________________________
 
 ### 5. Enharmonic Equivalents
 
@@ -83,21 +83,21 @@ These keys sound the same but are written differently depending on the context (
 
 | Position | Major Key | Relative Minor | Number of Accidentals |
 | :------- | :-------- | :------------- | :-------------------- |
-| 12:00    | C         | a              | 0                     |
-| 1:00     | G         | e              | 1 Sharp               |
-| 2:00     | D         | b              | 2 Sharps              |
-| 3:00     | A         | f#             | 3 Sharps              |
-| 4:00     | E         | c#             | 4 Sharps              |
-| 5:00     | B         | g#             | 5 Sharps              |
-| 6:00     | F# / Gb   | d# / eb        | 6 Sharps / 6 Flats    |
-| 7:00     | Db        | bb             | 5 Flats               |
-| 8:00     | Ab        | f              | 4 Flats               |
-| 9:00     | Eb        | c              | 3 Flats               |
-| 10:00    | Bb        | g              | 2 Flats               |
-| 11:00    | F         | d              | 1 Flat                |
+| 12:00 | C | a | 0 |
+| 1:00 | G | e | 1 Sharp |
+| 2:00 | D | b | 2 Sharps |
+| 3:00 | A | f# | 3 Sharps |
+| 4:00 | E | c# | 4 Sharps |
+| 5:00 | B | g# | 5 Sharps |
+| 6:00 | F# / Gb | d# / eb | 6 Sharps / 6 Flats |
+| 7:00 | Db | bb | 5 Flats |
+| 8:00 | Ab | f | 4 Flats |
+| 9:00 | Eb | c | 3 Flats |
+| 10:00 | Bb | g | 2 Flats |
+| 11:00 | F | d | 1 Flat |
 
 ### Why is this useful?
 
-1.  Songwriting: Keys that are next to each other on the circle sound good together. If you are in C Major, chords from G Major (neighbor right) and F Major (neighbor left) fit perfectly.
-2.  Modulation: If you want to change keys in the middle of a song, it is smoothest to move to a neighbor on the circle because they share almost all the same notes.
-3.  Transposition: If a song is too high for a singer, you can move the whole song one "step" left on the circle to lower the pitch while keeping the harmonic relationships intact.
+1. Songwriting: Keys that are next to each other on the circle sound good together. If you are in C Major, chords from G Major (neighbor right) and F Major (neighbor left) fit perfectly.
+1. Modulation: If you want to change keys in the middle of a song, it is smoothest to move to a neighbor on the circle because they share almost all the same notes.
+1. Transposition: If a song is too high for a singer, you can move the whole song one "step" left on the circle to lower the pitch while keeping the harmonic relationships intact.

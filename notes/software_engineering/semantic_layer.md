@@ -17,9 +17,9 @@ A semantic layer (like dbt Metric Layer, Looker’s LookML, or MetricFlow) enabl
 Layered Architecture (Modern Analytics Stack):
 
 1. Data Lake → Warehouse
-2. dbt / ETL: Clean, join, model data into consistent tables (e.g., `fct_orders`, `dim_customers`)
-3. Semantic Layer: Define metrics like `average_order_value`, dimensions like `order_date`, and relationships
-4. BI Tool: Just picks metrics and filters from semantic layer
+1. dbt / ETL: Clean, join, model data into consistent tables (e.g., `fct_orders`, `dim_customers`)
+1. Semantic Layer: Define metrics like `average_order_value`, dimensions like `order_date`, and relationships
+1. BI Tool: Just picks metrics and filters from semantic layer
 
 ## Why Not Just Predefine the Table?
 
@@ -76,15 +76,15 @@ Predefined tables sacrifice flexibility for speed and stability. They can still 
 ## The Best Practice? Use Both
 
 1. Use dbt or ETL to create clean models (`fct_orders`, `dim_customers`)
-2. Add semantic layer for key metrics (churn, LTV, etc.)
-3. Materialize common metrics as views or tables if performance matters
-4. Let BI tools use semantic definitions for flexibility — but point to precomputed sources when available
+1. Add semantic layer for key metrics (churn, LTV, etc.)
+1. Materialize common metrics as views or tables if performance matters
+1. Let BI tools use semantic definitions for flexibility — but point to precomputed sources when available
 
-| Approach               | Pros                                   | Cons                                    |
+| Approach | Pros | Cons |
 | ---------------------- | -------------------------------------- | --------------------------------------- |
-| Predefined tables      | Fast, simple, easy to cache            | Inflexible, hard to scale, logic hidden |
-| Semantic layer         | Flexible, documented, reusable         | May be slower, adds complexity          |
-| Hybrid (best practice) | Performance + governance + flexibility | Requires careful architecture           |
+| Predefined tables | Fast, simple, easy to cache | Inflexible, hard to scale, logic hidden |
+| Semantic layer | Flexible, documented, reusable | May be slower, adds complexity |
+| Hybrid (best practice) | Performance + governance + flexibility | Requires careful architecture |
 
 ## Recommended Setup: dbt + Looker
 
@@ -94,14 +94,14 @@ Predefined tables sacrifice flexibility for speed and stability. They can still 
    - Documenting columns, not necessarily metrics
    - (Optional) Using `dbt metrics` if you also serve metrics to non-Looker tools (e.g., Hex or Mode) so dbt is the source of truth
 
-2. Use LookML for:
+1. Use LookML for:
 
    - Defining metrics (like `total_revenue`, `LTV`, `churn_rate`)
    - Applying joins, dimension groups, filters
    - Exposing those to users in Explores
    - Surfacing tooltips/descriptions directly in the UI
 
-3. Optionally use dbt docs or dbt semantic layer for:
+1. Optionally use dbt docs or dbt semantic layer for:
 
    - Cross-tool metadata
    - Programmatic metric usage (e.g., in APIs or notebooks)

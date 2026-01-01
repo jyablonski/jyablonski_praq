@@ -202,7 +202,6 @@ jobs:
           terraform apply -auto-approve
 ```
 
-
 Key points:
 
 - Store SOPS decryption key and Vault token as CI secrets
@@ -238,6 +237,7 @@ Step 2: Save and exit
 SOPS automatically re-encrypts when you save. The file is now updated with your new secrets encrypted.
 
 Step 3: Commit and PR
+
 ```bash
 git add secrets.enc.yaml
 git commit -m "Add OpenAI and Slack secrets"

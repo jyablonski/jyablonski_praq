@@ -217,7 +217,7 @@ Key observations:
 - Formatting is stored as `marks` on text nodes
 - Attributes (like heading level or link href) go in `attrs`
 
----
+______________________________________________________________________
 
 # Backend Storage
 
@@ -373,8 +373,8 @@ create table document_snapshots (
 
 To reconstruct a document at version N:
 
-1. Find the nearest snapshot at version <= N
-2. Replay all steps from that snapshot's version to N
+1. Find the nearest snapshot at version \<= N
+1. Replay all steps from that snapshot's version to N
 
 This approach is typically used when you need real-time collaboration or very granular history.
 
@@ -411,13 +411,13 @@ create index idx_documents_search on documents using gin(to_tsvector('english', 
 
 ## Comparison: DraftJS vs Tiptap Storage
 
-| Aspect       | DraftJS                                     | Tiptap/ProseMirror             |
+| Aspect | DraftJS | Tiptap/ProseMirror |
 | ------------ | ------------------------------------------- | ------------------------------ |
-| Structure    | Flat array of blocks                        | Nested tree                    |
-| Formatting   | Offset ranges (`offset`, `length`, `style`) | Marks on text nodes            |
-| Entities     | Separate `entityMap` referenced by key      | Inline as node attributes      |
-| Manipulation | Must calculate offsets carefully            | Tree traversal, more intuitive |
-| Size         | Often slightly smaller                      | More verbose but clearer       |
+| Structure | Flat array of blocks | Nested tree |
+| Formatting | Offset ranges (`offset`, `length`, `style`) | Marks on text nodes |
+| Entities | Separate `entityMap` referenced by key | Inline as node attributes |
+| Manipulation | Must calculate offsets carefully | Tree traversal, more intuitive |
+| Size | Often slightly smaller | More verbose but clearer |
 
 DraftJS example:
 

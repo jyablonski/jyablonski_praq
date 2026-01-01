@@ -3,13 +3,13 @@
 ## Table of Contents
 
 1. [Window Functions](#window-functions)
-2. [String Functions](#string-functions)
-3. [Date & Time Functions](#date--time-functions)
-4. [Conditional Aggregation](#conditional-aggregation)
-5. [Numeric Operations](#numeric-operations)
-6. [Joins & Set Operations](#joins--set-operations)
+1. [String Functions](#string-functions)
+1. [Date & Time Functions](#date--time-functions)
+1. [Conditional Aggregation](#conditional-aggregation)
+1. [Numeric Operations](#numeric-operations)
+1. [Joins & Set Operations](#joins--set-operations)
 
----
+______________________________________________________________________
 
 ## Window Functions
 
@@ -71,11 +71,11 @@ from scores;
 | --  | Dave  | 90    | 4       | 3      | 4   |
 ```
 
-| Function       | Ties Behavior             | Gaps After Ties       |
+| Function | Ties Behavior | Gaps After Ties |
 | -------------- | ------------------------- | --------------------- |
-| `row_number()` | No ties (arbitrary order) | Never has gaps        |
-| `dense_rank()` | Same rank for ties        | No gaps (1, 2, 2, 3)  |
-| `rank()`       | Same rank for ties        | Has gaps (1, 2, 2, 4) |
+| `row_number()` | No ties (arbitrary order) | Never has gaps |
+| `dense_rank()` | Same rank for ties | No gaps (1, 2, 2, 3) |
+| `rank()` | Same rank for ties | Has gaps (1, 2, 2, 4) |
 
 ### PERCENT_RANK
 
@@ -97,7 +97,7 @@ from scores;
 | --  | Alice | 100   | 1.0        |
 ```
 
----
+______________________________________________________________________
 
 ## String Functions
 
@@ -172,7 +172,7 @@ from users;
 -- Result: 'John Doe'
 ```
 
----
+______________________________________________________________________
 
 ## Date & Time Functions
 
@@ -252,7 +252,7 @@ where created_at >= '2024-01-01'
   and created_at < '2024-02-01'
 ```
 
----
+______________________________________________________________________
 
 ## Conditional Aggregation
 
@@ -292,7 +292,7 @@ group by user_id;
 | --  | 2       | 8            | 3            |
 ```
 
----
+______________________________________________________________________
 
 ## Numeric Operations
 
@@ -336,7 +336,7 @@ from (values (4.2), (4.8), (-2.3)) as t(value);
 | --  | -2.3  | -2         | -3           |
 ```
 
----
+______________________________________________________________________
 
 ## Joins & Set Operations
 

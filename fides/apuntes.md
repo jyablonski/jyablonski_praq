@@ -7,10 +7,9 @@ Sometimes, a company may opt to anonymize the user data after it's been requeste
 - Example: you had 100 users in the month of March 2024, but 50 of those users requested their data to be deleted by July 2024.
 - If you wanted to run historical analytics after July 2024 and you actually deleted all of that data, your records would only show 50% of their true value between that period.
 
-
 ## Fides Example
 
-``` sh
+```sh
 poetry install
 poetry shell
 
@@ -23,5 +22,3 @@ fides deploy up
 - Admin UI: `http://localhost:8080`
   - Username: `root_user`
   - Password: `Testpassword1!`
-
-

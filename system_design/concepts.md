@@ -6,65 +6,65 @@ Hot Reads
 
 1. Relational Database
    1. The go-to choice for many use cases.
-   2. Versatile, stores structured data, allows various forms of OLTP and OLAP needs.
-   3. Can store many different types of structured data in different tables.
-   4. Allows you to configure complex data relationships.
-   5. ACID Compliance
+   1. Versatile, stores structured data, allows various forms of OLTP and OLAP needs.
+   1. Can store many different types of structured data in different tables.
+   1. Allows you to configure complex data relationships.
+   1. ACID Compliance
       1. Atomic - Transactions are all or nothing. If it fails, nothing gets committed.
-      2. Consistent - Database is always in a consistent state. Data integrity is maintained, constraints don't fail etc.
-      3. Isolated - Concurrent Transactions do not affect each other; they process 1 at a time.
-      4. Durable - Transaction that are committed are permanent. Enforced via WAL or the BinLog, which enables Admins to recover the database in the event of system failure etc.
-   6. Examples: Postgres, MySQL
-2. Key Value Store
+      1. Consistent - Database is always in a consistent state. Data integrity is maintained, constraints don't fail etc.
+      1. Isolated - Concurrent Transactions do not affect each other; they process 1 at a time.
+      1. Durable - Transaction that are committed are permanent. Enforced via WAL or the BinLog, which enables Admins to recover the database in the event of system failure etc.
+   1. Examples: Postgres, MySQL
+1. Key Value Store
    1. Effective at storing unstructured data quickly. Fast lookups in o(1) time for a specific key
-   2. Scales well, designed for horizontal scalability. Designed for large number of read + write operations across distributed systems.
-   3. Pairs well w/ things like Lambda Functions
-   4. Easy to implement Caching
-   5. Requires very specific access patterns that you have to know up front in order to design the data effectively
-   6. Less flexible than relational databases. No concepts of relationships, limited join capabilities, limited reporting and analytics capabiltiies etc
-   7. Application Examples: DynamoDB, MongoDB
-   8. Usecase Examples: Twitter / Instagram timelines, tweets & post storage, viewing history. Everything is saved at a feed:
-3. Caching Store
+   1. Scales well, designed for horizontal scalability. Designed for large number of read + write operations across distributed systems.
+   1. Pairs well w/ things like Lambda Functions
+   1. Easy to implement Caching
+   1. Requires very specific access patterns that you have to know up front in order to design the data effectively
+   1. Less flexible than relational databases. No concepts of relationships, limited join capabilities, limited reporting and analytics capabiltiies etc
+   1. Application Examples: DynamoDB, MongoDB
+   1. Usecase Examples: Twitter / Instagram timelines, tweets & post storage, viewing history. Everything is saved at a feed:
+1. Caching Store
    1. Used to improve the performance, reduce latency, and increase responsiveness of existing Applications.
-   2. General idea is data can be stored in this Caching Store in-memory and then be accessed by applications much more quickly than if the Application had to go to an actual Database or other memory store for it.
-   3. Primarily works in-memory, which is why it's so fast.
+   1. General idea is data can be stored in this Caching Store in-memory and then be accessed by applications much more quickly than if the Application had to go to an actual Database or other memory store for it.
+   1. Primarily works in-memory, which is why it's so fast.
       1. Because it's in-memory, there's a limit of how much data can be stored in a Caching Store.
-   4. Has a Time-to-live (TTL) feature which describes how long to keep the data cached for. There are also methods and ways to invalidate the cache and reset things.
-   5. Commonly used in web applications, databases, and REST APIs.
-   6. Examples: Redis, Memcached
-4. Queuing Services
+   1. Has a Time-to-live (TTL) feature which describes how long to keep the data cached for. There are also methods and ways to invalidate the cache and reset things.
+   1. Commonly used in web applications, databases, and REST APIs.
+   1. Examples: Redis, Memcached
+1. Queuing Services
    1. Great for building de-coupled Applications
-   2. Say you have events happening that you want to record, but don't necessarily want to process right away
-   3. First-in-first-out (FIFO) is a principle that allows consumers of these queuing services to process the messages in-order of when they were created.
-   4. Dead Letter Queues allow messages that fail to be consumed for whatever reason to be stored separately so that the message isn't lost.
-   5. With Queueing Services, messages can only be consumed once.
-   6. Examples: AWS SQS
-5. Pub Sub
+   1. Say you have events happening that you want to record, but don't necessarily want to process right away
+   1. First-in-first-out (FIFO) is a principle that allows consumers of these queuing services to process the messages in-order of when they were created.
+   1. Dead Letter Queues allow messages that fail to be consumed for whatever reason to be stored separately so that the message isn't lost.
+   1. With Queueing Services, messages can only be consumed once.
+   1. Examples: AWS SQS
+1. Pub Sub
    1. Mechanism to build publisher / subscriber patterns in distributed systems.
-   2. Message Producers (publishers) send messages to a central broker where they are stored in a log-based format, and message consumers (subscribers) read from those logs to consume the messages at their own pace.
-   3. As opposed to Queuing Services, messages are _not_ removed from the log when they are consumed. Instead, they have a TTL and are deleted after that TTL expires (typically 7 days).
-   4. Messages are stored in a log-based format in what are known as Topics.
-   5. Allow for high scalability and performance, often used in a distributed system format with multiple brokers for performance & failover redundancy.
-   6. Common use cases include real time data processing, notifications & alerts, or decoupled microservices similar to Queueing Services.
-   7. Examples: Apache Kafka, AWS SNS
-6. Load Balancer
+   1. Message Producers (publishers) send messages to a central broker where they are stored in a log-based format, and message consumers (subscribers) read from those logs to consume the messages at their own pace.
+   1. As opposed to Queuing Services, messages are _not_ removed from the log when they are consumed. Instead, they have a TTL and are deleted after that TTL expires (typically 7 days).
+   1. Messages are stored in a log-based format in what are known as Topics.
+   1. Allow for high scalability and performance, often used in a distributed system format with multiple brokers for performance & failover redundancy.
+   1. Common use cases include real time data processing, notifications & alerts, or decoupled microservices similar to Queueing Services.
+   1. Examples: Apache Kafka, AWS SNS
+1. Load Balancer
    1. Distribute incoming traffic to multiple servers or resources to ensure optimal perfromance, high availability, and reliability of a system or application.
-   2. Continuously monitors the health of the destination servers to make sure requests aren't routed to an unhealthy server.
-   3. Uses a pre-defined algorithm (Round Robin, least connections etc) to determine which server should handle the request.
-   4. Different kinds of load balancers for HTTP or UDP/TCP Traffic etc.
-   5. Ensures that client requests are routed to same server to ensure session data isn't lost.
-   6. Common use cases include web applications, database servers, or microservices.
-   7. Examples: Nginx, AWS ELB
-7. Columnar Store (Cassandra)
-8. Logging
+   1. Continuously monitors the health of the destination servers to make sure requests aren't routed to an unhealthy server.
+   1. Uses a pre-defined algorithm (Round Robin, least connections etc) to determine which server should handle the request.
+   1. Different kinds of load balancers for HTTP or UDP/TCP Traffic etc.
+   1. Ensures that client requests are routed to same server to ensure session data isn't lost.
+   1. Common use cases include web applications, database servers, or microservices.
+   1. Examples: Nginx, AWS ELB
+1. Columnar Store (Cassandra)
+1. Logging
    1. Elasticsearch / Opensearch
       1. Enables a search and analytics engine to query the logs and analyze large volumes of structured or unstructured data
-      2. Stores data in a searchable index format allowing for complex queries and analysis.
-      3. Allows for high availbility & scalability
-      4. Can be built as a distributed system w/ multiple shards (aka servers) that hold the same data, enabling redundancy & high availbility.
-   2. Cloudwatch
+      1. Stores data in a searchable index format allowing for complex queries and analysis.
+      1. Allows for high availbility & scalability
+      1. Can be built as a distributed system w/ multiple shards (aka servers) that hold the same data, enabling redundancy & high availbility.
+   1. Cloudwatch
       1. Stores logs as JSON-formatted events, providing simple, quick search capabilities
-      2. Integrates directly w/ all AWS Services like EC2, Lambda, ECS etc.
+      1. Integrates directly w/ all AWS Services like EC2, Lambda, ECS etc.
 
 ## CAP Theorem
 
@@ -76,11 +76,12 @@ The three components of the CAP theorem are as follows:
 
    - Consistency in the context of the CAP theorem means that all nodes in a distributed system have a consistent view of the data at all times. In other words, if a piece of data is updated, all subsequent reads will reflect that update.
 
-2. Availability (A):
+1. Availability (A):
 
    - Availability means that the system remains operational and responsive, even in the presence of failures. Every non-failing node in the system must respond to requests, ensuring that the system is available for use.
 
-3. Partition tolerance (P):
+1. Partition tolerance (P):
+
    - Partition tolerance refers to the system's ability to continue functioning and providing consistent responses even in the face of network partitions, where some nodes can't communicate with each other due to network failures.
 
 According to the CAP theorem, in a distributed system, you can only achieve two out of the three properties—Consistency, Availability, and Partition tolerance. It's not possible to simultaneously achieve all three. This theorem has significant implications for designing and managing distributed databases and systems.
@@ -94,13 +95,13 @@ Here are the three possible combinations under the CAP theorem:
 ## Interview Tips
 
 1. Ask clarifying questions
-2. Get a general about broad numbers & scale
+1. Get a general about broad numbers & scale
    1. How many users / requests / orders etc do we expect
       1. 100,000 active users per month
-      2. 23,000 per week
-      3. 3,300 per day
-      4. ~2,400 users during peak hrs (7am - 9pm)
-3. Auto scaling automatically to meet demand at peak hrs and then scale down during periods of low traffic
+      1. 23,000 per week
+      1. 3,300 per day
+      1. ~2,400 users during peak hrs (7am - 9pm)
+1. Auto scaling automatically to meet demand at peak hrs and then scale down during periods of low traffic
    Hot reads
 
 Example
@@ -166,9 +167,9 @@ WebSockets provide a persistent TCP style connection between client and server a
 - It allows either the client or the server to push data to the other without being prompted by a new request
 
 1. Client initiates WebSocket handshake over HTTP (with a backing TCP connection)
-2. Connection upgrades to WebSocket protocol, WebSocket takes over the TCP connection
-3. Both client and server can send binary messages to each other over the connection
-4. The connection stays open until explicitly closed
+1. Connection upgrades to WebSocket protocol, WebSocket takes over the TCP connection
+1. Both client and server can send binary messages to each other over the connection
+1. The connection stays open until explicitly closed
 
 WebSockets just allow you to effectively have a channel where you can send binary packets to the server from the client and vice versa. This means you'll need some way of defining what it is your client and server are exchanging.
 
@@ -237,9 +238,9 @@ The WebRTC standard includes two methods to work around these restrictions:
 There's effectively 4 steps to a WebRTC connection:
 
 1. Clients connect to a central signaling server to learn about their peers.
-2. Clients reach out to a STUN server to get their public IP address and port.
-3. Clients share this information with each other via the signaling server.
-4. Clients establish a direct peer-to-peer connection and start sending data.
+1. Clients reach out to a STUN server to get their public IP address and port.
+1. Clients share this information with each other via the signaling server.
+1. Clients establish a direct peer-to-peer connection and start sending data.
 
 WebRTC is an absolute pain to get right and even the best implementations still suffer connection losses. It truly is a niche solution.
 
@@ -338,11 +339,11 @@ This typically involves direct uploads to S3 using multi-part uploads which allo
 Large platforms generally let clients upload directly to S3 to offload the server. It works by:
 
 1. Clients request upload (like when they want to upload a video or save a file)
-2. Backend initializes multi-part upload by calling S3's `CreateMultipartUpload` API and returning an `UploadId` to track the session
-3. Backend generates pre-signed URLs for each ~5 MB chunk using `UploadId` and `PartNumber` and it returns those to the client
-4. Client uploads each part directly to S3 using the presigned URLs, directly bypassing the server
-5. Client then informs the backend when it's done by sending a list of uploaded part numbers and ETags
-6. Backend completes the upload by calling `CompleteMultipartUpload` with the part list and `UploadId`
+1. Backend initializes multi-part upload by calling S3's `CreateMultipartUpload` API and returning an `UploadId` to track the session
+1. Backend generates pre-signed URLs for each ~5 MB chunk using `UploadId` and `PartNumber` and it returns those to the client
+1. Client uploads each part directly to S3 using the presigned URLs, directly bypassing the server
+1. Client then informs the backend when it's done by sending a list of uploaded part numbers and ETags
+1. Backend completes the upload by calling `CompleteMultipartUpload` with the part list and `UploadId`
 
 - Can combine this with S3 Event Notifications to look for completed multi part file uploads so you can take metadata related to the large file and go update some video_metadata attributes in your database if you want to know the final s3 key, or file size etc.
 
@@ -444,44 +445,44 @@ Bitrate in video streaming refers to the amount of data processed per second of 
 
 ### ✅ 2xx – Success
 
-| Code           | Meaning                    | Notes                                                                |
+| Code | Meaning | Notes |
 | -------------- | -------------------------- | -------------------------------------------------------------------- |
-| 200 OK         | The request was successful | Standard for most `GET`, `PUT`, or successful `POST` requests        |
-| 201 Created    | Resource was created       | Used after a `POST` that creates something (e.g., user, post, swipe) |
-| 204 No Content | Success, no response body  | Used after a `DELETE` or `PUT` when no data needs to be returned     |
+| 200 OK | The request was successful | Standard for most `GET`, `PUT`, or successful `POST` requests |
+| 201 Created | Resource was created | Used after a `POST` that creates something (e.g., user, post, swipe) |
+| 204 No Content | Success, no response body | Used after a `DELETE` or `PUT` when no data needs to be returned |
 
----
+______________________________________________________________________
 
 ### ⚠️ 3xx – Redirection
 
-| Code                  | Meaning                       | Notes                                                    |
+| Code | Meaning | Notes |
 | --------------------- | ----------------------------- | -------------------------------------------------------- |
-| 301 Moved Permanently | Resource moved; use new URL   | Permanent redirect                                       |
-| 302 Found             | Temporary redirect            | Often used for login flows                               |
-| 304 Not Modified      | Cached content is still valid | Used with `ETag`/`If-Modified-Since` headers for caching |
+| 301 Moved Permanently | Resource moved; use new URL | Permanent redirect |
+| 302 Found | Temporary redirect | Often used for login flows |
+| 304 Not Modified | Cached content is still valid | Used with `ETag`/`If-Modified-Since` headers for caching |
 
----
+______________________________________________________________________
 
 ### ❌ 4xx – Client Errors
 
-| Code                     | Meaning                              | Notes                                                |
+| Code | Meaning | Notes |
 | ------------------------ | ------------------------------------ | ---------------------------------------------------- |
-| 400 Bad Request          | Malformed request                    | Missing parameters, invalid types, etc.              |
-| 401 Unauthorized         | Missing or invalid auth              | User must authenticate (usually with a token)        |
-| 403 Forbidden            | Authenticated but no access          | User is not allowed to do the action                 |
-| 404 Not Found            | Resource doesn't exist               | URL or object not found                              |
-| 409 Conflict             | Request conflicts with current state | E.g., trying to create a user that already exists    |
-| 422 Unprocessable Entity | Semantically invalid request         | Often used in validation-heavy APIs (like JSON\:API) |
+| 400 Bad Request | Malformed request | Missing parameters, invalid types, etc. |
+| 401 Unauthorized | Missing or invalid auth | User must authenticate (usually with a token) |
+| 403 Forbidden | Authenticated but no access | User is not allowed to do the action |
+| 404 Not Found | Resource doesn't exist | URL or object not found |
+| 409 Conflict | Request conflicts with current state | E.g., trying to create a user that already exists |
+| 422 Unprocessable Entity | Semantically invalid request | Often used in validation-heavy APIs (like JSON:API) |
 
----
+______________________________________________________________________
 
 ### 💥 5xx – Server Errors
 
-| Code                      | Meaning                       | Notes                                           |
+| Code | Meaning | Notes |
 | ------------------------- | ----------------------------- | ----------------------------------------------- |
-| 500 Internal Server Error | Something broke on the server | Catch-all; usually means unhandled exception    |
-| 502 Bad Gateway           | Bad response from upstream    | E.g., Nginx ↔ app server                        |
-| 503 Service Unavailable   | Server overloaded or down     | Often used during maintenance or scaling issues |
+| 500 Internal Server Error | Something broke on the server | Catch-all; usually means unhandled exception |
+| 502 Bad Gateway | Bad response from upstream | E.g., Nginx ↔ app server |
+| 503 Service Unavailable | Server overloaded or down | Often used during maintenance or scaling issues |
 
 ### HTTP Examples
 
@@ -615,8 +616,8 @@ PostgreSQL is a great transactional database, but not optimized for certain feat
 CDC involves:
 
 1. Enabling logical replication on your database instance to turn all database changes into readable, structured events that go into a binlog
-2. A tool like Debezium can read those changes and send them off to some data store like Kafka in topics, 1 for each database table
-3. From Kafka, you can implement a Sink Connector like Elasticsearch Sink to dump the database records from Kafka into Elasticsearch and keep the data updated.
+1. A tool like Debezium can read those changes and send them off to some data store like Kafka in topics, 1 for each database table
+1. From Kafka, you can implement a Sink Connector like Elasticsearch Sink to dump the database records from Kafka into Elasticsearch and keep the data updated.
 
 Benefits include:
 
@@ -670,5 +671,5 @@ The extension may work fine for small to medium scale geospatial use cases, but 
 ## Postgres Extensions
 
 1. pgvector - anytime you need to store vector embeddings for AI or ML applications that need to find similar items based on semantic meaning rather than exact matches
-2. PostGIS - anytime you need geospatial queries, ride sharing, local proximity user requests. Apps like Yelp, Uber, Tinder etc
-3. uuid-ossp - to create UUIDs for things like primary keys and distributed apps where you don't want auto incrementing keys
+1. PostGIS - anytime you need geospatial queries, ride sharing, local proximity user requests. Apps like Yelp, Uber, Tinder etc
+1. uuid-ossp - to create UUIDs for things like primary keys and distributed apps where you don't want auto incrementing keys

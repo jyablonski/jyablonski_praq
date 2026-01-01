@@ -18,14 +18,15 @@ Or you can use an Ad Platform that sources advertisements from companies for you
 ## High-Level Flow
 
 1. You (the developer) integrate ad slots or placements into your app.
-2. These slots are filled by:
+
+1. These slots are filled by:
 
    - A platform/marketplace like Google AdMob, Meta Audience Network, etc.
    - Or, direct deals with businesses or agencies.
 
-3. When users interact with your app and see or click on ads, you get paid (based on impressions, clicks, conversions, etc.).
+1. When users interact with your app and see or click on ads, you get paid (based on impressions, clicks, conversions, etc.).
 
----
+______________________________________________________________________
 
 ## Two Main Ways to Sell Ads
 
@@ -71,7 +72,7 @@ adView.loadAd(adRequest);
 - Fill Rate: The % of ad requests that are actually served with ads.
 - eCPM: Effective CPM — a blended revenue-per-thousand value based on clicks, views, installs, etc.
 
----
+______________________________________________________________________
 
 ### 2. Direct Deals
 
@@ -94,7 +95,7 @@ You bypass the middleman and sell ad space directly to businesses or agencies.
 - Need to handle contracts, billing, ad serving, etc.
 - Not scalable unless you have a large user base
 
----
+______________________________________________________________________
 
 ## How You Get Paid
 
@@ -102,17 +103,17 @@ You bypass the middleman and sell ad space directly to businesses or agencies.
 - Usually monthly payouts, via bank transfer or PayPal
 - Must hit a minimum threshold (e.g. $100)
 
----
+______________________________________________________________________
 
 ## How to Get Started
 
 1. Pick an Ad Network (e.g. Google AdMob)
-2. Register your app and create ad units
-3. Integrate the SDK into your app
-4. Place ad units in your app UI
-5. Test and publish
+1. Register your app and create ad units
+1. Integrate the SDK into your app
+1. Place ad units in your app UI
+1. Test and publish
 
----
+______________________________________________________________________
 
 ## Gotchas to Watch For
 
@@ -121,14 +122,14 @@ You bypass the middleman and sell ad space directly to businesses or agencies.
 - Ad blockers: Users can block ads
 - Fill rate drops in niche or low-demand markets
 
----
+______________________________________________________________________
 
 ## Advanced: Mediation and Header Bidding
 
 - Mediation tools (e.g. AdMob Mediation, IronSource) let you combine multiple networks and choose the highest-bidding one.
 - Header bidding (used in web more than mobile) is a real-time auction where multiple buyers compete before a page loads.
 
----
+______________________________________________________________________
 
 # Types of Ads
 
@@ -144,7 +145,7 @@ What: Small, usually fixed strips at the top or bottom of the screen.
 - User Experience: Least intrusive; users can continue interacting without interruption.
 - Best for: Apps that want steady, passive revenue without annoying users.
 
----
+______________________________________________________________________
 
 ## 2. Interstitial Ads
 
@@ -154,11 +155,11 @@ What: Full-screen ads shown during natural breaks (e.g., between game levels or 
 
 - Impressions: Lower than banners since they appear less frequently.
 - CTR: Higher than banners (1–3%) because they take over the screen.
-- CPM: Higher than banners, often \$3–\$10 or more.
+- CPM: Higher than banners, often $3–$10 or more.
 - User Experience: Can be disruptive if overused — risks annoying users and causing churn.
 - Best for: Apps with clear transition points; games or content apps where natural pauses exist.
 
----
+______________________________________________________________________
 
 ## 3. Rewarded Ads
 
@@ -168,11 +169,11 @@ What: Users voluntarily watch a video or interactive ad in exchange for in-app r
 
 - Impressions: Limited by how often users want to claim rewards.
 - CTR: Very high because users choose to watch.
-- CPM: Highest among typical formats (can be \$10+).
+- CPM: Highest among typical formats (can be $10+).
 - User Experience: Positive, since ads provide value to users.
 - Best for: Games and apps with virtual economies; great for engagement and revenue.
 
----
+______________________________________________________________________
 
 ## 4. Native Ads
 
@@ -192,10 +193,10 @@ What: Ads designed to blend seamlessly with app content (e.g., recommended artic
 ### Examples
 
 1. Instgram Sponsored Posts
-2. Google Sponsored Content appears at the top of the Search
-3. Recommended Amazon Products appear at the top of the Search labeled "Sponsored Products"
+1. Google Sponsored Content appears at the top of the Search
+1. Recommended Amazon Products appear at the top of the Search labeled "Sponsored Products"
 
----
+______________________________________________________________________
 
 ## 5. Playable Ads
 
@@ -209,34 +210,34 @@ What: Interactive mini-ads that let users try a game or app before installing.
 - User Experience: Engaging and immersive but can be longer than typical ads.
 - Best for: Gaming apps looking to promote installs of other games or interactive content.
 
----
+______________________________________________________________________
 
 # Summary Table
 
-| Ad Type      | Impressions | CTR            | CPM               | User Experience           | Best Use Case                    |
+| Ad Type | Impressions | CTR | CPM | User Experience | Best Use Case |
 | ------------ | ----------- | -------------- | ----------------- | ------------------------- | -------------------------------- |
-| Banner       | Very High   | Low (0.1-0.5%) | Low (\$0.5-\$3)   | Least intrusive           | Passive revenue                  |
-| Interstitial | Medium      | Medium (1-3%)  | Medium (\$3-\$10) | Disruptive if overused    | Between natural breaks           |
-| Rewarded     | Limited     | Very High      | High (\$10+)      | Positive (user opt-in)    | Games, apps with virtual rewards |
-| Native       | High        | Medium-High    | Medium-High       | Natural feel if done well | Content-driven apps              |
-| Playable     | Low         | Very High      | Very High         | Engaging, immersive       | Game install promos              |
+| Banner | Very High | Low (0.1-0.5%) | Low ($0.5-$3) | Least intrusive | Passive revenue |
+| Interstitial | Medium | Medium (1-3%) | Medium ($3-$10) | Disruptive if overused | Between natural breaks |
+| Rewarded | Limited | Very High | High ($10+) | Positive (user opt-in) | Games, apps with virtual rewards |
+| Native | High | Medium-High | Medium-High | Natural feel if done well | Content-driven apps |
+| Playable | Low | Very High | Very High | Engaging, immersive | Game install promos |
 
----
+______________________________________________________________________
 
 ## Implications for Monetization Strategy
 
 - If you want steady baseline revenue without annoying users: use banners + native ads.
 - If you want to maximize revenue per user and have natural pause points: add interstitials but use sparingly.
-- If your app has virtual goods or rewards, prioritize rewarded ads - great for engagement and \$\$\$.
+- If your app has virtual goods or rewards, prioritize rewarded ads - great for engagement and $$$.
 - If you’re a gaming app targeting installs of other games, playable ads can outperform everything else but might be harder to implement.
 
----
+______________________________________________________________________
 
 # How Advertisers Assess Ad Performance
 
 Advertisers assess ad performance by tracking specific metrics and KPIs that measure how well their ads meet their campaign goals.
 
----
+______________________________________________________________________
 
 ## 1. Define Campaign Objectives
 
@@ -257,7 +258,7 @@ For example:
 - follow up questions: can ad spend scale profitably here (if we spent $200k on advertising instead, does net profit turn into $200k here?)
 - Also have to factor in other costs like support, fulfillment
 
----
+______________________________________________________________________
 
 ## 2. Track Basic Metrics
 
@@ -282,7 +283,7 @@ For example:
   - Search Engines Ads
   - Shopping Ads
 
----
+______________________________________________________________________
 
 ## 3. Measure Conversion Metrics
 
@@ -302,7 +303,7 @@ If the goal is to get users to take a specific action (purchase, install, sign-u
 - Total campaign cost / Conversions.
 - Measures how much each conversion costs.
 
----
+______________________________________________________________________
 
 ## 4. Track Revenue & ROI
 
@@ -318,7 +319,7 @@ Advertisers calculate:
 - Predicts how much revenue a converted user will generate over time.
 - Helps justify higher CPA if LTV is good.
 
----
+______________________________________________________________________
 
 ## 5. Analyze Engagement & Quality Metrics
 
@@ -329,7 +330,7 @@ Advertisers also look at:
 - Video watch rates for video ads.
 - Viewability (whether the ad was actually seen).
 
----
+______________________________________________________________________
 
 ## 6. Use Attribution Models
 
@@ -338,7 +339,7 @@ They use attribution tools to understand which ads or channels contributed most 
 - Last-click attribution: gives credit to the last ad clicked.
 - Multi-touch attribution: credits multiple touchpoints along the user journey.
 
----
+______________________________________________________________________
 
 ## 7. Optimize & Iterate
 
@@ -349,7 +350,7 @@ Based on performance, advertisers:
 - Test different ad formats.
 - Reallocate budget to best-performing campaigns.
 
----
+______________________________________________________________________
 
 ## Tools Advertisers Use
 
@@ -359,7 +360,7 @@ Based on performance, advertisers:
 - Google Analytics
 - DSP dashboards (Demand-Side Platforms)
 
----
+______________________________________________________________________
 
 # How Ad Blockers Work
 
@@ -374,13 +375,13 @@ This typically causes no impression events, and obviously no conversion events
 
 - SDK callbacks for clicks, video views, completions, or other engagements never happen.
 
----
+______________________________________________________________________
 
 # Customer Lifetime Value
 
 LTV (Lifetime Value) estimates the total revenue or profit a business expects to earn from a customer over the entire period they remain active. Calculating LTV helps companies decide how much they can spend to acquire customers and guides long-term strategy.
 
----
+______________________________________________________________________
 
 ## How Companies Calculate LTV
 
@@ -388,50 +389,50 @@ LTV (Lifetime Value) estimates the total revenue or profit a business expects to
 
 - Decide the timeframe you want to measure (e.g., 12 months, customer lifespan, or average subscription duration).
 
----
+______________________________________________________________________
 
 ### 2. Gather Key Metrics
 
-| Metric                          | Description                                                 |
+| Metric | Description |
 | ------------------------------- | ----------------------------------------------------------- |
 | ARPU (Average Revenue Per User) | Average revenue generated per user per period (e.g., month) |
-| Gross Margin                    | Revenue minus direct costs, expressed as a percentage       |
-| Churn Rate                      | % of customers lost per period                              |
-| Retention Rate                  | % of customers retained per period (= 1 – churn rate)       |
-| Average Customer Lifespan       | How long a customer stays active (often 1 ÷ churn rate)     |
+| Gross Margin | Revenue minus direct costs, expressed as a percentage |
+| Churn Rate | % of customers lost per period |
+| Retention Rate | % of customers retained per period (= 1 – churn rate) |
+| Average Customer Lifespan | How long a customer stays active (often 1 ÷ churn rate) |
 
----
+______________________________________________________________________
 
 ### 3. Basic LTV Formula (Simplified)
 
 $$
-\text{LTV} = \text{ARPU} \times \text{Average Customer Lifespan}
+\\text{LTV} = \\text{ARPU} \\times \\text{Average Customer Lifespan}
 $$
 
 Example:
-If ARPU = \$20/month and Average Lifespan = 12 months, then LTV = \$240
+If ARPU = $20/month and Average Lifespan = 12 months, then LTV = $240
 
----
+______________________________________________________________________
 
 ### 4. Margin-Adjusted LTV
 
 $$
-\text{LTV} = (\text{ARPU} \times \text{Gross Margin}) \times \text{Average Customer Lifespan}
+\\text{LTV} = (\\text{ARPU} \\times \\text{Gross Margin}) \\times \\text{Average Customer Lifespan}
 $$
 
 This accounts for costs of goods/services sold.
 
----
+______________________________________________________________________
 
 ### 5. Using Churn to Estimate Lifespan
 
 $$
-\text{Average Customer Lifespan} = \frac{1}{\text{Churn Rate}}
+\\text{Average Customer Lifespan} = \\frac{1}{\\text{Churn Rate}}
 $$
 
 If monthly churn is 5%, lifespan is 1 ÷ 0.05 = 20 months.
 
----
+______________________________________________________________________
 
 ### 6. More Advanced Methods
 
@@ -439,19 +440,19 @@ If monthly churn is 5%, lifespan is 1 ÷ 0.05 = 20 months.
 - Discounted Cash Flow (DCF): Apply a discount rate to future revenues to account for the time value of money.
 - Predictive Models: Use machine learning to forecast future customer behavior and spending.
 
----
+______________________________________________________________________
 
 ### Summary Example:
 
-| Metric              | Value                     |
+| Metric | Value |
 | ------------------- | ------------------------- |
-| ARPU (monthly)      | \$30                      |
-| Gross Margin        | 70%                       |
-| Monthly Churn       | 4%                        |
-| Average Lifespan    | 1 / 0.04 = 25 months      |
-| Margin-Adjusted LTV | \$30 \* 0.7 \* 25 = \$525 |
+| ARPU (monthly) | $30 |
+| Gross Margin | 70% |
+| Monthly Churn | 4% |
+| Average Lifespan | 1 / 0.04 = 25 months |
+| Margin-Adjusted LTV | $30 * 0.7 * 25 = $525 |
 
----
+______________________________________________________________________
 
 ### Why LTV Matters
 

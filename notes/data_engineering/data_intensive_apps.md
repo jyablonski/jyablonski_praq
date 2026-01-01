@@ -6,11 +6,13 @@ Find out the proper percentiles to optimize performance / latency for. It might 
 
 Service Level Objectives (SLO) and Service Level Agreements (SLA) define the expected performance and availability of a serivce. - Service is considered up if it has median response time of less than 200ms and 99th percentile under 1 second.
 
-It's hard to scale architectures. If your load is x and the new load is 10x then the original architecture might not hold up. - Elastic systems can automatically scale in & out to match this load and continue operating at peak performance.  
- - Others have to be manually adjusted by a human and are slower to change and generally more error prone. - Scaling out to multiple systems introduces a shit ton of complexity, so try to stick to single machine processes until you're forced to make it distributed.
+It's hard to scale architectures. If your load is x and the new load is 10x then the original architecture might not hold up. - Elastic systems can automatically scale in & out to match this load and continue operating at peak performance.
 
-Maintainability - there's a cost to maintenance, fixing bugs, keeping systems operational, and investigating failures.  
- - Make systems that focus on operability, simplicity, and evolvability. - Operability - Easily view the health of the system, keep software up to date, establish good practices for testing + deployment. - Simplicity - manage the complexity, don't have hidden assumptions, reuse code instead of reimplementing it multiple times.
+- Others have to be manually adjusted by a human and are slower to change and generally more error prone. - Scaling out to multiple systems introduces a shit ton of complexity, so try to stick to single machine processes until you're forced to make it distributed.
+
+Maintainability - there's a cost to maintenance, fixing bugs, keeping systems operational, and investigating failures.
+
+- Make systems that focus on operability, simplicity, and evolvability. - Operability - Easily view the health of the system, keep software up to date, establish good practices for testing + deployment. - Simplicity - manage the complexity, don't have hidden assumptions, reuse code instead of reimplementing it multiple times.
 
 # Chapter 2 Data Models and Query Languages
 
@@ -87,8 +89,9 @@ Web Service - when HTTP is the protocol for talking to a service.
 
 REST is a design philosophy to emphasize simple data formats, using URLs to identify resources, and using standard HTTP features for authentication and requests. - Commonly use JSON.
 
-Remote Procedure Protocol (RPC) - make a request to a network service look the same as calling a function in a programming language - Flawed bc networks are inherently unpredictable.  
- - Can be unavailable, no internet, inconsistent response times, or timeout.
+Remote Procedure Protocol (RPC) - make a request to a network service look the same as calling a function in a programming language - Flawed bc networks are inherently unpredictable.
+
+- Can be unavailable, no internet, inconsistent response times, or timeout.
 
 Message Broker - messages get sent to a queue or topic, and the broker ensures the message is delivered to one or more consumers or subscribers to that topic. - Rabbit MQ, Kafka etc. - Pub / Sub architecture.
 
@@ -98,13 +101,15 @@ If your data doesn't change over time then replication is easy, you copy data to
 
 `Replicas` are nodes that store a copy of the database. How do you ensure all of the data ends up on the replicas.
 
-`Leader Based Replication` is the most common strategy to solve this. - One of the replicas is designated to be the leader. When clients want to write to the database, they send their request to the leader. - The other replicas are followers, and when the leader writes new data to its local storage it sends out the data change to all of these followers via a replication log and they each make the change accordingly.  
- - Writes are only accepted on the leader, however, reads can happen to either the leader or the follower. - Distributed message brokers like Kafka and RabbitMQ also use this.
+`Leader Based Replication` is the most common strategy to solve this. - One of the replicas is designated to be the leader. When clients want to write to the database, they send their request to the leader. - The other replicas are followers, and when the leader writes new data to its local storage it sends out the data change to all of these followers via a replication log and they each make the change accordingly.
+
+- Writes are only accepted on the leader, however, reads can happen to either the leader or the follower. - Distributed message brokers like Kafka and RabbitMQ also use this.
 
 ## Asynchronous vs Synchronous Replication
 
-Synchronous - the leader waits til it has received a success message from the replica that the write was successful before completing the actual update and making it visible to other clients. - Advantage is the follower is guaranteed to have an updated copy of the data consistent with the leader.  
- - Disadvantage is if the follower is unavailable (crashed or network issue) then the write cannot happen until follower is available again. - Any node that is down can cause the whole system can come to a halt. - Possible to have 1 synchronous node and the others async. if this synchronous one fails, one of the async ones becomes synchronous. - `semi-synchronous`.
+Synchronous - the leader waits til it has received a success message from the replica that the write was successful before completing the actual update and making it visible to other clients. - Advantage is the follower is guaranteed to have an updated copy of the data consistent with the leader.
+
+- Disadvantage is if the follower is unavailable (crashed or network issue) then the write cannot happen until follower is available again. - Any node that is down can cause the whole system can come to a halt. - Possible to have 1 synchronous node and the others async. if this synchronous one fails, one of the async ones becomes synchronous. - `semi-synchronous`.
 
 Asynchronous - the leader sends the data change but doesn't wait for a response from the follower. - Most commonly used. - leader can continue processing updates even if the followers fails. - Problems if user requests data too quickly after making a write. - `read-after-write consistency` is a guarantee that if the user reloads the page after a write, they will see the updates they submitted themselves.
 
@@ -112,8 +117,9 @@ Followers can take a few minutes to recover if they just failed and are waiting 
 
 New Followers - take a snapshot of leader's database, copy it to the new follower, and then the new follower reqeusts all new data changes that have happened since the snapshot. Once it processes this backlog, the follwoer has caught up.
 
-System has to continue working when a node fails.  
- - Follower - Each node knows the last trasnaction it processed before the fault occurred. - Leader - Much trickier. One of the followers needs to be promoted to the leader and the clients need to be reconfigured to send writes to the new leader. This is called `failover`. - Failover can happen manually or be triggered when the leader is known to have failed - crash, pwoer outage, network issue etc. Most systems use a timeout process where if no message has responsed for 30+ seconds it's assumed to be dead. - New leader - Election process where leader is chosen by a majority of remaining replicas, or appointed by a previously elected controller node. The new leader typically is the one that has the most up to date changes from the old leader. - Things get complicated if the old leader "comes back". Also - if async replication, the new leader might not have gotten all the most recent changes before the last one went down.
+System has to continue working when a node fails.
+
+- Follower - Each node knows the last trasnaction it processed before the fault occurred. - Leader - Much trickier. One of the followers needs to be promoted to the leader and the clients need to be reconfigured to send writes to the new leader. This is called `failover`. - Failover can happen manually or be triggered when the leader is known to have failed - crash, pwoer outage, network issue etc. Most systems use a timeout process where if no message has responsed for 30+ seconds it's assumed to be dead. - New leader - Election process where leader is chosen by a majority of remaining replicas, or appointed by a previously elected controller node. The new leader typically is the one that has the most up to date changes from the old leader. - Things get complicated if the old leader "comes back". Also - if async replication, the new leader might not have gotten all the most recent changes before the last one went down.
 
 Leader writes all write requests to a statement log to its followers. Every INSERT, UPDATE, or DELETE statement is forwarded to the followers. - Nondeterministic stuff like now() or RAND() will not be the same value on every replica. - Autoincrementing fields might get fkd up. - stored procedures and UDFs might not be consistent.
 

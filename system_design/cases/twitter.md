@@ -117,12 +117,17 @@ Why this works:
 Celebrity User Detection:
 
 - Threshold: 10k+ followers (configurable)
+
 - Updated via nightly batch job that queries userSubscriptions
+
 - Store in Redis SET: celebrity_users
+
 - Check this set during fan-out decisions
+
 - Trade-off: Celebrity tweets have slight read latency vs avoiding millions of fan-out writes
 
 - Postgres scalability - at what point do we move off it for better scalability options from something like Cassandra or a NoSQL database
+
 - Tweet archival - at some point you probably want to move data off the database and into long term storage in S3
 
 ### Fan Out
@@ -147,9 +152,9 @@ Alice has 3 followers: Bob, Charlie, David
 System immediately does:
 
 1. Write tweet to Postgres
-2. Add tweet to Bob's timeline in Redis
-3. Add tweet to Charlie's timeline in Redis
-4. Add tweet to David's timeline in Redis
+1. Add tweet to Bob's timeline in Redis
+1. Add tweet to Charlie's timeline in Redis
+1. Add tweet to David's timeline in Redis
 
 Now when Bob/Charlie/David open Twitter, their timeline is already pre-computed and ready to serve from Redis.
 
@@ -169,14 +174,14 @@ Alice posts: "Hello world!"
 System does:
 
 1. Write tweet to Postgres
-2. Done! (no fan-out)
+1. Done! (no fan-out)
 
 Later, Bob opens Twitter. The System does:
 
 1. Query: "Who does Bob follow?" → [Alice, Eve, Frank]
-2. Query: "Get recent tweets from Alice, Eve, Frank"
-3. Merge and sort by timestamp
-4. Return timeline to Bob
+1. Query: "Get recent tweets from Alice, Eve, Frank"
+1. Merge and sort by timestamp
+1. Return timeline to Bob
 
 ```sql
 SELECT t.* FROM tweets t
@@ -192,7 +197,7 @@ This leads to slower reads, but scales better for those hot users w/ millions of
 
 - 10 M DAU
 - Assume 5 tweets a day, for 50 M tweets per day
-  - 5 \* 10^7 / 10^5 = 500 tweets writes / second
+  - 5 * 10^7 / 10^5 = 500 tweets writes / second
   - Assume 30% higher during peak load, so this could be up to 650 tweets / second
   - Postgres is still fine here
 - Assume 100 read events a day, for 1 B reads

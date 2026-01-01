@@ -14,11 +14,11 @@ This lets you:
 ## Use Cases
 
 1. Article Summarization
-2. Email Drafting
-3. Meeting Notes -> Action Items
-4. Surveys
-5. Customer Feedback
-6. Report Generation
+1. Email Drafting
+1. Meeting Notes -> Action Items
+1. Surveys
+1. Customer Feedback
+1. Report Generation
 
 ## Running
 
@@ -123,10 +123,10 @@ print(response.summary)
 
 ## Template Syntax
 
-| Syntax                          | Description         | Example                        |
+| Syntax | Description | Example |
 | ------------------------------- | ------------------- | ------------------------------ |
-| `{{variable}}`                  | Simple substitution | `{{role}}` -> `"Data Analyst"` |
-| `{{#list}}...{{.}}...{{/list}}` | List iteration      | Iterates over list items       |
+| `{{variable}}` | Simple substitution | `{{role}}` -> `"Data Analyst"` |
+| `{{#list}}...{{.}}...{{/list}}` | List iteration | Iterates over list items |
 
 ## Key Files
 

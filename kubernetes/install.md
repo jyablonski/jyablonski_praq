@@ -1,10 +1,11 @@
 # K8s Install
+
 [Tutorial](https://www.youtube.com/watch?v=X48VuDVv0do)
 Left off at 1:02:00
 
 ## Minikube
 
-``` sh
+```sh
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
@@ -13,6 +14,7 @@ kubectl version
 ```
 
 Start the Cluster
+
 ```
 minikube start
 minikube status
@@ -20,7 +22,7 @@ minikube status
 
 ## Kubectl
 
-``` sh
+```sh
 kubectl get nodes
 kubectl get services
 kubectl create -h

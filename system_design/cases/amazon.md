@@ -36,9 +36,9 @@ Assume JWT is handling authentication and every request will be signed with it t
 - GET /cart
 - POST /orders
   - Body: {
-    cart_items: [
+    cart_items: \[
     { product_id, quantity, price_at_add_to_cart }
-    ]
+    \]
     }
 - GET /orders [] orders
 
@@ -112,7 +112,7 @@ carts (in Redis)
   - 100,000,000 or 10^8 / 10^5 = 1000 searches per second, peak 3x or 3000 per second
   - Can be handled by Elasticsearch and Redis
 - Assume 5 million purchases
-  - 5,000,000 or 5 \* 10^6 / 10^5 = 50 purchases per second, peak 3x or 150 per second
+  - 5,000,000 or 5 * 10^6 / 10^5 = 50 purchases per second, peak 3x or 150 per second
   - Can be handled by Postgres
 
 ## What I Missed
@@ -122,10 +122,10 @@ Order flow was way too simple (Which makes sense - i don't do this fucking shit)
 Saga Pattern
 
 1. Reserve inventory (set status: RESERVED)
-2. Create pending order
-3. Call Stripe (async)
-4. On success: Commit reservation -> SOLD
-5. On failure: Release reservation -> AVAILABLE
+1. Create pending order
+1. Call Stripe (async)
+1. On success: Commit reservation -> SOLD
+1. On failure: Release reservation -> AVAILABLE
 
 - The idea here is you're doing it asynchronously and/or with webhooks so you have a proper flow of user submits order -> pending payment -> payment_confirmed / payment_failed / payment_cancelled -> inventory released back
 

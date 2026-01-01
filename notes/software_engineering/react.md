@@ -88,5 +88,5 @@ React uses a Virtual DOM to optimize rendering performance.
 The process looks like below:
 
 1. Has State changed? If so, update the vDOM
-2. If vDom has changed, run a differential check to see what's changed
-3. Execute the reconciliation to update the real DOM with the changes it found
+1. If vDom has changed, run a differential check to see what's changed
+1. Execute the reconciliation to update the real DOM with the changes it found

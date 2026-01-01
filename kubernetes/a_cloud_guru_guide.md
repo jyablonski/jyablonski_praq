@@ -1,6 +1,6 @@
 # A Cloud Guru EKS Guide
 
-``` sh
+```sh
 eksctl create cluster --name dev-cluster --version 1.31 --region us-east-1 --nodegroup-name standard-workers --node-type t3.micro --nodes 3 --nodes-min 1 --nodes-max 4 --managed
 
 aws eks update-kubeconfig --name dev-cluster --region us-east-1

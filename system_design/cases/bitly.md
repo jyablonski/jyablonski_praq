@@ -3,7 +3,6 @@
 [Video](https://www.youtube.com/watch?v=iUU4O1sWtJA)
 [Guide](https://www.hellointerview.com/learn/system-design/answer-keys/ticketmaster)
 
-
 Core Requirements
 
 - Users should be able to create Short URLs from a given Long URL
@@ -11,13 +10,11 @@ Core Requirements
   - Optionally support an Expiration Time for the Short URL
 - Users should be able to redirect to the original URL from the short one
 
-
 Non-functional Requirements
 
 - Service should have low latency on redirects (~200 ms)
 - Service should scale to 100 million daily active users and 1 Billion URLs
 - Service should guarantee uniqueness of Short URLs
-
 
 Core Entities
 
@@ -25,10 +22,9 @@ Core Entities
 - Short URL
 - User creating the short URLs
 
-
 API
 
-``` sh
+```sh
 # shorten URL
 POST /urls -> shortURL
 {
@@ -40,7 +36,6 @@ POST /urls -> shortURL
 # redirection
 GET /{shortURL} -> redirectToOriginal
 ```
-
 
 High Level Design (that satisifes the Functional Requirements)
 
@@ -60,9 +55,8 @@ Database should have an index on `shortUrl` if it's not already the Primary Key 
 Can handle the long -> short URL in a couple of ways:
 
 1. Can generate a random x digit number, base64 encode it, and get some random short-character string and store it in the database so it deterministically always points back to that long url.
-2. Can has the long url, base64 encode it, and grab the first 6 characters of it.
+1. Can has the long url, base64 encode it, and grab the first 6 characters of it.
    1. Both of these can run into collisions. This requires you to check the database if the random value already exists for a short url yet before you store it in the database, and if it does then you try again.
-
 
 Deep Dives (to handle edge cases, critical performance implications, improvements to the system that can be made)
 

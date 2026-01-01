@@ -3,8 +3,8 @@
 ## Lambda
 
 The Lambda architecture involves 3 components:
-_ Batch Layer which precomputes all historical data.
-_ Streaming Layer which computes all data since the last batch update \* Serving Layer where the two compute layers above are merged to display aggregated data.
+\_ Batch Layer which precomputes all historical data.
+\_ Streaming Layer which computes all data since the last batch update * Serving Layer where the two compute layers above are merged to display aggregated data.
 
 Any issues or errors in the Streaming Layer can get fixed when that data is ran through the batch layer the following run cycle.
 
@@ -16,9 +16,9 @@ The Batch + Streaming layer means 2 different codebases have to be maintained.
 
 ## Kappa
 
-Kappa Architecture is fully event based and involves fully fledged event sourcing. There is no batch layer. It handles all real-time transactional and analytical workloads. You perform everything with 1 codebase.  
- _ You only do reprocessing when your processing code changes to recompute the results.
-_ Single source of truth.
+Kappa Architecture is fully event based and involves fully fledged event sourcing. There is no batch layer. It handles all real-time transactional and analytical workloads. You perform everything with 1 codebase.\
+\_ You only do reprocessing when your processing code changes to recompute the results.
+\_ Single source of truth.
 
 Things can get very complex when there are issues or hotfixes that need to be applied and you're forced to replay a large chunk of streaming events. This is a lot more engineering and developer intensive work than the Lambda architecture.
 

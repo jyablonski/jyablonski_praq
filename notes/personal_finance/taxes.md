@@ -39,17 +39,18 @@ This Form is for HSA Contributions, which are tax-deductible. This will also be 
    - **Step 1**: You contribute to a **Traditional IRA**. There's **no income limit** for contributing to a Traditional IRA, so even high earners (over the Roth IRA limits) can make this contribution.
    - You can contribute up to the **annual limit** (e.g., **$6,500** for those under 50, **$7,500** for 50+ in 2025).
 
-2. **Declare the Contribution as Non-Deductible**
+1. **Declare the Contribution as Non-Deductible**
 
    - **Step 2**: Since you're making a **non-deductible contribution** (because you're above the income limits for a deductible IRA), you **do not** deduct the contribution from your taxable income.
    - You will still make the contribution to the Traditional IRA, but because it's non-deductible, you've already paid tax on it.
 
-3. **Convert the Funds to a Roth IRA**
+1. **Convert the Funds to a Roth IRA**
 
    - **Step 3**: You **convert the funds** from the Traditional IRA to a **Roth IRA**, usually soon after the contribution. This avoids any significant earnings buildup, which could trigger additional taxes when converted.
    - The conversion is typically **tax-free** since the contribution was non-deductible and already taxed, so there shouldn't be any additional taxes on the amount you convert (unless there are earnings between the time of contribution and conversion).
 
-4. **File Form 8606**
+1. **File Form 8606**
+
    - **Step 4**: You must **file IRS Form 8606** with your tax return to:
      - Report the **non-deductible contribution** to the Traditional IRA (so it's not counted as a deduction).
      - Report the **conversion** to the Roth IRA to ensure you're not taxed twice on the same funds.

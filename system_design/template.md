@@ -7,15 +7,11 @@
 - Users should be able to b
 - Users should be able to c
 
-
 ## Non-functional Requirements
-
 
 ## Out of Scope
 
-
 ## Core Entities
-
 
 ## API
 
@@ -24,12 +20,8 @@
 
 ## High Level Design (to satisfy functional requirements)
 
-
-
 ## Database DDL
 
-
 ## Deep Dives
-
 
 ## Napkin Math

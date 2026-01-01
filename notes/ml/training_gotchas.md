@@ -4,14 +4,14 @@
 
 Moving from a Jupyter Notebook to a Production System requires a shift in mindset. We are not just training a model; we are building a software artifact that must function reliably in a live environment.
 
-### 1\. The "Golden Rule": Prevent Training-Serving Skew
+### 1. The "Golden Rule": Prevent Training-Serving Skew
 
 The Problem: If you manually scale data in your training script (e.g., `(x - mean) / std`), you must perfectly replicate that math in your production API. If the API uses a _new_ scaler or forgets to scale, the model receives "alien" numbers and fails.
 
 The Solution: The "Model" is not just the algorithm (Random Forest). The "Model" is the entire transformation pipeline:
-$$Model = \text{Scalers} + \text{Encoders} + \text{Algorithm}$$
+$$Model = \\text{Scalers} + \\text{Encoders} + \\text{Algorithm}$$
 
-### 2\. Production Architecture
+### 2. Production Architecture
 
 In a live recommendation system, the Frontend cannot send everything (it doesn't know the user's subscription tier or account age).
 
@@ -24,13 +24,13 @@ You can also just pre-compute recommendations offline and store them to a databa
 - In this case, the frontend would still query an API to get the recommendations, but the API would just read from the database instead of loading the model and generating the predictions in real-time.
 - Both approaches are valid, depending on the use case and latency requirements.
 
----
+______________________________________________________________________
 
 ## Part 2: Data Preprocessing Standards
 
 We never train on raw data. We must convert all inputs into a format the math can understand.
 
-### 1\. Numerical Data (Scaling)
+### 1. Numerical Data (Scaling)
 
 - Why: To prevent large numbers (Income: 1,000,000) from overpowering small numbers (Age: 30).
   - Age gap of 25 to 50 is significant, whereas income gap of $50,000 to $50,025 is nothing.
@@ -39,14 +39,14 @@ We never train on raw data. We must convert all inputs into a format the math ca
 - Required for: Neural Networks, KNN, Linear/Logistic Regression.
 - Good practice for: Tree-based models (allows for easy model swapping later).
 
-### 2\. Categorical Data (Encoding)
+### 2. Categorical Data (Encoding)
 
 - Why: Models cannot multiply strings like "Premium".
 - Tool: `OneHotEncoder`.
 - Effect: Converts "Premium" into `[0, 1, 0]`.
 - Config: Always use `handle_unknown='ignore'` so the pipeline doesn't crash if a new category appears in production.
 
-### 3\. Text Data (Varchar)
+### 3. Text Data (Varchar)
 
 - Rule: Never use raw text strings.
 - Strategy:
@@ -54,7 +54,7 @@ We never train on raw data. We must convert all inputs into a format the math ca
   - Advanced: Use Embeddings (Vectors) to represent semantic meaning in N-dimensional space.
   - These have to be computed in advance before training the model, or before using the model to generate predictions.
 
----
+______________________________________________________________________
 
 ## Part 3: The Code Implementation (Best Practices)
 
@@ -169,7 +169,7 @@ user_data = get_data_from_feature_store(user_id=42)
 recs = model.predict(client_data=client_data, user_data=user_data)
 ```
 
----
+______________________________________________________________________
 
 ## Part 4: Feature Importance & Interpretation
 
@@ -179,12 +179,12 @@ recs = model.predict(client_data=client_data, user_data=user_data)
 
 ### Troubleshooting Common Errors
 
-1.  URI Error (`file://...`):
+1. URI Error (`file://...`):
 
-    - _Cause:_ MLflow trying to read a URI as a local file path during logging.
-    - _Fix:_ Save the Scikit-Learn model to a local folder first (`save_model`), then point to that folder in `artifacts`.
+   - _Cause:_ MLflow trying to read a URI as a local file path during logging.
+   - _Fix:_ Save the Scikit-Learn model to a local folder first (`save_model`), then point to that folder in `artifacts`.
 
-2.  Column Collision (`Avg Duration` exists in input and lookup):
+1. Column Collision (`Avg Duration` exists in input and lookup):
 
-    - _Cause:_ Pandas `merge` renames duplicate columns to `col_x` and `col_y`.
-    - _Fix:_ Ensure the input request only contains session data, and the lookup only provides user data. Do not pass the same field in both.
+   - _Cause:_ Pandas `merge` renames duplicate columns to `col_x` and `col_y`.
+   - _Fix:_ Ensure the input request only contains session data, and the lookup only provides user data. Do not pass the same field in both.

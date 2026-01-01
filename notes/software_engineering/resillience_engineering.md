@@ -125,8 +125,8 @@ This is typically only done by sophisticated tech teams with large applications 
 The order probably goes something like:
 
 1. Startup - deploy fast, handle user-errors fast
-2. Mid-level company - implement staging environments and try to catch most issues there
-3. Large scale company - perform chaos engineering on production-like staging instances to try and catch bugs or find bottlenecks before you hit a production incident.
+1. Mid-level company - implement staging environments and try to catch most issues there
+1. Large scale company - perform chaos engineering on production-like staging instances to try and catch bugs or find bottlenecks before you hit a production incident.
 
 ### Graceful Degradation
 

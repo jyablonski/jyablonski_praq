@@ -32,22 +32,35 @@
 - Assume all user requests use JWT for Auth and their current location
 
 - GET /restaurants/?lat={lat}&long={long}&distance={distance}&category={category}
+
   - Get a list of restaurants within x distance of the user, can optionally specify food category
+
 - GET /restaurants/:restaurant_id/menu
+
   - To see menu
+
 - GET /restaurants/:restaurant_id
+
   - To get location, name, category, rating, estimated dellivery time etc
   - Returns lat long
+
 - POST /orders {restaurant_id, location_id, user_location, [] order_items}
+
   - Place an order at a restaurant at a specific location, with the order information
   - Async wait for order confirmed from the 3rd party ?
+
 - POST /orders/:order_id {status: accepted}
+
   - For a Driver to accept an Order
+
 - POST /driver_location {lat, long}
+
   - Update Driver Location
   - Runs automatically every 30 seconds while working
   - Not using /drivers/:driver_id/location because a driver will only ever update their own location using the JWT token to automatically identify them
+
 - GET /drivers/?lat={lat}&long={long}&distance={distance}
+
   - Get a list of all drivers within a specific lat long location
 
 ## High Level Design (to satisfy functional requirements)

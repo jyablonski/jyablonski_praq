@@ -28,7 +28,7 @@ Buying a home involves several costs beyond just the purchase price. Here’s a 
 - HOA Fees: If your home is in a homeowners association ($100 – $500 per month).
 - Maintenance & Repairs: Budget 1-3% of home value per year.
 
----
+______________________________________________________________________
 
 ### First-Time Home Buyer Benefits
 
@@ -55,21 +55,21 @@ Many states and local governments offer grants or low-interest loans to cover do
 
 ### 1. Upfront Costs
 
-| Expense                            | Estimated Amount              |
+| Expense | Estimated Amount |
 | ---------------------------------- | ----------------------------- |
-| Home Price                         | $1,000,000                    |
-| Down Payment (20%)                 | $200,000                      |
-| Loan Amount (80%)                  | $800,000                      |
-| Closing Costs (2-5%)               | $20,000 - $50,000             |
-| Home Inspection                    | $500                          |
-| Appraisal Fee                      | $600                          |
-| Title Insurance & Search           | $1,500                        |
+| Home Price | $1,000,000 |
+| Down Payment (20%) | $200,000 |
+| Loan Amount (80%) | $800,000 |
+| Closing Costs (2-5%) | $20,000 - $50,000 |
+| Home Inspection | $500 |
+| Appraisal Fee | $600 |
+| Title Insurance & Search | $1,500 |
 | Prepaid Property Taxes & Insurance | $10,000+ (Varies by location) |
-| Total Upfront Costs                | ~$230,000 – $260,000          |
+| Total Upfront Costs | ~$230,000 – $260,000 |
 
 👉 You’ll need around $230K – $260K upfront to purchase the home.
 
----
+______________________________________________________________________
 
 ### 2. Monthly Mortgage Payment
 
@@ -83,23 +83,23 @@ Assuming:
 
 #### Estimated Monthly Costs
 
-| Expense                                 | Estimated Amount |
+| Expense | Estimated Amount |
 | --------------------------------------- | ---------------- |
-| Mortgage Payment (Principal & Interest) | ~$5,320          |
-| Property Taxes (1.25%)                  | ~$1,042          |
-| Homeowners Insurance                    | ~$167            |
-| Total Monthly Payment                   | ~$6,529          |
+| Mortgage Payment (Principal & Interest) | ~$5,320 |
+| Property Taxes (1.25%) | ~$1,042 |
+| Homeowners Insurance | ~$167 |
+| Total Monthly Payment | ~$6,529 |
 
 🔹 If you have HOA fees, add those (typically $100 – $500/month).
 
----
+______________________________________________________________________
 
 ### 3. Additional Costs to Consider
 
 - Maintenance & Repairs: Budget 1-3% of home value per year (~$10,000 – $30,000 annually).
 - Utilities (Electric, Gas, Water, Internet, etc.): Likely $300 – $600 per month.
 
----
+______________________________________________________________________
 
 ### Summary
 
@@ -112,25 +112,25 @@ Does this example align with what you were thinking, or do you want to tweak any
 
 Example costs and monthly expenses for buying a $750,000 condo with a 20% down payment.
 
----
+______________________________________________________________________
 
 ### 1. Upfront Costs
 
-| Expense                            | Estimated Amount              |
+| Expense | Estimated Amount |
 | ---------------------------------- | ----------------------------- |
-| Home Price                         | $750,000                      |
-| Down Payment (20%)                 | $150,000                      |
-| Loan Amount (80%)                  | $600,000                      |
-| Closing Costs (2-5%)               | $15,000 - $37,500             |
-| Home Inspection                    | $500                          |
-| Appraisal Fee                      | $600                          |
-| Title Insurance & Search           | $1,500                        |
+| Home Price | $750,000 |
+| Down Payment (20%) | $150,000 |
+| Loan Amount (80%) | $600,000 |
+| Closing Costs (2-5%) | $15,000 - $37,500 |
+| Home Inspection | $500 |
+| Appraisal Fee | $600 |
+| Title Insurance & Search | $1,500 |
 | Prepaid Property Taxes & Insurance | ~$7,500+ (Varies by location) |
-| Total Upfront Costs                | $175,000 – $200,000           |
+| Total Upfront Costs | $175,000 – $200,000 |
 
 - You’ll need around $175K – $200K upfront to purchase the condo.
 
----
+______________________________________________________________________
 
 ### 2. Monthly Mortgage Payment
 
@@ -145,22 +145,22 @@ Assuming:
 
 #### Estimated Monthly Costs
 
-| Expense                                 | Estimated Amount |
+| Expense | Estimated Amount |
 | --------------------------------------- | ---------------- |
-| Mortgage Payment (Principal & Interest) | ~$3,990          |
-| Property Taxes (1.25%)                  | ~$781            |
-| Homeowners Insurance                    | ~$125            |
-| HOA Fees                                | ~$400            |
-| Total Monthly Payment                   | ~$5,296          |
+| Mortgage Payment (Principal & Interest) | ~$3,990 |
+| Property Taxes (1.25%) | ~$781 |
+| Homeowners Insurance | ~$125 |
+| HOA Fees | ~$400 |
+| Total Monthly Payment | ~$5,296 |
 
----
+______________________________________________________________________
 
 ### 3. Additional Costs to Conwwwsider
 
 - Maintenance & Repairs: Less than a house, but budget ~$5,000 – $15,000 annually.
 - Utilities (Electric, Gas, Water, Internet, etc.): Likely $200 – $500 per month.
 
----
+______________________________________________________________________
 
 ### Summary
 
@@ -183,8 +183,8 @@ Low rates are around 3-4%, high rates are around 7-8%
 
 | Interest Rate | Monthly Payment (P&I) | Total Interest Paid Over 30 Years |
 | ------------- | --------------------- | --------------------------------- |
-| 3.5%          | ~$2,245               | ~$308,000                         |
-| 7.0%          | ~$3,326               | ~$697,000                         |
+| 3.5% | ~$2,245 | ~$308,000 |
+| 7.0% | ~$3,326 | ~$697,000 |
 
 At 7%, you pay about $389,000 more in interest over 30 years—more than double the interest cost of a 3.5% loan
 

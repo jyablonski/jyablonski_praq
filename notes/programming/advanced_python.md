@@ -247,8 +247,8 @@ print(p[1])  # Output: 4
 The standard flow for using the decorator looks like below:
 
 1. Set up before yielding anything
-2. Yield a resource of some kind inside a `try` block in the function, so it can be used in a `with` block outside of the function
-3. Cleanup the yield in a finally block to ensure cleanup happens no matter what (even if you run into an exception)
+1. Yield a resource of some kind inside a `try` block in the function, so it can be used in a `with` block outside of the function
+1. Cleanup the yield in a finally block to ensure cleanup happens no matter what (even if you run into an exception)
 
 ```python
 from contextlib import contextmanager

@@ -137,15 +137,15 @@ Power trade-off:
 
 ### Key Comparisons
 
-| Feature           | Turbocharger                       | Supercharger                    |
+| Feature | Turbocharger | Supercharger |
 | ----------------- | ---------------------------------- | ------------------------------- |
-| Power source      | Exhaust gases                      | Engine crankshaft (belt-driven) |
-| Throttle response | Delayed (turbo lag)                | Instant                         |
-| Efficiency        | More efficient (uses waste energy) | Less efficient (parasitic drag) |
-| Complexity        | More complex                       | Simpler                         |
-| Heat generation   | Very high                          | Moderate                        |
-| Power delivery    | Can be abrupt                      | Linear and predictable          |
-| Maintenance       | Higher                             | Lower                           |
+| Power source | Exhaust gases | Engine crankshaft (belt-driven) |
+| Throttle response | Delayed (turbo lag) | Instant |
+| Efficiency | More efficient (uses waste energy) | Less efficient (parasitic drag) |
+| Complexity | More complex | Simpler |
+| Heat generation | Very high | Moderate |
+| Power delivery | Can be abrupt | Linear and predictable |
+| Maintenance | Higher | Lower |
 
 ### Why Forced Induction Matters
 

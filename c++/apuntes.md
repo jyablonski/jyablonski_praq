@@ -1,6 +1,6 @@
 # C++
 
-``` cpp
+```cpp
 g++ -o test test.cpp
 
 ./test

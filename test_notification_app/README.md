@@ -2,8 +2,7 @@
 
 Built in both Python & Go to compare each
 
-
-``` sh
+```sh
 go build -o jyablonski_tray_app
 sudo mv jyablonski_tray_app /usr/local/bin/
 

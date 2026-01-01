@@ -74,11 +74,11 @@ Most legal cases involve months or even years of preparation:
 ## The Trial Process
 
 1. Opening statements: Each side outlines what they'll prove
-2. Prosecution/plaintiff presents their case: Evidence and witnesses
-3. Defense presents their case: Counter-evidence and witnesses
-4. Closing arguments: Final persuasive speeches
-5. Jury deliberation or judge's decision
-6. Verdict
+1. Prosecution/plaintiff presents their case: Evidence and witnesses
+1. Defense presents their case: Counter-evidence and witnesses
+1. Closing arguments: Final persuasive speeches
+1. Jury deliberation or judge's decision
+1. Verdict
 
 ## Why Most Cases Don't Go to Trial
 

@@ -11,7 +11,7 @@
 
 - Search and initial host availability should be eventually consistent
 - Bookings should be strongly consistent
-- Search should be fast <500 ms
+- Search should be fast \<500 ms
 - Chats should be low latency
 
 ## Out of Scope
@@ -61,15 +61,22 @@ Assume all signed-in users use JWT for authentication to identify each request
 ## High Level Design (to satisfy functional requirements)
 
 - CDN to cache static content at the edge
+
 - API Gateway for load balancing, auth, rate limiting etc
+
 - Search Service for managing all search requests for listings
+
   - Handles GET /listings with geospatial + filter queries
   - Queries Postgres (PostGIS) for location-based search
   - Checks Redis cache for popular searches (Manhattan, SF)
   - Returns paginated results with availability hints
+
 - Listing Service manages creating or updating existing listings
+
 - Chat Service to manage chats between hosts and users
+
   - Utilizes Websocket for fast response and low latency
+
 - Booking Service to manage booking workflow
 
   - User searches -> Search Service queries Postgres + Redis cache
@@ -80,7 +87,9 @@ Assume all signed-in users use JWT for authentication to identify each request
   - Create conversation for chat
 
 - Postgres for primary backend database
+
   - PostGIS extension setup to enable better search capabilities and geospatial queries
+
 - Redis for caching recent searches or popular content
 
 ## Database DDL
@@ -122,7 +131,7 @@ Assume all signed-in users use JWT for authentication to identify each request
 
 - Assume 10 M DAU
 - Assume 25 read events per day, or 250 M read events per day
-  - 250,000,000 = 25 \_ 10^7 / 10^5 = 100 \* 25 or 2500 read events per second
+  - 250,000,000 = 25 _ 10^7 / 10^5 = 100 * 25 or 2500 read events per second
 - Assume 2 M bookings per day,
   - 2,000,000 or 10^6 / 10^5 = 100 bookings per second.
 - All fine for Postgres

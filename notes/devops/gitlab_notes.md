@@ -5,11 +5,11 @@
 
 CI CD File must be called `.gitlab-ci.yml` in the project root.
 
-Pipeline is set of jobs organized into stages that either pass or fail in response to events (merge requests etc). \* Directions are stored in the yml file.
+Pipeline is set of jobs organized into stages that either pass or fail in response to events (merge requests etc). * Directions are stored in the yml file.
 
 GitLab Pipelines are ran on `Runners`, which are the compute resources for your job.
-_ You can either configure specific runners like your own, with your personal PC, EC2, or some other registry.
-_ Or use shared GitLab-provided ones. \* These runners are ephemeral containers and run their jobs and then immediately gets destroyed.
+\_ You can either configure specific runners like your own, with your personal PC, EC2, or some other registry.
+\_ Or use shared GitLab-provided ones. * These runners are ephemeral containers and run their jobs and then immediately gets destroyed.
 
 Artifacts are things you want to save in these ephemeral runners.
 

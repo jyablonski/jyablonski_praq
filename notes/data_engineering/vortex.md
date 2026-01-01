@@ -21,9 +21,9 @@ Traditionally, each query engine like DuckDB, Polars, Spark etc implemented thei
 Pushdown
 
 1. Filter Pushdown (prune rows)
-2. Projection Pushdown (prune columns)
-3. Expression Pushdown (Functions on columns, e.g. `age + 5`)
-4. Selection Pushdown (Functions on columns w/ a row mask, e.g. `age + 5` only for rows where `state = 'CA'`)
+1. Projection Pushdown (prune columns)
+1. Expression Pushdown (Functions on columns, e.g. `age + 5`)
+1. Selection Pushdown (Functions on columns w/ a row mask, e.g. `age + 5` only for rows where `state = 'CA'`)
 
 As well as GPU SIMT & CPU SIMD
 
@@ -130,15 +130,15 @@ WHERE
 Step-by-step execution:
 
 1. Check file metadata - See which row groups might have age > 50
-2. Row group pruning - Zone maps show Row Group 1 has max age = 35, skip it!
-3. Read relevant row groups - Load Row Groups 2 and 3
-4. Page-level pruning - Within those row groups, check page-level zone maps for age column
-5. Decompress pages - Only decompress pages that might contain age > 50
-6. Dictionary lookup - For state column, check if 'CA' is even in the dictionary
-7. Scan and filter - Apply the actual predicates to the decompressed data
-8. Project columns - Only read name and age columns, skip all others
+1. Row group pruning - Zone maps show Row Group 1 has max age = 35, skip it!
+1. Read relevant row groups - Load Row Groups 2 and 3
+1. Page-level pruning - Within those row groups, check page-level zone maps for age column
+1. Decompress pages - Only decompress pages that might contain age > 50
+1. Dictionary lookup - For state column, check if 'CA' is even in the dictionary
+1. Scan and filter - Apply the actual predicates to the decompressed data
+1. Project columns - Only read name and age columns, skip all others
 
----
+______________________________________________________________________
 
 users.parquet (1GB file, 10M rows)
 

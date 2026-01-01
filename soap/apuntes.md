@@ -16,6 +16,7 @@ SOAP APIs also provide these other advantages when compared to REST APIs:
 - SOAP has built-in error handling features, which makes it easy to understand what happened when a request fails.
 
 SOAP API disadvantages
+
 - While SOAP can be extremely useful in certain situations, there are also times where REST may be the better option. Some drawbacks include:
 - SOAP does not support caching API calls.
 - SOAP is much more complicated than REST, which can have performance implications.
@@ -26,8 +27,7 @@ SOAP API disadvantages
 
 XML is used in SOAP (Simple Object Access Protocol) APIs, as opposed to REST which uses JSON.
 
-
-``` xml
+```xml
 <?xml version=\"1.0\" encoding=\"utf-8\"?>
             <soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">
                 <soap:Body>
@@ -45,7 +45,7 @@ Parsing XML-based results or content involves extracting meaningful data from XM
 Python offers several libraries for XML parsing. Two commonly used ones are:
 
 - **ElementTree**: This is part of Python's standard library (`xml.etree.ElementTree`). It provides a simple and efficient way to parse and manipulate XML data.
-  
+
 - **lxml**: This is a third-party library (`lxml`) that builds on top of ElementTree but offers more features and better performance, especially for large XML files.
 
 ### 2. **Load XML Data**
@@ -53,6 +53,7 @@ Python offers several libraries for XML parsing. Two commonly used ones are:
 First, you need to load your XML data into memory. This could be from a file, a web API response, or any other source that provides XML content.
 
 #### Example:
+
 ```python
 import xml.etree.ElementTree as ET
 
@@ -79,6 +80,7 @@ root = ET.fromstring(xml_content)
 Once you have the XML content loaded into an XML tree structure, you can navigate through it to extract the data you need.
 
 #### Example:
+
 ```python
 # Iterate over 'person' elements
 for person in root.findall('person'):
@@ -95,6 +97,7 @@ for person in root.findall('person'):
 If your XML contains attributes, you can access them using `.attrib`.
 
 #### Example:
+
 ```python
 # Example XML with attributes
 xml_with_attributes = '''
@@ -126,6 +129,7 @@ for person in root.findall('person'):
 When parsing XML, handle potential errors such as malformed XML or missing elements gracefully.
 
 #### Example (Error Handling):
+
 ```python
 try:
     # Attempt to parse XML
@@ -139,6 +143,7 @@ except ET.ParseError as e:
 For more complex XML structures or specific data extraction needs, consider using XPath expressions with `lxml` or `ElementTree`'s `findall()` method with XPath queries.
 
 #### Example (XPath with lxml):
+
 ```python
 from lxml import etree
 

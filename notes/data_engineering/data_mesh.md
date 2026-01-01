@@ -25,21 +25,21 @@ Data Mesh doesn't make sense when:
 
 ## Core Principles of Data Mesh
 
-| Principle                    | Meaning                                                                                                               |
+| Principle | Meaning |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| 1. Domain-Oriented Ownership | Data is owned and managed by the teams who know it best (e.g., Sales owns sales data).                                |
-| 2. Data as a Product         | Teams treat their datasets like products: discoverable, trustworthy, well-documented, with clear SLAs.                |
-| 3. Self-Serve Data Platform  | A shared platform provides tools, infrastructure, and standards to enable domains to own and serve data autonomously. |
-| 4. Federated Governance      | Governance is shared: central standards (e.g. PII policies), but implementation is distributed across domains.        |
+| 1. Domain-Oriented Ownership | Data is owned and managed by the teams who know it best (e.g., Sales owns sales data). |
+| 2. Data as a Product | Teams treat their datasets like products: discoverable, trustworthy, well-documented, with clear SLAs. |
+| 3. Self-Serve Data Platform | A shared platform provides tools, infrastructure, and standards to enable domains to own and serve data autonomously. |
+| 4. Federated Governance | Governance is shared: central standards (e.g. PII policies), but implementation is distributed across domains. |
 
 ## What It Replaces (and Why)
 
-| Traditional Data Lake / Warehouse Model | Data Mesh Alternative                                                |
+| Traditional Data Lake / Warehouse Model | Data Mesh Alternative |
 | --------------------------------------- | -------------------------------------------------------------------- |
-| Centralized data team owns everything   | Each domain owns its own data products                               |
-| Monolithic ETL pipelines                | Decentralized pipelines built and owned by domains                   |
-| Bottlenecks and lack of context         | Domain teams bring domain knowledge                                  |
-| One-size-fits-all schema                | Tailored schemas per domain, but with standards for interoperability |
+| Centralized data team owns everything | Each domain owns its own data products |
+| Monolithic ETL pipelines | Decentralized pipelines built and owned by domains |
+| Bottlenecks and lack of context | Domain teams bring domain knowledge |
+| One-size-fits-all schema | Tailored schemas per domain, but with standards for interoperability |
 
 ## Example
 
@@ -73,10 +73,10 @@ In a Data Mesh world:
 
 ## Tools That Support Data Mesh
 
-| Layer                       | Examples                                                                   |
+| Layer | Examples |
 | --------------------------- | -------------------------------------------------------------------------- |
-| Modeling / Orchestration    | dbt, Dagster, Airflow                                                      |
-| Data Catalog / Discovery    | Atlan, DataHub, Collibra                                                   |
-| Access Control / Governance | Immuta, Okera, Monte Carlo                                                 |
-| Infrastructure / Platform   | Snowflake, Kafka, Redpanda, Lakehouse tools (Iceberg, Delta, Hudi)         |
-| Delivery / Serving          | APIs, data contracts, warehouse tables, semantic layers (Cube, MetricFlow) |
+| Modeling / Orchestration | dbt, Dagster, Airflow |
+| Data Catalog / Discovery | Atlan, DataHub, Collibra |
+| Access Control / Governance | Immuta, Okera, Monte Carlo |
+| Infrastructure / Platform | Snowflake, Kafka, Redpanda, Lakehouse tools (Iceberg, Delta, Hudi) |
+| Delivery / Serving | APIs, data contracts, warehouse tables, semantic layers (Cube, MetricFlow) |

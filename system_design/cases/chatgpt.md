@@ -6,7 +6,6 @@
 - Users should be able to select a series of different models to use for their prompts
 - Users should be able to view past chats
 
-
 ## Non-functional Requirements
 
 - Application should be low latency and provide results within 10 seconds
@@ -25,15 +24,14 @@
 - Chats
 - Models
 
-
 ## API
 
 Use REST to allow users to browse their chat history, use Websocket for live streaming of LLM responses for fast performance and low latency
 
 Chat Management (REST)
 
-- POST /chats { modelId, title? } 
-- GET /chats 
+- POST /chats { modelId, title? }
+- GET /chats
 - GET /chats/:chatId/messages
 - DELETE /chats/:chatId
 
@@ -46,17 +44,16 @@ Live Messaging (WebSocket)
 ## High Level Design (to satisfy functional requirements)
 
 - API Gateway for user authentication, rate limiting, service routing
-    - This is where clients get authenticated and start a websocket connection for their chats
+  - This is where clients get authenticated and start a websocket connection for their chats
 - Message Processing Service which handles chat logic, context assembly, validation
 - Model Router/Gateway to handle routes to appropriate model endpoints
-    - Messages are passed here and then flow through to the right model service
+  - Messages are passed here and then flow through to the right model service
 - Multiple Model Services - one per model type, horizontally scaled
 - Model Serving Infrastructure requires significant GPU compute
 - Redis Database to cache recently chats & messages
 - Postgres Database to track prompts, chats, users, all interaction history etc
 
-
-``` sh
+```sh
 Client (WebSocket) 
   ↕
 API Gateway (WebSocket termination, auth, rate limiting)

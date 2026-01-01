@@ -125,7 +125,7 @@ Can split up environments into different structures like so, seems like the easi
 ## Open Questions
 
 1. Branching Strategy ?
-2. How do you handle code promotion? you shouldn't be deploying to all 3 dev / stg / prod at the same time
-3. Use a Service Provider or not ?
-4. Keep Terraform Code with Application Code ?
-5. Separate Repo for Modules ?
+1. How do you handle code promotion? you shouldn't be deploying to all 3 dev / stg / prod at the same time
+1. Use a Service Provider or not ?
+1. Keep Terraform Code with Application Code ?
+1. Separate Repo for Modules ?

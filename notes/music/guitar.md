@@ -115,6 +115,7 @@ An octave is a musical interval that spans eight notes in a diatonic scale, wher
 - An octave is the interval between one note and another note that is double or half its frequency. When you go up or down one octave, the note name stays the same, but it sounds higher or lower in pitch.
 
 - Open Low E String (E2): The open sixth string.
+
 - 12th Fret of the Low E String (E3): Playing the 12th fret on the low E string produces the E note one octave higher than the open string.
 
 Power Chords are 2-note chords
@@ -126,11 +127,11 @@ Power Chords are 2-note chords
 Standard Guitar Tuning is EADGBe
 
 1. **6th String (Low E)**: The thickest string, produces an E note when played open.
-2. **5th String (A)**: The second thickest string, produces an A note when played open.
-3. **4th String (D)**: Produces a D note when played open.
-4. **3rd String (G)**: Produces a G note when played open.
-5. **2nd String (B)**: Produces a B note when played open.
-6. **1st String (High e)**: The thinnest string, produces a high E note when played open.
+1. **5th String (A)**: The second thickest string, produces an A note when played open.
+1. **4th String (D)**: Produces a D note when played open.
+1. **3rd String (G)**: Produces a G note when played open.
+1. **2nd String (B)**: Produces a B note when played open.
+1. **1st String (High e)**: The thinnest string, produces a high E note when played open.
 
 - the `e` produces the note E, specifically the E note that is two octaves higher than the low E note produced by the sixth (thickest) string.
 
@@ -156,11 +157,11 @@ B Flat (Bb) means the note is played one half step lower than B. This is an enha
 ### Steps to Tune to Drop B:
 
 1. **Tune the 6th String**: Lower the E string down to B. This is achieved by tuning down five half steps (or a perfect fourth interval).
-2. **Tune the 5th String**: Lower the A string down to F#.
-3. **Tune the 4th String**: Lower the D string down to B.
-4. **Tune the 3rd String**: Lower the G string down to E.
-5. **Tune the 2nd String**: Lower the B string down to G#.
-6. **Tune the 1st String**: Lower the high E string down to C#.
+1. **Tune the 5th String**: Lower the A string down to F#.
+1. **Tune the 4th String**: Lower the D string down to B.
+1. **Tune the 3rd String**: Lower the G string down to E.
+1. **Tune the 2nd String**: Lower the B string down to G#.
+1. **Tune the 1st String**: Lower the high E string down to C#.
 
 - The lower tuning decreases string tension, which may require heavier gauge strings to maintain proper tension and playability.
 - Lower tunings can affect the neck tension, so a truss rod adjustment may be necessary to maintain proper neck relief.
@@ -171,17 +172,17 @@ B Flat (Bb) means the note is played one half step lower than B. This is an enha
 In Western music, there are 12 unique notes within an octave. Each of them are a half step (semitone) apart. These notes are:
 
 1. A
-2. A# (A sharp) / Bb (B flat)
-3. B
-4. C
-5. C# (C sharp) / Db (D flat)
-6. D
-7. D# (D sharp) / Eb (E flat)
-8. E
-9. F
-10. F# (F sharp) / Gb (G flat)
-11. G
-12. G# (G sharp) / Ab (A flat)
+1. A# (A sharp) / Bb (B flat)
+1. B
+1. C
+1. C# (C sharp) / Db (D flat)
+1. D
+1. D# (D sharp) / Eb (E flat)
+1. E
+1. F
+1. F# (F sharp) / Gb (G flat)
+1. G
+1. G# (G sharp) / Ab (A flat)
 
 - No B# or E#
 - No F flat or C flat
@@ -287,43 +288,43 @@ B |--1--3--5--6----------------------------------------------| (6th string: C, D
 
 1. Buy appropriate strings
    1. .10 - .46 strings that ship default with most guitars aren't thick enough to handle lower tuning. These strings get very floppy and it's not ideal to play
-   2. .12 - .60 or .11 - .56 strings are ideal for Drop B. They're heavier strings to account for the lower tuning. But, the rest of your guitar isn't setup out of the box for these heavier strings
-2. File down String Nuts (at the headstock) to accommodate the new strings
+   1. .12 - .60 or .11 - .56 strings are ideal for Drop B. They're heavier strings to account for the lower tuning. But, the rest of your guitar isn't setup out of the box for these heavier strings
+1. File down String Nuts (at the headstock) to accommodate the new strings
    1. These strings will probably not fit into the small slots available like with the .10 - .46 strings
-   2. Without doing this, as you play the strings will constantly slip out of place there and your guitar will go out of tune much faster
-   3. Use a nut file to widen the slots, but don't over-file.
-3. Tune Truss Rod
+   1. Without doing this, as you play the strings will constantly slip out of place there and your guitar will go out of tune much faster
+   1. Use a nut file to widen the slots, but don't over-file.
+1. Tune Truss Rod
    1. Heavier strings put more tension on the neck, which could cause it to bow.
       1. The truss rod helps balance that tension to maintain proper neck relief
-      2. Neck relief refers to the slight forward bow or concave curve in the guitar neck that allows for smooth playing without buzzing or dead spots.
-      3. When you switch to heavier strings, the increased tension may cause the neck to bow too much, making the action (string height) higher than desired.
-   2. Hold the low B string (or any string) down at the 1st fret and at the fret where the neck meets the body (usually the 15th-17th fret).
-   3. Look at the gap between the string and the frets around the 7th-9th frets.
+      1. Neck relief refers to the slight forward bow or concave curve in the guitar neck that allows for smooth playing without buzzing or dead spots.
+      1. When you switch to heavier strings, the increased tension may cause the neck to bow too much, making the action (string height) higher than desired.
+   1. Hold the low B string (or any string) down at the 1st fret and at the fret where the neck meets the body (usually the 15th-17th fret).
+   1. Look at the gap between the string and the frets around the 7th-9th frets.
       1. If there is too much gap (more than the thickness of a business card), the neck has too much relief (bowed forward).
-      2. If there is no gap, the neck is either too straight or back-bowed.
-   4. Adjust the truss rod in small increments (1/4 turn at a time) and give it time to settle after each adjustment
+      1. If there is no gap, the neck is either too straight or back-bowed.
+   1. Adjust the truss rod in small increments (1/4 turn at a time) and give it time to settle after each adjustment
       1. You will need a truss rod wrench or Allen key that fits your guitar.
-      2. Righty-tighty, lefty-loosey: Turning the truss rod clockwise tightens it (reduces neck relief), while turning it counterclockwise loosens it (increases neck relief).
-      3. Since heavier strings cause the neck to bow forward, you will want to loosen the truss rod slightly by turning it counterclockwise.
-      4. Let the neck settle: After each adjustment, give the neck some time to settle (several minutes or even a day). It takes time for the wood to adjust to the new tension.
-      5. After making a small adjustment, retune the guitar to Drop B.
-      6. Repeat the process of checking the neck relief by holding down the string at the 1st and last frets to check the gap.
-   5. Proper adjustment - There should be a slight gap between the string and the 7th-9th frets when fretting the string at the 1st and last frets. The guitar should feel comfortable to play, with no excessive fret buzz or overly high action.
-   6. Improper adjustments can damage the guitar
-4. Tune String Saddle to adjust for inotation
+      1. Righty-tighty, lefty-loosey: Turning the truss rod clockwise tightens it (reduces neck relief), while turning it counterclockwise loosens it (increases neck relief).
+      1. Since heavier strings cause the neck to bow forward, you will want to loosen the truss rod slightly by turning it counterclockwise.
+      1. Let the neck settle: After each adjustment, give the neck some time to settle (several minutes or even a day). It takes time for the wood to adjust to the new tension.
+      1. After making a small adjustment, retune the guitar to Drop B.
+      1. Repeat the process of checking the neck relief by holding down the string at the 1st and last frets to check the gap.
+   1. Proper adjustment - There should be a slight gap between the string and the 7th-9th frets when fretting the string at the 1st and last frets. The guitar should feel comfortable to play, with no excessive fret buzz or overly high action.
+   1. Improper adjustments can damage the guitar
+1. Tune String Saddle to adjust for inotation
    1. After tuning to drop B, the guitar may sound out of tune higher up in the fretboard. This is an intonation issue
-   2. Use a Tuner to compare the harmonic and fretted notes at the 12th fret
-   3. Adjust the saddle position to ensure the fretted note at the 12th fret matches the harmonic \*\*
-   4. Repeat process for each string until the guitar is intonated
-5. Adjust string height
+   1. Use a Tuner to compare the harmonic and fretted notes at the 12th fret
+   1. Adjust the saddle position to ensure the fretted note at the 12th fret matches the harmonic \*\*
+   1. Repeat process for each string until the guitar is intonated
+1. Adjust string height
    1. Can turn the saddle screws to bring it up or down as needed. This will mainly affect playability, not necessarily how it sounds.
-6. Tune to Drop B
+1. Tune to Drop B
 
 # Scales
 
 Practicing scales is one of the best ways to build your ear, finger strength, and understanding of music theory. Here's a breakdown of **common scales** with their **step patterns** using **whole steps (W)** and **half steps (H)**.
 
----
+______________________________________________________________________
 
 ## 🎼 1. **Major Scale (Ionian mode)**
 
@@ -331,7 +332,7 @@ Practicing scales is one of the best ways to build your ear, finger strength, an
 
 - Example: **C Major** → C - D - E - F - G - A - B - C
 
----
+______________________________________________________________________
 
 ## 🎼 2. **Natural Minor Scale (Aeolian mode)**
 
@@ -339,7 +340,7 @@ Practicing scales is one of the best ways to build your ear, finger strength, an
 
 - Example: **A Minor** → A - B - C - D - E - F - G - A
 
----
+______________________________________________________________________
 
 ## 🎼 3. **Harmonic Minor Scale**
 
@@ -348,7 +349,7 @@ Practicing scales is one of the best ways to build your ear, finger strength, an
 - Example: **A Harmonic Minor** → A - B - C - D - E - F - G# - A
 - Characteristic: Exotic, classical sound due to the **1.5 step** between F and G#
 
----
+______________________________________________________________________
 
 ## 🎼 4. **Melodic Minor Scale (Ascending)**
 
@@ -357,7 +358,7 @@ Practicing scales is one of the best ways to build your ear, finger strength, an
 - Example: **A Melodic Minor (ascending)** → A - B - C - D - E - F# - G# - A
 - Often played differently descending (like natural minor)
 
----
+______________________________________________________________________
 
 ## 🎼 5. **Pentatonic Scales (5-note scales)**
 
@@ -374,7 +375,7 @@ Practicing scales is one of the best ways to build your ear, finger strength, an
 - Example: **A Minor Pentatonic** → A - C - D - E - G - A
 - Most common in rock, blues, and soloing
 
----
+______________________________________________________________________
 
 ## 🎼 6. **Blues Scale (Minor Pentatonic + flat 5)**
 
@@ -383,21 +384,21 @@ Practicing scales is one of the best ways to build your ear, finger strength, an
 - Example: **A Blues** → A - C - D - D# - E - G - A
 - The added D# (♭5) gives it the “blues” sound
 
----
+______________________________________________________________________
 
 ## 🎼 7. **Modes of the Major Scale**
 
 Each mode is a major scale starting from a different scale degree:
 
-| Mode       | Formula       | Example in C | Flavor           |
+| Mode | Formula | Example in C | Flavor |
 | ---------- | ------------- | ------------ | ---------------- |
-| Ionian     | W W H W W W H | C major      | Happy, bright    |
-| Dorian     | W H W W W H W | D Dorian     | Jazzy minor      |
-| Phrygian   | H W W W H W W | E Phrygian   | Dark, exotic     |
-| Lydian     | W W W H W W H | F Lydian     | Dreamy major     |
-| Mixolydian | W W H W W H W | G Mixolydian | Bluesy major     |
-| Aeolian    | W H W W H W W | A Aeolian    | Natural minor    |
-| Locrian    | H W W H W W W | B Locrian    | Dissonant, tense |
+| Ionian | W W H W W W H | C major | Happy, bright |
+| Dorian | W H W W W H W | D Dorian | Jazzy minor |
+| Phrygian | H W W W H W W | E Phrygian | Dark, exotic |
+| Lydian | W W W H W W H | F Lydian | Dreamy major |
+| Mixolydian | W W H W W H W | G Mixolydian | Bluesy major |
+| Aeolian | W H W W H W W | A Aeolian | Natural minor |
+| Locrian | H W W H W W W | B Locrian | Dissonant, tense |
 
 ## Note Examples
 
@@ -415,33 +416,34 @@ Each mode is a major scale starting from a different scale degree:
   - Perfect fifth because there's 7 semitones difference from G# to D#
 
 - 5th String 5th Fret, 4th String 7th Fret
+
   - B, F#
 
-| 5th String Fret (Root) | 5th String Note | 4th String Fret | 4th String Note | Interval Name     | Semitones |
+| 5th String Fret (Root) | 5th String Note | 4th String Fret | 4th String Note | Interval Name | Semitones |
 | ---------------------- | --------------- | --------------- | --------------- | ----------------- | --------- |
-| 0                      | F#              | 0               | B               | Perfect 4th       | 5         |
-| 0                      | F#              | 1               | C               | Tritone / Aug 4th | 6         |
-| 0                      | F#              | 2               | C#              | Perfect 5th       | 7         |
-| 0                      | F#              | 3               | D               | Minor 6th         | 8         |
-| 0                      | F#              | 4               | D#              | Major 6th         | 9         |
-| 0                      | F#              | 5               | E               | Minor 7th         | 10        |
-| 0                      | F#              | 6               | F               | Major 7th         | 11        |
-| 0                      | F#              | 7               | F#              | Octave            | 12        |
+| 0 | F# | 0 | B | Perfect 4th | 5 |
+| 0 | F# | 1 | C | Tritone / Aug 4th | 6 |
+| 0 | F# | 2 | C# | Perfect 5th | 7 |
+| 0 | F# | 3 | D | Minor 6th | 8 |
+| 0 | F# | 4 | D# | Major 6th | 9 |
+| 0 | F# | 5 | E | Minor 7th | 10 |
+| 0 | F# | 6 | F | Major 7th | 11 |
+| 0 | F# | 7 | F# | Octave | 12 |
 
 B F# B E G# C#
 
 1. A
-2. A# (A sharp) / Bb (B flat)
-3. B
-4. C
-5. C# (C sharp) / Db (D flat)
-6. D
-7. D# (D sharp) / Eb (E flat)
-8. E
-9. F
-10. F# (F sharp) / Gb (G flat)
-11. G
-12. G# (G sharp) / Ab (A flat)
+1. A# (A sharp) / Bb (B flat)
+1. B
+1. C
+1. C# (C sharp) / Db (D flat)
+1. D
+1. D# (D sharp) / Eb (E flat)
+1. E
+1. F
+1. F# (F sharp) / Gb (G flat)
+1. G
+1. G# (G sharp) / Ab (A flat)
 
 Fuller Octaves
 
@@ -456,21 +458,21 @@ so:
 - it's b5 because it's a perfect fifth? - it's a power chord because we have a root note (B) and it's perfect fifth (f#) which is 5 letters apart, but actually 7 semitones different
 - the 3rd string 7th fret just adds an optional octave of the root, making it sound fuller, but is not required for it to be a power chord.
 
-| Interval         | Semitones |
+| Interval | Semitones |
 | ---------------- | --------- |
-| Unison / root    | 0         |
-| Minor 2nd        | 1         |
-| Major 2nd        | 2         |
-| Minor 3rd        | 3         |
-| Major 3rd        | 4         |
-| Perfect 4th      | 5         |
-| Tritone / Aug4th | 6         |
-| Perfect 5th      | 7         |
-| Minor 6th        | 8         |
-| Major 6th        | 9         |
-| Minor 7th        | 10        |
-| Major 7th        | 11        |
-| Octave           | 12        |
+| Unison / root | 0 |
+| Minor 2nd | 1 |
+| Major 2nd | 2 |
+| Minor 3rd | 3 |
+| Major 3rd | 4 |
+| Perfect 4th | 5 |
+| Tritone / Aug4th | 6 |
+| Perfect 5th | 7 |
+| Minor 6th | 8 |
+| Major 6th | 9 |
+| Minor 7th | 10 |
+| Major 7th | 11 |
+| Octave | 12 |
 
 ### **1. Power Chord (Root + Perfect Fifth)**
 
@@ -514,7 +516,7 @@ B → E
 
 - Suspended / unresolved sound
 
----
+______________________________________________________________________
 
 ### **5. Tritone / Augmented Fourth**
 
@@ -528,7 +530,7 @@ B → F
 
 - Very tense, dissonant
 
----
+______________________________________________________________________
 
 ### **6. Minor / Major Sixth**
 
@@ -546,7 +548,7 @@ Major sixth: B → G#
 
 - Adds color / bluesy or jazzy flavor
 
----
+______________________________________________________________________
 
 ## B Minor Scale High strings
 

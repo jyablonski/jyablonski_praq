@@ -17,9 +17,9 @@ Postgres works fine for full text search when starting out, but eventually gets 
 ## Why use it?
 
 1. Speed — Instead of `LIKE '%keyword%'` which scans every row, you can build a GIN index on `tsvector` columns for fast lookups
-2. Linguistic smarts — Stemming means searching "run" matches "running", "runs", "ran"
-3. Ranking — You can score results by relevance using `ts_rank()`
-4. Phrase and proximity search — Find words near each other, in order, etc.
+1. Linguistic smarts — Stemming means searching "run" matches "running", "runs", "ran"
+1. Ranking — You can score results by relevance using `ts_rank()`
+1. Phrase and proximity search — Find words near each other, in order, etc.
 
 It's ideal for things like article search, product catalogs, or anywhere you need "Google-like" search over text.
 
@@ -36,8 +36,8 @@ WHERE to_tsvector('english', title || ' ' || body) @@ to_tsquery('english', 'mac
 The @@ operator checks whether the lexemes in the tsquery exist in the tsvector. It's doing:
 
 1. Normalize "machine" -> machin (stem)
-2. Normalize "learning" -> learn (stem)
-3. Check: does the tsvector contain both machin AND learn?
+1. Normalize "learning" -> learn (stem)
+1. Check: does the tsvector contain both machin AND learn?
 
 But, this is inefficient. The query computes `to_tsvector()` for every row on every search, no index can help.
 
@@ -47,9 +47,9 @@ To improve performance, we can add an index here. This involves:
 
 1. Creating a new `tsvector` column on the table; 1 column for all of the text fields you want searchable
    - 1 Column here makes queries very simple. If separate columns, your queries start involving a lot of `OR` conditions and ranking becomes harder
-2. Backfill the values for that tsvector column
-3. Create a `GIN` index on that column
-4. Now the tsvector is pre-computed and indexed. Queries hit the GIN index instead of recomputing on every row.
+1. Backfill the values for that tsvector column
+1. Create a `GIN` index on that column
+1. Now the tsvector is pre-computed and indexed. Queries hit the GIN index instead of recomputing on every row.
 
 ```sql
 ALTER TABLE articles ADD COLUMN search_vector tsvector;
@@ -67,9 +67,9 @@ CREATE INDEX idx_articles_search ON articles USING GIN(search_vector);
 In plain english, the process looks like:
 
 1. Normalize words from the text fields you include
-2. ssign weights by field (title=A, summary=B, body=C, can only go A-D)
-3. Store it all in one tsvector column: lexemes + positions + weight tags
-4. GIN index enables fast lookups, weights enable ranking
+1. ssign weights by field (title=A, summary=B, body=C, can only go A-D)
+1. Store it all in one tsvector column: lexemes + positions + weight tags
+1. GIN index enables fast lookups, weights enable ranking
 
 ### GIN Index
 
@@ -97,16 +97,16 @@ This can be solved with a database trigger, or handled on the application side s
 
 ## Operation Summary
 
-| Concept                  | What it does                                               |
+| Concept | What it does |
 | ------------------------ | ---------------------------------------------------------- |
-| `to_tsvector()`          | Converts text -> normalized lexemes with positions         |
-| `to_tsquery()`           | Creates search query with operators (`&`, ` `, `!`, `<->`) |
-| `websearch_to_tsquery()` | User-friendly query parsing (handles quotes, OR, `-`)      |
-| `@@` operator            | Matches tsvector against tsquery                           |
-| `ts_rank()`              | Scores relevance                                           |
-| `ts_headline()`          | Generates snippets with highlighted matches                |
-| `setweight()`            | Assigns importance (A > B > C > D) to different fields     |
-| GIN index                | Makes searches fast on large tables                        |
+| `to_tsvector()` | Converts text -> normalized lexemes with positions |
+| `to_tsquery()` | Creates search query with operators (`&`, ` `, `!`, `<->`) |
+| `websearch_to_tsquery()` | User-friendly query parsing (handles quotes, OR, `-`) |
+| `@@` operator | Matches tsvector against tsquery |
+| `ts_rank()` | Scores relevance |
+| `ts_headline()` | Generates snippets with highlighted matches |
+| `setweight()` | Assigns importance (A > B > C > D) to different fields |
+| GIN index | Makes searches fast on large tables |
 
 ## tsvector Storage Tradeoffs
 
@@ -122,21 +122,21 @@ This metadata enables phrase search (`<->`) and ranking (`ts_rank`), but it take
 
 For a table with 100 articles:
 
-| Column        | Size   |
+| Column | Size |
 | ------------- | ------ |
-| title         | 2.5 KB |
-| body          | 13 KB  |
-| search_vector | 24 KB  |
-| GIN index     | 96 KB  |
+| title | 2.5 KB |
+| body | 13 KB |
+| search_vector | 24 KB |
+| GIN index | 96 KB |
 
 The `search_vector` column is roughly 1.5x the size of the source text, and the GIN index is substantial because it builds an inverted index mapping every lexeme to its matching rows.
 
 You're paying storage cost upfront to avoid computation cost at query time.
 
-| Approach                           | Storage | Query speed            |
+| Approach | Storage | Query speed |
 | ---------------------------------- | ------- | ---------------------- |
-| Stored tsvector + GIN index        | Higher  | Fast (index lookup)    |
-| Compute `to_tsvector()` on the fly | None    | Slow (full table scan) |
+| Stored tsvector + GIN index | Higher | Fast (index lookup) |
+| Compute `to_tsvector()` on the fly | None | Slow (full table scan) |
 
 ### When each makes sense
 
@@ -156,16 +156,16 @@ Compute on the fly when:
 
 ### What's the difference?
 
-|                                | tsvector                          | pgvector                                              |
+| | tsvector | pgvector |
 | ------------------------------ | --------------------------------- | ----------------------------------------------------- |
-| Search type                    | Keyword/lexical                   | Semantic/similarity                                   |
-| Stores                         | Normalized word stems + positions | Float arrays (embeddings)                             |
-| Matches on                     | Exact words present               | Conceptual meaning                                    |
-| "ML" finds "machine learning"? | No                                | Yes                                                   |
-| "happy" finds "joyful"?        | No                                | Yes                                                   |
-| Index type                     | GIN                               | HNSW or IVFFlat                                       |
-| External dependency            | None                              | Embedding model (OpenAI, sentence-transformers, etc.) |
-| Storage per row                | ~1-2x source text                 | Fixed (e.g., 1536 floats for OpenAI = 6KB)            |
+| Search type | Keyword/lexical | Semantic/similarity |
+| Stores | Normalized word stems + positions | Float arrays (embeddings) |
+| Matches on | Exact words present | Conceptual meaning |
+| "ML" finds "machine learning"? | No | Yes |
+| "happy" finds "joyful"? | No | Yes |
+| Index type | GIN | HNSW or IVFFlat |
+| External dependency | None | Embedding model (OpenAI, sentence-transformers, etc.) |
+| Storage per row | ~1-2x source text | Fixed (e.g., 1536 floats for OpenAI = 6KB) |
 
 ### When to use tsvector
 
@@ -188,7 +188,7 @@ Compute on the fly when:
 Many production systems combine them:
 
 1. pgvector for semantic similarity (find conceptually related content)
-2. tsvector for keyword filters (must contain "PostgreSQL")
+1. tsvector for keyword filters (must contain "PostgreSQL")
 
 Example: "Find articles similar to this one, but only if they mention Kubernetes"
 

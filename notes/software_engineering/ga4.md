@@ -16,7 +16,7 @@ The key philosophical shift from Universal Analytics is that everything is an ev
 Basic setup involves:
 
 1. Creating a GA4 Propety in your Google Analytics Account
-2. Add your measurement ID to your website by either:
+1. Add your measurement ID to your website by either:
    - Installing gtag.js snippet in your `<head>` section
    - Using Google Tag Manager (recommended)
 
@@ -73,11 +73,11 @@ GTM uses 3 key concepts:
    - Track product views, add-to-carts, purchases
    - Analyze shopping behavior and cart abandonment
    - Measure Revenue and ROI by traffic source
-2. Lead Generation
+1. Lead Generation
    - Track form submissions and button clicks
    - Measure conversion rates by landing page
    - Setup conversion funnels (visit -> form view -> submission)
-3. Content Sites
+1. Content Sites
    - Measure scroll depth to see if people read full articles
    - Track video engagement
    - Analyze navigation patterns and popular content
@@ -97,10 +97,10 @@ GA4 automatically collects events like page views, scrolls, outbound clicks, sit
 GA4 works by sending HTTP requests as events happen to Google's Servers. This works everywhere JavaScript can run and the tracking is entirely client-side. The actual flow looks like:
 
 1. JavaScript loads on the page (gtag.js or GTM container)
-2. Events occur (page view, click)
-3. Data gets queued in the `dataLayer` array (a JS object)
-4. HTTP requests fire to Google's collection endpoints
-5. Google processes and stores the data
+1. Events occur (page view, click)
+1. Data gets queued in the `dataLayer` array (a JS object)
+1. HTTP requests fire to Google's collection endpoints
+1. Google processes and stores the data
 
 These are typically:
 
@@ -168,7 +168,7 @@ CDNs and caching actually don't affect GA4 tracking at all. The Cached content i
    - Each user gets their own Client ID cookie
    - Each page view still fires a request to Google's servers
 
-2. Example flow with CDN:
+1. Example flow with CDN:
 
 ```
    User -> CDN (cached HTML) -> User's Browser

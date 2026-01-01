@@ -145,7 +145,7 @@ ORDER BY last_query_time DESC
 
 Sure! Here's a cleaned-up writeup summarizing your example, including explanations and best practices:
 
----
+______________________________________________________________________
 
 ## 🧾 Snowflake JSON Handling Example: Parsing JSON Strings, Working with VARIANT, and Flattening Arrays
 
@@ -215,11 +215,12 @@ CREATE OR REPLACE TABLE PRODUCTION.TEST_SCHEMA.TEST_TABLE_V2 (
 );
 ```
 
----
+______________________________________________________________________
 
 Notes & Takeaways:
 
 - Use `PARSE_JSON()` on JSON **strings** to turn them into `VARIANT`, enabling further JSON processing.
+
 - For `VARIANT` columns, you can immediately access nested attributes using:
 
   ```sql
@@ -227,9 +228,10 @@ Notes & Takeaways:
   ```
 
 - Use `LATERAL FLATTEN(...)` to explode JSON arrays (from `VARIANT` or parsed strings).
+
 - If you're flattening an array but want to keep one row per record, **use a separate CTE and `ARRAY_AGG()`**, then join back.
 
----
+______________________________________________________________________
 
 Example Query: Parsing, Flattening, Joining
 
@@ -262,7 +264,7 @@ FROM data
 INNER JOIN tags ON data.id = tags.id;
 ```
 
----
+______________________________________________________________________
 
 Bonus: Flatten in One Shot (If Row Explosion Is Acceptable)
 
@@ -275,4 +277,4 @@ FROM test_schema.test_table_v2,
 GROUP BY id;
 ```
 
----
+______________________________________________________________________

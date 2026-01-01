@@ -28,7 +28,7 @@ Python’s built-in [`datetime`](https://docs.python.org/3/library/datetime.html
   - Use [`zoneinfo`](https://docs.python.org/3/library/zoneinfo.html) (Python 3.9+) or `pytz` for timezone-aware datetimes.
   - Always work in UTC internally, and convert to local time at presentation.
 
----
+______________________________________________________________________
 
 ## Logging
 
@@ -65,7 +65,7 @@ The [`logging`](https://docs.python.org/3/library/logging.html) module provides 
   logger.error("Failed to fetch data", exc_info=True)
   ```
 
----
+______________________________________________________________________
 
 ## Requests
 
@@ -105,7 +105,7 @@ The [`requests`](https://docs.python-requests.org/en/latest/) library simplifies
   session.mount("https://", adapter)
   ```
 
----
+______________________________________________________________________
 
 ## Polars
 
@@ -141,7 +141,7 @@ The [`requests`](https://docs.python-requests.org/en/latest/) library simplifies
 
   - Avoid `.apply()` unless you must use Python-only logic; otherwise leverage Polars expressions for better speed.
 
----
+______________________________________________________________________
 
 ## SQLAlchemy
 
@@ -242,7 +242,7 @@ async def daily_stats(date: str):
     return conn.execute(query, {"date": date}).fetchone()
 ```
 
----
+______________________________________________________________________
 
 ## Asyncio
 
@@ -275,7 +275,7 @@ async def daily_stats(date: str):
   - Network I/O (APIs, websockets, DB drivers).
   - Not for CPU-bound tasks — use multiprocessing instead.
 
----
+______________________________________________________________________
 
 ## Multithreaded
 

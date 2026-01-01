@@ -10,8 +10,8 @@
 ## Non-functional Requirements
 
 - System should scale to 10 million DAU
-- Post/comment creation latency: <500ms (p95)
-- Feed/post view latency: <200ms (p95)
+- Post/comment creation latency: \<500ms (p95)
+- Feed/post view latency: \<200ms (p95)
 - Upvotes/downvotes: eventual consistency acceptable (~1-5 sec delay)
 - System availability: 99.9% uptime
 - Data durability: no vote/post/comment loss
@@ -79,9 +79,9 @@
 Key Flows:
 
 1. Write: API -> Write Service -> Postgres
-2. Read: API -> Read Service -> Redis (cache hit)
+1. Read: API -> Read Service -> Redis (cache hit)
    -> Postgres replica (cache miss) -> cache -> return
-3. Vote: API -> Vote Service -> then in parallel:
+1. Vote: API -> Vote Service -> then in parallel:
    - -> Postgres (write individual vote row)
    - -> Kafka
    - Then aggregate results on a batch basis every 30 seconds - "post X got +47 votes, post Y got -12 votes"
@@ -111,10 +111,10 @@ Key Flows:
 - Assume 10% of them make posts - 1 M posts / day
   - 10^6 / 10^5 = 10 posts per second
 - Assume 50 M comments per day
-  - 5 \* 10^7 / 10^5 = 10^2 or 500 comments per second
+  - 5 * 10^7 / 10^5 = 10^2 or 500 comments per second
 - Assume 50 votes per user per day, or 500 M votes
   - 500,000,000
-  - 5 \* 10^8 / 10^5 = 5 \* 10^3 or 5k votes per second
+  - 5 * 10^8 / 10^5 = 5 * 10^3 or 5k votes per second
   - This is right at Postgres' limit to scale
 
 ## Best Practice Approach

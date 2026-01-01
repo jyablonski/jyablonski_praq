@@ -7,14 +7,14 @@ Keyboards use a matrix circuit to track all keys from a single circuit rather th
 ### From Key Press to Character
 
 1. The controller maintains a lookup table (firmware) that maps each row-column position to a scan code - a numeric identifier for that physical key position
-2. The scan code is sent to your computer via USB HID (Human Interface Device) protocol
-3. Your OS interprets the scan code based on your configured keyboard layout and delivers the character to the active application
+1. The scan code is sent to your computer via USB HID (Human Interface Device) protocol
+1. Your OS interprets the scan code based on your configured keyboard layout and delivers the character to the active application
 
 ### Traditional Actuation
 
 On standard mechanical keyboards, a key registers when the switch mechanism makes contact - typically around 2mm into a ~4mm total travel. The actuation point is fixed by physical switch design and cannot be changed.
 
----
+______________________________________________________________________
 
 ## Wooting's Hall Effect Technology
 
@@ -41,22 +41,22 @@ Rapid Trigger
 
 These are independent features, both enabled by continuous position sensing:
 
-| Feature         | What It Controls                                                                                    |
+| Feature | What It Controls |
 | --------------- | --------------------------------------------------------------------------------------------------- |
-| Actuation Point | How far down must I press before the key registers? (The "entry gate")                              |
-| Rapid Trigger   | After pressing, how is release/re-press determined? (Based on direction change, not fixed position) |
+| Actuation Point | How far down must I press before the key registers? (The "entry gate") |
+| Rapid Trigger | After pressing, how is release/re-press determined? (Based on direction change, not fixed position) |
 
 Traditional keyboards can't do either because they only know two states: contact made or contact broken. They have no idea where the key is between those points.
 
----
+______________________________________________________________________
 
 ## Polling Rate
 
 Definition: How many times per second the keyboard reports its state to the OS.
 
-| Rate    | Interval      |
+| Rate | Interval |
 | ------- | ------------- |
-| 1000 Hz | Every 1ms     |
+| 1000 Hz | Every 1ms |
 | 8000 Hz | Every 0.125ms |
 
 Potential downsides of high polling rates:
@@ -67,7 +67,7 @@ Potential downsides of high polling rates:
 
 For most setups, maximum polling rate is ideal.
 
----
+______________________________________________________________________
 
 ## Other Wooting Features
 
@@ -75,7 +75,7 @@ Debounce Filter: Traditional mechanical keyboards require debounce filtering bec
 
 Continuous Rapid Trigger: When enabled, allows spamming a key without ever needing to hit the actuation point again after the first press.
 
----
+______________________________________________________________________
 
 ## Key Takeaway
 

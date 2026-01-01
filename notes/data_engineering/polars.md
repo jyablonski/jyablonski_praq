@@ -52,15 +52,15 @@ Key features of Apache Arrow include:
 
 1. **Columnar Memory Layout**: Apache Arrow represents data in a columnar memory layout, where each column is stored separately. This layout is highly efficient for analytical and statistical processing, as it allows for vectorized operations and improved cache locality.
 
-2. **Cross-Language Compatibility**: Apache Arrow provides libraries and tools for working with data in multiple programming languages, including Python, C++, Java, JavaScript, and more. This cross-language compatibility enables seamless data interchange between different systems and components.
+1. **Cross-Language Compatibility**: Apache Arrow provides libraries and tools for working with data in multiple programming languages, including Python, C++, Java, JavaScript, and more. This cross-language compatibility enables seamless data interchange between different systems and components.
 
-3. **Zero-Copy Data Sharing**: Apache Arrow enables zero-copy data sharing between different systems and processes. Instead of copying data when transferring between systems, Arrow allows systems to share memory buffers directly, reducing memory overhead and improving performance.
+1. **Zero-Copy Data Sharing**: Apache Arrow enables zero-copy data sharing between different systems and processes. Instead of copying data when transferring between systems, Arrow allows systems to share memory buffers directly, reducing memory overhead and improving performance.
 
-4. **Columnar Compression**: Apache Arrow supports various compression techniques for reducing the memory footprint of data, including dictionary encoding, run-length encoding, and delta encoding. These compression techniques help optimize memory usage and reduce data transfer times.
+1. **Columnar Compression**: Apache Arrow supports various compression techniques for reducing the memory footprint of data, including dictionary encoding, run-length encoding, and delta encoding. These compression techniques help optimize memory usage and reduce data transfer times.
 
-5. **Parallel and Distributed Processing**: Apache Arrow is designed for parallel and distributed processing of data. It provides support for efficient data partitioning, distributed computing frameworks (such as Apache Spark and Dask), and parallel execution of operations across multiple cores and nodes.
+1. **Parallel and Distributed Processing**: Apache Arrow is designed for parallel and distributed processing of data. It provides support for efficient data partitioning, distributed computing frameworks (such as Apache Spark and Dask), and parallel execution of operations across multiple cores and nodes.
 
-6. **Integration with Ecosystem Tools**: Apache Arrow integrates with various data processing and analytics tools, including Apache Parquet, Apache Spark, Pandas, TensorFlow, and more. This integration allows users to leverage Arrow's capabilities within their existing data pipelines and workflows.
+1. **Integration with Ecosystem Tools**: Apache Arrow integrates with various data processing and analytics tools, including Apache Parquet, Apache Spark, Pandas, TensorFlow, and more. This integration allows users to leverage Arrow's capabilities within their existing data pipelines and workflows.
 
 Overall, Apache Arrow aims to provide a standardized, efficient, and cross-platform data representation format for improving the interoperability, performance, and scalability of data processing and analytics systems.
 

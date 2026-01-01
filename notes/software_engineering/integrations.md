@@ -1,6 +1,5 @@
 # Integrations
 
-
 ## HubSpot
 
 [API Docs](https://developers.hubspot.com/docs/api/overview)
@@ -8,8 +7,7 @@
 
 `pip install hubspot-api-client`
 
-
-``` py
+```py
 from hubspot import HubSpot
 from hubspot.crm.contacts import SimplePublicObjectInputForCreate
 from hubspot.crm.contacts.exceptions import ApiException
@@ -36,8 +34,7 @@ except ApiException as e:
 [API Docs](https://mailchimp.com/developer/marketing/)
 [Python SDK](https://github.com/mailchimp/mailchimp-marketing-python)
 
-
-``` py
+```py
 import mailchimp_marketing as MailchimpMarketing
 from mailchimp_marketing.api_client import ApiClientError
 
@@ -63,8 +60,7 @@ except ApiClientError as error:
 
 Supported integrations to third-party systems such as Mailchimp for both internal use & for customer-facing data products
 
-
-``` py
+```py
 from simple_salesforce import Salesforce
 import requests
 

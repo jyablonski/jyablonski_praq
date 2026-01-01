@@ -10,7 +10,7 @@ Core Concepts:
 - An item in a table is a single record, similar to a row in SQL
 - An attribute is a field within an item.
 - A primary key is used to distribute data across partitions
-- A sort key can be set to allow range queries like ==, <, >, between, contains, in, top / bottom n values etc
+- A sort key can be set to allow range queries like ==, \<, >, between, contains, in, top / bottom n values etc
 - Secondary global index enable queries with different partition or sort keys
 - Secondary local index shares the same partition key, but has a different sort key
 - Scales horizontally very easily, and it auto scales automatically depending on your actual traffic

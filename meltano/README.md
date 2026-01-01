@@ -1,6 +1,6 @@
 [Article](https://jove.medium.com/build-a-meltano-target-within-1-hour-7134df6244fb)
 
-``` sh
+```sh
 pip install meltano
 
 # add an extractor

@@ -59,6 +59,7 @@ a. API Gateway Layer
   ```
 
 - The request first hits an API gateway (think Nginx, Envoy, API Gateway services).
+
 - Handles authentication, rate limiting, and logging.
 
 b. Orchestration Layer
@@ -70,6 +71,7 @@ b. Orchestration Layer
 c. Preprocessing
 
 - Converts the raw input text into tokens using the model’s tokenizer.
+
 - Builds the prompt — which could include:
 
   - Your input text
@@ -93,7 +95,7 @@ f. Response Returned
 
 - Sent back through the gateway to you.
 
----
+______________________________________________________________________
 
 ### General Workflow
 
@@ -124,13 +126,14 @@ f. Response Returned
 #### 3. Training Process
 
 - Objective: usually next-token prediction (causal language modeling).
+
 - Steps:
 
   1. Input a sequence of tokens.
-  2. Model predicts the next token.
-  3. Compare prediction to the actual next token -> calculate loss.
-  4. Adjust weights via backpropagation using gradient descent.
-  5. Repeat for billions/trillions of examples.
+  1. Model predicts the next token.
+  1. Compare prediction to the actual next token -> calculate loss.
+  1. Adjust weights via backpropagation using gradient descent.
+  1. Repeat for billions/trillions of examples.
 
 - Infrastructure: multi-GPU/TPU clusters, distributed training frameworks, high-throughput data pipelines.
 
@@ -145,4 +148,4 @@ f. Response Returned
 - Prompt goes in -> tokenized -> passed through the network -> output tokens are generated via decoding strategy (greedy, sampling, beam search).
 - Post-processing can include formatting, filtering, or grounding in external knowledge.
 
----
+______________________________________________________________________

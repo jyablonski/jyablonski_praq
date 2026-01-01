@@ -23,16 +23,19 @@ Geometric and geospatial data types in a data warehouse, such as those available
 
 1. **Location-based analysis**:
    Geospatial data is used when you need to analyze data that involves geographic locations. This includes:
+
    - Finding the nearest store or facility to a user’s location.
    - Determining which region (e.g., a state or district) a specific point falls within.
-2. **Spatial relationships**:
+
+1. **Spatial relationships**:
    When you need to understand the relationships between different locations, such as:
 
    - Calculating distances between two geographic points (e.g., customer location to store).
    - Checking whether a point falls within a certain boundary or region (e.g., whether a house is within a flood zone).
 
-3. **Mapping and visualization**:
+1. **Mapping and visualization**:
    Geospatial data is often used when you want to generate maps or visualize data spatially. This could be used for:
+
    - Creating heat maps of data like sales density across a region.
    - Showing routes or areas of coverage for logistics or service companies.
 
@@ -44,22 +47,23 @@ Geometric and geospatial data types in a data warehouse, such as those available
    - **Delivery routing**: Calculate the best routes for delivery trucks or optimize logistics based on distance from distribution centers.
    - **Sales territory mapping**: Define sales regions and assign customers to specific representatives based on their locations.
 
-2. **Real Estate**:
+1. **Real Estate**:
 
    - **Property location**: Analyze properties based on proximity to certain points of interest (e.g., schools, parks).
    - **Region zoning**: Determine which properties fall within particular zones (e.g., residential, commercial).
 
-3. **Telecommunications**:
+1. **Telecommunications**:
 
    - **Network coverage**: Map out cell tower coverage areas and ensure optimal placement of new towers to minimize dead zones.
    - **Service availability**: Check whether a potential customer location is within an area serviced by the provider.
 
-4. **Transportation**:
+1. **Transportation**:
 
    - **Route optimization**: For ride-sharing or delivery services, determine the fastest or most efficient routes using spatial analysis.
    - **Public transportation planning**: Analyze population density and travel patterns to optimize the placement of bus routes or subway lines.
 
-5. **Environmental Studies**:
+1. **Environmental Studies**:
+
    - **Natural resource mapping**: Analyze geographic areas for resources like water bodies, forests, and mineral deposits.
    - **Disaster response**: Determine affected areas during events like wildfires or floods using polygon boundaries and spatial queries.
 

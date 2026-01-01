@@ -13,17 +13,17 @@ So, to get data flowing into Flink, you need producer services or systems that g
 ## Use Cases
 
 1. Fraud Detection - these events must be caught instantly
-2. Online Ad Tech bidding - to get the best offer you have to be first
-3. IoT Sensor Data - detect equipment failure or anomalies in real time to avoid costly downtime or incidents
-4. General Anomaly Detection
+1. Online Ad Tech bidding - to get the best offer you have to be first
+1. IoT Sensor Data - detect equipment failure or anomalies in real time to avoid costly downtime or incidents
+1. General Anomaly Detection
 
 ## Workflow Examples
 
 1. Real Time Sliding Window Aggregation - calculate rolling sum every 5 minutes across a streaming data feed
-2. Session Windowing for User Activity - detect user sessions by grouping clicks with inactivity gaps of 30 minutes
-3. Join multiple stream datasets together for Fraud Detection - join transactions and real time blacklist updates to flag suspicious payments as they happen
-4. Detect fraud patterns like 3 failed login attempts with 5 minutes followed by a successful login
-5. Process sensor data streams with out-of-order events, discarding or handling late data gracefully.
+1. Session Windowing for User Activity - detect user sessions by grouping clicks with inactivity gaps of 30 minutes
+1. Join multiple stream datasets together for Fraud Detection - join transactions and real time blacklist updates to flag suspicious payments as they happen
+1. Detect fraud patterns like 3 failed login attempts with 5 minutes followed by a successful login
+1. Process sensor data streams with out-of-order events, discarding or handling late data gracefully.
 
 ## Flink Memory Requirements
 
@@ -34,7 +34,7 @@ So, to get data flowing into Flink, you need producer services or systems that g
 
 * Flink's memory usage is tightly coupled with the size and complexity of your streaming state, not just how many events you process per second.
 
----
+______________________________________________________________________
 
 ### Spark Memory Requirements
 
@@ -42,19 +42,21 @@ So, to get data flowing into Flink, you need producer services or systems that g
 - RDD caching & shuffles: Spark uses more memory for caching, shuffles, and holding batches in memory until the entire micro-batch finishes.
 - Garbage collection: Because it handles batches, GC pressure can be high if batch sizes or joins are large.
 
----
+______________________________________________________________________
 
-| Aspect                   | Flink                                    | Spark                                         |
+| Aspect | Flink | Spark |
 | ------------------------ | ---------------------------------------- | --------------------------------------------- |
-| Processing model         | Event-by-event streaming                 | Micro-batching streaming                      |
-| Memory usage depends on  | Size of state and buffered events        | Batch size, caching, shuffles, and batch data |
-| Typical memory footprint | Can be lower if state is small & simple  | Usually larger due to batch overhead          |
-| Use case                 | Low latency, continuous event processing | Higher latency, batch-style streaming         |
+| Processing model | Event-by-event streaming | Micro-batching streaming |
+| Memory usage depends on | Size of state and buffered events | Batch size, caching, shuffles, and batch data |
+| Typical memory footprint | Can be lower if state is small & simple | Usually larger due to batch overhead |
+| Use case | Low latency, continuous event processing | Higher latency, batch-style streaming |
 
 - Flink can run on much lower memory if your streaming job is stateless or has very small state, Flink’s memory footprint can be quite small compared to Spark.
+
 - However, if your Flink job keeps a large state (like large windowed aggregations or joins), you’ll still need enough memory to hold that state efficiently.
 
 - A Flink job doing simple filtering or stateless map functions can run with very little memory.
+
 - A Flink job tracking millions of active sessions or long time-windowed joins will require memory comparable to a Spark cluster running similar workloads.
 
 ## Flink vs Spark
