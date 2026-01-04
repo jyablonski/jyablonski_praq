@@ -20,7 +20,7 @@ def solution(nums: list[int], target: int) -> int:
     left = 0
     right = n - 1
 
-    # use <= to consider all elements
+    # use <= to consider all elements -  we're searching for an exact match
     while left <= right:
         mid = (left + right) // 2
 
@@ -29,14 +29,21 @@ def solution(nums: list[int], target: int) -> int:
             return mid
 
         # because it's a rotated sorted array, we have to check which side is properly sorted
+        # note the subsequent `nums[mid]` conditionals or < or > and not equal to because we've alrady checked
+        # for mid right above this
+
+        # ---- LEFT SIDE -----
 
         # if nums[left] <= nums[mid], then we check if target is in that left range and adjust accordingly
         if nums[left] <= nums[mid]:
+            # note the subsequent `nums[mid]` conditionals or < or > and not equal to because we've alrady checked
+            # for mid right above this
             if nums[left] <= target < nums[mid]:
                 right = mid - 1
             else:
                 left = mid + 1
 
+        # ---- RIGHT SIDE -----
         # if nums[left] > nums[mid], then we check if target is in that right range and adjust accordingly
         else:
             if nums[mid] < target <= nums[right]:

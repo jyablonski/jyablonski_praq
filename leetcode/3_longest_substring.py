@@ -49,13 +49,22 @@ solution(s=str2)
 # instead of having to do it in a for loop
 def longestSubstringWithoutRepeat(s):
     state = {}
-    start = 0
+    start = 0  # left boundary of the current window
     max_length = 0
 
     for end in range(len(s)):
         if s[end] in state:
+            # We've seen this char before, but we haven't updated s[end] yet to the current value.
+            # state[s[end]] + 1 = position right after the previous occurrence
+            # We take max() because the previous occurrence might be BEFORE start
+            # (already outside our window), and we don't want to move start backward
             start = max(start, state[s[end]] + 1)
+            print(f"Found new start {start}")
 
         state[s[end]] = end
         max_length = max(max_length, end - start + 1)
+
     return max_length
+
+
+longestSubstringWithoutRepeat(str2)

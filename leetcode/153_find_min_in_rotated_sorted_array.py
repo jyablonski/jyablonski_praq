@@ -14,6 +14,8 @@ def solution(nums: list[int]) -> int:
     left = 0
     right = len(nums) - 1
 
+    # you're converging to a position, not searching for a match.
+    # the loop shrinks the window until one element remains
     while left < right:
         mid = (left + right) // 2
 
