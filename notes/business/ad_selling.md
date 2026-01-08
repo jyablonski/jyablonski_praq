@@ -215,7 +215,7 @@ ______________________________________________________________________
 # Summary Table
 
 | Ad Type | Impressions | CTR | CPM | User Experience | Best Use Case |
-| ------------ | ----------- | -------------- | ----------------- | ------------------------- | -------------------------------- |
+| ------------ | ----------- | -------------- | --------------- | ------------------------- | -------------------------------- |
 | Banner | Very High | Low (0.1-0.5%) | Low ($0.5-$3) | Least intrusive | Passive revenue |
 | Interstitial | Medium | Medium (1-3%) | Medium ($3-$10) | Disruptive if overused | Between natural breaks |
 | Rewarded | Limited | Very High | High ($10+) | Positive (user opt-in) | Games, apps with virtual rewards |
@@ -360,6 +360,88 @@ ______________________________________________________________________
 - Google Analytics
 - DSP dashboards (Demand-Side Platforms)
 
+## Attribution: Tracking Where Users Come From
+
+Attribution is the process of identifying which marketing channels, campaigns, or touchpoints led a user to take a specific action (install, purchase, sign-up, etc.). In the context of ad selling and monetization, attribution matters because it tells you why users are in your app in the first place, and helps you understand the quality and behavior of users from different sources.
+
+### Why Attribution Matters for App Monetization
+
+When you're monetizing through ads, not all users are equal. Users acquired from different channels behave differently:
+
+- Users from organic search might have higher intent and engage more deeply
+- Users from paid social campaigns might churn faster but convert on ads at higher rates
+- Users from influencer partnerships might have specific interests that affect which ads perform well
+
+Understanding attribution helps you optimize both your acquisition spend and your ad monetization strategy. If users from TikTok ads have 3x higher ad engagement than users from Google UAC, that changes how you allocate budget and potentially how you segment your ad inventory.
+
+### Source and Medium
+
+Source refers to where the traffic came from (Google, Facebook, a specific website, an email campaign). Medium describes how they got there (organic search, paid CPC, referral link, email).
+
+Common source/medium combinations:
+
+- `google / organic` — user searched on Google and clicked a non-ad result
+- `facebook / cpc` — user clicked a paid Facebook ad
+- `newsletter / email` — user clicked a link in your email campaign
+- `partner_site / referral` — user came from a link on another website
+
+This data flows into your analytics and can be joined with ad performance data to answer questions like "do users from paid Instagram campaigns watch more rewarded ads than organic users?"
+
+### The Direct Traffic Black Box
+
+Direct traffic (`direct / none`) is one of the trickiest categories. It means the analytics system couldn't determine where the user came from. This happens when:
+
+- User typed your URL directly into the browser
+- User clicked a link in a native mobile app that doesn't pass referrer data
+- User clicked a link in an email client that strips tracking parameters
+- User came from HTTPS to HTTP (referrer gets dropped for security)
+- User had a bookmark
+- UTM parameters were missing or malformed on a campaign link
+
+The problem is that "direct" becomes a catch-all bucket that mixes genuinely direct visitors (who already know your brand) with traffic from campaigns you thought you were tracking but aren't. This makes it hard to measure true campaign performance and can hide attribution gaps.
+
+Best practices to minimize the black box:
+
+- Always use UTM parameters on links you control (emails, social posts, partner links)
+- Use deep linking SDKs for mobile that preserve attribution through app installs
+- Implement server-side tracking where possible to reduce client-side tracking failures
+
+### Attribution Models
+
+Since users often interact with multiple touchpoints before converting, you need a model to decide which touchpoints get credit:
+
+| Model | How It Works | Pros | Cons |
+| ----------- | ------------------------------------------------- | ---------------------------------- | --------------------------------------- |
+| Last-Click | 100% credit to final touchpoint before conversion | Simple, easy to implement | Ignores everything that built awareness |
+| First-Click | 100% credit to first touchpoint | Shows what drove initial discovery | Ignores nurturing/closing touchpoints |
+| Linear | Equal credit to all touchpoints | Acknowledges full journey | Doesn't distinguish high-impact touches |
+| Time Decay | More credit to touchpoints closer to conversion | Balances journey with recency | Arbitrary decay curves |
+| Data-Driven | ML model assigns credit based on actual impact | Most accurate if you have data | Requires significant volume, black box |
+
+For most apps, last-click is the default but increasingly misleading as user journeys get more complex across devices and channels.
+
+### Mobile Attribution Challenges
+
+Mobile adds extra complexity because:
+
+- Users switch between web and app
+- App installs break the tracking chain (you lose referrer data when someone goes to the App Store)
+- Privacy changes (iOS ATT, Android Privacy Sandbox) limit cross-app tracking
+- Deterministic matching (device IDs) is becoming restricted, pushing toward probabilistic fingerprinting which is less accurate
+
+This is why mobile attribution platforms (Appsflyer, Adjust, Branch, Singular) exist — they specialize in stitching together the install journey using deep links, deferred deep links, and probabilistic matching where deterministic fails.
+
+### Connecting Attribution to Ad Monetization
+
+Once you have attribution data, you can segment your ad monetization analysis:
+
+- Compare eCPM and fill rates across user cohorts by acquisition source
+- Identify which channels bring users with higher ad engagement
+- Calculate true ROI by factoring in both acquisition cost and ad revenue LTV by source
+- Detect fraud (if a paid channel is sending users who never engage with ads, something's wrong)
+
+Without attribution, you're optimizing blind — you might be spending heavily to acquire users who generate almost no ad revenue, while underinvesting in channels that bring your most valuable users.
+
 ______________________________________________________________________
 
 # How Ad Blockers Work
@@ -445,7 +527,7 @@ ______________________________________________________________________
 ### Summary Example:
 
 | Metric | Value |
-| ------------------- | ------------------------- |
+| ------------------- | --------------------- |
 | ARPU (monthly) | $30 |
 | Gross Margin | 70% |
 | Monthly Churn | 4% |
