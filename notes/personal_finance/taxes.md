@@ -2,15 +2,82 @@
 
 Taking the standard deduction is recommended, this is a flat amount that reduces your taxable income for the year.
 
-- You can go itemized deduction if you have your own business or have significant mortgage interest, charitable donations to report etc.
+- You can consider itemized deduction if you have your own business or have significant mortgage interest, charitable donations, marriage, or kids.
 
 Tax returns are filed annually, with April 15 being the deadline (or the next business day if the 15th is a weekend/holiday).
 
+## Annual Tax Filing Checklist
+
+### Documents to Gather
+
+| Document | Source | Purpose |
+| --------- | ------------------------- | --------------------------------------------- |
+| W-2 | Employer (Axios) | Reports wages and taxes withheld |
+| 1099-R | Fidelity | Reports Roth IRA conversion (backdoor Roth) |
+| 1099-INT | Ally | Reports HYSA interest income |
+| 1099-SA | WexHealth (if applicable) | Reports HSA distributions |
+| Form 5498 | Fidelity | Confirms IRA contributions (for your records) |
+
+### Step-by-Step Filing Process
+
+Step 1: Enter W-2 Information
+
+- Enter wages, federal/state taxes withheld, and pre-tax deductions
+- Your HSA contributions (WexHealth) and 401k contributions (JPMorgan) are already reflected as pre-tax deductions, reducing your taxable income automatically
+
+Step 2: Report HSA Activity (Form 8889)
+
+- Enter HSA contributions from your W-2 (Box 12, Code W)
+- Report any distributions from Form 1099-SA if you used HSA funds for medical expenses
+- FreeTaxUSA will generate Form 8889 automatically
+
+Step 3: Report Interest Income (1099-INT)
+
+- Enter interest earned from Ally HYSA
+- This counts as taxable income
+- Have extra withholding in day job to account for this so you don't get dinged at tax time
+
+Step 4: Report Backdoor Roth IRA (Form 8606)
+
+- Enter Form 1099-R from Fidelity showing the Traditional → Roth conversion
+- Indicate the Traditional IRA contribution was non-deductible
+- FreeTaxUSA will ask if you made non-deductible contributions—answer yes
+- Form 8606 documents that you don't owe additional taxes on the conversion
+
+Step 5: Confirm Deduction Type
+
+- Select Standard Deduction (no mortgage, dependents, or itemizable expenses)
+- For 2026, standard deduction for single filers is approximately $15,000+
+
+Step 6: Verify Health Insurance
+
+- California requires health insurance coverage
+- Your employer-provided coverage satisfies this requirement
+- No additional forms needed
+
+Step 7: Review and File
+
+- Review total tax owed vs. withheld
+- Extra withholding should cover HYSA interest income
+- E-file and select direct deposit for any refund
+
+### Tax-Advantaged Account Summary
+
+| Account | Tax Treatment | Annual Limit (2026) |
+| ------------------- | ---------------------------------------------------------------------- | ------------------- |
+| 401k (JPMorgan) | Pre-tax contributions, tax-deferred growth | $23,500 |
+| HSA (WexHealth) | Pre-tax contributions, tax-free growth, tax-free qualified withdrawals | $4,300 (self-only) |
+| Roth IRA (Fidelity) | After-tax contributions, tax-free growth, tax-free withdrawals | $7,500 |
+
+______________________________________________________________________
+
 ## Software
 
-Turbo Tax
+FreeTaxUSA
 
-## Forms
+______________________________________________________________________
+
+## Forms Reference
 
 ### W-2
 
@@ -26,44 +93,92 @@ This Form is for HSA Distributions if you took any money out for Purchases or Se
 
 ### Form 5498
 
-This Form will be provided by Fidelity if you contribute the maximum limit to your Roth IRA. These contributions are not tax-deductible,
+This Form will be provided by Fidelity if you contribute the maximum limit to your Roth IRA. These contributions are not tax-deductible.
 
 ### Form 8889
 
 This Form is for HSA Contributions, which are tax-deductible. This will also be reflected on your W-2 by your employer.
 
-### Backdoor Roth IRA
+______________________________________________________________________
 
-1. **Contribute to a Traditional IRA**
+## Backdoor Roth IRA
 
-   - **Step 1**: You contribute to a **Traditional IRA**. There's **no income limit** for contributing to a Traditional IRA, so even high earners (over the Roth IRA limits) can make this contribution.
-   - You can contribute up to the **annual limit** (e.g., **$6,500** for those under 50, **$7,500** for 50+ in 2025).
+### Why Use Backdoor Roth?
 
-1. **Declare the Contribution as Non-Deductible**
+If your income exceeds the Roth IRA contribution limits, you cannot contribute directly. The backdoor method allows you to:
 
-   - **Step 2**: Since you're making a **non-deductible contribution** (because you're above the income limits for a deductible IRA), you **do not** deduct the contribution from your taxable income.
-   - You will still make the contribution to the Traditional IRA, but because it's non-deductible, you've already paid tax on it.
+1. Contribute to a Traditional IRA (no income limit)
+1. Convert to Roth IRA immediately
+1. Pay no additional taxes since the contribution was non-deductible
 
-1. **Convert the Funds to a Roth IRA**
+### Tax Treatment
 
-   - **Step 3**: You **convert the funds** from the Traditional IRA to a **Roth IRA**, usually soon after the contribution. This avoids any significant earnings buildup, which could trigger additional taxes when converted.
-   - The conversion is typically **tax-free** since the contribution was non-deductible and already taxed, so there shouldn't be any additional taxes on the amount you convert (unless there are earnings between the time of contribution and conversion).
+1. Contribute to a Traditional IRA
 
-1. **File Form 8606**
+   - You contribute up to the annual limit (e.g., $7,500 for 2026)
+   - There's no income limit for contributing to a Traditional IRA
 
-   - **Step 4**: You must **file IRS Form 8606** with your tax return to:
-     - Report the **non-deductible contribution** to the Traditional IRA (so it's not counted as a deduction).
-     - Report the **conversion** to the Roth IRA to ensure you're not taxed twice on the same funds.
-   - Form 8606 keeps the IRS informed that the contribution to the Traditional IRA was non-deductible and that you're converting it to a Roth without owing taxes on the original contribution.
+1. Declare the Contribution as Non-Deductible
 
-### Key Points:
+   - Since you're above the income limits for a deductible IRA, you do not deduct the contribution from your taxable income
+   - You've already paid tax on this money
 
-- **No Income Limit for Traditional IRA Contributions**: Even if you're above the income limits for Roth IRA contributions, you can still make a **Traditional IRA contribution** (though you won't be able to deduct it if your income is too high).
-- **Tax-Free Conversion**: As long as the **Traditional IRA** has no earnings or gains before the conversion (or you make the conversion quickly), the **conversion** to the **Roth IRA** should be tax-free.
-- **Avoid Double Taxation**: By using Form 8606, you ensure the IRS understands the nature of the transaction and that you're not taxed twice.
+1. Convert the Funds to a Roth IRA
 
-### Potential Caveats:
+   - Convert soon after the contribution to avoid earnings buildup
+   - The conversion is tax-free since the contribution was non-deductible
 
-- **Pro-Rata Rule**: If you have **other pre-tax IRA balances** (e.g., if you've made deductible contributions to a Traditional IRA in the past), the **pro-rata rule** may apply, which can make part of the conversion taxable. It means the IRS views all of your IRAs (Traditional, SEP, SIMPLE, etc.) as one big pool of money when calculating how much of your Roth conversion is taxable.
+1. File Form 8606
 
-But if you have **no pre-tax IRAs** or just convert the new contributions quickly, you should be able to avoid tax on the conversion.
+   - Reports the non-deductible contribution to the Traditional IRA
+   - Reports the conversion to the Roth IRA
+   - Ensures you're not taxed twice on the same funds
+
+### Key Points
+
+- No Income Limit for Traditional IRA Contributions: Even if you're above the Roth IRA income limits, you can make a Traditional IRA contribution (though you can't deduct it)
+- Tax-Free Conversion: As long as there are no earnings before conversion, the conversion is tax-free
+- Avoid Double Taxation: Form 8606 ensures the IRS understands the transaction
+
+### Pro-Rata Rule (Important Caveat)
+
+If you have other pre-tax IRA balances (from past deductible contributions), the pro-rata rule applies. The IRS views all your IRAs as one pool when calculating how much of your conversion is taxable.
+
+Solution: Keep your Traditional IRA balance at $0 between conversions.
+
+______________________________________________________________________
+
+## Fidelity Backdoor Roth IRA – Annual Process
+
+Step 1: Contribute to Traditional IRA
+
+- Log into Fidelity
+- Transfer the year's max contribution from HYSA into your Traditional IRA
+- Wait 1-3 business days for the EFT to settle (check "Cash available to withdraw")
+
+Step 2: Convert to Roth IRA
+
+- Once cash is available, go to Transfer → Convert to Roth IRA
+- Convert the full amount
+- Select $0 federal tax withholding (you already paid taxes on this money)
+- Wait 1-2 business days for conversion to settle
+
+Step 3: Invest the Funds
+
+- Money lands in your Roth's core position as cash
+- Allocate to your investments of choice
+
+Step 4: Tax Filing
+
+- You'll receive a 1099-R from Fidelity the following January
+- File Form 8606 with your tax return to report the non-deductible contribution
+- This documents that you don't owe taxes on the conversion
+
+______________________________________________________________________
+
+## Key Reminders
+
+- Keep your Traditional IRA balance at $0 between conversions (avoids pro-rata taxation)
+- Contribution limits adjust periodically, confirm the current year's max before contributing
+- Do this early in the year to maximize time in market
+- Don't invest the money in the Traditional IRA, leave it as cash and convert quickly to avoid taxable gains
