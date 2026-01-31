@@ -1,0 +1,23 @@
+# Game Revenue Forecasting Requirements
+# Core dependencies
+numpy>=1.21.0
+pandas>=1.3.0
+matplotlib>=3.4.0
+scipy>=1.7.0
+
+# Statistical models
+statsmodels>=0.13.0
+pmdarima>=2.0.0  # For auto_arima
+
+# Facebook Prophet
+prophet>=1.1.0
+
+# Nixtla StatsForecast
+statsforecast>=1.4.0
+
+# Machine Learning
+lightgbm>=3.3.0
+scikit-learn>=1.0.0
+
+# Optional: for faster numba compilation
+numba>=0.56.0

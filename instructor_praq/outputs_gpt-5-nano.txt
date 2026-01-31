@@ -1,0 +1,226 @@
+Classifying leads with OpenAI...
+
+============================================================
+Lead ID: lead_001
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): Yes
+    Estimated Amount: $40,000.00
+    Reasoning: Project budget mentioned ~ $40,000; this exceeds $25k threshold, indicating sufficient budget for initial engagement.
+
+  Domain Assessment:
+    Type: business
+    Reasoning: Email domain techcorp.io appears to be a professional company domain; not a known free email provider.
+
+  Legitimacy Assessment:
+    Legitimate: Yes
+    Reasoning: Coherent message from a named company seeking vendor for enterprise data infrastructure modernization with stated budgets.
+
+  Overall Classification:
+    Quality: HIGH
+    Recommendation: Proceed with outreach: propose discovery call to define scope, timelines, milestones; gather details on current data stack, on-premise vs cloud, desired outcomes; assess vendor fit; consider providing case studies on data modernization for enterprise scale.
+
+============================================================
+Lead ID: lead_002
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): No
+    Reasoning: No budget amount provided; no explicit project scope or investment details. Request for 'free stuff' suggests no clear buying intent.
+
+  Domain Assessment:
+    Type: personal
+    Reasoning: Email domain is gmail.com (free, personal domain).
+
+  Legitimacy Assessment:
+    Legitimate: No
+    Reasoning: Message is casual with no company information, no clear product interest, and explicit request for freebies, which resembles spam or low-quality inquiry.
+
+  Overall Classification:
+    Quality: SPAM
+    Recommendation: Low priority; consider automated information response and request for business intent, and/or disqualify if no follow-up; avoid allocating sales resources.
+
+============================================================
+Lead ID: lead_003
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): Yes
+    Estimated Amount: $75,000.00
+    Reasoning: Lead explicitly states a budget of $75,000 for this fiscal year for a comprehensive data analytics solution.
+
+  Domain Assessment:
+    Type: business
+    Reasoning: Email uses a company domain m.garcia@innovatehealth.com; Innovate Health Systems appears to be a legitimate healthcare organization.
+
+  Legitimacy Assessment:
+    Legitimate: Yes
+    Reasoning: Coherent inquiry from a known company, professional tone, concrete budget and HIPAA requirement.
+
+  Overall Classification:
+    Quality: HIGH
+    Recommendation: Proceed with outreach; propose discovery call focusing on HIPAA-compliant analytics solution; gather requirements, timelines, and compliance needs; verify data security and HIPAA requirements.
+
+============================================================
+Lead ID: lead_004
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): No
+    Reasoning: No budget or investment amount stated in the message.
+
+  Domain Assessment:
+    Type: suspicious
+    Reasoning: Email domain tempmail.xyz is a temporary email provider and commonly used for spam/bogus submissions.
+
+  Legitimacy Assessment:
+    Legitimate: No
+    Reasoning: Temporary email plus minimal generic message; unlikely to be a real business inquiry.
+
+  Overall Classification:
+    Quality: SPAM
+    Recommendation: Flag as spam; do not engage; remove from active pipeline; consider blocking or filtering this lead.
+
+============================================================
+Lead ID: lead_005
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): Yes
+    Estimated Amount: $200,000.00
+    Reasoning: Projected investment of $200,000 over 18 months for ML-driven fraud detection.
+
+  Domain Assessment:
+    Type: business
+    Reasoning: Email uses company domain 'globalfinance.com' indicating a professional business contact.
+
+  Legitimacy Assessment:
+    Legitimate: Yes
+    Reasoning: Coherent inquiry from a named company with specific project and timeline; requests discovery call and mentions compliance certifications.
+
+  Overall Classification:
+    Quality: HIGH
+    Recommendation: Engage with a discovery call. Prepare a discovery agenda focused on ML fraud detection capabilities, model governance, data requirements, integration, and compliance certifications. Collect information on existing systems, data availability, regulatory requirements, and expected outcomes. Consider assigning a solutions architect or security lead for the response. If appropriate, request NDA and outline a pilot/POC plan with success metrics.
+
+============================================================
+Lead ID: lead_006
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): No
+    Estimated Amount: $750.00
+    Reasoning: Customer cites budget of $500-$1000 for a small freelance project; does not indicate a budget >= $25k.
+
+  Domain Assessment:
+    Type: personal
+    Reasoning: Email is yahoo.com, a common free email provider; personal domain.
+
+  Legitimacy Assessment:
+    Legitimate: Yes
+    Reasoning: Message is coherent, professional tone, and describes a real-sounding freelance inquiry with a budget.
+
+  Overall Classification:
+    Quality: LOW
+    Recommendation: Qualify further via discovery call to assess scope and fit. Consider offering a small pilot or hourly engagement within the stated budget. Ask clarifying questions about timeline, deliverables, and scope; set expectations around pricing and project boundaries.
+
+============================================================
+Lead ID: lead_007
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): No
+    Reasoning: No project budget or investment amount is stated. The message mentions a prize amount rather than funding a project.
+
+  Domain Assessment:
+    Type: suspicious
+    Reasoning: Domain prize-notification.biz, unusual TLD .biz, and recipient email 'winner' indicate phishing/spam attempt.
+
+  Legitimacy Assessment:
+    Legitimate: No
+    Reasoning: Content is a typical lottery scam: unsolicited, sensational prize claim, requests for bank details; lacks verifiable company information and coherent business context.
+
+  Overall Classification:
+    Quality: SPAM
+    Recommendation: Mark as spam; do not engage; block domain; consider flagging as phishing; do not collect any information from the lead.
+
+============================================================
+Lead ID: lead_008
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): Yes
+    Estimated Amount: $85,000.00
+    Reasoning: Explicit budget of $85,000 for ERP upgrade and data warehouse integration; project scope includes ERP upgrade and data warehouse integration; timeline Q2 next year; team of 5 developers; indicates significant investment.
+
+  Domain Assessment:
+    Type: business
+    Reasoning: Email uses a professional company domain manufacturingpro.net; not a free email; domain appears legitimate for a manufacturing business.
+
+  Legitimacy Assessment:
+    Legitimate: Yes
+    Reasoning: Coherent inquiry from a named company with specific project scope, budget, team size, and timeline.
+
+  Overall Classification:
+    Quality: HIGH
+    Recommendation: Pursue a discovery call to scope requirements, confirm integration specifics, propose ERP + data warehouse solution, and prepare a formal proposal or SOW. Suggest scheduling within the next 2 weeks; collect technical requirements, existing systems, data migration plan, and success metrics.
+
+============================================================
+Lead ID: lead_009
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): No
+    Reasoning: No budget information provided in lead; no project scope or investment amount indicated.
+
+  Domain Assessment:
+    Type: business
+    Reasoning: Email domain test.com is a professional domain, not a known free provider; however the address is noreply and message content is empty, which reduces credibility.
+
+  Legitimacy Assessment:
+    Legitimate: No
+    Reasoning: Empty message, no company name, and a noreply email; insufficient data to indicate a legitimate inquiry; high risk of spam or bot submission.
+
+  Overall Classification:
+    Quality: SPAM
+    Recommendation: Flag as spam/incomplete; do not route to sales; consider ignoring or auto-response asking for details if appropriate.
+
+============================================================
+Lead ID: lead_010
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): Yes
+    Estimated Amount: $500,000.00
+    Reasoning: Explicit pilot budget of $500,000 with potential to scale to $2M+; indicates substantial budget and willingness to scale.
+
+  Domain Assessment:
+    Type: business
+    Reasoning: Professional corporate domain (retailgiant.com); not a free email provider.
+
+  Legitimacy Assessment:
+    Legitimate: Yes
+    Reasoning: Coherent message from a Fortune 500 retailer seeking AI-powered inventory management; realistic budget and scope; professional tone.
+
+  Overall Classification:
+    Quality: HIGH
+    Recommendation: Treat as a high-priority enterprise lead. Schedule a discovery call to understand current inventory challenges, data readiness, integration with ERP/WMS, and timeline. Gather details on pilot goals, success criteria, data sharing agreements, and security/compliance considerations. Propose a pilot plan with milestones and a phased budget closer to $500k–$2M+ range.
+
+============================================================
+SUMMARY
+============================================================
+
+Total leads processed: 10
+High quality leads: 5
+Medium quality leads: 0
+Low quality leads: 1
+Spam leads: 4
+
+Qualified leads (budget + business domain + medium+ quality): 5
+
+Qualified lead IDs:
+  - lead_001
+  - lead_003
+  - lead_005
+  - lead_008
+  - lead_010

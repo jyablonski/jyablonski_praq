@@ -1,0 +1,241 @@
+============================================================
+Lead ID: lead_001
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): Yes
+    Estimated Amount: $40,
+000.00
+    Reasoning: The lead explicitly states that they would like to allocate approximately $40,
+000 for the project, which exceeds the $25,
+000 threshold.
+
+  Domain Assessment:
+    Type: business
+    Reasoning: The email domain 'techcorp.io' is a professional company domain, indicating a business affiliation.
+
+  Legitimacy Assessment:
+    Legitimate: Yes
+    Reasoning: The message is coherent, contains realistic company information, and requests services in a professional manner with a clear budget and requirements.
+
+  Overall Classification:
+    Quality: HIGH
+    Recommendation: Proceed with further qualification and outreach to discuss project specifics.
+
+============================================================
+Lead ID: lead_002
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): No
+    Reasoning: No explicit budget mentioned, and the request seems to ask for free information.
+
+  Domain Assessment:
+    Type: personal
+    Reasoning: Email domain is a common free email provider (gmail.com).
+
+  Legitimacy Assessment:
+    Legitimate: No
+    Reasoning: The message is vague and lacks professional tone or detailed inquiries. It's more of a casual request than a serious business inquiry.
+
+  Overall Classification:
+    Quality: SPAM
+    Recommendation: Do not engage with this lead as it appears to be a spam request.
+
+============================================================
+Lead ID: lead_003
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): Yes
+    Estimated Amount: $75,
+000.00
+    Reasoning: The lead explicitly states a budget of $75,
+000 for the project, which exceeds the $25,
+000 threshold.
+
+  Domain Assessment:
+    Type: business
+    Reasoning: The email domain innovatehealth.com is a professional company domain, indicating a legitimate business.
+
+  Legitimacy Assessment:
+    Legitimate: Yes
+    Reasoning: The message is coherent, details a specific service requirement (data analytics), and includes appropriate professional language and contact information.
+
+  Overall Classification:
+    Quality: HIGH
+    Recommendation: Proceed with the lead, schedule a discussion to explore their requirements further.
+
+============================================================
+Lead ID: lead_004
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): No
+    Reasoning: No budget is mentioned in the message.
+
+  Domain Assessment:
+    Type: suspicious
+    Reasoning: The email domain is from a temporary email service.
+
+  Legitimacy Assessment:
+    Legitimate: No
+    Reasoning: The message lacks coherence and substance, and the company name seems generic.
+
+  Overall Classification:
+    Quality: SPAM
+    Recommendation: Mark as spam and do not engage.
+
+============================================================
+Lead ID: lead_005
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): Yes
+    Estimated Amount: $200,
+000.00
+    Reasoning: The lead explicitly mentions a projected investment of $200,
+000, which exceeds the $25,
+000 threshold.
+
+  Domain Assessment:
+    Type: business
+    Reasoning: The email domain 'globalfinance.com' belongs to a professional company, indicating a legitimate business.
+
+  Legitimacy Assessment:
+    Legitimate: Yes
+    Reasoning: The message is coherent, provides realistic company information, and includes a clear request for a discovery call, suggesting genuine interest.
+
+  Overall Classification:
+    Quality: HIGH
+    Recommendation: Proceed with scheduling the discovery call and prepare relevant information on capabilities and compliance certifications.
+
+============================================================
+Lead ID: lead_006
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): No
+    Estimated Amount: $1,
+000.00
+    Reasoning: The lead indicates a budget of $500-$1000, which is below the $25,
+000 threshold.
+
+  Domain Assessment:
+    Type: personal
+    Reasoning: The email domain is yahoo.com, which is a common free email provider.
+
+  Legitimacy Assessment:
+    Legitimate: Yes
+    Reasoning: The lead message is coherent and professional, and contains realistic information about a freelance consulting project.
+
+  Overall Classification:
+    Quality: MEDIUM
+    Recommendation: Follow up with the lead to explore the project further, but set expectations regarding the budget.
+
+============================================================
+Lead ID: lead_007
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): No
+    Reasoning: The message does not mention any realistic project budget or investment amounts.
+
+  Domain Assessment:
+    Type: suspicious
+    Reasoning: The email domain 'prize-notification.biz' appears to be spam-like and is associated with promotional or scam messages.
+
+  Legitimacy Assessment:
+    Legitimate: No
+    Reasoning: The message is incoherent, contains spammy language, and requests sensitive information, indicating it's a scam rather than a legitimate inquiry.
+
+  Overall Classification:
+    Quality: SPAM
+    Recommendation: Do not engage; mark as spam and block the sender.
+
+============================================================
+Lead ID: lead_008
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): Yes
+    Estimated Amount: $85,
+000.00
+    Reasoning: The lead explicitly states a budget of $85,
+000 for the project, exceeding the $25,
+000 threshold.
+
+  Domain Assessment:
+    Type: business
+    Reasoning: The email domain 'manufacturingpro.net' appears to be a professional domain associated with a legitimate business.
+
+  Legitimacy Assessment:
+    Legitimate: Yes
+    Reasoning: The message is coherent, provides realistic company information, and outlines a clear request with supporting details about budget and project timelines.
+
+  Overall Classification:
+    Quality: HIGH
+    Recommendation: Proceed with discussions to explore project requirements and next steps.
+
+============================================================
+Lead ID: lead_009
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): No
+    Reasoning: No budget or investment amount mentioned in the message.
+
+  Domain Assessment:
+    Type: suspicious
+    Reasoning: The email domain noreply@test.com suggests it may be a temporary or generic no-reply address.
+
+  Legitimacy Assessment:
+    Legitimate: No
+    Reasoning: The message lacks coherent content and details, suggesting it may not be a genuine inquiry.
+
+  Overall Classification:
+    Quality: SPAM
+    Recommendation: Do not engage with this lead as it appears to be spam.
+
+============================================================
+Lead ID: lead_010
+============================================================
+
+  Budget Assessment:
+    Sufficient (>=$25k): Yes
+    Estimated Amount: $500,
+000.00
+    Reasoning: The lead explicitly mentions a budget of $500,
+000 for a pilot project, which exceeds the $25,
+000 threshold.
+
+  Domain Assessment:
+    Type: business
+    Reasoning: The email domain 'retailgiant.com' is a professional company domain, indicating it belongs to a legitimate business.
+
+  Legitimacy Assessment:
+    Legitimate: Yes
+    Reasoning: The message is coherent, comes from a recognized Fortune 500 company, and contains requests relevant to a strategic partnership in a specific domain.
+
+  Overall Classification:
+    Quality: HIGH
+    Recommendation: Proceed with engagement and follow-up to discuss potential collaboration.
+
+============================================================
+SUMMARY
+============================================================
+
+Total leads processed: 10
+High quality leads: 5
+Medium quality leads: 1
+Low quality leads: 0
+Spam leads: 4
+
+Qualified leads (budget + business domain + medium+ quality): 5
+
+Qualified lead IDs:
+  - lead_001
+  - lead_003
+  - lead_005
+  - lead_008
+  - lead_010
