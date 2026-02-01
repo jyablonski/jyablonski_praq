@@ -8,15 +8,30 @@ Tax returns are filed annually, with April 15 being the deadline (or the next bu
 
 ## Annual Tax Filing Checklist
 
-### Documents to Gather
+## 1. Gather Documents
 
-| Document | Source | Purpose |
-| --------- | ------------------------- | --------------------------------------------- |
-| W-2 | Employer (Axios) | Reports wages and taxes withheld |
-| 1099-R | Fidelity | Reports Roth IRA conversion (backdoor Roth) |
-| 1099-INT | Ally | Reports HYSA interest income |
-| 1099-SA | WexHealth (if applicable) | Reports HSA distributions |
-| Form 5498 | Fidelity | Confirms IRA contributions (for your records) |
+- **W-2** from employer (wages, withholdings, 401k/HSA contributions)
+- **1099-INT** from banks (HYSA interest)
+- **1099-SA** from HSA provider (if you took distributions)
+- **1099-DIV / 1099-B** from brokerages (if applicable)
+- **1099-R** (only if you took retirement distributions)
+
+## 2. File on FreeTaxUSA
+
+1. Sign in and start new return
+1. Import W-2 for 99% of the tax return
+1. Import 1099-INT for interest income
+1. Enter 1099-SA under Deductions/Credits -> HSA section (confirm used for qualified expenses)
+1. Skip itemized deductions -> take standard deduction
+1. Review state return (CA pulls from federal)
+1. E-file with direct deposit info
+
+## 3. Quick Notes
+
+- 401k/HSA contributions already reflected in W-2, no extra entry needed
+- Roth IRA contributions aren't reported on tax return
+- Standard deduction beats itemizing unless you have mortgage interest from a mortgage or condo
+- File after IRS opens (late January) for fastest processing
 
 ### Step-by-Step Filing Process
 
