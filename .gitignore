@@ -173,3 +173,4 @@ notes/private/**
 system_design/cases/**example**
 *.pkl
 notes/cooking/**
+!opencode/.opencode.json
