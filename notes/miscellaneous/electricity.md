@@ -212,3 +212,81 @@ So the full path is:
 1. You plug in devices, which draw current based on their needs
 1. Current flows back through neutral to complete the circuit
 1. You're billed for kilowatt-hours (power × time)
+
+## Inverter
+
+An inverter converts DC (direct current) power to AC (alternating current) power. Batteries store and output DC, but most household appliances and anything with a standard wall plug expects 120V AC (in the US). The inverter bridges that gap.
+
+Pure sine wave inverters produce a clean, smooth AC waveform that matches what comes out of a wall outlet. Modified sine wave inverters are cheaper but produce a choppier waveform that can cause issues with sensitive electronics, motors, and audio equipment.
+
+Inverters are rated by wattage, which defines how much load they can handle at once. A 2000W inverter can power devices drawing up to 2000 watts simultaneously. Most also have a surge rating (brief peak capacity) for devices that draw extra power at startup, like compressors or motors.
+
+Every time DC is converted to AC through an inverter, roughly 10-15% of energy is lost to the conversion. This is why it's more efficient to run devices on DC directly when possible, and only use the inverter for things that genuinely need AC power.
+
+Many devices that plug into AC outlets (laptops, phone chargers, TVs) have internal power bricks that immediately convert AC back to DC at whatever voltage the device needs. Running these through an inverter means two conversions: DC to AC, then AC back to DC, with losses at each step. Using a direct DC adapter (like a 12V-to-USB-C PD charger for a laptop) eliminates both conversions.
+
+## DC-to-DC Charger
+
+A DC-to-DC charger takes DC power from one source and converts it to the correct voltage and current profile needed to charge a battery. It regulates the output to match the specific charge requirements of the target battery chemistry (lithium, AGM, lead-acid, etc.).
+
+Different battery chemistries require different charge profiles. Lithium (LiFePO4) batteries need precise voltage cutoffs and can accept high charge rates. Lead-acid batteries need multi-stage charging (bulk, absorption, float). A DC-to-DC charger handles these profiles automatically.
+
+The charger also isolates the source from the target. In a vehicle application, this means the starter battery and house battery are electrically decoupled. The charger draws from one side and outputs a regulated charge to the other, preventing voltage irregularities from one system affecting the other.
+
+Without a DC-to-DC charger, directly connecting two batteries with different chemistries or states of charge can result in undercharging, overcharging, or uncontrolled current flow between them.
+
+## Solar Panels
+
+Solar panels generate DC electricity from sunlight using photovoltaic cells. The output voltage and current vary based on sunlight intensity, panel angle, temperature, and shading.
+
+Panels are rated by wattage under ideal lab conditions (called STC, standard test conditions). Real-world output is typically 70-85% of the rated value depending on conditions.
+
+Solar panels feed into a charge controller before reaching the battery. The charge controller regulates the panel's variable output into the correct charge profile for the battery. MPPT (Maximum Power Point Tracking) controllers are more efficient than PWM (Pulse Width Modulation) controllers. MPPT controllers continuously adjust to extract the maximum available power from the panels, converting excess voltage into additional current. This makes them 20-30% more efficient than PWM in most conditions.
+
+Panels can be wired in series (increases voltage, current stays the same) or parallel (increases current, voltage stays the same). Series wiring is more common with MPPT controllers because the higher voltage converts well into charging current. The tradeoff is that series strings are more affected by partial shading, since one shaded panel reduces the output of the entire string.
+
+## Battery Bank
+
+A battery bank is one or more batteries connected together to store electrical energy as DC power. Banks can be wired in series (increases voltage), parallel (increases capacity at the same voltage), or series-parallel (both).
+
+### Lithium (LiFePO4)
+
+The dominant chemistry for off-grid and mobile applications. Key characteristics: ~95%+ charge/discharge efficiency, usable down to roughly 90% depth of discharge, flat voltage curve through most of the discharge range, thousands of charge cycles (3000-5000+), lighter weight per kWh than lead-acid, and fast charge acceptance. More expensive upfront but lower cost per cycle over the battery's lifetime.
+
+### Lead-Acid / AGM
+
+Older, cheaper chemistry. Lower charge efficiency (~80%), only usable to about 50% depth of discharge without significantly shortening lifespan, heavier per kWh, fewer charge cycles (300-500 for deep cycle), and slower charge acceptance. Still used where upfront cost is the priority.
+
+### Key Specs
+
+- Capacity (Ah): how much charge the battery holds. A 200Ah battery can theoretically deliver 200 amps for one hour, or 10 amps for 20 hours.
+- Voltage: most systems are 12V or 24V. Higher voltage systems can use thinner wiring for the same power delivery.
+- Depth of discharge (DoD): how much of the rated capacity you can actually use. Deeper discharge shortens lifespan, especially for lead-acid.
+- Cycle life: how many full charge/discharge cycles the battery can handle before capacity degrades significantly.
+
+## Battery Monitoring
+
+### How It Works
+
+A shunt-based battery monitor measures everything flowing in and out of a battery bank. The shunt is a precision, low-resistance conductor wired in series on the negative cable. All current passes through it. By measuring the tiny voltage drop across itself, the shunt calculates how much current is flowing and in which direction (charging vs discharging).
+
+This is called coulomb counting. The monitor knows the total capacity of the bank (configured during setup) and keeps a running tally of amp-hours in and amp-hours out to derive state of charge.
+
+Think of it like a water meter on a pipe. It doesn't divert anything or draw meaningful power. It sits in the path and measures what passes through.
+
+### What It Reports
+
+- State of charge (percentage remaining)
+- Voltage
+- Current (amps flowing in or out)
+- Power (watts)
+- Time remaining at current draw
+- Historical data (deepest discharge, cumulative energy throughput)
+
+### Accuracy and Drift
+
+Current measurement accuracy is typically within ~1%. However, state of charge estimates can drift over time because small measurement errors compound across thousands of readings.
+
+To correct for this, monitors use a synchronization feature. When the battery reaches a known full state (voltage hits a set threshold and current drops to near zero, meaning the battery has stopped accepting charge), the monitor resets its counter to 100%. This zeros out accumulated drift. With periodic full charges, state of charge accuracy stays within 2-3%.
+
+Lithium batteries have a very flat voltage curve between roughly 20-80% charge, meaning voltage alone is a poor indicator of remaining capacity. This is why coulomb counting through a shunt is the preferred monitoring method for lithium rather than simple voltage measurement.
