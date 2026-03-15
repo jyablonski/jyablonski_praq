@@ -1,5 +1,29 @@
 # Car Engine Components & How They Work
 
+## Complete Flow
+
+1. Battery provides electrical power to the starter motor
+1. Starter motor turns the crankshaft to start the engine
+1. Crankshaft rotates and drives the camshaft via the timing chain
+1. Camshaft opens and closes the intake and exhaust valves in sync with the pistons
+1. Air-fuel mixture enters the cylinders during the intake stroke
+1. Spark plugs ignite the mixture during the power stroke, creating combustion
+1. Combustion forces the pistons down, generating power to turn the crankshaft
+1. Flywheel attached to the crankshaft helps smooth out power delivery and maintain momentum between combustion cycles
+1. Crankshaft sends power to the transmission, which adjusts torque and speed depending on the gear (lower gears = more torque for acceleration, higher gears = more speed for cruising)
+1. Power is sent through the driveshaft to the differential, which splits power between the left and right wheels while allowing them to spin at different speeds during turns. The differential also applies the final drive ratio, multiplying torque one last time before it reaches the wheels.
+1. Axles (half-shafts) carry the rotation from the differential to the wheel hubs, propelling the car forward.
+
+Extra components:
+
+- Alternator: Generates electricity to recharge the battery and power electrical systems while the engine is running
+- Fuel injectors — Spray fuel into the intake air stream for precise control of the air-fuel mixture
+- ECU — Computer that manages fuel injection, ignition timing, and other parameters for optimal performance and efficiency
+- Lubrication system — Circulates oil to reduce friction and wear on moving parts
+- Cooling system / Radiator — Circulates coolant to prevent overheating
+- Exhaust system — Carries burnt gases away from the cylinders, through the catalytic converter (which reduces harmful emissions), and out the muffler (which dampens the sound of those rapid-fire pressure waves from combustion).
+- Air intake system — Filters and directs air into the engine, sometimes includes a mass airflow sensor to measure incoming air for fuel calculations
+
 ## The Four-Stroke Cycle
 
 This is the fundamental process that powers your engine. Each cylinder goes through these four steps:
@@ -32,6 +56,12 @@ This is the fundamental process that powers your engine. Each cylinder goes thro
 - The exhaust valve closes and the cycle repeats
 
 Key fact: The crankshaft rotates twice (720 degrees) to complete one full four-stroke cycle.
+
+This cycle happens many times per second across all cylinders, creating the continuous power that propels your car. It takes less than 200 ms for all 4 cylinders to complete a full cycle at 3,000 RPM.
+
+- The flywheel helps smooth out the power delivery by storing rotational energy during the power stroke and releasing it between strokes, preventing the engine from stalling and providing momentum to keep the crankshaft spinning.
+
+An engine stall is basically the crankshaft slowing down so much that the flywheel can't carry it through to the next power stroke. Mainly only a problem in manual transmission cars if you let the RPMs drop too low while in gear, or if you release the clutch too quickly without enough throttle. In an automatic, the torque converter helps prevent stalling by allowing some slippage at low speeds.
 
 ## Major Engine Components
 
@@ -176,7 +206,7 @@ Performance tuning:
 
 ### Front-Wheel Drive (FWD) Setup
 
-Crankshaft → Transaxle → Axles → Front Wheels
+Crankshaft -> Transaxle -> Axles -> Front Wheels
 
 Transaxle: Combines transmission and differential in one unit
 
@@ -190,7 +220,7 @@ Axles (CV axles/half-shafts): Two short shafts that connect the transaxle to eac
 
 ### Rear-Wheel Drive (RWD) Setup
 
-Crankshaft → Transmission → Driveshaft → Differential → Axles → Rear Wheels
+Crankshaft -> Transmission -> Driveshaft -> Differential -> Axles -> Rear Wheels
 
 ## Transmission & Gears
 

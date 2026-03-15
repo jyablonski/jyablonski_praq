@@ -239,3 +239,79 @@ Fundamental analysis looks at the business itself — revenue, earnings, growth,
 Technical analysis looks at price charts, patterns, and trading volume to predict future price movement. Fundamentalists think technicals are basically astrology; technicians think fundamentals are already priced in and patterns reveal market psychology.
 
 Most serious institutional investors lean fundamental, though many use some technical analysis for timing entries and exits.
+
+## How Stock Prices Move
+
+- Stock prices are fundamentally driven by supply and demand. Every price reflects the highest bid and lowest ask at any given moment.
+- When a fund drops 5%, that does not mean every holding dropped 5%. It is a weighted average across all positions. Some holdings may be up, others down significantly, and the net effect averages out.
+
+### What causes daily fluctuations
+
+- New information: earnings reports, economic data, Fed announcements, geopolitical events
+- Sentiment and expectations: markets are forward-looking. A stock can drop on good earnings if the market expected great earnings. The gap between expectations and reality matters more than absolute numbers.
+- Liquidity dynamics: in thinly traded stocks or during off-hours, small orders can move prices disproportionately
+- Algorithmic trading: trend-following algos, mean-reversion bots, and options market makers hedging delta exposure create feedback loops
+- Options market mechanics: market makers hedging gamma exposure can amplify moves in both directions, especially near expiration dates
+- Cross-asset correlations: bond yields, dollar strength, oil prices all ripple into equities
+
+## The Snowball Effect
+
+- Positive feedback loops are real. Drops trigger stop-losses, which create more selling, which triggers more stops. Same dynamic works on the way up.
+- There are natural brakes in both directions:
+  - On the way down: value buyers step in at cheaper prices, short sellers cover to lock in profits, institutional rebalancers buy to maintain allocations, companies do buybacks
+  - On the way up: profit-takers sell, new short sellers enter, portfolio managers trim oversized positions, buyers step away from unattractive risk/reward
+- The snowball gets dangerous when leverage and forced selling enter the picture. Margin calls force liquidation at any price, which pushes prices lower, which triggers more margin calls. This is the cascade dynamic behind major crashes.
+- Volatility clusters: a big down day increases uncertainty, widens bid-ask spreads, reduces liquidity, and makes the next big order move prices more. Calm begets calm, chaos begets chaos.
+
+## What Causes Major Drops (15-20%+)
+
+- Real economic shocks that threaten corporate earnings broadly (COVID, 2008 housing collapse)
+- Credit or liquidity crises where the financial plumbing breaks and institutions need cash to survive regardless of stock valuations
+- Policy shocks or regime changes that rewrite the rules markets are pricing against
+- Bubble deflation where speculative prices correct back to reality
+
+### Where the money "goes"
+
+- Most of it evaporates. Market cap is an extrapolation based on the last traded price multiplied across all shares. If the last trade drops from $100 to $80, no one received the $20 difference. The implied valuation simply changed.
+- Same concept as a house: Zillow says your house is worth $700k based on comps. If comps drop to $600k, you "lost" $100k but no one took it from you.
+- During drawdowns people do move capital into safe havens (treasuries, money market funds, cash, gold), but the total wealth in the system contracts rather than simply relocating.
+
+## US Debt, Money Printing, and Inflation
+
+### How government debt works
+
+- When the government spends more than it collects in taxes, it borrows the difference by issuing treasury bonds.
+- Bonds are IOUs: give the government money now, get it back later with interest. Creditors include US individuals, mutual funds, pension funds, banks, the Fed, and foreign governments.
+
+### What is a bond
+
+- A loan with agreed-upon terms. Common structure: buy a $10,000 bond with a 5% coupon, receive $250 every six months for the bond's term, then get $10,000 back at maturity.
+- Shorter-term treasury bills work at a discount: pay $9,524, get $10,000 back in a year.
+- Bonds are considered the safest investment because the US has never defaulted. They provide known, guaranteed returns, which is why retirees and pension funds hold them.
+
+### How printing money causes inflation
+
+- Normally, investors buy government bonds with existing dollars. No new money is created, just redirected from private sector to government.
+- The inflationary version: the Fed creates new dollars and buys the bonds. This is effectively the government funding itself with newly created money through an intermediary step.
+- More dollars chasing the same amount of goods means prices rise. The ratio of money to real economic output shifts.
+- COVID was a textbook example: trillions in stimulus entered the economy while supply chains were broken. Tons of new dollars, same or fewer goods, prices spiked.
+
+### Why the bond mechanism exists
+
+- The Treasury (spends and borrows) and the Federal Reserve (manages money supply) are intentionally separate institutions.
+- If politicians could directly print money, the temptation to overdo it would be irresistible.
+- The bond step provides institutional separation and gives the Fed discretion to say no. Fed independence is critical to the system.
+- If the Fed becomes politically captured and automatically monetizes whatever debt the Treasury issues, the separation is meaningless and you effectively have direct money printing.
+
+### The debt spiral feedback loop
+
+- Government prints money to pay debts, which causes inflation, which erodes the dollar, which makes creditors demand higher interest rates, which increases borrowing costs, which requires printing even more money
+- This is the dynamic that played out in Weimar Germany, Zimbabwe, Venezuela, and Argentina
+- The US is far from that point due to dollar reserve currency status and the size/productivity of the economy, but the mechanism is the same
+
+### Social security removal impact
+
+- Roughly $1.4 trillion per year flowing to about 70 million recipients, most of whom spend almost all of it on basic expenses
+- Removing it yanks a massive chunk of consumer spending from the economy
+- Second-order effect: working-age adults step in to support parents, reducing their own disposable income
+- Would likely trigger a significant recession from the demand shock
