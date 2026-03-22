@@ -684,3 +684,32 @@ SELECT * FROM public.test_users WHERE age = 25;
 
 drop table public.test_users;
 ```
+
+### How GIN Works for tsvector
+
+GIN builds an inverted index: for each distinct lexeme across all indexed documents, it stores a posting list of heap tuple pointers. A query for `to_tsquery('quick & fox')` looks up the posting lists for "quick" and "fox" and intersects them.
+
+The pending list optimization batches new entries to avoid the cost of inserting many lexemes into the main tree structure on every row insert. The `gin_pending_list_limit` setting (default 4MB) controls when the pending list gets flushed.
+
+### Setup Pattern
+
+```sql
+-- stored generated column (preferred, avoids recomputation on every query)
+alter table articles add column search_vector tsvector
+    generated always as (
+        to_tsvector('english', coalesce(title, '') || ' ' || coalesce(body, ''))
+    ) stored;
+
+create index concurrently idx_articles_search
+    on articles using gin(search_vector);
+
+-- querying
+select title, ts_rank(search_vector, q) as rank
+from articles, to_tsquery('english', 'postgres & concurrency') q
+where search_vector @@ q
+order by rank desc;
+```
+
+### GiST as an Alternative
+
+GiST also supports tsvector but uses a lossy representation (bit signatures). Lookups require a recheck against the heap. GiST is smaller and faster to update but slower to query. Use GiST when write performance matters more than read performance, or when you need to combine the full-text predicate with other GiST-indexable predicates in a multi-column index.
