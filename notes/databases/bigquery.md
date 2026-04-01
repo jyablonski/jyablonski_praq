@@ -4,7 +4,7 @@
 
 BigQuery is Google's fully managed, serverless cloud data warehouse built on Google's internal Dremel query engine. The core architectural idea is complete separation of compute and storage — you do not provision clusters or manage servers. Queries are automatically parallelized across as many machines as needed, and storage is backed by Colossus, Google's distributed filesystem.
 
----
+______________________________________________________________________
 
 ## Concrete strengths
 
@@ -24,12 +24,12 @@ BigQuery is Google's fully managed, serverless cloud data warehouse built on Goo
 
 The main scaling caveat is high-concurrency dashboarding. On-demand gives no SLA guarantees under heavy simultaneous query load. Flat-rate reservations or Snowflake's multi-cluster warehouse model can be more predictable for that pattern.
 
----
+______________________________________________________________________
 
 ## BigQuery vs Snowflake
 
 | | BigQuery | Snowflake |
-|---|---|---|
+| -------------------- | ------------------------------------------------- | --------------------------------------------- |
 | Compute model | Serverless, automatic | Virtual warehouses, explicitly sized |
 | Concurrency | Can queue under load on-demand | Multi-cluster auto-scaling, predictable |
 | Cloud neutrality | GCP-native (Omni for cross-cloud queries) | Runs identically on AWS, GCP, Azure |
@@ -41,7 +41,7 @@ The main scaling caveat is high-concurrency dashboarding. On-demand gives no SLA
 
 Snowflake is more turnkey for high-concurrency BI and multi-cloud organizations. BigQuery is better for GCP-native teams, bursty/unpredictable workloads, petabyte-scale queries, and ML pipelines integrated with Vertex AI.
 
----
+______________________________________________________________________
 
 ## GCS ingestion patterns
 
@@ -77,13 +77,14 @@ Handles scheduling for recurring GCS-to-BigQuery loads without needing Airflow. 
 
 Use this for: simple "pick up new files every hour and append" patterns with no orchestrator.
 
----
+______________________________________________________________________
 
 ## Streaming patterns
 
 ### GCS + load job (batch)
 
 Best for any pipeline where latency of minutes to hours is acceptable. Examples:
+
 - NBA analytics pipeline hitting the stats API on a schedule
 - nightly CRM export (Salesforce CSV dump)
 - log archival from Cloud Logging
@@ -114,6 +115,7 @@ gcloud pubsub subscriptions create user-events-bq-sub \
 ```
 
 Data lands tabular — JSON keys map to BigQuery column names and are deserialized into the correct types. Common gotchas:
+
 - key name mismatch silently drops the field (null in that column)
 - wrong JSON type causes message rejection
 - timestamp fields expect RFC3339 format
@@ -132,7 +134,7 @@ The low-level write surface for cases where correctness guarantees matter. Three
 
 Use this for: CDC/database replication (Debezium → BigQuery), financial transaction ledgers where duplicates are unacceptable, internal ingestion platform infrastructure, atomic partition replacement.
 
----
+______________________________________________________________________
 
 ## Pub/Sub topic schema
 
@@ -156,12 +158,13 @@ gcloud pubsub schemas create user-events-schema \
 Nullable Avro fields use union syntax `["null", "string"]`, which maps to NULLABLE in BigQuery. With `--message-encoding=JSON` the application still publishes plain JSON — no Avro serialization required on the producer side.
 
 Avro → BigQuery type mapping:
+
 - `string` → STRING
 - `double` / `float` → FLOAT64
 - `long` / `int` → INT64
 - `boolean` → BOOL
 
----
+______________________________________________________________________
 
 ## Terraform module pattern
 
@@ -190,3 +193,106 @@ module "order_events" {
 The module outputs the topic name, which application services use as their only configuration dependency.
 
 One caveat: the Avro schema and BigQuery schema are separate definitions that must be kept in sync manually. The type mapping is deterministic so it is possible to derive one from the other programmatically, but for most teams manually maintaining both in the module call is sufficient given how infrequently schemas change.
+
+## How BigQuery Loads Data from GCS
+
+BigQuery uses `LOAD DATA` (not `COPY INTO` like Snowflake). It takes a `gs://` URI directly with no stage or storage integration needed.
+
+```sql
+LOAD DATA INTO my_dataset.my_table
+FROM FILES (
+  format = 'PARQUET',
+  uris = ['gs://my-bucket/path/*.parquet']
+);
+```
+
+Permissions are determined by whoever submits the BigQuery job. If your Airflow worker submits the job, BigQuery uses the Airflow worker's identity for both the BigQuery write and the GCS read. No secondary service account in the middle.
+
+For Parquet specifically, BigQuery matches columns by name from the file metadata automatically. Snowflake defaults to positional matching and requires `MATCH_BY_COLUMN_NAME` to opt into name-based matching.
+
+In Python, the `google-cloud-bigquery` makes this easy with `load_table_from_uri`, which just calls the BigQuery load API under the hood.
+
+- This is what the Airflow BigQuery operators use.
+
+### Cloud Composer (Managed Airflow) Identity
+
+Cloud Composer attaches a GCP service account to the environment at creation time. All DAG tasks run as that identity by default.
+
+```bash
+gcloud composer environments create my-env \
+  --service-account=airflow-worker@my-project.iam.gserviceaccount.com \
+  --location=us-central1
+```
+
+For a typical setup with GCS reads, GCS writes, BigQuery loads, and Secret Manager access, the service account needs:
+
+- `roles/bigquery.jobUser` on the project
+- `roles/bigquery.dataEditor` on the project or specific datasets
+- `roles/storage.objectViewer` on read-only buckets
+- `roles/storage.objectAdmin` on read/write buckets
+- `roles/secretmanager.secretAccessor` on specific secrets
+
+### Scoping Bucket Access
+
+Grant access per bucket, not project-wide. Can use `for_each` to keep it manageable:
+
+```hcl
+locals {
+  read_buckets  = ["source-bucket-a", "source-bucket-b"]
+  write_buckets = ["output-bucket-a"]
+}
+
+resource "google_storage_bucket_iam_member" "read" {
+  for_each = toset(local.read_buckets)
+  bucket   = each.value
+  role     = "roles/storage.objectViewer"
+  member   = "serviceAccount:${google_service_account.airflow.email}"
+}
+
+resource "google_storage_bucket_iam_member" "write" {
+  for_each = toset(local.write_buckets)
+  bucket   = each.value
+  role     = "roles/storage.objectAdmin"
+  member   = "serviceAccount:${google_service_account.airflow.email}"
+}
+```
+
+Adding a new bucket is a one-line change to the list.
+
+Alternatively, use IAM Conditions to grant access by naming convention without modifying Terraform for each new bucket:
+
+```hcl
+resource "google_project_iam_member" "storage_read" {
+  project = var.project_id
+  role    = "roles/storage.objectViewer"
+  member  = "serviceAccount:${google_service_account.airflow.email}"
+
+  condition {
+    title      = "airflow-buckets-only"
+    expression = "resource.name.startsWith(\"projects/_/buckets/airflow-\")"
+  }
+}
+```
+
+### GCP IAM vs AWS IAM + Bucket Policies
+
+AWS has two independent systems that both grant access: IAM policies on the role and S3 bucket policies on the resource. Either one can grant access independently.
+
+GCP has one unified IAM system. Bindings can be set at different levels (org, folder, project, bucket), but it is all the same mechanism. There is no separate resource-attached policy document like S3 bucket policies.
+
+### iam_member vs iam_binding
+
+Both express the same IAM binding. The difference is operational:
+
+- `google_storage_bucket_iam_member`: Adds a single member to a role on the bucket. Additive, does not interfere with other bindings. Safe default.
+- `google_storage_bucket_iam_binding`: Sets the complete list of members for a role on the bucket. Authoritative for that role, will remove members not in the list.
+
+Use `iam_member` unless you specifically need to enforce "only these principals should have this role" on a resource. `iam_binding` will blow away grants made by other teams or Terraform workspaces managing the same bucket.
+
+### Per-Task Permission Escalation
+
+If different DAGs need different permission scopes, use service account impersonation rather than granting the Composer service account the union of all permissions:
+
+- Grant the Composer service account `roles/iam.serviceAccountTokenCreator` on a more privileged service account.
+- Pass `impersonation_chain` in the Airflow operator.
+- The base identity stays narrow, escalation happens per-task.
