@@ -175,3 +175,4 @@ system_design/cases/**example**
 notes/cooking/**
 !opencode/.opencode.json
 .github/.SKILLS/
+.codex
