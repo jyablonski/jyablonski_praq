@@ -176,3 +176,4 @@ notes/cooking/**
 !opencode/.opencode.json
 .github/.SKILLS/
 .codex
+*.xpi
