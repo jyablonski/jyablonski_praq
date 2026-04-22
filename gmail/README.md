@@ -11,22 +11,24 @@ This directory contains a minimal Python script that creates a Gmail draft via t
 ## What The Script Does
 
 - Uses OAuth to authenticate as `jyablonski9@gmail.com`
-- Requests only the Gmail compose scope
+- Requests Gmail compose access and basic Gmail settings access
 - Builds a small hello-world style email
+- Pulls the account's configured Gmail signature
 - Creates a draft in that account's Gmail `Drafts`
 - Leaves `To` optional by default
 
 Important: this creates a draft in `Drafts`, not in the `Inbox`.
 
-## Minimal Permission Scope
+## Permission Scopes
 
 The script uses:
 
 ```text
 https://www.googleapis.com/auth/gmail.compose
+https://www.googleapis.com/auth/gmail.settings.basic
 ```
 
-That is the narrow scope that still allows draft creation.
+The compose scope allows draft creation. The settings scope allows the script to read the configured Gmail signature from the account's send-as settings.
 
 ## Setup For A Personal Gmail Account
 
@@ -86,7 +88,7 @@ In that setup, a script can create drafts in a stakeholder's mailbox on their be
 python gmail/main.py
 ```
 
-If you change scopes later, delete `gmail/token.json` and re-run so Google issues a new token with the updated permissions.
+If you change scopes later, re-run the script so Google issues a new token with the updated permissions. The script will automatically request fresh consent when the cached token is missing one of the required scopes.
 
 ## References
 

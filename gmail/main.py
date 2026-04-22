@@ -1,15 +1,21 @@
 from __future__ import annotations
 
 import base64
+import html
+import re
 from email.message import EmailMessage
 from pathlib import Path
+from typing import Any
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-SCOPES = ["https://www.googleapis.com/auth/gmail.compose"]
+SCOPES = [
+    "https://www.googleapis.com/auth/gmail.compose",
+    "https://www.googleapis.com/auth/gmail.settings.basic",
+]
 SCRIPT_DIR = Path(__file__).resolve().parent
 CREDENTIALS_PATH = SCRIPT_DIR / "credentials.json"
 TOKEN_PATH = SCRIPT_DIR / "token.json"
@@ -23,10 +29,10 @@ def get_credentials() -> Credentials:
     if TOKEN_PATH.exists():
         creds = Credentials.from_authorized_user_file(str(TOKEN_PATH), SCOPES)
 
-    if creds and creds.valid:
+    if creds and creds.valid and creds.has_scopes(SCOPES):
         return creds
 
-    if creds and creds.expired and creds.refresh_token:
+    if creds and creds.expired and creds.refresh_token and creds.has_scopes(SCOPES):
         creds.refresh(Request())
     else:
         if not CREDENTIALS_PATH.exists():
@@ -42,16 +48,64 @@ def get_credentials() -> Credentials:
     return creds
 
 
-def build_draft_message() -> dict[str, dict[str, str]]:
+def html_to_plain_text(value: str) -> str:
+    value = re.sub(r"(?i)<br\s*/?>", "\n", value)
+    value = re.sub(r"(?i)</(div|p|li|tr|h[1-6])>", "\n", value)
+    value = re.sub(r"<[^>]+>", "", value)
+    value = html.unescape(value)
+    value = re.sub(r"\n{3,}", "\n\n", value)
+    return value.strip()
+
+
+def get_gmail_signature(service: Any) -> str:
+    send_as_addresses = (
+        service.users()
+        .settings()
+        .sendAs()
+        .list(userId="me")
+        .execute()
+        .get("sendAs", [])
+    )
+
+    send_as = next(
+        (
+            address
+            for address in send_as_addresses
+            if address.get("sendAsEmail") == ACCOUNT_EMAIL
+        ),
+        None,
+    )
+    if send_as is None:
+        send_as = next(
+            (address for address in send_as_addresses if address.get("isPrimary")),
+            None,
+        )
+
+    return (send_as or {}).get("signature", "")
+
+
+def build_draft_message(signature: str = "") -> dict[str, dict[str, str]]:
+    body_text = (
+        "Hello world-ish from a minimal Python script.\n\n"
+        "This draft was created with the Gmail API."
+    )
+
     message = EmailMessage()
     message["From"] = ACCOUNT_EMAIL
     if TO_EMAIL:
         message["To"] = TO_EMAIL
     message["Subject"] = "Hello from the Gmail API"
-    message.set_content(
-        "Hello world-ish from a minimal Python script.\n\n"
-        "This draft was created with the Gmail API."
-    )
+
+    plain_parts = [body_text]
+    if signature:
+        plain_parts.append(html_to_plain_text(signature))
+    message.set_content("\n\n".join(part for part in plain_parts if part))
+
+    html_body = "<p>Hello world-ish from a minimal Python script.</p>"
+    html_body += "<p>This draft was created with the Gmail API.</p>"
+    if signature:
+        html_body += f"<br>{signature}"
+    message.add_alternative(html_body, subtype="html")
 
     encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
     return {"message": {"raw": encoded_message}}
@@ -60,10 +114,11 @@ def build_draft_message() -> dict[str, dict[str, str]]:
 def main() -> None:
     creds = get_credentials()
     service = build("gmail", "v1", credentials=creds)
+    signature = get_gmail_signature(service)
     draft = (
         service.users()
         .drafts()
-        .create(userId="me", body=build_draft_message())
+        .create(userId="me", body=build_draft_message(signature))
         .execute()
     )
 
