@@ -5,9 +5,11 @@ import hmac
 import json
 import logging
 import os
+import random
 import re
 import time
 from datetime import UTC, datetime
+from uuid import uuid4
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from slack_sdk import WebClient
@@ -38,17 +40,21 @@ ANNOUNCEMENT_CHANNELS = {
 client = WebClient(token=SLACK_BOT_TOKEN)
 
 
-def require_settings() -> None:
-    if not SLACK_BOT_TOKEN:
-        raise HTTPException(
-            status_code=500,
-            detail="Missing SLACK_BOT_TOKEN environment variable.",
-        )
-
+def require_signing_secret() -> None:
     if not SLACK_SIGNING_SECRET:
         raise HTTPException(
             status_code=500,
             detail="Missing SLACK_SIGNING_SECRET environment variable.",
+        )
+
+
+def require_incident_settings() -> None:
+    require_signing_secret()
+
+    if not SLACK_BOT_TOKEN:
+        raise HTTPException(
+            status_code=500,
+            detail="Missing SLACK_BOT_TOKEN environment variable.",
         )
 
     if not INCIDENT_ANNOUNCE_CHANNEL:
@@ -235,11 +241,68 @@ def extract_submission_value(view_state: dict, block_id: str, action_id: str) ->
     return ""
 
 
+def mask_email(email: str) -> str:
+    local_part, domain = email.split("@", 1)
+    return f"{'*' * len(local_part)}@{domain}"
+
+
+def generate_mock_customer_record(email: str) -> dict:
+    now = datetime.now(UTC)
+    start = datetime(2026, 1, 1, tzinfo=UTC)
+    random_epoch = random.randint(int(start.timestamp()), int(now.timestamp()))
+    last_seen_at = datetime.fromtimestamp(random_epoch, tz=UTC)
+    status = "active" if (now - last_seen_at).days <= 30 else "inactive"
+
+    return {
+        "customer_id": str(uuid4()),
+        "email": mask_email(email),
+        "plan": random.choice(["free", "enterprise"]),
+        "status": status,
+        "last_seen_at": last_seen_at.isoformat().replace("+00:00", "Z"),
+    }
+
+
+@app.post("/slack/db_lookup")
+async def db_lookup_command(request: Request):
+    require_signing_secret()
+    await verify_slack_request(request)
+
+    form = await request.form()
+    query_text = str(form.get("text", "")).strip().lower()
+    user_name = str(form.get("user_name", "unknown-user"))
+
+    if not query_text:
+        return {
+            "response_type": "ephemeral",
+            "text": (
+                "Usage: `/db-lookup <email>`\nExample: `/db-lookup person@example.com`"
+            ),
+        }
+
+    if "@" not in query_text or "." not in query_text.split("@", 1)[-1]:
+        return {
+            "response_type": "ephemeral",
+            "text": (
+                f":warning: `{query_text}` does not look like a valid email.\n"
+                "Try: `/db-lookup person@example.com`"
+            ),
+        }
+
+    record = generate_mock_customer_record(query_text)
+    formatted_record = json.dumps(record, indent=2)
+    return {
+        "response_type": "ephemeral",
+        "text": (
+            f":mag: Lookup result requested by `{user_name}`.\n```{formatted_record}```"
+        ),
+    }
+
+
 @app.post("/slack/incident")
 async def open_incident_modal(
     request: Request,
 ):
-    require_settings()
+    require_incident_settings()
     await verify_slack_request(request)
 
     form = await request.form()
@@ -270,7 +333,7 @@ async def submit_incident_modal(
     request: Request,
     background_tasks: BackgroundTasks,
 ):
-    require_settings()
+    require_incident_settings()
     await verify_slack_request(request)
 
     form = await request.form()

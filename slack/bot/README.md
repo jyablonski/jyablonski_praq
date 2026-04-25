@@ -1,10 +1,13 @@
-# Slack Incident Bot
+# Slack Bot
 
-This directory contains a small FastAPI app that backs a Slack slash command for incident creation. The command opens a modal, collects a few incident details, creates a new Slack channel, invites the requester, and posts an announcement into a selected channel.
+This directory contains a small FastAPI app that backs a few Slack slash commands for incident creation and database lookup simulation.
 
-This is just an example of how you could build out slash commands in Slack and integrate them with internal tools & data.
+- The incident command opens a modal, collects a few incident details, creates a new Slack channel, invites the requester, and posts an announcement into a selected channel.
+- The database lookup command simulates fetching data from an internal database and posting it back to the user in Slack.
 
-It uses ngrok to expose the local API to the internet, so we can have Slack send requests to it and actually test it out. In production, you wouldn't need ngrok and instead the API would just be hosted on a publically available URL.
+This is just an example of how you could build out slash commands in Slack and integrate them with internal tools & data, or to add useful utilities and automation for your team without having to pay for third-party services.
+
+It uses ngrok to expose the local API to the internet, so we can have Slack send requests to it and actually test it out. In production, you wouldn't need ngrok and instead the API would just be hosted on a publically available URL on your infrastructure.
 
 ## Current Flow
 
@@ -172,3 +175,11 @@ ngrok http 8000
 - Channel names are normalized for Slack channel naming rules
 - The incident creation work happens in a FastAPI background task so the Slack request can return quickly
 - Slack request signature verification is enabled on both Slack endpoints
+
+## Examples
+
+<img width="630" height="647" alt="Image" src="https://github.com/user-attachments/assets/20090743-fafe-4b9c-b6f4-9e989a9efd63" />
+
+<img width="1354" height="868" alt="Image" src="https://github.com/user-attachments/assets/d115c4b3-e0f5-41f5-81a2-4d1e77373bf5" />
+
+<img width="809" height="448" alt="Image" src="https://github.com/user-attachments/assets/401f1710-7e86-4278-8e74-28a70ae73d8f" />
