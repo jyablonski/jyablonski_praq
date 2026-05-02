@@ -21,6 +21,12 @@ How you know this is happening:
 
 {What breaks if this is not addressed? Who is affected? Is data loss possible?}
 
+## Dashboards
+
+- Grafana Link 1
+- Grafana Link 2
+- {Any other relevant monitoring dashboards}
+
 ## Prerequisites
 
 - Access to {e.g. AWS console, kubectl, specific Slack channel}
@@ -76,7 +82,25 @@ If the above steps do not resolve the issue:
 | ------ | ------------------- | --------------- | ----------- |
 | {date} | {brief description} | {what fixed it} | {link} |
 
+## Rollback Plan (If Necessary)
+
+> Ideally you just have a dedicated rollback runbook for how to handle rollbacks that you can link. If not, write out the steps here.
+
+If service continues to be degraded after mitigation, consider rolling back the bad change.
+
+- If this is a feature flag, disable it in xyz and monitor for recovery.
+- If this is a code change, follow the steps below.
+
+Rollback Steps:
+
+1. Revert change in K8s for the deployment `kubectl rollout undo service-x/1e23456ffd118db9dc04caf40a442040e5ec99f9`
+   1. This will put out the fire, but the state of `main` will still be broken.
+1. Open a new PR that reverts the offending commit(s) and merge it to `main` to prevent future incidents.
+   1. If the change was a feature flag, open a PR to remove the flag and merge it to `main`.
+1. End state should be that the bad change is no longer running in production and the codebase reflects that change has been rolled back.
+
+If the bad change is related to a database migration that cannot be easily rolled back, there is additional triage you need to do; use your best judgement, escalate if needed.
+
 ## Notes
 
 - {Anything else useful, e.g. "This tends to happen after large batch ingestions on Mondays"}
-- {e.g. "The staging version of this service does not have the same resource limits, so this issue is not reproducible there"}
