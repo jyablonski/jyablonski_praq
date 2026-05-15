@@ -273,3 +273,37 @@ Adjusts the balance between torque (pulling power) and speed to match driving co
 - Serpentine/accessory belt: Check around 60,000 miles
 - TPMS sensors: Can be replaced/fixed during next tire change
 - General maintenance: Consult owner's manual for complete schedule
+
+## Wheel Horsepower
+
+There are 2 different types of horsepower measurements for cars:
+
+1. Crank horsepower is the advertising number: It's what manufacturers publish, and while it's a real measurement, it's done at the engine in isolation, not in the actual car. It represents the theoretical maximum output before any of it has to fight through the drivetrain.
+
+1. Every gas car loses power between the engine and the wheels: This is unavoidable physics. Any mechanical system has friction, and any time you transfer rotational energy through gears, fluids, and bearings, some of it becomes heat instead of motion. There's no such thing as a 100% efficient drivetrain. Even race cars with the most optimized drivetrains lose some power, just less than a typical street car.
+
+1. A chassis dyno gives you the real wheel horsepower number: It measures what's actually being delivered to the road. This is the true performance number, accounting for everything between the engine and pavement.
+
+EVs have much less drivetrain loss because of fewer moving parts and a more direct power delivery, which is why their wheel horsepower is often much closer to their motor's rated horsepower.
+
+## Hybrids
+
+Hybrid cars combine an internal combustion engine with one or more electric motors. The electric motor can assist the engine for better fuel efficiency and performance, and in some cases can power the car on its own for short distances (like in a plug-in hybrid). The battery is charged through regenerative braking and sometimes by plugging in. Hybrids are designed to optimize fuel economy while still providing the benefits of a traditional gasoline engine when needed.
+
+There are multiple types of hybrids:
+
+1. Mild Hybrid: Uses a small electric motor to assist the engine, but can't run on electricity alone. It provides better fuel efficiency and smoother start-stop operation.
+1. Full Hybrid: Can run on the engine, the electric motor, or a combination of both. It can drive short distances on electric power alone, making it more efficient in stop-and-go traffic. Cannot be plugged in; the battery is charged through regenerative braking and engine use.
+1. Plug-in Hybrid: Can be plugged in to charge the battery, allowing for longer electric-only driving ranges. Combines the benefits of a full hybrid with the ability to drive significant distances on electric power alone. Can be driven indefinitely on gas alone if you never plug it in, but the electric mode is where you get your moneys worth.
+
+### Battery Charging
+
+Hybrid batteries can be charged through a few ways:
+
+1. Gas engine often generates more power than the car needs, so some of this is routed to a generator to charge the battery. Engine can also fire up to charge the battery, instead of typical propulsion use.
+1. Regenerative braking captures kinetic energy when you slow down and converts it into electricity to recharge the battery. This is why hybrids feel different when you lift off the gas pedal - they use that opportunity to slow the car and recharge the battery at the same time.
+1. Plug-in hybrids can be charged by plugging into an external power source, allowing for longer electric-only driving ranges.
+
+Hybrid batteries charge by themselves and require 0 maintenance. They're designed to last the life of the car.
+
+Plug-ins can be charged on regular 120V outlets, but it'll take longer than using a dedicated 240V charger. The electricity cost is about the same regardless of the charging method, 240V is just faster.
