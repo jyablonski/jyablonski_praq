@@ -177,3 +177,4 @@ notes/cooking/**
 .github/.SKILLS/
 .codex
 *.xpi
+notes/code_review/*/**
