@@ -6,23 +6,32 @@
 1. Starter motor turns the crankshaft to start the engine
 1. Crankshaft rotates and drives the camshaft via the timing chain
 1. Camshaft opens and closes the intake and exhaust valves in sync with the pistons
+1. Air is drawn through the air intake, past the throttle body, which controls how much air enters the engine based on driver input
 1. Air-fuel mixture enters the cylinders during the intake stroke
 1. Spark plugs ignite the mixture during the power stroke, creating combustion
 1. Combustion forces the pistons down, generating power to turn the crankshaft
 1. Flywheel attached to the crankshaft helps smooth out power delivery and maintain momentum between combustion cycles
-1. Crankshaft sends power to the transmission, which adjusts torque and speed depending on the gear (lower gears = more torque for acceleration, higher gears = more speed for cruising)
+1. Crankshaft sends power to the clutch (manual) or torque converter (automatic), which connects and disconnects the engine from the transmission
+1. Transmission adjusts torque and speed depending on the gear (lower gears = more torque for acceleration, higher gears = more speed for cruising)
 1. Power is sent through the driveshaft to the differential, which splits power between the left and right wheels while allowing them to spin at different speeds during turns. The differential also applies the final drive ratio, multiplying torque one last time before it reaches the wheels.
 1. Axles (half-shafts) carry the rotation from the differential to the wheel hubs, propelling the car forward.
 
 Extra components:
 
 - Alternator: Generates electricity to recharge the battery and power electrical systems while the engine is running
-- Fuel injectors — Spray fuel into the intake air stream for precise control of the air-fuel mixture
-- ECU — Computer that manages fuel injection, ignition timing, and other parameters for optimal performance and efficiency
-- Lubrication system — Circulates oil to reduce friction and wear on moving parts
-- Cooling system / Radiator — Circulates coolant to prevent overheating
-- Exhaust system — Carries burnt gases away from the cylinders, through the catalytic converter (which reduces harmful emissions), and out the muffler (which dampens the sound of those rapid-fire pressure waves from combustion).
-- Air intake system — Filters and directs air into the engine, sometimes includes a mass airflow sensor to measure incoming air for fuel calculations
+- Throttle body: Houses a butterfly valve that regulates airflow into the intake manifold. In modern cars it's electronically controlled (drive-by-wire) by the ECU based on accelerator pedal position
+- Fuel injectors: Spray fuel into the intake air stream for precise control of the air-fuel mixture
+- Fuel pump: Pressurizes fuel from the tank and delivers it to the injectors at the required pressure
+- Ignition coil: Steps up battery voltage to the tens of thousands of volts needed to fire the spark plugs
+- ECU: Computer that manages fuel injection, ignition timing, throttle position, and other parameters for optimal performance and efficiency
+- Sensors: Mass airflow sensor, oxygen sensors, crankshaft and camshaft position sensors, knock sensor, coolant temperature sensor, and others feed real-time data to the ECU so it can adjust fueling and timing
+- Lubrication system: Oil pump circulates oil through the engine via galleries and the oil filter to reduce friction and wear on moving parts
+- Cooling system / Radiator: Water pump circulates coolant through the engine block and radiator, with a thermostat regulating temperature
+- Exhaust system: Carries burnt gases away from the cylinders, through the catalytic converter (which reduces harmful emissions), and out the muffler (which dampens the sound of those rapid-fire pressure waves from combustion). An oxygen sensor in the exhaust stream lets the ECU fine-tune the air-fuel ratio
+- Air intake system: Filters and directs air into the engine through the air filter, then past the mass airflow sensor and throttle body into the intake manifold, which distributes air evenly to each cylinder
+- PCV system: Positive Crankcase Ventilation routes blow-by gases from the crankcase back into the intake to be re-burned, reducing emissions and pressure buildup
+- Engine mounts: Rubber or hydraulic mounts that secure the engine to the chassis while isolating vibration
+- Forced induction (if equipped): Turbocharger (driven by exhaust gases) or supercharger (driven by the crankshaft) compresses intake air to cram more into the cylinders, increasing power. Usually paired with an intercooler to cool the compressed air before it enters the engine
 
 ## The Four-Stroke Cycle
 
