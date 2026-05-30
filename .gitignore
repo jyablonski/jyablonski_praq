@@ -178,3 +178,4 @@ notes/cooking/**
 .codex
 *.xpi
 notes/code_review/*/**
+pyexile/
