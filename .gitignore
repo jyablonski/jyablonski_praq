@@ -179,3 +179,4 @@ notes/cooking/**
 *.xpi
 notes/code_review/*/**
 pyexile/
+job_tracker/

@@ -713,3 +713,12 @@ order by rank desc;
 ### GiST as an Alternative
 
 GiST also supports tsvector but uses a lossy representation (bit signatures). Lookups require a recheck against the heap. GiST is smaller and faster to update but slower to query. Use GiST when write performance matters more than read performance, or when you need to combine the full-text predicate with other GiST-indexable predicates in a multi-column index.
+
+## Advanced Index Recap
+
+- in postgres when creating indexes on a column, you can specify the function to use for creating that index after calling the column `CREATE INDEX ON items USING hnsw (embedding vector_cosine_ops)`
+- GIN indexes are inverted indexes, and how they work is they break down the text and store references to the rows containing them
+- \<-> syntax is related to embeddings / semantic search
+- `pg_trgm is an extension that can be used for breaking text down into trigrams for fuzzy keyword matching to handle typos or character level similarity on data you already have stored`
+- hnsw indexes are used for vector columns to improve similarity search performance by giving up some exactness and utilizing approximate nearest neighbor concepts
+- gist indexes are a generalized framework for creating a balanced tree, and it uses different algorithms depending on what the data type of the column is that you're working with. typically used w/ postgis and geospatial use cases
