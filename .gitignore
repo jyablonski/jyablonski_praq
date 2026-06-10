@@ -177,6 +177,6 @@ notes/cooking/**
 .github/.SKILLS/
 .codex
 *.xpi
-notes/code_review/*/**
+notes/review/*/**
 pyexile/
 job_tracker/
