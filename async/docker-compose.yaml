@@ -1,0 +1,62 @@
+services:
+  producer:
+    build:
+      context: .
+    command: ["python", "-u", "main.py", "producer"]
+    environment:
+      RABBITMQ_URL: amqp://ingest:ingest@rabbitmq:5672/
+      POSTGRES_DSN: postgresql://postgres:postgres@postgres:5432/postgres
+      QUEUE_NAME: ingestion-runs
+      SEED_MESSAGES: 5
+      SEED_INTERVAL_SECONDS: 30
+      TOTAL_MESSAGES: 0
+      RUN_SECONDS: 1200
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  consumer:
+    build:
+      context: .
+    command: ["python", "-u", "main.py", "consumer"]
+    environment:
+      RABBITMQ_URL: amqp://ingest:ingest@rabbitmq:5672/
+      POSTGRES_DSN: postgresql://postgres:postgres@postgres:5432/postgres
+      QUEUE_NAME: ingestion-runs
+      MAX_CONCURRENCY: 3
+      RUN_SECONDS: 1200
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    environment:
+      RABBITMQ_DEFAULT_USER: ingest
+      RABBITMQ_DEFAULT_PASS: ingest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 12

@@ -61,6 +61,7 @@ package = false
 [tool.uv.workspace]
 members = [
     "mcp/mcp-rag-server",
+    "async",
 ]
 
 [build-system]
