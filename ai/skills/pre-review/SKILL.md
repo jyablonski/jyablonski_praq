@@ -1,78 +1,104 @@
 ______________________________________________________________________
 
-## name: pre-review description: Review a local diff or proposed code change before opening a PR, focusing on correctness, tests, production risk, and maintainability.
+## name: pre-review description: Reviews staged git changes before commit. Manually invoked to do a final pass over a feature branch — checks repo standards, flags bugs and bad logic, spots DRY opportunities, and reports line-change stats. Use before committing or opening a draft PR. disable-model-invocation: true user-invocable: true
 
-# pre-review
+## Staged changes
 
-Use this skill when the user wants a strict pre-PR review of a code diff, branch, patch, or proposed implementation.
+Change stats (added / removed per file):
+!`git diff --cached --numstat`
 
-## Goal
+Full staged diff:
+!`git diff --cached`
 
-Find meaningful issues before a human reviewer sees the PR. Prioritize correctness, missing tests, risky behavior changes, and unnecessary complexity. Avoid low-value style nits unless they affect maintainability.
+## Your task
 
-## Inputs
+Do a final review pass over the staged changes above before they are committed. This is a quality gate, not a rewrite — report findings only, do not modify any files. Review only what is staged (the `--cached` diff); ignore unstaged work and untracked files. If the staged diff is empty, say so and stop.
 
-Use whatever context is available:
+Work through these steps in order.
 
-- Current diff, staged changes, branch changes, or pasted patch.
-- Existing tests and test output.
-- Related ticket, implementation plan, or PR description.
-- Relevant repository conventions and nearby code.
+### 1. Report the change size
 
-If only a partial diff is available, review the visible changes and state the limits of the review.
+From the `--numstat` output, compute and report (ignore binary files, which show `-`):
 
-## Review priorities
+- Lines added
+- Lines removed
+- Net change (added − removed)
+- Total churn (added + removed)
+- Files changed
 
-Review in this order:
+Present as a short summary, then a per-file breakdown if more than ~5 files changed. Flag any single file with >300 lines of churn as worth splitting before review.
 
-1. Correctness bugs and broken behavior.
-1. Missing or weak tests.
-1. Production risks, rollout risks, migrations, config changes, and backward compatibility.
-1. Security, privacy, permissions, secrets, and unsafe logging.
-1. Readability, maintainability, and unnecessary complexity.
-1. Documentation, comments, and examples that drifted from behavior.
+### 2. Discover this repo's standards
 
-## Workflow
+Don't assume conventions — find them. Look for and respect whatever this repo actually uses:
 
-1. Determine the intended behavior from the request, diff, and surrounding code.
-1. Compare the implementation against that intent.
-1. Inspect changed call paths and likely downstream consumers.
-1. Check whether tests cover the changed behavior and important failure paths.
-1. Identify risky assumptions and edge cases.
-1. Suggest the smallest concrete fixes.
+- Linter / formatter configs: `ruff.toml`, `.flake8`, `pyproject.toml`, `.golangci.yml`, `.sqlfluff`, `.yamllint`, `.editorconfig`, `.pre-commit-config.yaml`
+- Project guidance: `AGENTS.md`
+- Existing patterns: read 1–2 neighboring files in the same package/module to match local idioms (naming, error handling, import style, test layout)
 
-## Output format
+If a finding is style-related, anchor it to the repo's own configured rule rather than personal preference.
 
-Use this structure:
+### 3. Review the diff
 
-```markdown
+Group findings by severity. Lead with the most important. Reference every finding by `path:line`. Read surrounding context with Read/Grep when the diff hunk alone is ambiguous (e.g. to judge a DRY opportunity against an existing helper, or to confirm a signature).
+
+Blockers — must fix before commit:
+
+- Real bugs: off-by-one, wrong operator, inverted/incomplete conditionals, unreachable branches
+- Broken business logic or logic that contradicts the apparent intent
+- Null/None/nil and empty-collection handling gaps
+- Security: injection (string-interpolated SQL/commands), hardcoded secrets/credentials, unsafe deserialization
+- Resource leaks, unclosed handles, unhandled errors
+
+Should fix — standards & correctness-adjacent:
+
+- Violations of the repo's configured lint/style rules
+- Missing or wrong error handling vs. local patterns
+- Missing tests for new logic where the repo clearly tests similar code
+- Naming / structure inconsistent with neighboring code
+
+DRY & refactor — only where it genuinely reduces duplication or risk:
+
+- Copy-pasted blocks that should be a shared function/helper (point to where the helper exists or should live)
+- Repeated literals/config that belong in one place
+- Reinvented logic that an existing util in this repo already covers
+
+Nits — optional, clearly labeled as low priority. Keep these brief and few.
+
+### Language-specific checks
+
+Apply the ones relevant to the files in the diff:
+
+- Python — type hints on new public functions, mutable default args, bare `except`, `print` where logging is the norm, unused imports, f-string-built SQL, pandas chained-assignment / silent dtype issues
+- Go — every returned error checked and wrapped (`%w`), nil checks before deref, `defer` placement and double-close, `context` propagation, goroutine/channel leaks, exported symbols documented
+- SQL — no string-interpolated values (parameterize), no `SELECT *` in shipped queries, `UPDATE`/`DELETE` without `WHERE`, NULL handling across joins, implicit casts, naming + CTE conventions vs. the repo's models
+- YAML — valid indentation/structure, no hardcoded secrets, schema-correct for its purpose (CI, dbt, Dagster, Airflow, k8s/Helm manifests), anchors/aliases used correctly
+
+### 4. Output format
+
+```
+## Change size
+<the stats from step 1>
+
+## Findings
+### Blockers
+- path:line — <issue and concrete fix>
+### Should fix
+- ...
+### DRY & refactor
+- ...
+### Nits
+- ...
+
 ## Verdict
-<Ready / Needs changes / Needs clarification>
-
-## High-priority findings
-- `<path>:<line if known>` — <issue>
-  - Why it matters: <impact>
-  - Suggested fix: <smallest safe fix>
-
-## Test gaps
-- <missing test or assertion>
-
-## Risk notes
-- <deployment, data, compatibility, security, or operational risk>
-
-## Low-priority cleanup
-- <optional improvement>
-
-## What looks good
-- <briefly note strong parts, only if meaningful>
+<Ready to commit | Address blockers first> — one line.
 ```
 
-If there are no material issues, say so directly and still list any reasonable test or rollout checks.
+If a section has no findings, omit it. End with a one-line verdict.
 
-## Guardrails
+## Boundaries
 
-- Do not rewrite the whole solution unless the current approach is fundamentally flawed.
-- Do not nitpick formatting that should be handled by linters/formatters.
-- Do not ask for broad rewrites when a smaller fix is sufficient.
-- Do not invent line numbers if unavailable.
-- Be direct and specific. Every finding should be actionable.
+- Do not modify, stage, unstage, or commit anything. Report only. The user runs the commit.
+- Review only staged changes.
+- Optimize for precision over recall — a senior engineer is the audience. Don't flag style the repo doesn't enforce, don't restate what the code obviously does, and don't pad with praise. A short, high-signal review beats an exhaustive one.
+- When unsure whether something is a real problem, say so explicitly rather than asserting it.

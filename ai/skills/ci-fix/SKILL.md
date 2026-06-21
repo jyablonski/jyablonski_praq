@@ -1,6 +1,6 @@
 ______________________________________________________________________
 
-## name: ci-fix description: Analyze CI failures in context of the current diff and propose the smallest safe fix.
+## name: ci-fix description: Analyze CI failures in context of the current diff and propose the smallest safe fix. disable-model-invocation: true user-invocable: true
 
 # ci-fix
 

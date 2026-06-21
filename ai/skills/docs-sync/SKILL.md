@@ -1,10 +1,24 @@
 ______________________________________________________________________
 
-## name: docs-sync description: Update or review documentation so it stays aligned with code, configs, APIs, workflows, and operational behavior.
+## name: docs-sync description: Manual-only skill. Do not invoke automatically. Use only when the user explicitly runs or mentions docs-sync by name. disable-model-invocation: true user-invocable: true
 
 # docs-sync
 
-Use this skill when the user wants documentation updated after code changes, or wants to check whether docs, comments, examples, README sections, runbooks, API docs, or changelogs are stale.
+## Invocation policy
+
+This skill is manual-only.
+
+Use this skill only when the user explicitly invokes it by name, for example:
+
+- `/docs-sync`
+- `$docs-sync`
+- `run docs-sync`
+- `use docs-sync`
+- `invoke docs-sync`
+
+Do not use this skill automatically for normal coding tasks, documentation edits, README updates, code review, PR review, changelog work, API changes, config changes, workflow changes, or stale-docs detection unless the user explicitly asks to run `docs-sync`.
+
+If the user asks a general documentation question without explicitly invoking `docs-sync`, answer normally without loading or applying this skill.
 
 ## Goal
 

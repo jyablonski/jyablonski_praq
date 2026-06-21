@@ -1,10 +1,28 @@
 ______________________________________________________________________
 
-## name: create-pr description: Create a draft GitHub pull request for the current branch with a semantic title and a concise body that follows the repository pull request template. Use when the user is ready to open a draft PR and does not want Codex to commit or push changes. user_invocable: true
+## name: create-pr description: Manual-only skill. Do not invoke automatically. Use only when the user explicitly runs or mentions create-pr by name. disable-model-invocation: true user-invocable: true
+
+# create-pr
+
+## Invocation policy
+
+This skill is manual-only.
+
+Use this skill only when the user explicitly invokes it by name, for example:
+
+- `/create-pr`
+- `$create-pr`
+- `run create-pr`
+- `use create-pr`
+- `invoke create-pr`
+
+Do not use this skill automatically for normal coding tasks, git tasks, GitHub tasks, documentation tasks, review tasks, or PR-related discussion unless the user explicitly asks to run `create-pr`.
+
+If the user asks a general question about pull requests without explicitly invoking `create-pr`, answer normally without loading or applying this skill.
 
 ## When to use this skill
 
-Use this skill when the user wants Codex to open a draft PR for the current branch.
+Use this skill when the user wants you to open a draft PR for the current branch.
 
 Do not commit changes.
 Do not push changes.
@@ -27,31 +45,38 @@ If the repo uses a different default base branch, detect it from `origin/HEAD` a
 
 ### Step 2: Write the PR title
 
-The title must match the semantic PR title format used by the repository:
+The title must match this semantic PR title format:
 
 ```text
-type(scope): lowercase description
+type: lowercase description
 ```
 
 Allowed types:
 
 - `feat`
 - `fix`
-- `docs`
-- `test`
-- `build`
-- `ci`
 - `chore`
 
-Scope is optional but recommended when there is a clear area such as `infra`, `backend`, `frontend`, `dbt`, `dagster`, or a service name.
+Use the type rules below strictly:
+
+- Use `feat` for anything that adds new functionality, user-facing behavior, product functionality, API behavior, CLI behavior, UI behavior, or meaningful new software capability.
+- Use `fix` only for a bug fix that corrects broken, incorrect, or unintended behavior. This should be rare.
+- Use `chore` for everything else, including refactors, documentation, tests, CI, build changes, dependency updates, formatting, cleanup, internal tooling, config changes, infrastructure changes, and maintenance work.
+
+Do not use `docs`, `test`, `build`, or `ci` as PR title types. Those changes should use `chore` unless they are part of a new feature or a bug fix.
+
+When in doubt, omit the scope. Never copy scopes from existing commit history. Scopes should only be added in a monorepo context w/ multiples services.
 
 The description must start with a lowercase letter and stay concise.
 
 Examples:
 
-- `feat(backend): add user timezone endpoint`
+- `feat: add user timezone endpoint`
+- `feat: add project validation command`
 - `fix(frontend): correct trace propagation in server actions`
-- `chore(infra): improve local validation workflow`
+- `chore: improve local validation workflow`
+- `chore: simplify release workflow`
+- `chore: update deployment notes`
 
 ### Step 3: Write the PR body
 
