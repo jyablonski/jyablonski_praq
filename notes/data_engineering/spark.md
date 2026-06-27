@@ -1,393 +1,234 @@
-## Apache Spark
+# Apache Spark
 
-Apache Spark is an open-source distributed computing system designed for big data processing and analytics. Apache Spark is widely used in various industries for big data processing, analytics, and machine learning due to its performance, scalability, and versatility in handling diverse data processing workloads.
+## What it is
 
-Key features of Apache Spark include:
+Apache Spark is an open-source, in-memory distributed compute engine for large-scale data processing. It's a unified analytics engine: batch SQL/DataFrame, streaming, ML, and graph workloads all run on the same execution substrate. The core abstraction is the RDD (Resilient Distributed Dataset) — an immutable, partitioned, lineage-tracked collection — but most code today is written against the higher-level DataFrame/Dataset/SQL APIs, which sit on top of a Catalyst-optimized planner and the Tungsten execution engine. Spark runs on the JVM (Scala-native, with PySpark, SparkR, and now Go/Swift/Rust clients via Spark Connect).
 
-1. **In-Memory Processing**: Apache Spark processes data in-memory, allowing for faster data processing and iterative analytics. It keeps data in memory rather than persisting it to disk after each operation, which enhances performance.
+## What it's used for
 
-1. **Distributed Computing**: Spark distributes data and computation across a cluster of machines, enabling parallel processing and efficient utilization of resources.
+- Batch ETL/ELT at scale — Parquet/Delta/Iceberg/Hudi transformations, the bread-and-butter case
+- SQL warehousing-style analytics — interactive query via Thrift Server, Spark SQL, or Databricks SQL
+- Streaming — Structured Streaming for near-real-time and (now) real-time sub-second pipelines
+- ML feature engineering and training — MLlib for classic ML, and as the preprocessing layer for distributed DL
+- Lakehouse compute — the workhorse engine behind Delta Lake, Apache Iceberg, and Hudi tables
+- Ad-hoc data exploration at TB+ scale where single-node tools (pandas/Polars/DuckDB) fall over
 
-1. **Versatile Data Processing**: Spark supports various data processing workloads, including batch processing, real-time streaming, machine learning, and graph processing. It provides a unified platform for these diverse workloads.
+Spark's sweet spot is the 100 GB – multi-TB range with complex joins and aggregations. Below ~10 GB, DuckDB/Polars usually crushes it on a single node; above it, Spark's shuffle-based parallelism pays off.
 
-1. **Resilient Distributed Datasets (RDDs)**: RDDs are the fundamental data structure in Spark that represents a distributed collection of objects. RDDs are fault-tolerant and can be operated on in parallel. They can be created from HDFS files, distributed over a cluster, and operated upon using transformations and actions.
+______________________________________________________________________
 
-1. **Streaming Data Processing**: Spark Streaming allows processing of real-time streaming data and integrates with various sources like Kafka, Flume, or TCP sockets. It processes data in micro-batches, making it suitable for real-time analytics.
+## Hosting: Databricks vs. self-hosted on EKS
 
-1. **Machine Learning (MLlib)**: MLlib is Spark's machine learning library, providing a wide range of machine learning algorithms and tools for scalable machine learning tasks.
+### Databricks
 
-1. **SQL and DataFrames**: Spark provides SQL and DataFrame APIs for working with structured data, making it easier for users familiar with SQL to query and manipulate data.
+Managed, opinionated Spark distribution. You pay a per-DBU premium on top of cloud compute in exchange for:
 
-1. **Integration with Hadoop Ecosystem**: Spark can run on Hadoop YARN, can read data from HDFS, and can integrate with Hadoop components like Hive and HBase.
+- Photon — Databricks' vectorized C++ execution engine that transparently accelerates SQL/DataFrame ops (2–5× typical, more on string-heavy queries). Closed-source; only available on Databricks.
+- Delta Lake deep integration — Liquid Clustering, predictive optimization, deletion vectors, Z-ordering.
+- Unity Catalog — governance, lineage, RBAC, audit. The main reason orgs lock in.
+- Job scheduling, notebooks, SQL warehouses, MLflow, Delta Live Tables / Lakeflow Declarative Pipelines — the surrounding platform.
+- Cluster autoscaling and pool management — much less plumbing than DIY.
 
-1. **Ease of Use**: Spark offers user-friendly APIs in various programming languages like Scala, Java, Python, and R. It also provides interactive shells for easy experimentation and development.
+Trade-offs: vendor lock-in (Photon, Unity Catalog, DLT syntax), DBU pricing, less control over JVM tuning, and you can't easily run alongside arbitrary K8s workloads.
 
-## Key Components
+### Self-hosted on EKS
 
-1. **Spark Core**:
+You run vanilla Apache Spark on your own EKS cluster. Two flavors:
 
-   - The foundational component of Spark that provides the basic functionality for distributed data processing.
+1. `spark-submit` in cluster mode against the K8s API — Spark's native K8s scheduler creates driver and executor pods directly. Simple, imperative, no extra controller.
+1. Apache Spark Kubernetes Operator — launched as an official Apache Spark subproject in May 2025, this is now the recommended path. It uses CRDs (`SparkApplication`, `SparkCluster`, `ScheduledSparkApplication`) to manage lifecycle declaratively. Prior to this, the Kubeflow/GCP Spark Operator was the de facto standard and is still widely used. There's also the option of EMR on EKS if you want AWS's optimized runtime, but that's a third hosting model — not pure self-host.
 
-   - It includes the fundamental data structures (like RDDs), parallel processing capabilities, and APIs for distributed computing.
+What you own with self-hosted EKS:
 
-1. **Resilient Distributed Datasets (RDDs)**:
+- Container images (build your own, including Hadoop AWS SDK, Iceberg/Delta JARs, Python deps)
+- IRSA mappings for S3 access per service account
+- Karpenter or Cluster Autoscaler for node provisioning
+- Pod templates, affinity/anti-affinity, taints, PriorityClasses
+- Shuffle reliability (more below — the painful part)
+- Spark History Server, Prometheus/Grafana, log aggregation
+- Catalog (external Hive metastore, Glue, or Iceberg REST catalog)
 
-   - RDDs are the primary data abstraction in Spark, representing an immutable, fault-tolerant distributed collection of objects.
+Trade-offs: significantly more operational burden, but zero per-DBU premium, full control, multi-tenancy with other K8s workloads, and no engine lock-in.
 
-   - They serve as the basis for distributed transformations and actions in Spark applications.
+### Rough decision frame
 
-1. **Spark SQL**:
+| Factor | Databricks | EKS self-host |
+| -------------------------------- | ---------------------------------------------- | ---------------------------------------------------- |
+| Time-to-production | Days | Weeks-to-months |
+| Per-job compute cost | Higher (DBU markup) | Lower (just EC2) |
+| Governance/lineage | Unity Catalog out of box | Build it (OpenMetadata, DataHub) |
+| Engine performance | Photon advantage | Vanilla Spark only |
+| Custom workloads on same cluster | No | Yes |
+| Egress from one cloud | Painful | Painful |
+| Right answer when | Small/mid platform team, need governance, fast | Strong platform team, cost-sensitive, K8s-first shop |
 
-   - Provides a programming interface to work with structured data using SQL and supports querying data with SQL-like queries.
+______________________________________________________________________
 
-   - It also supports working with DataFrames, which are structured collections of data, similar to tables in a relational database.
+## Internal components
 
-1. **Cluster Manager (e.g., Standalone, Apache Mesos, YARN)**:
+### Driver
 
-   - Spark can run on various cluster management systems, including its standalone cluster manager, Apache Mesos, and Apache Hadoop YARN. These manage resources and scheduling across the cluster.
+The driver is the process running your `SparkSession` and `main()`. It owns:
 
-1. **Driver Program and Executors**:
+- The `SparkContext` and the high-level APIs you call
+- The DAGScheduler, which turns RDD/DataFrame lineage into a DAG of *stages* split at shuffle boundaries
+- The TaskScheduler (and a `SchedulerBackend` per cluster manager — K8s, YARN, standalone), which submits *tasks* (one per partition per stage) to executors and tracks completion
+- The BlockManagerMaster, which tracks where cached/shuffle blocks live
+- The Spark UI, event log, and metrics endpoints
 
-   - The driver program is the main application that runs the user's Spark job. Executors are processes launched by the driver on worker nodes to perform computations and store data for RDDs.
+In cluster mode on K8s, the driver is its own pod. Losing it kills the application.
 
-1. **Spark Packages and Libraries**:
+### Executors
 
-   - In addition to the core components, Spark has a vibrant ecosystem of libraries and packages developed by the community, addressing various use cases such as data connectors, visualization, integration with other systems, and more.
+JVM processes (or pods, on K8s) that actually run tasks. Each executor has:
 
-## Data Structures
+- A fixed number of cores (slots for concurrent tasks)
+- A heap split between execution memory (joins, aggregations, sorts) and storage memory (cached blocks), unified under Spark's memory manager — borrows between regions are dynamic
+- A BlockManager that holds cached partitions and shuffle output
+- Off-heap memory for Tungsten binary row format and (optionally) cached data
 
-1. **RDD (Resilient Distributed Dataset)**:
+Executors are stateless from the application's perspective but stateful from the *shuffle* perspective — losing an executor mid-stage means recomputing any shuffle blocks it held (unless you have an external shuffle service or shuffle data on S3).
 
-   - RDD is the fundamental data structure in Spark, representing an immutable distributed collection of objects that can be processed in parallel.
+### Cluster manager
 
-   - It provides low-level transformation and action operations, allowing users to perform operations at the element level.
+The thing that hands out resources. Options:
 
-   - RDDs are dynamically typed and can hold any type of Python object. This flexibility allows for more complex and unstructured data processing.
+- Kubernetes — Spark talks to the K8s API directly; each executor is a pod
+- YARN — still dominant in on-prem Hadoop shops
+- Standalone — Spark's built-in scheduler
+- Mesos — deprecated, gone
+- Local — single-JVM for dev
 
-   - However, RDDs lack the optimization capabilities that come with DataFrames and Datasets due to their unstructured nature.
+### Catalyst optimizer
 
-1. **DataFrame**:
+The query planner. Pipeline:
 
-   - DataFrame is a structured collection of data, similar to a table in a relational database or a spreadsheet. It has rows and columns.
+1. Parsed logical plan — raw AST from SQL or DataFrame API
+1. Analyzed logical plan — resolves columns, functions, types against the catalog
+1. Optimized logical plan — applies rule-based optimizations (predicate pushdown, column pruning, constant folding, join reordering, subquery elimination, ~150+ rules)
+1. Physical plan — picks join strategies (broadcast hash, sort-merge, shuffle hash, broadcast nested loop), exchange operators, scan operators
+1. Code-generated execution — Tungsten compiles whole stages of operators into a single JVM bytecode method (whole-stage codegen) to eliminate iterator overhead
 
-   - DataFrames were introduced in Spark 1.3 and provide a more user-friendly, structured API for working with data.
+You can inspect any stage with `df.explain(mode="formatted" | "extended" | "cost")`.
 
-   - DataFrames are built on top of RDDs but provide a schema (structure) and can be thought of as RDDs with schema information.
+### Tungsten execution engine
 
-   - DataFrame operations benefit from the Catalyst optimizer, which optimizes the execution plan based on the provided operations, improving performance.
+Spark's columnar/binary execution layer:
 
-   - DataFrames can be created from various sources like structured data files, Hive tables, external databases, and RDDs.
+- UnsafeRow — off-heap binary row format, no Java object overhead
+- Whole-stage code generation — collapses operator chains into one tight loop
+- Cache-aware computation — explicit memory management instead of GC'd objects
+- Vectorized Parquet/ORC readers — batch decode into columnar buffers
 
-1. **Dataset**:
+This is the core reason Spark SQL is much faster than equivalent RDD code.
 
-   - Dataset is an extension of DataFrames introduced in Spark 1.6, aiming to combine the type safety of RDDs with the optimization and performance benefits of DataFrames.
+### Adaptive Query Execution (AQE)
 
-   - Datasets are strongly typed, allowing for safe and efficient processing, as the type information is preserved during transformations and actions.
+Re-plans the query *during* execution based on actual shuffle statistics. On by default since 3.2. It can:
 
-   - Like DataFrames, Datasets are built on top of RDDs, and they also leverage the Catalyst optimizer for better performance.
+- Coalesce small post-shuffle partitions
+- Switch sort-merge joins to broadcast joins when one side ends up small
+- Split skewed partitions (covered below)
+- Optimize partition counts for stage outputs
 
-   - Datasets can be created from DataFrames or from structured data sources.
+If you're not using AQE on a self-hosted Spark, turn it on (`spark.sql.adaptive.enabled=true`).
 
-**Key Differences**:
+### Shuffle subsystem
 
-- RDDs are the most basic and unstructured data abstraction in Spark.
+The most failure-prone part of Spark. Each shuffle writes map output to local disk (or S3, with newer plugins), partitioned by hash/range, then reducers fetch their assigned partitions over the network. Components:
 
-- DataFrames add structure to the data and provide an API similar to SQL tables.
+- ShuffleManager (sort-based since 2.0; Tungsten sort variant)
+- External shuffle service — a long-running daemon that serves shuffle files independently of the executor lifetime (so executors can be removed without losing shuffle data). On K8s, this is awkward — see the EKS gotchas.
+- Shuffle service alternatives on K8s: Apache Celeborn, Magnet (LinkedIn), or S3-backed remote shuffle.
 
-- Datasets provide the benefits of both RDDs (type safety, functional transformations) and DataFrames (optimization, query optimization).
+### BlockManager
 
-- In terms of performance, Datasets and DataFrames usually outperform RDDs due to the optimization opportunities offered by their structured nature and the Catalyst optimizer.
+Per-executor (and driver) component that stores cached RDDs, broadcast variables, and shuffle blocks. Coordinates with the driver's BlockManagerMaster to track replicas. Storage levels span memory-only, memory-and-disk, off-heap, and replicated variants.
 
-- RDDs are more suitable for unstructured data or when you need more fine-grained control over the data.
+### Catalog
 
-- DataFrames and Datasets are recommended for structured data, and Datasets are preferred when you need strong typing and the benefits of optimization.
+Where Spark looks up tables, schemas, and functions. Options:
 
-## Key Terms
+- In-memory (ephemeral, default)
+- Hive metastore (most common in production)
+- AWS Glue Data Catalog (Glue-compatible metastore)
+- Iceberg REST catalog, Nessie, Polaris — newer table-format-native catalogs
+- Unity Catalog (Databricks; UC OSS now exists)
 
-In Apache Spark, a **partition** refers to a portion of a larger distributed dataset (such as an RDD, DataFrame, or Dataset) that is stored on a single machine in a Spark cluster. Partitions are the basic units of parallelism in Spark and play a crucial role in enabling parallel processing across the nodes of the cluster.
+### Structured Streaming engine
 
-Here's how partitions relate to tasks:
+Stream processing built on top of the DataFrame API and the same Catalyst/Tungsten stack. Micro-batch by default, with continuous processing as a long-standing experimental mode, and now Real-Time Mode (4.1) for true sub-second latency. State is stored in a pluggable state store (default HDFSBackedStateStore; RocksDB state store is preferred for large state).
 
-1. **Partitioning Data**:
+### Spark Connect
 
-   - When a distributed dataset (e.g., an RDD) is created in Spark, it is divided into smaller logical units called partitions. Each partition contains a subset of the overall data.
+Newer thin-client / server split. Your client (Python, Scala, Go, Swift, Rust) sends an unresolved logical plan over gRPC to a long-running Spark server, which executes it. Decouples client lifecycle from cluster lifecycle. GA in 4.0 with high feature parity to Spark Classic, including new clients for Go, Swift, and Rust, and a `spark.api.mode` setting to switch between Classic and Connect.
 
-   - The number of partitions is determined during the dataset's creation and often depends on the input data source, the parallelism level desired, or any custom partitioning logic.
+### DataSource V2 API
 
-1. **Task Execution**:
+Modern pluggable connector API for sources/sinks. All the lakehouse table formats (Delta, Iceberg, Hudi) implement V2. Pushes down filters, projections, aggregates, and limits.
 
-   - In Spark, tasks are units of work that are executed on each partition of the data in parallel across the cluster.
+______________________________________________________________________
 
-   - When a Spark job is triggered, tasks are created to process each partition of the data. Each task processes one partition independently.
+## Scaling
 
-1. **Parallel Execution**:
+Horizontal scaling is the default model: more executors = more parallel tasks. Targets:
 
-   - In a typical Spark application, multiple tasks (corresponding to the number of partitions) are executed concurrently on different worker nodes in the cluster.
+- Parallelism: aim for `spark.sql.shuffle.partitions` ≈ 2–4× total executor cores. Default 200 is wrong for almost everything.
+- Partition size: target ~128–256 MB per shuffle partition after AQE coalescing. Smaller → scheduler overhead dominates; larger → spill and OOM.
+- Executor sizing: 4–8 cores and 16–32 GB heap per executor is the standard sweet spot. Bigger executors hurt GC; smaller hurt broadcast efficiency.
 
-   - This parallel execution allows for efficient and distributed processing of the dataset, improving the overall performance and throughput of the application.
+Dynamic allocation lets Spark add/remove executors based on pending tasks. On K8s, this works but historically required either an external shuffle service or shuffle tracking (`spark.dynamicAllocation.shuffleTracking.enabled=true`) to avoid losing shuffle data when executors scale down.
 
-1. **Task Per Partition**:
+Karpenter on EKS is the modern node-provisioning story — much faster scale-up than Cluster Autoscaler, with native spot/diversified-instance handling. Pair with PodDisruptionBudgets and graceful executor decommissioning (`spark.decommission.enabled=true`) for Spot tolerance.
 
-   - Each task operates on a single partition of the data, processing the elements within that partition using the specified transformations and actions.
+Vertical scaling mostly means giving the driver more memory for big collect/broadcast plans, and giving executors more off-heap for large hash tables.
 
-   - The relationship between partitions and tasks is one-to-one: each partition is processed by exactly one task.
+______________________________________________________________________
 
-1. **Task**:
+## Data skew
 
-   - A task is the smallest unit of work in Spark. It represents a single unit of computation that is executed on a partition of data.
+Skew is when one or a few partitions hold disproportionate data, causing a long tail where 199 tasks finish in 30s and one task runs for 20 minutes. Tools, in order of preference:
 
-   - Tasks are created for each partition of the data and are sent to worker nodes for execution in parallel.
+1. Turn on AQE skew join handling (`spark.sql.adaptive.skewJoin.enabled=true`) — Spark detects skewed partitions at runtime and splits them into sub-partitions, replicating the matching side of the join. This handles most real-world skew without code changes.
+1. Broadcast joins — if the small side is < ~10 MB (or whatever you set `spark.sql.autoBroadcastJoinThreshold` to), broadcast it and avoid the shuffle entirely. AQE can promote a sort-merge join to broadcast mid-query.
+1. Salting — append a random salt to the join key on the skewed side, explode the dim side by the salt range, then join. Manual but reliable when AQE isn't enough (e.g., extreme skew, complex join graphs).
+1. Filter out null/sentinel keys first — a huge amount of "skew" in practice is `NULL` or `0` keys piling into one partition. Filter or pre-aggregate them separately.
+1. Repartition by a better key before the operation, or use range partitioning.
+1. Two-phase aggregation for skewed groupBy — partial agg with salt, then final agg without. Less needed now that AQE handles aggregate skew well.
 
-1. **Job**:
+Diagnose skew from the Spark UI's stage summary metrics: look at the *task duration* and *shuffle read size* distributions. Median vs. max is the tell.
 
-   - A job in Spark refers to a set of tasks that are launched in response to a Spark action, such as `collect()`, `count()`, or any other action that triggers computation and brings data from RDDs or DataFrames to the driver program.
+______________________________________________________________________
 
-   - Each action usually triggers one job, although some complex actions can trigger multiple jobs.
+## Recent (≥ 2024) additions to be mindful of
 
-   - The set of tasks that comprise a job corresponds to the transformations that lead to the action being executed.
+### Spark 4.0 (released February 2025)
 
-1. **Stage**:
+- ANSI mode on by default — Spark now throws on integer overflow, divide-by-zero, invalid casts, etc., instead of returning NULL. This breaks pipelines. Audit before upgrading; set `spark.sql.ansi.enabled=false` if you need the old behavior temporarily.
+- VARIANT data type — efficient binary encoding for semi-structured JSON, comparable in spirit to Snowflake's VARIANT. Faster than parsing JSON strings every read.
+- SQL pipe syntax — `FROM t |> WHERE x > 0 |> SELECT a, b` style, more readable for long transformations.
+- SQL UDFs, session variables, and SQL scripting with control flow — reusable SQL functions without Python/Scala roundtrips.
+- String collation support — locale-aware sorting and comparison.
+- Spark Connect GA, with new Python/Scala/Go/Swift/Rust clients.
+- Java 17 by default, structured logging (JSON-format logs), Python Data Source API, polymorphic Python UDTFs, Arrow-optimized Python UDFs.
+- Streaming State Data Source reader — query Structured Streaming state directly with SQL for debugging.
 
-   - A stage is an intermediate computational step within a job. A job may be divided into multiple stages based on the presence of shuffling operations (e.g., `reduceByKey` or `join`), which require data to be shuffled across the cluster.
+### Spark 4.1 (released 2025)
 
-   - Stages are constructed based on the transformations in the lineage of RDDs. Each stage represents a set of tasks that can be executed in parallel, and these tasks do not require data shuffling.
+- Spark Declarative Pipelines (SDP) — a declarative framework where you define datasets and queries and Spark handles the execution graph, dependency ordering, parallelism, checkpoints, and retries. Effectively OSS DLT.
+- Structured Streaming Real-Time Mode for continuous, sub-second latency, dropping to single-digit milliseconds for stateless tasks.
+- Spark ML on Connect GA for the Python client, SQL Scripting GA, VARIANT shredding GA for faster reads on semi-structured data, recursive CTEs, and new KLL and Theta approximate sketches.
+- Significant RocksDB state store improvements (memory unification, snapshot lag detection, checksum verification).
 
-   - A stage is defined by the partitions of the data that are input to the stage (the partitions that were the result of the previous stage).
+### Ecosystem (≥ 2024)
 
-In summary:
+- Apache Spark Kubernetes Operator launched as an official Apache subproject in May 2025, supporting Spark 3.5+. This is increasingly the canonical way to run Spark on K8s; the Kubeflow operator remains a viable alternative but the long-term momentum is on the Apache one.
+- Apache Celeborn maturing as the leading remote shuffle service — addresses the EKS shuffle reliability gap.
+- Iceberg and Delta Lake both shipped major changes (V3 spec for Iceberg with row-level deletes via deletion vectors, Delta UniForm for Iceberg compatibility).
+- Databricks: Photon now covers most operators including UDFs in some cases; Liquid Clustering replaces Z-order; serverless compute is the default direction.
 
-- **Task** is the smallest unit of work, representing computation on a single partition of data.
+### Gotchas worth flagging on upgrade
 
-- **Job** is a set of tasks triggered by a Spark action and is typically associated with one or more transformations.
-
-- **Stage** is an intermediate step in a job, defined by the presence of shuffling operations, and is constructed based on the transformations and partitions of data.
-
-In Apache Spark, a **shuffle** refers to the process of redistributing and reorganizing data across the nodes in a cluster during certain types of operations. This process is essential when data needs to be moved or exchanged between different nodes for further processing, particularly when a transformation involves grouping or aggregating data from multiple sources.
-
-Here's a more detailed explanation of a shuffle in Spark:
-
-1. **Why Shuffling Occurs**:
-
-   - Shuffling is needed when a transformation requires data from multiple partitions to be combined, such as during a group-by operation, a join, or an aggregation like a reduce operation.
-
-1. **Process of Shuffling**:
-
-   - When a shuffle is required, the data from various partitions is collected, sorted (if needed), and then distributed or "shuffled" across the nodes in the cluster based on the partitioning key or criteria.
-
-   - Shuffling involves writing intermediate data to disk and transferring it over the network, making it a resource-intensive operation.
-
-1. **Stages Involving Shuffling**:
-
-   - Shuffling usually creates a boundary between stages in a Spark application. The stage before the shuffle is often referred to as the "map stage," and the stage after the shuffle is the "reduce stage."
-
-   - In the "map stage," data is mapped based on some criteria (e.g., keys for a join). In the "reduce stage," the shuffled and aggregated data is further processed.
-
-1. **Performance Implications**:
-
-   - Shuffling can be a performance bottleneck due to the need for extensive data movement and disk I/O, especially when dealing with large datasets.
-
-   - Effective management and optimization of shuffling operations are crucial for improving the performance and efficiency of Spark applications.
-
-   - Techniques such as reducing the amount of shuffled data (e.g., by using appropriate partitioning), using combiners, and optimizing the Spark application's execution plan can help mitigate the performance impact of shuffling.
-
-In summary, a shuffle in Spark involves the redistribution and reorganization of data across nodes in the cluster during certain transformations. It's a critical operation for computations that involve combining data from multiple partitions, but it also comes with performance considerations due to the need for data movement and disk I/O. Optimal usage and management of shuffling operations are essential for efficient Spark application performance.
-
-## PySpark
-
-PySpark, which is the Python library for Apache Spark, indeed utilizes the Java Virtual Machine (JVM) under the hood. When using PySpark, the majority of the Spark functionality is implemented in Scala and runs on the JVM.
-
-Here's how it works:
-
-1. **Py4J Integration**:
-
-   - PySpark uses Py4J, a popular library for connecting Python programs with Java objects, to facilitate communication between the Python environment and the JVM.
-
-1. **JVM Execution**:
-
-   - The actual Spark processing, including data processing, transformations, and actions, happens in the JVM. When you call PySpark methods or functions from Python, these requests are translated and executed in the JVM.
-
-1. **Python as a Driver Program**:
-
-   - In a typical PySpark application, the Python code serves as the driver program, coordinating and orchestrating the Spark application's flow. However, the actual data processing occurs within the JVM.
-
-1. **Serialization and Deserialization**:
-
-   - Data serialization and deserialization are handled efficiently by the JVM, even though the initial call originates from Python. This helps in effective data exchange between the Python environment and the JVM.
-
-In PySpark, `SparkSession` is the entry point and central interface for interacting with Apache Spark. It is a higher-level API that encapsulates the functionality of the older SparkContext, SQLContext, and HiveContext, providing a unified entry point for reading data, executing SQL queries, and interacting with Spark features.
-
-Here are the main aspects and functionalities of `SparkSession` in PySpark:
-
-1. **Unified Entry Point**:
-
-   - `SparkSession` combines functionalities previously provided by `SQLContext` and `HiveContext`, simplifying the usage of Spark by consolidating various contexts into a single entry point.
-
-1. **DataFrame API**:
-
-   - `SparkSession` provides the DataFrame API, which allows for working with structured data in a tabular format, similar to a relational database or a spreadsheet.
-
-1. **SQL Execution**:
-
-   - Users can execute SQL queries directly on DataFrames registered as temporary tables, making it easy to leverage SQL for data processing.
-
-1. **Data Loading and Saving**:
-
-   - `SparkSession` supports reading data from various sources (e.g., Parquet, CSV, JSON) and saving DataFrames to different formats.
-
-1. **Configuration and Properties**:
-
-   - Users can configure Spark properties and settings through the `SparkSession` object, allowing for customization and optimization of Spark application behavior.
-
-1. **Application Context**:
-
-   - `SparkSession` is designed to be a single point of entry for the application. When using `SparkSession`, the underlying SparkContext, SQLContext, and HiveContext are automatically created and managed, ensuring proper initialization and handling.
-
-1. **Resource Management**:
-
-   - `SparkSession` helps manage resources, including memory allocation and cluster resources, providing better control over Spark application execution.
-
-**Creating a SparkSession**:
-
-To create a `SparkSession` in PySpark, you can use the `pyspark.sql.SparkSession` class and its `builder` method:
-
-```python
-from pyspark.sql import SparkSession
-
-# Create a SparkSession
-spark = SparkSession.builder \
-    .appName('MySparkApp') \
-    .getOrCreate()
-```
-
-Once you have the `SparkSession` object (`spark` in the above example), you can use it to perform various data processing operations, execute SQL queries, load and save data, and more.
-
-The introduction of `SparkSession` in PySpark simplifies the code and provides a more efficient and user-friendly way to work with structured data using DataFrames and SQL.
-
-## UDFs
-
-Spark User-Defined Functions (UDFs) are custom functions created by users to perform transformations on data in Apache Spark. UDFs allow users to apply their custom business logic or computations to one or more columns in a DataFrame or RDD, providing flexibility and extensibility in data processing.
-
-Here are the key aspects of Spark UDFs:
-
-1. **Custom Logic**:
-
-   - UDFs allow users to define their own custom logic or computations that need to be applied to each element or row in a column of the DataFrame or RDD.
-
-1. **Data Transformation**:
-
-   - UDFs are used to transform data at a row-wise level, often applying the same transformation to multiple rows or elements within a column.
-
-1. **Supported in Various Languages**:
-
-   - Spark UDFs can be implemented using different programming languages supported by Spark, including Scala, Python, Java, and R.
-
-1. **Types of UDFs**:
-
-   - UDFs can be either scalar functions, which operate on a single input item and return a single output item, or aggregate functions, which take multiple input items and return a single output.
-
-1. **Application to DataFrames and RDDs**:
-
-   - UDFs can be applied to both DataFrames (structured, tabular data) and RDDs (distributed collections of data). However, UDFs in DataFrames are often preferred due to the Catalyst optimizer's optimization capabilities.
-
-1. **Usage in DataFrame Operations**:
-
-   - In DataFrames, UDFs can be applied using the `withColumn()` method to add a new column with the transformed data based on the UDF.
-
-1. **Python Example**:
-
-   - For instance, in PySpark, a simple Python UDF could be used to convert a DataFrame column to uppercase:
-
-   ```python
-   from pyspark.sql.functions import udf
-   from pyspark.sql.types import StringType
-
-   # Define the UDF
-   def to_upper(s):
-       if s is not None:
-           return s.upper()
-       return None
-
-   # Register the UDF
-   udf_to_upper = udf(to_upper, StringType())
-
-   # Apply the UDF to a DataFrame column
-   df = df.withColumn('uppercase_column', udf_to_upper(df['original_column']))
-   ```
-
-Spark UDFs provide a powerful way to customize data transformations and processing in Spark applications, enabling users to tailor their data processing to specific business requirements and use cases. However, it's important to use UDFs judiciously and consider the performance implications, especially for complex or resource-intensive computations.
-
-## Spark SQL vs non-Spark SQL
-
-In Apache Spark, there can be performance differences between using Spark SQL (SQL-based operations) and using non-SQL operations (programmatic operations using DataFrames or RDDs). These differences stem from various factors related to the execution and optimization of the respective operations. Let's delve into the key aspects that can influence performance:
-
-1. **Optimization and Catalyst Optimizer**:
-
-   - Spark SQL uses the Catalyst Optimizer, which leverages query optimization techniques to optimize SQL-based operations. The Catalyst Optimizer can apply advanced optimizations like predicate pushdown, projection pruning, and join reordering, leading to more efficient query plans and potentially improved performance.
-
-   - Non-SQL operations do not benefit from the Catalyst Optimizer's specific SQL-related optimizations.
-
-1. **Query Plan Execution**:
-
-   - SQL-based operations follow a declarative approach, where users define the desired results, and the Spark SQL engine generates an optimized query plan to achieve those results.
-
-   - Non-SQL operations are more programmatic and imperative, requiring users to define the specific steps for data transformations and actions. While this provides flexibility, the engine may not be able to optimize the steps as effectively as with a declarative query plan.
-
-1. **Code Complexity and Efficiency**:
-
-   - SQL-based operations often lead to more concise and readable code, reducing the potential for human error and improving development efficiency.
-
-   - Non-SQL operations, especially complex ones, may require more code and be harder to optimize manually, potentially impacting efficiency and introducing more room for optimization errors.
-
-1. **Data Locality and Shuffling**:
-
-   - Depending on the nature of the operations, SQL-based operations can sometimes introduce additional shuffling of data, which could affect performance.
-
-   - Non-SQL operations allow for more fine-grained control over data processing, potentially enabling optimizations that reduce or eliminate shuffling.
-
-1. **Complexity of Operations**:
-
-   - The complexity and nature of the operations can significantly impact performance. Some operations may be more naturally expressed and optimized using SQL, while others may be better suited to programmatic approaches.
-
-   - Simple transformations and filters can often be equally efficient in both SQL and non-SQL operations.
-
-In summary, there can be performance differences, but it heavily depends on the specific use case, the nature of the data processing, and the complexity of the operations. Both SQL and non-SQL approaches have their merits and are optimized differently. It's important to choose the appropriate approach based on the specific requirements, readability, maintainability, and the ability to leverage the optimization capabilities provided by Spark's query optimizer. It's also common to use a mix of both SQL and non-SQL operations to strike a balance between performance and ease of use.
-
-## Rapid Fire
-
-spark is a distributed in-memory processing framework for working with big data.
-
-- it is lazily evaluated and builds a DAG of all steps to be ran when certain action operations are executed like .write or .collect etc
-- you have a master spark node which runs the driver program, and worker nodes which run executors or processes triggered by the master node to run jobs
-- Example: 10 spark workers (aka 10 executor JVM processes), 4 cores per worker, 40 total cores that can run in parallel on 40 partitions at the same time.
-- jobs consist of all of the work needed for a spark workload to run.
-- jobs consist of stages, which are when you need to re-shuffle the data across nodes for specific operations like group by aggs or repartitioning events etc
-- within stages are spark tasks, which are individual units of work on a single partition
-- shuffles are expensive because they involve disk I/O, network I/O, and serialization
-  - serialization: Convert in-memory objects to bytes for network transfer (CPU intense)
-  - disk IO: each executor has to write shuffle data to local disk
-  - network IO: data going back and forth across the network to appropriate executors. network bandwidth becomes the bottleneck
-  - deserialization:c onvert bytes back to in memory objects (CPU intense)
-  - so the data during shuffles is serialized to bytes, written to disk, sent over the network, read back from disk, and deserialized into in-memory objects on the executors
-  - The disk write serves a purpose for fault tolerance and avoiding all data sitting in memory at once
-- a partition is 1 slice of the data. many parittions develop many tasks which can be executed in parallel across all worker nodes
-- if you have 200 partitions, you'll have 200 tasks. try to balance partitions at around < 128 MB each and have an appropraite amount of worker nodes avaialble ot paralleize the work.
-  - too few partitions and you wont get good parallism
-  - too many partitions and you end up with a lot of overhead which could affect performance
-- broadcast joins allow a table to be placed in memory on every worker node to avoid reshuffling operations and improve performance, at the cost of taking up memroy across every node. typically used for small tables relative to the total size of the data, like joining a 1 TB table with a 5 GB broadcast join table would bew appropriate.
-- spark operates in-memory. if too much data comes into the worker node and causes it to hit its limits, the worker node can spill to disk to complete the job. this works, but is a serious performance penalty
-- narrow transaformations are simple operations like filter or creating a new column that adds 1 to an integer column and can be executed locally in memory
-- wide transformations require data to be redistributed across partitions and trigger a shuffle, such as a group by aggregation
-- repartition does a full shuffle and can increase or decrease partitions
-  - can be useful to fix data skew, or increase # of partitions for better parallelism
-- coalesce simplly decreases partitions without a shuffle.
-  - useful when you're about to write data, and only want to write 1 file instead of 1000
-- optimizing a slow running spark job involves checking for data skew, minimizing shuffles, potentially using broadcast joins, adjusting partition counts etc
-- Data skew happens when certain partitions have way more data than others (e.g., NULL keys, popular user IDs). This causes some tasks to take much longer. Solutions: salting keys, custom partitioning, or AQE can help.
-- since spark is lazily evaluated and has DAG, if a partition is lost or a task fails spark can recompute it using the transformation history.
-- the mechanism that optimizes spark query plans is called the catalyst optimizer, it basically runs under the hood
-- adaptive query execution is a runtime optimization feature that dynamically adjusts query execution plans based on actual runtime statistics after each stage during spark jobs so it can optimize the remaining stage steps
-  - it does things like: dynamically update partition counts, automatically switching join strategies to broadcast, detects data skew and creates sub-partitions to enable further parallelization
-- Caching stores computed results in memory to avoid recomputation when a DataFrame is used multiple times in a job.
-- parquet is a preferred file format because it is columnar focused, has a strict data type schema, and has good compression ratios for efficient storage.
-- predicate pushdown involves pushing filters down to the data source level when possible so you only read in the minimal amount of data you need.
-  - Example: select from parquet file where date = '2025-01-01\` - spark can read parquet metadata and skip entire row groups based on min max statistics, so it doesnt need to read in the whole file and then do the filter in memory, it can apply the filter when it fetches the data
+- ANSI mode changes can silently fail jobs that previously ran on bad data — run with `ansi.enabled=true` in staging well before prod.
+- Spark Connect's session model differs from Classic in subtle ways (no `SparkContext`, restricted Hadoop config access) — some libraries still don't work cleanly under Connect.
+- Java 17 strict module access can break libraries that reflect into JDK internals; expect to add `--add-opens` flags.
