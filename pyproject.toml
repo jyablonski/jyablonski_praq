@@ -60,8 +60,8 @@ package = false
 
 [tool.uv.workspace]
 members = [
-    "mcp/mcp-rag-server",
-    "async",
+    "tools/apis-integrations/mcp",
+    "tools/python-concepts/async",
 ]
 
 [build-system]

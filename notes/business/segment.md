@@ -16,7 +16,7 @@ Segment is built around a small set of standardized method calls, which is a lar
 
 Because every source speaks this same language, all downstream destinations receive data in a consistent, predictable format. This normalization is the core unlock.
 
----
+______________________________________________________________________
 
 ## Getting Data Into Segment
 
@@ -32,7 +32,7 @@ Cloud sources (Salesforce, Stripe, Zendesk, Marketo) are first-party integration
 
 Reverse ETL (via Segment's Reverse ETL feature, or tools like Census/Hightouch that integrate with it) reads computed data from your warehouse and syncs it back into operational tools — think pushing a "predicted churn score" from Snowflake into your CRM.
 
----
+______________________________________________________________________
 
 ## Getting Data to Destinations
 
@@ -48,7 +48,7 @@ Destination filters and functions let you control what gets routed where. You ca
 
 Protocols (Segment's data governance layer) lets you define a tracking plan — a schema of what events and properties are allowed — and will block or flag events that don't conform. This is critical for data quality at scale.
 
----
+______________________________________________________________________
 
 ## Business Use Cases
 
@@ -64,7 +64,7 @@ For the data warehouse: A Snowflake or BigQuery destination receives every event
 
 For customer success and support: User traits and behavioral context flow into Intercom or Zendesk so support reps see what a user has done recently before a conversation starts.
 
----
+______________________________________________________________________
 
 ## When It's Worth It
 
