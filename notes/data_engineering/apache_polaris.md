@@ -1,8 +1,8 @@
 # Apache Polaris
 
-## What is a data catalog
+## What is a table catalog
 
-A data catalog is the service that makes data discoverable, addressable, and governable. In a warehouse like Snowflake, the catalog is bundled invisibly: when you write `SELECT * FROM analytics.orders`, Snowflake resolves the name to physical storage, checks your permissions, and executes the query — all inside one system. In a lakehouse, those responsibilities are explicit and separate.
+A table catalog is the service that makes data discoverable, addressable, and governable. In a warehouse like Snowflake, the catalog is bundled invisibly: when you write `SELECT * FROM analytics.orders`, Snowflake resolves the name to physical storage, checks your permissions, and executes the query — all inside one system. In a lakehouse, those responsibilities are explicit and separate.
 
 A lakehouse catalog answers three questions for every query, from every engine:
 
