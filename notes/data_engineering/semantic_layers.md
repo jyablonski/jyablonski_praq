@@ -17,10 +17,21 @@ For sake of argument, assume you're in a data team of 3 people, 5 stakeholder te
 
 A semantic layer owns metric and dimension definitions independently of physical storage. Define a metric once, query it consistently no matter who asks or how they slice it. The core phrase: "define once, query anywhere."
 
-It solves two distinct problems:
+It provides two core capabilities:
 
-1. Definition consistency. One enforced source of truth, so "revenue" and "active user" can't drift across dbt, the BI tool, and ad-hoc queries.
-1. Dynamic aggregation. A metric is defined atomically and the layer compiles SQL on demand for whatever grain/slice the consumer asks. You don't pre-decide the grain.
+1. A governance layer. Business metrics, dimensions, relationships, and calculation rules are defined once and reused consistently, so concepts such as "revenue" and "active user" cannot drift across dbt, the BI tool, and ad-hoc queries.
+1. A controlled query mechanism. Consumer requests are translated into SQL using those governed definitions. The individual SQL queries do not need to be predefined; instead, the semantic rules and allowed building blocks are predefined, and the layer generates or validates queries against them. This enables dynamic aggregation at whatever supported grain or slice the consumer requests while improving consistency, standardization, and trust in the results.
+
+The semantic layer therefore standardizes both what business concepts mean and how those concepts are translated into data queries. It does not necessarily own the underlying transformations: dbt can remain the source of truth for how warehouse tables are built, while the semantic layer is the source of truth for how those tables become consumer-facing metrics.
+
+### Where the semantic layer runs
+
+The layer's position in the query path depends on the implementation:
+
+- External service, such as Cube. Cube sits between consumers and the warehouse. Consumers authenticate to and query Cube through REST, GraphQL, SQL, or another supported interface. Cube holds the warehouse connection, compiles requests using its governed definitions, executes the resulting queries against the warehouse, and returns the results. Consumers do not need direct warehouse credentials.
+- Warehouse-embedded, such as Snowflake Semantic Views. The semantic definitions are native Snowflake objects and Snowflake generates and executes the underlying SQL. Consumers connect to Snowflake with a Snowflake identity, role, and compute access, but they can be granted access only to the semantic view rather than its underlying tables.
+
+In both models, consumers query controlled semantic objects instead of independently recreating metric SQL. The difference is whether the semantic layer mediates warehouse access as a separate service or executes as part of the warehouse itself.
 
 ### How the existing setup maps to semantic-layer concepts
 
@@ -57,6 +68,21 @@ Headless alternatives that live outside the BI tool:
 - Cube: most adopted open-source headless layer, own SQL/REST/GraphQL APIs and caching. Tradeoff is a separate server to operate.
 - Lightdash, Omni: lighter, integrate tightly with dbt models.
 - Snowflake Semantic Views: warehouse-native, definitions live as Snowflake objects, no third-party server. Best fit for a Snowflake stack and closest to the "testable, owned definition" philosophy.
+
+Option comparison for a Snowflake, dbt, and Sigma stack:
+
+| Axis | Snowflake Semantic Views | Cube Core | dbt Cloud Semantic Layer |
+| ------------------------------ | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Deployment model | Embedded in Snowflake | External self-hosted service | Managed dbt service |
+| Query execution | Snowflake executes directly | Cube compiles requests and executes against the warehouse | dbt compiles metric requests and executes against the warehouse |
+| Consumer access | Snowflake identity, role, compute, and semantic-view access; no underlying-table access required | Cube API or SQL credentials; no consumer warehouse credentials required | Supported dbt Semantic Layer API or partner integration |
+| Standing infrastructure | No separate semantic-layer service | A single Cube container is sufficient initially; workers, Cube Store, and pre-aggregation storage are scaling choices | None operated by the data team |
+| Version-controlled definitions | DDL, YAML, or Terraform | YAML or JavaScript | MetricFlow YAML in the dbt project |
+| Warehouse portability | Snowflake only | Portable across supported warehouses | Portable across supported adapters |
+| Caching and acceleration | Snowflake-native execution and caching | In-memory caching by default; optional pre-aggregations and Cube Store for scale | Primarily relies on warehouse execution and caching |
+| AI and agent path | Native Cortex Analyst and Cortex Agents grounding | Custom agents use Meta plus REST, GraphQL, or Semantic SQL; hosted Cube adds direct MCP and Chat integrations | Agents use supported Semantic Layer APIs and integrations |
+| Primary operational cost | Snowflake compute | Self-hosting and operations, or Cube Cloud | dbt Cloud subscription plus warehouse compute |
+| Best fit | Snowflake-native governance with minimal additional infrastructure | Embedded analytics, multiple consumers or warehouses, or an independent serving boundary | Teams that want transformations and metrics managed together in dbt Cloud |
 
 ### Snowflake Semantic Views (2026 mechanics)
 

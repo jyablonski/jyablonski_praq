@@ -1,0 +1,31 @@
+cubes:
+  - name: customers
+    title: Customers
+    description: Customer attributes used to segment sales metrics.
+    sql_table: gold.dim_customers
+
+    dimensions:
+      - name: customer_id
+        title: Customer ID
+        description: Unique identifier for a customer.
+        sql: customer_id
+        type: number
+        primary_key: true
+
+      - name: customer_name
+        title: Customer Name
+        description: Display name of the customer.
+        sql: customer_name
+        type: string
+
+      - name: segment
+        title: Customer Segment
+        description: Commercial segment assigned to the customer.
+        sql: segment
+        type: string
+
+      - name: region
+        title: Customer Region
+        description: Sales region assigned to the customer.
+        sql: region
+        type: string

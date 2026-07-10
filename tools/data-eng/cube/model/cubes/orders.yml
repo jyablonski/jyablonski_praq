@@ -1,0 +1,51 @@
+cubes:
+  - name: orders
+    title: Orders
+    description: Sales orders used for revenue reporting.
+    sql_table: gold.fct_orders
+
+    joins:
+      - name: customers
+        relationship: many_to_one
+        sql: "{CUBE}.customer_id = {customers.customer_id}"
+
+    measures:
+      - name: monthly_revenue
+        title: Monthly Revenue
+        description: Revenue from completed orders, attributed to the month the order was placed.
+        sql: amount
+        type: sum
+        format: currency
+        meta:
+          owner: Finance
+          certification: approved
+          calculation: SUM(amount) for completed orders
+          time_basis: order_date
+        filters:
+          - sql: "{CUBE}.status = 'completed'"
+
+    dimensions:
+      - name: order_id
+        title: Order ID
+        description: Unique identifier for an order.
+        sql: order_id
+        type: number
+        primary_key: true
+
+      - name: customer_id
+        title: Customer ID
+        description: Identifier of the customer that placed the order.
+        sql: customer_id
+        type: number
+
+      - name: order_date
+        title: Order Date
+        description: Date the order was placed; use month granularity for monthly revenue reporting.
+        sql: order_date
+        type: time
+
+      - name: status
+        title: Order Status
+        description: Whether the order was completed or cancelled.
+        sql: status
+        type: string

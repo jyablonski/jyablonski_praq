@@ -1,0 +1,44 @@
+cases:
+  - id: monthly_revenue_trend
+    question: How is monthly revenue trending across 2025?
+    expected:
+      measures:
+        - orders.monthly_revenue
+      time_dimension: orders.order_date
+      granularity: month
+      row_count: 12
+      facts:
+        first_month: 2025-01
+        first_month_revenue: 3033.50
+        last_month: 2025-12
+        last_month_revenue: 8236.60
+
+  - id: december_revenue_by_segment
+    question: Which customer segment generated the most revenue in December 2025?
+    expected:
+      measures:
+        - orders.monthly_revenue
+      dimensions:
+        - customers.segment
+      date_range:
+        - 2025-12-01
+        - 2025-12-31
+      top_segment: Mid-Market
+      top_segment_revenue: 3506.35
+      must_explain_metric_filter: completed orders only
+
+  - id: revenue_by_region
+    question: Compare monthly revenue by customer region during 2025.
+    expected:
+      measures:
+        - orders.monthly_revenue
+      dimensions:
+        - customers.region
+      time_dimension: orders.order_date
+      granularity: month
+
+  - id: unsupported_metric
+    question: What was gross profit by month in 2025?
+    expected:
+      behavior: explain that gross profit is not defined in the governed model
+      must_not_query_unknown_members: true

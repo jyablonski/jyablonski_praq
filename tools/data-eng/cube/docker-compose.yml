@@ -1,0 +1,61 @@
+services:
+  postgres:
+    image: postgres:16.9
+    environment:
+      POSTGRES_DB: sales
+      POSTGRES_USER: cube
+      POSTGRES_PASSWORD: cube_password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cube -d sales"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./seed.sql:/docker-entrypoint-initdb.d/seed.sql:ro
+
+  cube:
+    image: cubejs/cube:v1.6.51
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "4000:4000"
+      - "15432:15432"
+    environment:
+      CUBEJS_DEV_MODE: "true"
+      CUBEJS_DB_TYPE: postgres
+      CUBEJS_DB_HOST: postgres
+      CUBEJS_DB_PORT: "5432"
+      CUBEJS_DB_NAME: sales
+      CUBEJS_DB_USER: cube
+      CUBEJS_DB_PASS: cube_password
+      CUBEJS_PG_SQL_PORT: "15432"
+      CUBEJS_SQL_USER: cube
+      CUBEJS_SQL_PASSWORD: cube_sql_password
+    volumes:
+      - ./cube.py:/cube/conf/cube.py:ro
+      - ./model:/cube/conf/model:ro
+
+  agent:
+    build: ./agent
+    depends_on:
+      cube:
+        condition: service_started
+    ports:
+      - "8000:8000"
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-5.4-mini}
+      CUBE_API_URL: http://cube:4000
+      AGENT_MAX_TOOL_CALLS: "5"
+      AGENT_MAX_ROWS: "100"
+      AGENT_QUERY_TIMEOUT_SECONDS: "15"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres_data:
