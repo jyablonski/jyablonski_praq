@@ -57,6 +57,21 @@ The boundary is additive vs non-additive metrics.
 
 OBT covers the additive long-tail (a wide atomic table the BI tool rolls up). It does NOT close the non-additive arbitrary-slice gap. Pitch OBT precisely: additive long-tail yes, non-additive arbitrary slice stays a one-off analyst query against silver. Claiming OBT solves all slicing is the one place the argument is unsound as stated.
 
+### When to use a semantic layer
+
+Default to the simple thing. A one-big-table in the gold layer feeding a single dashboard is often the right answer, not a compromise. One consumer means there's nothing to be consistent *with* — you'd be paying governance overhead (YAML, CI, review cycles, a mental model the team has to learn) for a benefit that doesn't exist.
+
+The trigger is contested meaning, not data volume. A semantic layer earns its keep when the same metric shows up in multiple places and people disagree about the number. Concretely, that's:
+
+- Multiple consumers. Two BI tools, or a BI tool plus LLM/agentic querying, or a dashboard plus an API. The moment logic has to exist in two places, it will drift.
+- Flexible slicing. Users need the metric cut by dimensions you can't enumerate ahead of time, so you can't just pre-bake a table per view.
+- Non-additive metrics. Ratios, distinct counts, period-over-period. These break when someone re-aggregates a pre-aggregated table — the semantic layer computes at the requested grain instead.
+- Join safety. Multiple entities where the wrong join path silently fans out the grain. The semantic model constrains you to legal traversals; a wide table just lets you do it wrong.
+
+What graduates something from OBT to semantic view: a second consumer appears, or someone asks "why doesn't this match X." Multiple consumers is the real trigger — that's when a shortcut becomes a divergent definition.
+
+The failure mode is over-application. Forcing everything through the semantic layer produces a sprawl of half-maintained definitions and the same trust problem in a more expensive form. Small, well-governed core; simple machinery for the long tail.
+
 ### dbt options
 
 - Define side is open source: dbt-core and MetricFlow. Write semantic models and metric YAML, query locally via MetricFlow CLI. The new MetricFlow spec (Fusion engine) is coming to dbt Core in 1.12.
