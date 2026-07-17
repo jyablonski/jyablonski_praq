@@ -1,5 +1,13 @@
 # Arch Linux Packaging
 
+## Version
+
+Example: `linux-7.1.3.arch2-1`
+
+- `7.1.3` — upstream kernel version (from Linus/kernel.org).
+- `arch1`, `arch2`, … — Arch's patchset revision on top of that specific kernel version.
+- `-1`, `-2`, … — package release number for that exact `7.1.3.archN` source.
+
 ## Repository taxonomy
 
 Arch is rolling-release with no versioned distro releases. Software is distributed through binary repositories synced via `pacman -Syu`.
