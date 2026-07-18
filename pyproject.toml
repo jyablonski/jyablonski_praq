@@ -37,7 +37,6 @@ dependencies = [
     "dlt>=1.15.0",
     "streamlit>=1.48.1",
     "nba-api>=1.10.2",
-    "mcp>=1.22.0",
     "starlette>=0.50.0",
     "uvicorn>=0.38.0",
     "reportlab>=4.4.9",
@@ -58,11 +57,6 @@ dev = [
 [tool.uv]
 package = false
 
-[tool.uv.workspace]
-members = [
-    "tools/apis-integrations/mcp",
-    "tools/python-concepts/async",
-]
 
 [build-system]
 requires = ["hatchling"]

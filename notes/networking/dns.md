@@ -1,139 +1,130 @@
 # DNS
 
-### 1. **Introduction to DNS:**
+## What DNS is
 
-- DNS is a hierarchical and distributed naming system used to translate human-readable domain names into numerical IP addresses. This translation is essential for computers to locate and communicate with each other over the Internet. Without this, we'd have to manually type IP Addresses in everytime we wanted to visit a Website.
+DNS (Domain Name System) translates human-friendly names like example.com into the IP addresses machines actually route to, such as 93.184.216.34. It is a hierarchical, distributed, heavily-cached database. The hierarchy reads right-to-left from an implicit root: the root (.) knows who runs each top-level domain, the TLD servers (.com, .org, .io) know who is authoritative for each domain under them, and the authoritative servers hold the actual records (A/AAAA for addresses, plus MX, TXT, CNAME, and others).
 
-### 2. **Hierarchy in DNS:**
+## Why DNS is used
 
-- **Root DNS Servers:**
+Nobody wants to memorize IP addresses, and addresses change over time while names stay stable. DNS gives us stable, memorable names that map to whatever address a service currently uses. Caching at every layer, governed by TTLs, keeps the system fast and prevents it from collapsing under global load.
 
-  - At the top of the DNS hierarchy are the root DNS servers. They are a set of authoritative servers that maintain information about top-level domain (TLD) servers. Authoritative servers contain definitive information about domain names or zones and are considered the ultimate source of truth.
+## The players involved
 
-- **Top-Level Domain (TLD) Servers:**
+Stub resolver: lives on your device as part of the OS. It does no real work; it just asks someone smarter and caches the answer.
 
-  - TLD servers are responsible for specific domain extensions (e.g., .com, .org, .net). They store information about the authoritative name servers for each second-level domain within their TLD. To illustrate this, in `example.com` `example` is the second-level domain and `.com` is the top-level domain.
+Router: on a home network this is usually a forwarder. It receives queries and relays them to something else, and it hands out network settings to devices via DHCP.
 
-- **Second-Level Domain Servers:**
+When a device joins a network, it doesn't magically know how to participate — it needs a handful of settings. DHCP is the protocol that hands those settings to the device automatically instead of you configuring each one by hand. The core things it typically assigns:
 
-  - These servers are specific to individual domains (e.g., example.com). They hold information about subdomains, such as www.example.com or mail.example.com.
+- An IP address for the device (this is the part you're thinking of with reservations)
+- The subnet mask (which addresses are "local")
+- The default gateway (your router — how to reach anything off-LAN)
+- The DNS server(s) ← this is why it keeps surfacing in our DNS talk
 
-- **Authoritative Name Servers:**
+ISP resolver (or a public recursive resolver): the recursive resolver is the workhorse that walks the hierarchy on your behalf and caches aggressively. By default this is your ISP's resolver, but it can be a public one like 1.1.1.1 (Cloudflare), 8.8.8.8 (Google), or 9.9.9.9 (Quad9).
 
-  - At the bottom of the hierarchy are authoritative name servers, which hold the actual DNS records for a specific domain.
+Authoritative servers: the servers that actually hold the records for a domain and give the definitive answer.
 
-### 3. **DNS Records:**
+## Three distinct roles (the part that confuses people)
 
-- DNS records are stored on authoritative name servers and contain information about a domain. Common types include:
-  - **A Record (Address Record):** Maps a domain to an IPv4 address.
-  - **AAAA Record (IPv6 Address Record):** Maps a domain to an IPv6 address.
-  - **CNAME (Canonical Name):** Alias of one domain to another.
-  - **MX Record (Mail Exchange):** Specifies mail servers responsible for receiving email.
-  - **NS Record (Name Server):** Indicates authoritative name servers for the domain.
-  - **PTR Record (Pointer Record):** Used for reverse DNS lookups.
-  - **SOA Record (Start of Authority):** Contains administrative information about the domain.
+Forwarding and recursing are different jobs, and a box can do one, the other, or both.
 
-### 4. **DNS Resolution Process:**
+Stub resolver: asks someone smarter, caches. Never changes.
 
-1. **User Query:**
+Forwarder: a middleman that relays queries elsewhere, optionally caching or filtering. It does not walk the hierarchy itself.
 
-   - When a user enters a domain name (e.g., www.example.com) in a browser, their device initiates a DNS query.
+Recursive resolver: the only role that resolves a name from scratch by walking root to TLD to authoritative.
 
-1. **Local DNS Resolver:**
+## How a normal lookup works
 
-   - The device's DNS resolver, often provided by the ISP or a public DNS service, handles the query. It checks its cache for a recent response.
+1. The app calls the OS; the stub resolver checks its cache (miss).
+1. It sends the query to the DNS server handed out by DHCP, usually the router, which forwards to the ISP resolver.
+1. The recursive resolver checks its cache (miss) and walks: root tells it the .com nameservers, the .com TLD tells it the authoritative nameservers, the authoritative server returns the IP.
+1. The resolver caches the answer (honoring TTL) and returns it down the chain.
+1. Your device connects to that IP.
 
-1. **Root DNS Servers:**
+In this path every domain resolves truthfully, including ad and tracker domains.
 
-   - If not found in the cache, the resolver queries the root DNS servers to find the authoritative servers for the top-level domain.
+## What Pi-hole is
 
-1. **TLD DNS Servers:**
+Pi-hole inserts itself as the DNS server for your whole LAN and adds a filtering gate in front of resolution. You point your router's DHCP to hand out Pi-hole's IP as the DNS server, so every device asks Pi-hole with no per-device setup. Pi-hole itself is configured with an upstream resolver that it forwards non-blocked queries to.
 
-   - The resolver queries the TLD servers to obtain information about the authoritative name servers for the second-level domain.
+Important: by default Pi-hole is a forwarder with a filter, not a recursive resolver. It is essentially the same role your router already played, with a blocklist bolted on. The recursion still happens upstream unless you change it.
 
-1. **Authoritative DNS Servers:**
+## HaGeZi + OISD blocklists
 
-   - Finally, the resolver queries the authoritative name servers for the specific domain to obtain the IP address associated with the requested domain.
+OISD and HaGeZi are curated, actively-maintained lists of domains known to serve ads, tracking, telemetry, malware, and phishing. You add them to Pi-hole as adlist URLs.
 
-1. **Response to User:**
+OISD: a large aggregated list tuned to minimize false positives, commonly used as Small vs Big.
 
-   - The resolver stores the obtained IP address in its cache and returns the result to the user's device.
+HaGeZi: tiered as Light, Normal, and Pro (plus specialized feeds like Threat Intelligence), from conservative to aggressive.
 
-### 5. **Caching:**
+When you save these, Pi-hole runs gravity (pihole -g): it downloads each list, deduplicates the domains, and compiles them into its local gravity database. It re-pulls on a schedule to stay current.
 
-- To improve efficiency, DNS resolvers cache responses for a specific duration (Time-To-Live or TTL). Cached information is reused for subsequent queries within the TTL period.
+## How a Pi-hole lookup works
 
-### 6. **Security Measures:**
+1. Device stub resolver sends the query to Pi-hole (because DHCP said so).
+1. Pi-hole checks the domain against the gravity database first.
+1. Not on any list: Pi-hole checks its cache, forwards upstream on a miss, caches, and returns the answer. It behaves like a normal resolver.
+1. On a list: Pi-hole sinkholes it and does not forward at all. In default NULL-blocking mode it answers with 0.0.0.0 or ::, an unroutable address, so the connection fails fast. (NXDOMAIN is an alternative mode.)
 
-- **DNSSEC (DNS Security Extensions):**
-  - A suite of extensions that adds an additional layer of security by ensuring the integrity and authenticity of DNS data, preventing DNS spoofing or tampering.
+Pi-hole operates purely at the DNS layer. It never inspects packet content or blocks by IP; its only lever is a per-domain decision to answer truthfully or answer with a dead address.
 
-### 7. **Dynamic DNS (DDNS):**
+## Doing DNS yourself (Pi-hole + unbound)
 
-- Allows dynamic, real-time updates to DNS records. Often used when the IP address of a device changes regularly.
+By default Pi-hole forwards non-blocked queries to a third party like Cloudflare, so that company still does the recursion and sees your query stream. Pairing Pi-hole with a local unbound instance changes this. Instead of forwarding to Cloudflare, Pi-hole hands non-blocked queries to unbound, and unbound does the full recursive walk itself, talking directly to root, TLD, then authoritative servers from your own box.
 
-The hierarchy in the Domain Name System (DNS) is essential for several reasons, contributing to the efficiency, scalability, and reliability of the system. Here are key reasons why a hierarchical structure is needed in DNS:
+This is the only setup where the recursion genuinely relocates into your network. No single upstream company holds your aggregated lookup history. The trade-off: you lose the warm, nearby anycast cache of a public resolver, so cold lookups are slower (repeat lookups are cached locally either way).
 
-1. **Efficient and Fast Resolution:**
+## Diagram: normal setup
 
-   - The hierarchical structure allows DNS queries to be resolved quickly and efficiently. By dividing the responsibility among different levels (root, TLDs, second-level domains, etc.), the system can narrow down the search for a specific domain, reducing the number of servers queried at each step.
+```mermaid
+flowchart LR
+    A[Device] --> B[Router]
+    B --> C[Recursive Resolver<br/>ISP or 1.1.1.1]
+    C --> D[Root to TLD to Authoritative]
+    D --> C
+    C --> B
+    B --> A
+    A --> E((Connects to real IP))
+```
 
-1. **Distribution of Authority:**
+## Diagram: Pi-hole setup
 
-   - DNS follows a distributed model where different levels of the hierarchy have authority over specific portions of the domain name space. This distribution of authority enables efficient management and updates, as changes to one part of the system don't require a centralized update to the entire DNS infrastructure.
+```mermaid
+flowchart LR
+    A[Device] --> B[Pi-hole]
+    B --> C{On blocklist?<br/>HaGeZi + OISD}
+    C -->|No| D[Upstream Resolver<br/>or local unbound]
+    D --> E[Root to TLD to Authoritative]
+    E --> D
+    D --> B
+    B --> F((Connects to real IP))
+    C -->|Yes| G((Sinkhole 0.0.0.0 dies))
+```
 
-1. **Scalability:**
+## Reasons to use a different resolver
 
-   - The hierarchical structure ensures scalability as the number of domains and DNS queries grows. The system can handle a vast number of domain names by distributing the load among various levels of authoritative servers. This is crucial given the enormous size of the modern internet.
+Privacy: your recursive resolver sees every domain you look up. Moving to a no-logging resolver changes who holds that record; running your own unbound means no single upstream company holds it at all.
 
-1. **Redundancy and Reliability:**
+Performance: better caching and closer points of presence can shave latency, though ISP resolvers are often already fine.
 
-   - Redundancy is built into the DNS hierarchy. Multiple authoritative servers exist for each level, providing backup in case one server is unavailable. This redundancy enhances the reliability and fault tolerance of the DNS system.
+Reliability: ISP resolvers sometimes go down; anycast public resolvers are engineered for very high uptime.
 
-1. **Localized Resolution:**
+Security filtering: some resolvers block malicious domains by default (Quad9) or offer filtered variants (Cloudflare for families). This overlaps with what HaGeZi and OISD already give you locally.
 
-   - The hierarchical model allows for localized resolution. DNS resolvers and caching servers can store information about recently resolved queries, reducing the need to repeatedly query higher-level authoritative servers for the same information. This improves response times and reduces the load on higher-level servers.
+Avoiding manipulation: some ISPs hijack NXDOMAIN responses or enforce blocking at the resolver; a neutral resolver sidesteps that.
 
-1. **Delegation of Responsibilities:**
+Control: with your own unbound you trust nobody's answers or logging policy and own the whole path.
 
-   - Each level in the hierarchy has specific responsibilities. The root servers know about TLDs, TLD servers know about second-level domains, and so on. This delegation of responsibilities allows for effective management and ensures that no single server needs to maintain information about the entire DNS namespace.
+An honest caveat: even with your own unbound, authoritative servers still see the individual queries that reach them, and your ISP can still observe the connections you open. Running unbound stops one company from holding your aggregated history; it does not make you invisible.
 
-1. **Simplified Updates and Changes:**
+## The two independent choices
 
-   - Changes to DNS records can be localized to the relevant authoritative servers. For example, updates to a second-level domain can be made without affecting the entire DNS system. This simplifies the process of making changes and updates to domain configurations.
+All of this comes down to two separate knobs that are easy to conflate.
 
-1. **Global Distribution:**
+Do I filter? Run Pi-hole with blocklists like HaGeZi and OISD, or not. This is entirely what Pi-hole is about.
 
-   - The hierarchical structure supports the global distribution of DNS servers. This distribution helps reduce latency for users accessing websites from different parts of the world. Users can query local DNS servers, which, in turn, can efficiently resolve queries through the DNS hierarchy.
+Who does my recursion? ISP, a public resolver like Cloudflare or Quad9, or your own local unbound.
 
-In summary, the hierarchical structure of the DNS provides a systematic and organized way to manage domain names, distribute authority, handle a large number of queries, and ensure efficient, redundant, and reliable domain name resolution across the internet.
-
-The servers that serve DNS query requests are owned and operated by various entities, including government organizations, private companies, and nonprofit organizations. The ownership and management of DNS servers are distributed across the internet, reflecting the decentralized and collaborative nature of the Domain Name System. Here are key entities involved:
-
-1. **Root DNS Servers:**
-
-   - The 13 root DNS servers are maintained by different organizations worldwide. These organizations operate under agreements with the Internet Assigned Numbers Authority (IANA), which is a function of the Internet Corporation for Assigned Names and Numbers (ICANN). ICANN oversees the global coordination of the DNS.
-
-1. **Top-Level Domain (TLD) Name Servers:**
-
-   - TLD name servers are operated by the organizations responsible for specific top-level domains (e.g., Verisign for .com, Public Interest Registry for .org, etc.). These organizations manage and maintain the authoritative name servers for their respective TLDs.
-
-1. **Second-Level Domain and Authoritative Name Servers:**
-
-   - Second-level domain name servers and authoritative name servers for specific domains are typically owned and operated by the organizations or individuals that own the corresponding domains. For example, if you own the domain example.com, you might manage the authoritative name servers for that domain.
-
-1. **Internet Service Providers (ISPs):**
-
-   - ISPs operate DNS servers to handle DNS queries from their subscribers. These servers often act as recursive resolvers, caching DNS information and forwarding queries to higher-level authoritative servers when needed.
-
-1. **Public DNS Services:**
-
-   - Public DNS services, such as Google Public DNS, OpenDNS, and Cloudflare DNS, are owned and operated by large technology companies. These services offer free DNS resolution to the public and may have distributed server infrastructure globally.
-
-1. **Government and Educational Institutions:**
-
-   - Some government agencies and educational institutions operate DNS servers for their internal networks and services.
-
-It's important to note that while the infrastructure of the DNS is distributed, the overall coordination and management of the DNS are overseen by organizations like ICANN. ICANN ensures the stability and security of the DNS, manages the allocation of IP addresses and domain names, and coordinates the root DNS servers' operation.
-
-In summary, DNS servers are owned and operated by a variety of entities, each responsible for different levels of the DNS hierarchy. The collaborative and distributed nature of DNS ensures its reliability, redundancy, and global accessibility.
+Pi-hole dictates only the first knob. It does not force the second; it just becomes the place where you set the upstream for your whole network. You can mix and match freely: ISP DNS with filtering, Cloudflare without filtering, or your own unbound with filtering.
