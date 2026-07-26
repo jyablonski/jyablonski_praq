@@ -38,7 +38,9 @@ services:
       - ./model:/cube/conf/model:ro
 
   agent:
-    build: ./agent
+    build:
+      context: .
+      dockerfile: agent/Dockerfile
     depends_on:
       cube:
         condition: service_started
@@ -56,6 +58,20 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+
+  cube-mcp:
+    build:
+      context: .
+      dockerfile: mcp/Dockerfile
+    depends_on:
+      cube:
+        condition: service_started
+    ports:
+      - "8001:8000"
+    environment:
+      CUBE_API_URL: http://cube:4000
+      AGENT_MAX_ROWS: "100"
+      AGENT_QUERY_TIMEOUT_SECONDS: "15"
 
 volumes:
   postgres_data:

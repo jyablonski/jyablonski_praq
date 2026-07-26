@@ -5,11 +5,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY agent/requirements.txt .
 RUN pip install --no-cache-dir --requirement requirements.txt
 
-COPY app.py evaluations.yml policies.py prompts.py tools.py ./
-COPY tests ./tests
+COPY shared ./shared
+COPY agent/app.py agent/evaluations.yml agent/policies.py agent/prompts.py agent/tools.py ./
+COPY agent/tests ./tests
 
 EXPOSE 8000
 

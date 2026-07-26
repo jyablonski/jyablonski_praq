@@ -49,6 +49,39 @@ ORDER BY 1;
 
 Because the query uses `MEASURE(monthly_revenue)`, Cube applies the governed definition that includes only completed orders. The agent should receive Cube credentials with read-only access and should never receive a direct warehouse connection. In production, also enforce authentication, member-level access, query limits, and logging outside of the LLM. The hosted Cube platform additionally provides MCP and Chat API integrations for connecting supported AI assistants directly; this Cube Core POC demonstrates the custom-agent API and Semantic SQL path.
 
+### MCP service
+
+The Compose stack also includes an MCP adapter at <http://localhost:8001/mcp>. It exposes the same governed Cube surface to MCP-compatible development hosts such as an IDE assistant or desktop AI client:
+
+- `search_semantic_model`: discover public measures and dimensions.
+- `get_metric_definition`: inspect the governed definition and metadata for a measure.
+- `run_semantic_query`: execute a structured, read-only Cube query.
+
+The MCP service contains no LLM and does not query Postgres directly. The MCP host supplies the model and orchestration; the service validates requests and calls Cube's Meta and REST APIs. The adapter and FastAPI agent both import the shared Cube client and query policy from `shared/`, so public-member checks, supported filters, time grains, and row limits remain enforced server-side through either interface.
+
+For an MCP client that supports Streamable HTTP connections, configure the server URL as:
+
+```text
+http://localhost:8001/mcp
+```
+
+After connecting, a development assistant can ask questions such as "How is monthly revenue trending across 2025?" or "What is the approved definition of monthly revenue?" The host will discover the three tools and decide when to call them. The MCP path does not require the `OPENAI_API_KEY` used by the separate FastAPI `/ask` service.
+
+This POC MCP endpoint has no caller authentication, and its empty `user_context` is not an authenticated identity. Production use requires authenticated MCP connections, server-derived authorization context, Cube authentication, audit logging, rate limits, and secret management.
+
+### Potential consumers and use cases
+
+The two interfaces are intended for different consumers while sharing the same governed Cube logic:
+
+- Internal web app: provide a search box, charts, saved questions, and team-specific response formatting through `POST /ask`.
+- Slack or Teams command: route a slash command or bot message to `/ask` and return a concise answer with links to a dashboard or trace.
+- Scheduled reporting: call `/ask` from a workflow that sends recurring metric summaries to email or a team channel.
+- Local developer assistants: connect Cursor, Claude Desktop, Codex, or another MCP-compatible tool using a Streamable HTTP connection to `http://localhost:8001/mcp` for governed metric discovery and read-only analysis during development.
+- Stakeholder AI clients: connect an authenticated, reachable MCP deployment to a compatible ChatGPT or other AI client so users can ask questions without receiving warehouse credentials.
+- Data and analytics development: use MCP to inspect approved metric definitions, validate proposed breakdowns, and investigate seeded or development data without granting direct Postgres access.
+
+The `/ask` path is best when the team owns the product experience, identity, and answer format. The MCP path is best when an existing AI host owns the conversation and needs a reusable Cube integration. Neither path should bypass Cube by querying the underlying Postgres tables directly.
+
 ### Agent service
 
 The POC includes a FastAPI agent at <http://localhost:8000>. It uses the OpenAI Responses API tool-calling loop and exposes three controlled tools:

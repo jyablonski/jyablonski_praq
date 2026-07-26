@@ -69,4 +69,10 @@ flowchart LR
 
 The model chooses tools from the schemas supplied by the FastAPI app. The orchestration gate enforces call ordering, while `validate_and_normalize_query` enforces the Cube query allowlist. Both policy failures become tool outputs so the model can correct its plan and continue the loop. A complete turn can call Cube's `/meta` endpoint three times: search, metric definition, and query validation.
 
+## MCP adapter path
+
+Compose also runs a separate `cube-mcp` service on host port `8001`. It exposes `search_semantic_model`, `get_metric_definition`, and `run_semantic_query` through MCP Streamable HTTP at `/mcp` for external development hosts. Those hosts perform the model orchestration; the adapter and FastAPI agent both import the shared Cube client and query policy, then call Cube's `/meta` and `/load` APIs. This is an interoperability layer for MCP-compatible clients, not a replacement for Cube's semantic layer or the FastAPI agent.
+
+For Codex or another local MCP client, select `Streamable HTTP` and configure `http://localhost:8001/mcp`. The root URL and a browser GET are not interactive health checks for this protocol; the client must send MCP protocol requests to `/mcp`.
+
 Model configuration is currently inconsistent: Docker Compose supplies `gpt-5.4-mini` when `OPENAI_MODEL` is unset, `_run_agent` falls back to `gpt-5.6-luna`, and `/health` reports `gpt-5.4-mini` when unset. The diagram labels the model by the runtime setting and shows the `_run_agent` fallback explicitly.
