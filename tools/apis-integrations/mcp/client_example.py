@@ -1,27 +1,32 @@
 import asyncio
-from mcp.client.sse import sse_client
-from mcp.client.session import ClientSession
+import os
+
+from mcp import Client
+
+SERVER_URL = os.environ.get("MCP_SERVER_URL", "http://localhost:8000/mcp")
+EXPECTED_PROTOCOL_VERSION = "2026-07-28"
 
 
-async def run():
-    # Connect to the SSE endpoint
-    async with sse_client("http://localhost:8000/sse") as (read_stream, write_stream):
-        async with ClientSession(read_stream, write_stream) as session:
-            # 1. Initialize
-            await session.initialize()
-
-            # 2. List Available Tools
-            tools = await session.list_tools()
-            print(f"Connected! Found tool: {tools.tools[0].name}")
-
-            # 3. Call the Tool
-            result = await session.call_tool(
-                "query_policy_docs", arguments={"query": "my refund is broken"}
+async def run() -> None:
+    async with Client(SERVER_URL) as client:
+        if client.protocol_version != EXPECTED_PROTOCOL_VERSION:
+            raise RuntimeError(
+                f"Expected MCP {EXPECTED_PROTOCOL_VERSION}, got {client.protocol_version}"
             )
 
-            # 4. Print Result
-            print("\nTool Output:")
-            print(result.content[0].text)
+        tools = await client.list_tools()
+        tool_names = [tool.name for tool in tools.tools]
+        print(f"Connected with MCP {client.protocol_version}: {tool_names}")
+
+        result = await client.call_tool(
+            "query_policy_docs",
+            {"query": "my refund is broken"},
+        )
+        if result.is_error or result.structured_content is None:
+            raise RuntimeError("query_policy_docs did not return structured output")
+
+        print("\nTool output:")
+        print(result.structured_content["result"])
 
 
 if __name__ == "__main__":

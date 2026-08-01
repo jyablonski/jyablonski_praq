@@ -5,10 +5,8 @@ WORKDIR /app
 
 COPY pyproject.toml uv.lock ./
 
-# Syncs dependencies into /app/.venv
 RUN uv sync --frozen
 
-# FIX: Add the virtual environment to the PATH so the shell finds 'uvicorn'
 ENV PATH="/app/.venv/bin:$PATH"
 
 COPY server.py .
