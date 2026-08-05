@@ -4,16 +4,17 @@ This stack runs Cube Core and a small AI analytics agent over a seeded PostgreSQ
 
 ## Start
 
-Export an OpenAI API key for the agent, then start the complete stack from this directory:
+Generate a Cube API secret, optionally export an OpenAI API key for the agent, then start the complete stack from this directory:
 
 ```sh
+export CUBEJS_API_SECRET="$(openssl rand -hex 32)"
 export OPENAI_API_KEY='your-api-key'
 docker compose up --build
 ```
 
-The key is passed directly into the agent container and is not stored in the repository. The agent defaults to `gpt-5.4-mini`; set `OPENAI_MODEL` before starting Compose to override it. Cube and Postgres still start without an API key, but `POST /ask` returns `503` until one is configured.
+The secrets are passed directly into their containers and are not stored in the repository. `CUBEJS_API_SECRET` is required because Cube runs with development mode disabled; the agent and MCP adapter use it to generate short-lived JWTs for Cube. The agent defaults to `gpt-5.4-mini`; set `OPENAI_MODEL` before starting Compose to override it. Cube and Postgres still start without an OpenAI API key, but `POST /ask` returns `503` until one is configured.
 
-Open the Cube Developer Playground at <http://localhost:4000>. Select the `orders.monthly_revenue` measure and the `orders.order_date` time dimension with month granularity. Add `customers.segment` or `customers.region` to slice the result.
+The Cube Developer Playground and PostgreSQL-compatible SQL API are disabled to reduce the local runtime surface. Cube exposes its authenticated REST and GraphQL APIs on <http://localhost:4000>.
 
 ## Consuming the semantic layer
 
@@ -21,33 +22,38 @@ Any application, dashboard, BI tool, or other consumer that needs the governed m
 
 - REST API: `http://localhost:4000/cubejs-api/v1/load`
 - GraphQL API: `http://localhost:4000/cubejs-api/graphql`
-- SQL API: PostgreSQL-compatible connections on `localhost:15432`
 - WebSockets or a supported Cube frontend integration
 
 Consumers should not query the underlying Postgres tables directly. Doing so bypasses Cube's measure filters, joins, metadata, and other semantic definitions—for example, the rule that monthly revenue includes only completed orders.
 
 ## AI agents and natural-language queries
 
-Cube Core is headless and does not include a built-in chat interface, but an LLM application or AI agent can use it as the governed execution layer for text-to-SQL or text-to-query workflows:
+Cube Core is headless and does not include a built-in chat interface, but an LLM application or AI agent can use it as the governed execution layer for text-to-query workflows:
 
 1. Read `/cubejs-api/v1/meta` so the agent knows the available measures, dimensions, descriptions, types, and formats.
 1. Give that metadata and the stakeholder's question to the LLM, instructing it to use only exposed Cube members.
-1. Have the LLM produce either a structured REST query or Semantic SQL for Cube's PostgreSQL-compatible SQL API.
+1. Have the LLM produce a structured REST query.
 1. Validate the generated query, apply row and time-range limits, and execute it through Cube rather than directly against Postgres.
 1. Give the returned rows to the LLM to explain or visualize for the stakeholder.
 
-For example, the question "How is monthly revenue trending?" could be translated into this Semantic SQL query:
+For example, the question "How is monthly revenue trending?" could be translated into this Cube REST query:
 
-```sql
-SELECT
-  DATE_TRUNC('month', order_date) AS month,
-  MEASURE(monthly_revenue) AS monthly_revenue
-FROM orders
-GROUP BY 1
-ORDER BY 1;
+```json
+{
+  "measures": ["orders.monthly_revenue"],
+  "timeDimensions": [
+    {
+      "dimension": "orders.order_date",
+      "granularity": "month"
+    }
+  ],
+  "order": {
+    "orders.order_date": "asc"
+  }
+}
 ```
 
-Because the query uses `MEASURE(monthly_revenue)`, Cube applies the governed definition that includes only completed orders. The agent should receive Cube credentials with read-only access and should never receive a direct warehouse connection. In production, also enforce authentication, member-level access, query limits, and logging outside of the LLM. The hosted Cube platform additionally provides MCP and Chat API integrations for connecting supported AI assistants directly; this Cube Core POC demonstrates the custom-agent API and Semantic SQL path.
+Because the query uses `orders.monthly_revenue`, Cube applies the governed definition that includes only completed orders. The agent receives Cube API credentials and never receives a direct warehouse connection. In production, also enforce caller authentication, member-level access, query limits, and logging outside of the LLM. The hosted Cube platform additionally provides MCP and Chat API integrations for connecting supported AI assistants directly; this Cube Core POC demonstrates the custom-agent and structured REST query path.
 
 ### MCP service
 
@@ -241,16 +247,23 @@ Run the read-only policy unit tests:
 docker compose run --rm agent python -m unittest discover --start-directory tests
 ```
 
-This remains a development POC: `/ask` has no caller authentication, `user_context` is illustrative rather than trusted identity, and Cube itself is running with authentication disabled. Production deployment requires authenticated user identity, server-generated authorization context, access policies, audit storage, rate limits, and secret management.
+This remains a development POC: `/ask` has no caller authentication and `user_context` is illustrative rather than trusted identity. Cube API authentication protects the service boundary but does not yet implement per-user or row-level authorization. Production deployment requires authenticated user identity, server-generated authorization context, access policies, audit storage, rate limits, and managed secrets.
 
 The implementation follows the current [OpenAI model guidance](https://developers.openai.com/api/docs/models) and uses function calling through the Responses API.
 
 ## REST API example
 
-Development mode disables API authentication. This query returns completed revenue grouped by month:
+Generate a short-lived local Cube token from the shared secret inside the agent container:
+
+```sh
+export CUBE_API_TOKEN="$(docker compose exec --no-TTY agent python -c 'import os,time,jwt; now=int(time.time()); print(jwt.encode({"iat":now,"exp":now+300}, os.environ["CUBE_API_SECRET"], algorithm="HS256"))')"
+```
+
+This authenticated query returns completed revenue grouped by month:
 
 ```sh
 curl --get 'http://localhost:4000/cubejs-api/v1/load' \
+  --header "Authorization: ${CUBE_API_TOKEN}" \
   --data-urlencode 'query={"measures":["orders.monthly_revenue"],"timeDimensions":[{"dimension":"orders.order_date","granularity":"month"}],"order":{"orders.order_date":"asc"}}'
 ```
 
@@ -259,27 +272,17 @@ curl --get 'http://localhost:4000/cubejs-api/v1/load' \
 Cube's Meta API returns the cubes, measures, dimensions, types, descriptions, formats, and custom metadata exposed by the semantic layer:
 
 ```sh
-curl 'http://localhost:4000/cubejs-api/v1/meta'
+curl --header "Authorization: ${CUBE_API_TOKEN}" \
+  'http://localhost:4000/cubejs-api/v1/meta'
 ```
 
 With `jq`, this query returns just the `monthly_revenue` measure metadata that could be synchronized to a data catalog:
 
 ```sh
-curl --silent 'http://localhost:4000/cubejs-api/v1/meta' \
+curl --silent \
+  --header "Authorization: ${CUBE_API_TOKEN}" \
+  'http://localhost:4000/cubejs-api/v1/meta' \
   | jq '.cubes[] | select(.name == "orders") | .measures[] | select(.name == "orders.monthly_revenue")'
-```
-
-## SQL API example
-
-The SQL API is exposed on port `15432`. Any database name is accepted by the Cube SQL API; this example uses `cube`:
-
-```sh
-PGPASSWORD=cube_sql_password psql \
-  --host localhost \
-  --port 15432 \
-  --username cube \
-  --dbname cube \
-  --command "SELECT DATE_TRUNC('month', order_date) AS month, MEASURE(monthly_revenue) AS monthly_revenue FROM orders GROUP BY 1 ORDER BY 1;"
 ```
 
 ## Tear down

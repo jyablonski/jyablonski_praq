@@ -3,10 +3,12 @@ from __future__ import annotations
 import json
 import os
 import re
+import time
 from typing import Any
 from uuid import uuid4
 
 import httpx
+import jwt
 
 from .policies import validate_and_normalize_query
 
@@ -16,11 +18,24 @@ class CubeTools:
 
     def __init__(self) -> None:
         self.base_url = os.getenv("CUBE_API_URL", "http://cube:4000").rstrip("/")
+        self.api_secret = os.getenv("CUBE_API_SECRET")
+        if not self.api_secret:
+            raise RuntimeError("CUBE_API_SECRET is required")
         self.max_rows = int(os.getenv("AGENT_MAX_ROWS", "100"))
         self.timeout_seconds = float(os.getenv("AGENT_QUERY_TIMEOUT_SECONDS", "15"))
 
     def _client(self) -> httpx.Client:
-        return httpx.Client(base_url=self.base_url, timeout=self.timeout_seconds)
+        now = int(time.time())
+        token = jwt.encode(
+            {"iat": now, "exp": now + 300},
+            self.api_secret,
+            algorithm="HS256",
+        )
+        return httpx.Client(
+            base_url=self.base_url,
+            timeout=self.timeout_seconds,
+            headers={"Authorization": token},
+        )
 
     def get_meta(self) -> dict[str, Any]:
         with self._client() as client:
@@ -146,3 +161,27 @@ class CubeTools:
             "row_count": len(payload.get("data", [])),
             "user_context_supplied": bool(user_context),
         }
+
+    def dispatch(
+        self,
+        tool_name: str,
+        arguments: dict[str, Any],
+        *,
+        user_context: dict[str, Any],
+    ) -> dict[str, Any]:
+        if tool_name == "search_semantic_model":
+            return self.search_semantic_model(arguments["question"])
+        if tool_name == "get_metric_definition":
+            return self.get_metric_definition(arguments["metric_name"])
+        if tool_name == "run_semantic_query":
+            return self.run_semantic_query(
+                measures=arguments["measures"],
+                dimensions=arguments["dimensions"],
+                time_dimension=arguments["time_dimension"],
+                filters=arguments["filters"],
+                order_by=arguments["order_by"],
+                order_direction=arguments["order_direction"],
+                row_limit=arguments["row_limit"],
+                user_context=user_context,
+            )
+        raise ValueError(f"Unknown tool: {tool_name}")

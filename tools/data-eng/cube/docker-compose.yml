@@ -21,18 +21,18 @@ services:
         condition: service_healthy
     ports:
       - "4000:4000"
-      - "15432:15432"
     environment:
-      CUBEJS_DEV_MODE: "true"
+      CUBEJS_DEV_MODE: "false"
+      CUBEJS_API_SECRET: b22d8128d09887af5bc4e1811c598fabf951e326a9ca2e9e2ef48eade095ffb3
+      CUBEJS_CACHE_AND_QUEUE_DRIVER: memory
+      CUBEJS_CONCURRENCY: "1"
+      CUBEJS_DB_MAX_POOL: "2"
       CUBEJS_DB_TYPE: postgres
       CUBEJS_DB_HOST: postgres
       CUBEJS_DB_PORT: "5432"
       CUBEJS_DB_NAME: sales
       CUBEJS_DB_USER: cube
       CUBEJS_DB_PASS: cube_password
-      CUBEJS_PG_SQL_PORT: "15432"
-      CUBEJS_SQL_USER: cube
-      CUBEJS_SQL_PASSWORD: cube_sql_password
     volumes:
       - ./cube.py:/cube/conf/cube.py:ro
       - ./model:/cube/conf/model:ro
@@ -50,6 +50,7 @@ services:
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       OPENAI_MODEL: ${OPENAI_MODEL:-gpt-5.4-mini}
       CUBE_API_URL: http://cube:4000
+      CUBE_API_SECRET: ${CUBEJS_API_SECRET:?Set CUBEJS_API_SECRET before starting the stack}
       AGENT_MAX_TOOL_CALLS: "5"
       AGENT_MAX_ROWS: "100"
       AGENT_QUERY_TIMEOUT_SECONDS: "15"
@@ -70,6 +71,7 @@ services:
       - "8001:8000"
     environment:
       CUBE_API_URL: http://cube:4000
+      CUBE_API_SECRET: ${CUBEJS_API_SECRET:?Set CUBEJS_API_SECRET before starting the stack}
       AGENT_MAX_ROWS: "100"
       AGENT_QUERY_TIMEOUT_SECONDS: "15"
 
