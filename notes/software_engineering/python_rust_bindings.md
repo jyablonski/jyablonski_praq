@@ -52,6 +52,16 @@ This architecture is already common in the Python ecosystem. Libraries expose a 
 
 The important unit of optimization is a substantial operation, not an individual addition or property lookup. Every Python-to-Rust call requires argument validation and conversion. Calling Rust millions of times for tiny operations can be slower than staying in Python, and copying a large collection into a new Rust allocation can erase much of the gain. Good bindings move an entire loop or algorithm across the boundary and, where possible, borrow contiguous buffers instead of copying them.
 
+## When Rust Bindings Are a Good Fit
+
+Rust bindings are most useful when profiling finds a stable, CPU-bound hotspot that can do substantial work per call. The Python layer can retain the public API and orchestration while Rust owns operations such as:
+
+- Parsing, validating, filtering, or aggregating large batches of records.
+- Simulations, numeric kernels, graph searches, or other algorithms that cannot use an existing optimized library.
+- Tokenization, compression, hashing, serialization, and parallel work over large strings or byte buffers.
+
+The best candidates accept coarse-grained inputs, interact with few Python objects, and can borrow buffers instead of copying them. Rust is less likely to help I/O-bound code, rapidly changing business rules, tiny operations that cross the binding boundary repeatedly, or work that NumPy or another native library already performs efficiently.
+
 ## The Typical Rust Stack
 
 A small Python/Rust extension commonly uses:
@@ -156,6 +166,25 @@ This separation is useful both for correctness and performance:
 Native code must still be designed carefully. Releasing the GIL does not make shared data automatically thread-safe, and panics or unsafe foreign-function interface code must not be allowed to unwind across the C boundary.
 
 Modern CPython also offers free-threaded builds that can run without the GIL. PyO3 supports them, but extension authors must ensure their Rust and unsafe code are genuinely thread-safe. Detaching during long Rust-only work remains useful because it lets the interpreter coordinate events such as garbage collection without waiting on that work.
+
+## Wheel Size and Download Time
+
+A Rust extension increases wheel size because the wheel contains a compiled shared library, including statically linked Rust dependencies and sometimes bundled native libraries. The compressed `.whl` size is approximately what one user downloads from PyPI; installers select one compatible platform wheel rather than downloading the entire release matrix. The installed extension is uncompressed and usually larger.
+
+There is no reliable size multiplier, so compare release wheels before and after adding the extension. Download time grows with the additional compressed bytes, while a prebuilt native wheel still installs much faster than compiling a source distribution. Strip symbols, disable unused crate features, and avoid unnecessary bundled libraries to control size. Using `abi3` can reduce the number of wheels published across CPython versions, but does not necessarily shrink each wheel.
+
+## Keep Python-Side Overhead Low
+
+Unrelated Python code does not become slower merely because the package contains Rust. The main package can avoid paying the extension's import-time and memory cost until the accelerated feature is used by importing it inside the Python wrapper:
+
+```python
+def parse_records(data: bytes):
+    from ._native import parse_records as native_parse_records
+
+    return native_parse_records(data)
+```
+
+Python caches the module after the first call. Also avoid creating thread pools, large caches, or background workers during module import, and keep calls into Rust coarse enough that wrapper dispatch remains negligible. Lazy loading changes runtime initialization cost; it does not reduce the wheel's PyPI download size. If users who never need the extension must avoid downloading it entirely, publish the native component as an optional distribution.
 
 ## The User Outcome
 
