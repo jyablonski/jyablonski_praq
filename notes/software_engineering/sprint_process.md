@@ -9,11 +9,11 @@ Sprints run two weeks. The meeting cadence below assumes that rhythm.
 | Meeting | Frequency | Duration |
 | ------------------- | ---------------------------- | --------- |
 | Standup | Daily | 10-15 min |
-| Refinement | Every sprint | 45-60 min |
-| Sprint planning | Every sprint | 60 min |
-| Sprint demo | Every sprint | 45-60 min |
-| Retro | Every other sprint (monthly) | 60 min |
-| Chapter meeting | Bi-weekly | 30 min |
+| Refinement | Every sprint | 45 min |
+| Sprint planning | Every sprint | 30 min |
+| Sprint demo | Every sprint | 45 min |
+| Retro | Every other sprint (monthly) | 45 min |
+| Chapter meeting | Monthly | 45 min |
 | EM 1:1 | Bi-weekly | 30 min |
 | PM 1:1 | Monthly or as needed | 30 min |
 | Peer 1:1s | Monthly or as needed | 30 min |
@@ -27,19 +27,23 @@ Sprints run two weeks. The meeting cadence below assumes that rhythm.
 
 ## Refinement
 
-Once per sprint, 45-60 min. The team walks through tickets that need shared understanding before being picked up.
+Once per sprint. The team walks through epics and tickets that need shared understanding before being picked up.
 
 Rules:
 
-- Only tickets with the `refinement` label are discussed. Curation is explicit.
-- Tickets are drafted before the meeting (background, technical context, AC filled in).
+- Only epics or tickets with the `refinement` label are discussed. Curation is explicit.
+- Tickets are drafted before the meeting (background, technical context, AC, points filled in).
 - Author leads the walkthrough.
 - Exit criteria: pointed, no unresolved questions, approach directionally agreed-on, dependencies identified.
 - "Not yet" is a valid outcome. If a ticket needs a spike or more async work, name that and move on.
 
+Not everything needs to go through refinement. Only tickets that genuinely benefit from group discussion and require shared understanding ahead of time should be discussed in refinement.
+
+The goal here is so everyone on the team can have a shared understanding of the work ahead and enough context to contribute and review effectively. If the first time you're seeing complex, critical work go out is during a PR, it increases the risk of misunderstandings, rework, and missed edge cases.
+
 ## Sprint Planning
 
-60 min, first day of the new sprint. This is a selection and commitment exercise, not an authoring exercise.
+First day of the new sprint. This is a selection and commitment exercise, not an authoring exercise.
 
 Tickets entering the sprint should be well-written enough to be picked up without clarification. That doesn't require them to have gone through refinement: a clear ticket with solid background, technical context, and AC can go straight into planning even if no one but the author has seen it. Refinement is reserved for tickets that genuinely benefit from group discussion, not a mandatory gate for everything.
 
@@ -47,13 +51,13 @@ If planning consistently turns into authoring or major clarification, the issue 
 
 ## Sprint Demo
 
-45-60 min at the end of each sprint. Engineers volunteer what's worth showing; not every ticket needs a demo.
+Engineers volunteer what's worth showing; not every ticket needs a demo.
 
 Don't force a demo if there's nothing visual to show. The point is celebrating progress and sharing learnings, not theatricality.
 
 ## Retro
 
-Every other sprint (monthly), 60 min. Reviews what worked, what didn't, and where to improve.
+Every other sprint (monthly). Reviews what worked, what didn't, and where to improve.
 
 Mandatory practices:
 
@@ -99,7 +103,7 @@ Mechanics:
 
 ## Chapter Meetings
 
-Bi-weekly, 30 min. Engineers from different squads in the same discipline (data, frontend, backend, quality) compare notes and discuss shared concerns.
+Monthly. Engineers from different squads in the same discipline (data, frontend, backend, quality) compare notes and discuss shared concerns.
 
 Mechanics:
 
