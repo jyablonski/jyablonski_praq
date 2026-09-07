@@ -178,6 +178,6 @@ notes/cooking/**
 *.xpi
 notes/review/*/**
 projects/job_tracker/
-system_design/cases/jellyfish.md
 notes/politics/**
 notes/home/**
+system_design/cases/private/**
