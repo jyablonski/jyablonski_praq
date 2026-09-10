@@ -1,7 +1,15 @@
+import argparse
 import json
+from datetime import datetime
+from pathlib import Path
+
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.lib.colors import HexColor
+
+
+DEFAULT_OUTPUT_DIR = Path.home() / "Documents" / "consulting" / "gun"
+DEFAULT_OUTPUT_PREFIX = "jyablonski-gun-invoice"
 
 
 def load_config(config_path: str) -> dict:
@@ -9,8 +17,17 @@ def load_config(config_path: str) -> dict:
         return json.load(f)
 
 
+def get_default_output_path(config_path: Path) -> Path:
+    config = load_config(str(config_path))
+    invoice_date = datetime.strptime(config["invoice"]["date"], "%B %d, %Y")
+    date_suffix = invoice_date.strftime("%Y%m%d")
+    return DEFAULT_OUTPUT_DIR / f"{DEFAULT_OUTPUT_PREFIX}-{date_suffix}.pdf"
+
+
 def create_invoice(config_path: str, output_path: str):
     config = load_config(config_path)
+    output_path_obj = Path(output_path).expanduser()
+    output_path_obj.parent.mkdir(parents=True, exist_ok=True)
 
     sender = config["sender"]
     client = config["client"]
@@ -18,7 +35,7 @@ def create_invoice(config_path: str, output_path: str):
     inv = config["invoice"]
     line_items = config["line_items"]
 
-    c = canvas.Canvas(output_path, pagesize=letter)
+    c = canvas.Canvas(str(output_path_obj), pagesize=letter)
     width, height = letter
 
     # Colors
@@ -76,6 +93,8 @@ def create_invoice(config_path: str, output_path: str):
     c.setFont("Helvetica-Bold", 10)
     c.setFillColor(dark_gray)
     c.drawString(60, table_top + 5, "Description")
+    c.drawRightString(400, table_top + 5, "Hours")
+    c.drawRightString(480, table_top + 5, "Rate")
     c.drawRightString(width - 60, table_top + 5, "Amount")
 
     # Table content
@@ -95,6 +114,8 @@ def create_invoice(config_path: str, output_path: str):
         amount = item["amount"]
         total += amount
         amount_y = desc_y - ((len(item["description"]) - 1) * 15) / 2
+        c.drawRightString(400, amount_y, f"{item['hours']:g}")
+        c.drawRightString(480, amount_y, f"${item['rate']:,.2f}")
         c.drawRightString(width - 60, amount_y, f"${amount:,.2f}")
 
         # Move down for next item
@@ -144,12 +165,30 @@ def create_invoice(config_path: str, output_path: str):
     c.save()
 
 
-# uv run invoice/main.py invoice/config.json ~/Documents/consulting/xyz.pdf
+# uv run python tools/apis-integrations/invoice/main.py [config.json] [output.pdf]
 if __name__ == "__main__":
-    import sys
+    parser = argparse.ArgumentParser(description="Generate a consulting invoice PDF.")
+    parser.add_argument(
+        "config_file",
+        nargs="?",
+        type=Path,
+        default=Path(__file__).with_name("config.json"),
+        help="Path to the invoice config JSON (defaults to config.json beside this script).",
+    )
+    parser.add_argument(
+        "output_file",
+        nargs="?",
+        type=Path,
+        help="Optional output PDF path (defaults to the consulting invoice directory).",
+    )
+    args = parser.parse_args()
 
-    config_file = sys.argv[1] if len(sys.argv) > 1 else "invoice/config.json"
-    output_file = sys.argv[2] if len(sys.argv) > 2 else "invoice.pdf"
+    config_file = args.config_file.expanduser()
+    output_file = (
+        args.output_file.expanduser()
+        if args.output_file
+        else get_default_output_path(config_file)
+    )
 
-    create_invoice(config_file, output_file)
+    create_invoice(str(config_file), str(output_file))
     print(f"Invoice created: {output_file}")
