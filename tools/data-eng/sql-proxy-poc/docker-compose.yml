@@ -1,0 +1,60 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: proxy_demo
+      POSTGRES_PASSWORD: poc
+      POSTGRES_USER: poc
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U poc -d proxy_demo"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+  pgbouncer:
+    image: edoburu/pgbouncer:v1.24.1-p1
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ADMIN_USERS: poc
+      AUTH_TYPE: plain
+      DB_HOST: postgres
+      DB_NAME: proxy_demo
+      DB_PASSWORD: poc
+      DB_PORT: 5432
+      DB_USER: poc
+      DEFAULT_POOL_SIZE: 2
+      LISTEN_PORT: 6432
+      MAX_CLIENT_CONN: 50
+      POOL_MODE: transaction
+
+  direct-client:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      CONNECTION_MODE: direct
+      DB_HOST: postgres
+      DB_NAME: proxy_demo
+      DB_PASSWORD: poc
+      DB_PORT: 5432
+      DB_USER: poc
+      SERVICE_NAME: direct-client
+
+  proxied-client:
+    build: .
+    depends_on:
+      pgbouncer:
+        condition: service_started
+    environment:
+      CONNECTION_MODE: via-proxy
+      DB_HOST: pgbouncer
+      DB_NAME: proxy_demo
+      DB_PASSWORD: poc
+      DB_PORT: 6432
+      DB_USER: poc
+      SERVICE_NAME: proxied-client
