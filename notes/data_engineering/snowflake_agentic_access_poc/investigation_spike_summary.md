@@ -4,7 +4,16 @@
 
 Start with one Snowflake-managed MCP endpoint and one shared Cortex Agent. Add domains through semantic views, Agent tools, and role grants. Introduce additional Agents or MCP endpoints when ownership, operating boundaries, or measured behavior justify them.
 
-**Status as of 2026-10-23:** this reference design uses Snowflake-managed MCP with sales and customers as example domains. The [Terraform reference configuration](analytics_mcp_poc.tf) and saved [mocked-plan checks](analytics_mcp_poc.tftest.hcl) pass locally. The Agent/MCP POC has not been deployed; personal OAuth, live permissions, answer accuracy, and ChatGPT warning handling remain untested. See the [detailed investigation](investigation_spike.md) for supporting research and the [separate validation and rollout suggestions](pilot_suggestions.md) for execution steps.
+**Status as of 2026-10-24:** the minimum personal POC passed its three-role ChatGPT matrix using the separate [SQL setup](setup_poc.sql), [verification script](verify_poc.sql), and [OAuth connection script](connect_chatgpt.sql). The user reported successful setup and SQL checks. ChatGPT screenshots show correct all-access fixture answers and a sales-only response that preserves the customer-access limitation; the user confirmed the reverse customers-only case also passed. The [Terraform reference configuration](analytics_mcp_poc.tf) and saved [mocked-plan checks](analytics_mcp_poc.tftest.hcl) pass locally; that stack has not been deployed. See the [detailed investigation](investigation_spike_details.md) and [observed trial results](pilot_suggestions.md#observed-personal-trial-results-2026-10-24).
+
+## Findings from the personal trial
+
+- One shared Agent and MCP endpoint served both domains through a personal OAuth connection. All-access answers matched September completed revenue of USD 1,000, total completed revenue of USD 2,000, and six registered customers.
+- After switching to the sales-only default role and obtaining a new OAuth connection, ChatGPT still returned the revenue figures but reported registered customers as unavailable with the current role. It identified `SV_CUSTOMERS` as inaccessible rather than guessing a count. This demonstrates the visible partial-access behavior for one restricted role, while also showing that denied resource names can remain visible.
+- The user confirmed customers-only returned six registered customers while both sales questions were unavailable. The same Snowflake user holds all three POC roles, so this tests primary-role behavior across connections; separate-user identity isolation and target-workspace distribution need their own evidence.
+- A trial account with a credit card and a personal ChatGPT plugin was sufficient for this small experiment. The setup used manually entered OAuth client credentials and the exact ChatGPT callback, with the user's default role and warehouse configured before connecting. Role changes require a new OAuth connection and a fresh chat. [Reproduction steps and setup lessons](pilot_suggestions.md#setup-lessons-from-the-trial)
+
+The personal feasibility question and three-role exercise are complete for the tested fixtures. Restore the all-access default role and reconnect when returning to that demo. Sigma parity, production data policies, token lifecycle/revocation, deployment automation, and operating cost remain later rollout work.
 
 ## What we need
 
@@ -18,7 +27,7 @@ Start with one Snowflake-managed MCP endpoint and one shared Cortex Agent. Add d
 | ChatGPT Analytics plugin | Configure the MCP URL, OAuth client credentials, exact callback, workspace audience, and personal connections. | ChatGPT workspace admins |
 | Sigma connection/workbooks | Query the semantic views using a connection with appropriate data visibility. | Analytics / BI |
 
-Terraform manages the control schema, shared Agent, MCP, OAuth integration, and consumer roles. Semantic views and source relations remain owned by their existing deployment process. OAuth client credentials are handed to ChatGPT through a protected admin workflow.
+In the reference deployment, Terraform manages the control schema, shared Agent, MCP, OAuth integration, and consumer roles. Semantic views and source relations remain owned by their existing deployment process. The personal trial instead uses the standalone SQL scripts, including fixture and semantic-view creation. Choose one deployment owner: the SQL and Terraform paths share account-role and integration names. OAuth client credentials are handed to ChatGPT through a protected admin workflow.
 
 ## How a question gets answered
 
@@ -56,11 +65,17 @@ The reference configuration describes three access levels:
 
 The all-domains role inherits both restricted roles. Keep OAuth secondary roles disabled and allowlist the three approved primary roles. The integration allowlist permits a role to be used; it does not assign that role to a user or grant data access. The default `session:role:all` scope uses the user's default role, not every role assigned to them. [OAuth behavior][sf-mcp]
 
-The shared Agent uses `orchestration.tool_not_accessible: accept`: Snowflake skips an inaccessible semantic-view tool and continues with accessible tools. Missing source privileges can still fail when SQL runs. A successful response may contain an access warning; a denied-domain question must not receive a guessed number or a substitute answer from another domain. This needs live validation through ChatGPT. [Partial access][sf-partial]
+The shared Agent uses `orchestration.tool_not_accessible: accept`: Snowflake skips an inaccessible semantic-view tool and continues with accessible tools. Missing source privileges can still fail when SQL runs. A successful response may contain an access warning; a denied-domain question must not receive a guessed number or a substitute answer from another domain. The personal sales-only screenshot shows revenue answers alongside an explicit customer-access limitation, and the user confirmed the reverse customers-only result. Raw warning payloads and other failure cases remain unverified. [Partial access][sf-partial]
 
 Tool visibility is separate from data authorization. A shared endpoint can reveal tool/resource names even when the caller cannot retrieve their data. Use explicit source grants, review inherited access and row/masking policies, and do not assume prompts enforce the boundary.
 
 Inherited Cortex feature entitlement through `PUBLIC` does not grant access to the configured Agent or its data. Audit inherited privileges, while keeping feature access, Agent/MCP usage, and data grants distinct. [Access layers][sf-access]
+
+### Scaling membership through Okta
+
+The proposed enterprise model separates a common Agent/MCP runtime role, reusable domain read roles, and audience analytics profile roles. Okta provisions the profile roles and their user memberships; the platform deployment grants the approved domain roles into each profile. A sales profile can inherit sales only, a revenue-operations profile can inherit sales plus customers, and a newsroom profile can inherit newsroom. Give engineers dedicated analytics read profiles alongside their separate engineering work roles. The separate [roles and permissioning guide](roles_and_permissioning.md) covers hierarchy examples, ownership, OAuth selection, access changes, and rollout checks.
+
+One authorized profile must contain the intended domain set. Under the current OAuth configuration, membership in several Okta groups does not automatically combine their separately assigned Snowflake roles in one session. Choose a stable analytics primary role per audience, with a deliberate default-role or named-scope policy. Automatic aggregation of arbitrary group combinations remains a separate design choice, and the Okta integration has not been tested by the personal POC.
 
 ## How this scales
 

@@ -22,6 +22,8 @@
 
 **Pilot:** dummy-data access checks → a certified sales question set → prove release, support, and acceptable cost → expand one domain at a time. [Suggested execution plan](pilot_suggestions.md)
 
-**Status:** Terraform validation and nine mocked checks pass. The Agent/MCP POC has not been deployed; live identity enforcement, answer quality, and cost remain unproven.
+**Status as of 2026-10-24:** the minimum personal POC passed its three-role ChatGPT matrix using a separate SQL deployment on a Snowflake trial. All-access answers matched the fixtures: USD 1,000 September revenue, USD 2,000 total revenue, and six registered customers. Sales-only returned both revenue figures and preserved the customer-access limitation; the user also confirmed customers-only returned six customers while sales remained unavailable. These are manual, single-user trial results; separate-user identity isolation, Sigma parity, cost, and stakeholder rollout remain unproven. [Observed results and optional follow-ups](pilot_suggestions.md#observed-personal-trial-results-2026-10-24)
 
-**Further detail:** [Design summary](investigation_spike_summary.md) · [Supporting investigation](investigation_spike.md) · [Terraform POC](analytics_mcp_poc.tf)
+Terraform validation and nine mocked checks pass; the Terraform stack itself has not been deployed. The runnable SQL path is [setup](setup_poc.sql) → [verification](verify_poc.sql) → [ChatGPT OAuth](connect_chatgpt.sql).
+
+**Further detail:** [Design summary](investigation_spike_summary.md) · [Roles and permissioning](roles_and_permissioning.md) · [Supporting investigation](investigation_spike_details.md) · [Terraform POC](analytics_mcp_poc.tf)

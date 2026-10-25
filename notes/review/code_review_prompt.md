@@ -1,182 +1,133 @@
-# Prompt
+# Senior Data Engineer Code Review Drill
 
-Act as a senior software engineer helping me improve my code review skills.
+Help me sharpen my code review skills so I can be a more focused and effective reviewer during the agentic AI wave, when the volume of code being produced is much higher than it used to be. That means training me to quickly find the issues that actually matter in production, explain their impact clearly, and propose concrete fixes, without getting distracted by noise.
 
-Create 5 code review exercises in **{MODE}**.
+## Session settings
 
-The goal is speed and precision. Each exercise should have exactly 1 major production-impact issue, and optionally 1 secondary issue. Do not include extra ambiguous problems, style distractions, or broad “could be improved” concerns.
+- Focus: {FOCUS} (Mixed, Python, SQL/dbt, Airflow, Terraform, CI/CD). Default: Mixed
+- Exercises: 3
+- Time budget: 15 minutes total, about 5 minutes per exercise
+- Round: {ROUND}. If greater than 1, do not reuse issue types or scenarios from earlier rounds in this conversation
 
-Each exercise should be realistic enough to resemble production code, but small enough to review quickly.
+## Environment
 
-Before showing me the exercises, privately decide the answer key for each one:
+The code lives in a company data platform monorepo:
 
-- Primary issue
+- `dataplat/`: internal shared library (warehouse connections, incremental loading, secrets, retries, schema validation, logging)
+- `dags/`: Airflow DAGs and custom operators
+- `dbt/`: dbt project on Snowflake
+- `infra/`: Terraform (AWS and Snowflake providers)
+- `.github/workflows/` and `.pre-commit-config.yaml`: CI/CD
+
+Before the exercises, show a **Shared library reference** block (under 25 lines): signatures plus a one-line docstring for the 3 to 6 `dataplat` utilities the exercises use. Those docstrings are the contract and must be accurate. A bug may come from code misusing a utility's contract, or from a defect inside a utility, but it must be findable from what is shown.
+
+## Layers
+
+Each exercise comes from a different layer:
+
+1. **Shared library** (`dataplat/`): Python utilities used by many pipelines
+1. **Pipeline code**: Airflow DAGs and operators, Python transforms (Polars, Pandas, SQLAlchemy, Requests)
+1. **Modeling**: dbt models (incremental, snapshots, macros), Snowflake or Postgres SQL
+1. **Infrastructure**: Terraform for S3, IAM, Snowflake roles, warehouses, grants, MWAA or ECS
+1. **CI/CD**: GitHub Actions workflows, pre-commit hooks, dbt slim CI, deploy jobs
+
+With Focus = Mixed: at least one Python exercise, at least one SQL/dbt exercise, and the third from infrastructure or CI/CD.
+
+## Issue types
+
+Each exercise's primary issue must be a different type:
+
+- **Silent data corruption**: wrong join grain or fanout, null handling, timezone or date boundaries, type coercion
+- **Duplicate or dropped records**: incremental filters, late-arriving data, non-idempotent reruns or backfills, retries with side effects
+- **Plain bug**: wrong variable, off-by-one, mutable default, swallowed exception, wrong return value
+- **Business logic error**: runs fine and looks reasonable, but violates a stated business rule
+- **Performance or cost**: full scans, non-sargable predicates, defeated pruning, row-by-row loops, unbounded memory, oversized compute
+- **Security or trust boundary**: secrets in logs or CI output, overly broad IAM or grants, untrusted PR code running with secrets, SQL injection in a shared helper
+- **Operational failure**: missing timeouts, retries that amplify load, hangs, partial writes, non-idempotent Airflow tasks, CI that silently passes
+- **Infrastructure state hazard**: a Terraform change that forces replacement or destroys data, unsafe defaults, drift
+
+For business logic exercises, state the business rule explicitly in the context so the issue is objectively gradable.
+
+## Constraints
+
+- Exactly 1 primary issue with real production impact. Optionally 1 smaller but real secondary issue.
+- No other defects. The code should otherwise be clean, idiomatic, and plausible for a mature team.
+- No style bait, no TODOs, no names or comments that point at the bug. Comments may only be wrong if the wrong comment is the issue.
+- Senior difficulty: prefer issues that only appear on rerun, at scale, at a time boundary, under concurrency, or across component boundaries. Avoid anything a linter or type checker would catch.
+- A strong senior DE reading carefully should find the primary issue in under 4 minutes.
+- Size limits (excluding the shared library reference): Python under 30 lines, SQL/dbt under 40, Terraform under 35, YAML under 35.
+
+## Answer key
+
+Before writing the exercises, commit to an answer key for each:
+
+- Primary issue and issue type
 - Optional secondary issue
-- Category
-- Why it matters in production
+- Production impact: what breaks, when, blast radius, how it would be noticed
 - Concrete fix
+- Prevention: the test, CI check, lint rule, dbt test, or contract change that would catch this class of bug
 
-Do not reveal the answer key yet.
-
-## Mode-specific guidance
-
-If `{MODE}` is `Python`, use examples from:
-
-- data pipelines
-- FastAPI handlers
-- Pydantic models
-- SQLAlchemy database writes
-- Requests API clients
-- background jobs
-- caching, queues, retries
-
-Common libraries may include:
-
-- Polars
-- FastAPI
-- Pydantic
-- SQLAlchemy
-- Pytest
-- Requests
-
-If `{MODE}` is `SQL`, use examples from:
-
-- production analytics queries
-- incremental models
-- reporting queries
-- warehouse transformations
-- Postgres queries
-- Snowflake-style warehouse queries
-- index-sensitive queries
-- joins, deduplication, time windows, and aggregations
-
-Issues should focus on:
-
-- silent data corruption
-- duplicate or dropped records
-- incorrect join grain
-- incorrect time boundaries
-- non-sargable predicates
-- bad index usage
-- accidental full table scans
-- query patterns that fail at scale
-- incorrect null handling
-- incorrect aggregation logic
-- unsafe backfills or incremental filters
-- production locking or transaction impact
-
-If `{MODE}` is `Go`, use examples from:
-
-- HTTP handlers
-- gRPC services
-- GORM or database/sql queries
-- Postgres writes
-- webhook handlers
-- background workers
-- retries
-- goroutines and channels
-- context cancellation
-- concurrency-safe caches
-- external API clients
-
-Common libraries may include:
-
-- net/http
-- context
-- database/sql
-- gorm
-- grpc
-- pgx
-- testify
-- httptest
-
-Issues should focus on:
-
-- missing context propagation
-- missing timeouts
-- goroutine leaks
-- channel deadlocks
-- unsafe shared state
-- partial database writes
-- webhook idempotency bugs
-- bad retry behavior
-- transaction misuse
-- connection pool exhaustion
-- incorrect error handling across service boundaries
-- contract violations in gRPC or JSON APIs
-
-If `{MODE}` is `Mixed`, include a balanced mix of Python, SQL, and Go.
-
-## Global issue categories
-
-Across the five exercises, cover at least four of these:
-
-- silent data corruption
-- unbounded growth: memory, queues, logs, retries
-- hangs, deadlocks, or missing timeouts
-- partial failures and inconsistent state
-- incorrect behavior under load or concurrency
-- contract violations across service or version boundaries
-- security and trust-boundary violations
-- data loss or duplicate processing
-- production performance degradation
-- unsafe database behavior
+Do not reveal it. Do not change it after seeing my notes.
 
 ## Exercise format
 
 For each exercise, include only:
 
-1. A short title
-1. The code snippet or SQL query
-1. 1-2 sentences of production context
+### Exercise N: short title
 
-Do not include hints.\
-Do not include answers.\
-Do not include long explanations.\
-Do not include intentionally messy code unless the messiness is directly tied to the intended issue.
+`path/to/file.ext`
 
-Size limits:
+```lang
+code
+```
 
-- Python snippets: under 25 lines
-- Go snippets: under 35 lines
-- SQL queries: under 40 lines
+**Context:** 1 to 2 sentences covering what it does, how it runs (schedule, volume, consumers), and the business rule if relevant.
 
-I will reply with my review notes per exercise, numbered. My notes may be terse.
+No hints, no difficulty labels, no issue type labels. End with: "Timer starts now. Reply with numbered notes."
 
-After I send my notes, grade them against your private answer key.
+## My notes
 
-For each exercise, respond in this compact format:
+I will reply with numbered notes, possibly terse, aiming for issue, impact, fix. I may include elapsed time.
 
-## Exercise N
+## Grading
+
+Score each exercise out of 4:
+
+- **Identification (0 to 2):** 2 = pinpointed the primary issue and its mechanism; 1 = right area but vague or wrong mechanism; 0 = missed
+- **Impact (0 to 1):** stated a concrete production consequence
+- **Fix (0 to 1):** correct and specific
+
+Bonus +1 for the secondary issue. Minus 1 for each confident claim of a defect that is not real. No penalty for questions or flagged uncertainty.
+
+Respond in this format:
+
+## Exercise N: X/4
 
 **Verdict:** Nailed / Mostly caught / Partially caught / Missed
 
-**What you caught:**
+**Caught:** ...
 
-- ...
+**Missed:** ...
 
-**What you missed:**
+**False positives:** ...
 
-- ...
+**Expected:** Primary: ... Secondary: ...
 
-**False positives:**
+**Fix:** corrected snippet or precise diff
 
-- ...
+**Prevention:** one line on the guardrail that catches this class of bug
 
-**Expected finding:**
+After all three:
 
-- Primary: ...
-- Secondary, if any: ...
+**Total:** X/12 (+ bonus)
 
-**Fix:**
-Show a corrected snippet/query or describe the specific fix concretely. Do not say vague things like “add error handling,” “optimize the query,” or “handle concurrency better.” Say exactly what should change.
+**Senior signal:** 1 to 2 sentences on the gap between my review and a staff-level review (for example: missed blast radius, ignored reruns, didn't consider downstream consumers).
+
+**Next round:** which layer or issue type to drill next.
 
 ## Grading rules
 
-- Be strict.
-- Do not invent extra issues after the fact.
-- Do not reward generic comments unless they identify the actual production risk.
-- Do not penalize me for ignoring style, naming, formatting, or test coverage unless that is the intended issue.
-- Prioritize security, correctness, data loss, hangs, resource leaks, bad retries, scaling problems, inconsistent state, and production performance.
+- Be strict. Generic comments ("add error handling", "could be slow") earn nothing unless they name the specific mechanism.
+- Do not invent new issues after the fact. If my notes identify a genuine defect that is not in the key, say so honestly and do not count it as a false positive.
+- Ignore style, naming, formatting, and test coverage unless that is the intended issue.
 - Keep feedback concise. No walls of text.
-- The intended issue should be crisp enough that a strong reviewer can identify it in 1-3 minutes.

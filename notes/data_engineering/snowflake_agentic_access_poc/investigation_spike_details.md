@@ -7,8 +7,10 @@ For product readers, start with the [short summary](investigation_spike_summary.
 | Evidence level | What is established | What remains uncertain |
 | --- | --- | --- |
 | Vendor-documented | Agent/MCP configuration, caller-role authorization, partial-access behavior, OAuth controls, and Sigma limitations. | Compatibility with the target account, policies, and ChatGPT workspace. |
-| Locally validated | The Terraform configuration and saved mocked-plan checks validate the intended resource and grant graph. | Actual resource creation, effective permissions, and client behavior. |
-| Live verification | No live execution evidence is included for these example domains. | Target-account Sigma behavior, Agent/MCP personal OAuth, domain isolation, final-answer accuracy, deployment promotion, and operating cost. |
+| Locally validated | The Terraform configuration and saved mocked-plan checks validate the intended resource and grant graph. | Terraform deployment and behavior beyond the separate SQL trial. |
+| Personal trial, 2026-10-24 | User-reported SQL setup/verification and personal ChatGPT OAuth succeeded. Screenshots show correct all-access fixture answers and a sales-only customer-access limitation; the user confirmed customers-only returns six customers while sales is unavailable. | Independent tool/query/run evidence, separate-user identity isolation, target-workspace distribution, Sigma parity, refresh/revocation, deployment promotion, and operating cost. |
+
+The minimum personal feasibility POC has completed its three-role matrix. It uses the standalone [setup](setup_poc.sql), [verification](verify_poc.sql), and [OAuth](connect_chatgpt.sql) scripts, not a Terraform apply. The SQL and Terraform paths share account-role and integration names, so select one deployment owner. The [trial results and reproduction notes](pilot_suggestions.md#observed-personal-trial-results-2026-10-24) distinguish screenshot evidence, user-confirmed results, and later rollout work.
 
 ## Recommendation and decisions needed
 
@@ -129,6 +131,8 @@ The shared Agent has two separately named Analyst tools, `sales` and `customers`
 
 `reject` would fail the shared run if either configured view tool were inaccessible. Reserve that mode for a separate domain Agent whose named resources are all required. `accept` can return HTTP success with warnings, including when the requested domain is unavailable; the final ChatGPT answer must preserve the limitation. Skipped tools produce warning code `399569`; non-streaming Agent responses include a top-level `warnings` array. The warning does not distinguish missing objects from unauthorized objects, so the user-facing explanation must preserve that uncertainty. [Warning contract][sf-partial]
 
+**Observed in the personal trial:** sales-only ChatGPT output returned USD 1,000 September revenue and USD 2,000 total revenue, while reporting registered customers as unavailable with the current role. The answer named `AGENTIC_ACCESS_POC.POC_DATA.SV_CUSTOMERS` as inaccessible. The user also confirmed the reverse customers-only check returned six customers while sales was unavailable. These results demonstrate the visible partial-answer behavior for the tested questions and show that denied resource names can be disclosed. Raw warning codes/payloads and query/run IDs were not captured. [Observed matrix](pilot_suggestions.md#observed-personal-trial-results-2026-10-24)
+
 All three POC users should see the same single `analytics` MCP tool. Listing that tool does not establish access to both internal domains, and a denied tool/resource name may still be visible in specifications or warnings. Separate domain Agents are an ownership and authorization option, not a requirement for different domain access. The managed MCP limit counts exposed tools, not metrics; this shared-Agent POC uses one MCP tool. [MCP metadata][sf-describe], [Agent resources][sf-agent-run]
 
 The managed Agent path needs the following grant categories. This is a design checklist, not a deployable grant script:
@@ -164,13 +168,21 @@ The reference configuration pins provider 2.22.0 and manages the role allowlist 
 
 The default MCP `session:role:all` scope uses the user's `DEFAULT_ROLE`; it does not combine every assigned role. Check what ChatGPT actually requests and what Snowflake uses. A different integration alone does not select a different default role. For users with an existing engineering default, test explicit role scopes before changing defaults that other workflows rely on. [MCP session roles][sf-mcp]
 
-Current OpenAI instructions explicitly support adding a custom MCP server as a plugin, including predefined OAuth client credentials. Snowflake's older Developer Mode instructions do not establish the current distribution requirement. The actual workspace still needs suitable plugin installation, audience, and MCP permissions, with personal connections selected. Register the exact callback shown by that connection. [Current client setup][oai-custom-mcp], [Authentication][oai-mcp], [Workspace controls][oai-controls]
+Current OpenAI instructions explicitly support adding a custom MCP server as a plugin, including predefined OAuth client credentials. This personal trial connected successfully using manually entered client credentials and the exact callback from the ChatGPT connection. The target stakeholder workspace still needs suitable plugin installation, audience, and MCP permissions, with personal connections selected; the personal trial does not verify workspace distribution. [Current client setup][oai-custom-mcp], [Authentication][oai-mcp], [Workspace controls][oai-controls]
+
+In the one-user SQL trial, changing the default role and reconnecting the plugin's connected account allowed each primary-role case to be tested in a fresh chat. The setup also resolved user lookup and non-constant assignment errors by using a quoted `CURRENT_USER()` identifier inside a Snowflake Scripting block. Reuse the corrected SQL scripts and [recorded setup lessons](pilot_suggestions.md#setup-lessons-from-the-trial); changing worksheet roles alone does not change the existing ChatGPT OAuth connection.
 
 Refresh-token lifetime is a product and security choice. The reference configuration exposes `oauth_refresh_token_validity_seconds`, defaulting to 86,400 seconds (24 hours), versus Snowflake's 90-day custom-client default. Expiry requires authorization again; SSO and client behavior determine whether credentials must be entered again. [Token lifecycle][sf-oauth-lifecycle]
 
 ChatGPT's verified-domain restriction is a separate control that can prevent a corporate identity being linked in a personal or outside workspace. It requires OIDC discovery, `openid`/`email` scopes, and a UserInfo endpoint returning a verified email. Snowflake OAuth compatibility with these requirements has not been established. Workspace audience controls and Snowflake role grants do not by themselves establish this restriction. [Domain restriction requirements][oai-domain]
 
 Offboarding must address identity-provider assignment, Snowflake user/role access, active OAuth authorization, and ChatGPT workspace access. Test revocation with an existing connection, an existing conversation, and a new session. Revoking future retrieval cannot erase results already copied into a chat, export, or shared artifact; those need the applicable retention and sharing controls.
+
+### Proposed Okta role model
+
+The dedicated [roles and permissioning guide](roles_and_permissioning.md) owns the proposed scaled design: common runtime privileges, reusable domain read roles, audience roles managed through Okta, multi-domain composition, OAuth profile selection, and access-change validation.
+
+The personal POC demonstrated the combined-parent role pattern. The Okta model remains a proposal until separate provisioned users, membership changes, and the intended role-selection policy pass the guide's acceptance checks.
 
 ## Metric consistency needs a business contract
 
@@ -247,8 +259,11 @@ Use one deployment owner per object. Publish breaking metric/schema changes with
 
 | Evidence | Status and practical limit |
 | --- | --- |
-| Snowflake managed Agent/MCP and access requirements | Vendor-documented behavior, checked during this review. The target account configuration and ChatGPT path need live verification. |
+| Snowflake managed Agent/MCP and access requirements | Vendor-documented behavior, checked during this review. Selected personal-trial paths have manual live evidence; minimum-grant audits and the target stakeholder environment remain to be validated. |
 | Local [Terraform POC](analytics_mcp_poc.tf) | Implements the shared Agent/two-view tool configuration and the three-role access matrix. Formatting, provider-schema validation, and the saved [mocked-plan checks](analytics_mcp_poc.tftest.hcl) passed. These do not prove live role enforcement, partial-access warnings, or ChatGPT behavior. |
+| Standalone SQL fixture and connection | User reported setup and active verification queries passed, then connected the personal plugin through OAuth. The script grants MCP `USAGE` without consumer `MODIFY`; the observed flow worked under that configuration, but a complete effective-grant audit was not captured. |
+| All-access ChatGPT results | Screenshot matches September revenue USD 1,000, all-fixture revenue USD 2,000, and six registered customers, including the intended status exclusions and customer population. |
+| Restricted-role ChatGPT results | Sales-only screenshot preserves both revenue answers and the customer-access limitation. User confirmed customers-only returns six customers and denies sales. This tests one user's primary-role sessions, not separate identities. Raw warning payloads and query/run IDs remain uncaptured. |
 | Sigma integration | The vendor documents semantic-view support and its limitations. Validate required workbook behavior and data visibility in the target environment. |
 
 Attach reproducible evidence to the implementation review: date, environment, least-privileged role, deployed definition/config version, question, expected/actual result, query/run IDs, and sanitized failure output. Use accessible artifacts that reviewers can reproduce.

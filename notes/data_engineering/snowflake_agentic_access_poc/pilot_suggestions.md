@@ -1,10 +1,40 @@
 # Suggested analytics pilot
 
-**Recommendation:** prove the connection and authorization model with dummy data, then certify a bounded sales workflow before adding real customer coverage. This is a proposed sequence and set of acceptance criteria, not an executed deployment or agreed SLA.
+**Recommendation:** prove the connection and authorization model with dummy data, then certify a bounded sales workflow before adding real customer coverage. The stakeholder rollout stages remain a proposed sequence and set of acceptance criteria; the personal trial results below record what has actually been observed.
 
-The [summary](investigation_spike_summary.md) explains the proposal; the [investigation](investigation_spike.md) records design constraints and supporting sources. This document owns setup, validation, and rollout suggestions.
+The [summary](investigation_spike_summary.md) explains the proposal; the [investigation](investigation_spike_details.md) records design constraints and supporting sources. This document owns setup, observed results, validation, and rollout suggestions.
 
-**Current evidence:** the [Terraform POC](analytics_mcp_poc.tf) and saved [mocked-plan checks](analytics_mcp_poc.tftest.hcl) pass locally. This reference implementation uses a Snowflake-managed MCP endpoint with sales and customers as example domains. It has not been deployed, and no live OAuth, authorization, or answer-quality checks have run for these examples.
+The separate [roles and permissioning guide](roles_and_permissioning.md) owns the proposed Okta role hierarchy, audience membership, OAuth profile-selection policy, and access-change procedures for stakeholder rollout.
+
+**Current evidence:** the [Terraform POC](analytics_mcp_poc.tf) and saved [mocked-plan checks](analytics_mcp_poc.tftest.hcl) pass locally. This reference implementation uses a Snowflake-managed MCP endpoint with sales and customers as example domains. The Terraform stack has not been deployed.
+
+## Observed personal trial results (2026-10-24)
+
+The user reported successfully running the [SQL setup](setup_poc.sql) and active [verification queries](verify_poc.sql), then connecting a personal ChatGPT plugin through [custom OAuth](connect_chatgpt.sql). The setup creates `AGENTIC_ACCESS_POC`, an X-Small warehouse, 12 dummy orders, six customers, two semantic views, three consumer roles assigned to one trial user, one shared Agent with two Analyst tools, and one MCP endpoint exposing `analytics`. This is a separate SQL deployment; the Terraform stack remains undeployed. Both paths use the same account-role and integration names, so choose one owner for those objects.
+
+| OAuth primary role under test | September completed revenue | All-fixture completed revenue | Registered customers | Evidence/status |
+| --- | --- | --- | --- | --- |
+| `ROLE_ALL_ANALYTICS_POC` | USD 1,000 | USD 2,000 | 6 | ChatGPT screenshot matches all three fixture answers and explains exclusions/populations. |
+| `ROLE_SALES_ANALYTICS_POC` | USD 1,000 | USD 2,000 | Unavailable with current role | User confirmed the result after the role-change/reconnection workflow. The screenshot names `AGENTIC_ACCESS_POC.POC_DATA.SV_CUSTOMERS` as inaccessible. |
+| `ROLE_CUSTOMERS_ANALYTICS_POC` | Unavailable | Unavailable | 6 | User confirmed this result in a fresh connection and chat. A subsequent screenshot shows the same results and identifies `ROLE_CUSTOMERS_ANALYTICS_POC` as the current role and `SV_SALES` as inaccessible. |
+
+The sales-only response continued answering permitted questions and preserved the customer-access limitation without substituting sales data or guessing a customer count. It also exposed the denied view's name, so data isolation does not imply hidden resource metadata. The all-access and sales-only screenshots show 57s and 45s of displayed ChatGPT work time respectively; these are individual UI observations, not per-query timings or a latency benchmark.
+
+Evidence is based on the user's execution report and chat screenshots. The repository review did not execute live Snowflake calls, and raw tool payloads, warning code `399569`, query/run IDs, cost, and a complete effective-grant audit have not been captured. The trial validates selected fixture answers and both directions of partial access for one user across fresh OAuth connections; it does not establish separate-user isolation, Sigma parity, or stakeholder rollout readiness. The commented denial/Agent blocks in `verify_poc.sql` are manual checks and are not assumed to have run merely because its active queries passed.
+
+### Setup lessons from the trial
+
+- **Trial activation:** the trial used a credit card before exercising AI. Snowflake documents that adding a card enables AI without ending the trial or upgrading it to a paid account. [Trial limitations][sf-trial]
+- **Plugin registration:** the working path used a personal custom MCP plugin with manually entered OAuth client ID and secret. Copy the complete **Callback URL** from that connection into `OAUTH_REDIRECT_URI`. The CIMD metadata URL is a separate field. Snowflake-managed MCP does not support dynamic client registration; the manual-client path leaves Registration URL empty. The **I understand and want to continue** checkbox must be selected before creating the plugin. [ChatGPT setup][oai-client], [Snowflake OAuth setup][sf-mcp]
+- **User assignment:** provisioning initially hit a user lookup error and an unsupported non-constant `SET` assignment. The working script obtains `CURRENT_USER()` inside an `EXECUTE IMMEDIATE` Snowflake Scripting block, quotes/escapes the stored username, and binds it with `IDENTIFIER(:poc_user)`. Use the Snowflake user object name rather than assuming the sign-in email is that identifier. [Working assignment block](setup_poc.sql)
+- **OAuth role and warehouse:** the connection uses `session:role:all`, which selects the user's `DEFAULT_ROLE`. The script sets a POC role and a non-null default warehouse, keeps secondary roles disabled, and disables in-session role switching. Capture the previous user defaults before changing them. [Role behavior][sf-mcp]
+- **Reconnect after a role change:** changing the worksheet role or the user's defaults does not change the role of an existing OAuth connection. Disconnect the connected account through its **…** menu in the plugin settings, use **Connect another account**, and start a fresh chat after authorization. [Detailed role-switching procedure](#personal-trial-switch-roles-and-reconnect-chatgpt)
+
+### Minimum POC completion and optional follow-ups
+
+The core feasibility checks are complete: fixture setup and SQL queries, personal OAuth connection, all-access ChatGPT answers, and permitted/denied results under both restricted roles. Restore `ROLE_ALL_ANALYTICS_POC` and reconnect when returning to the all-access demo; this restoration has not been separately recorded as a test result.
+
+One useful additional quality check is a follow-up asking for September revenue by product category: Electronics must be USD 750 and Home USD 250, totaling USD 1,000. Retain one expanded `analytics` call and an available Snowflake query/run ID as reproducible evidence. These are optional lightweight follow-ups for the personal POC; the broader Sigma, separate-user, refresh/revocation, release, and cost checks belong to the stakeholder rollout stages below.
 
 ## Proposed sequence
 
@@ -132,6 +162,36 @@ For skipped views, assert warning code `399569`; inspect `response.warning` even
 
 Exercise row-access/masking policies with actual caller sessions, plus unmodeled fields, unrelated data, raw SQL requests, prompt injection, and cross-domain leakage. A broader evaluation identity can conceal consumer failures.
 
+### Personal trial: switch roles and reconnect ChatGPT
+
+The standalone SQL trial assigns all three POC roles to one trial user. Test each as the OAuth session's primary role; separate-user identity isolation still needs dedicated users. With the integration's role switching and secondary roles disabled, an existing OAuth connection retains its authorized primary role. Changing the user's `DEFAULT_ROLE` or running `USE ROLE` in a worksheet does not change that existing connection. Obtain a new OAuth token for each role test. [Snowflake OAuth role behavior][sf-mcp], [Session role restrictions][sf-oauth-custom]
+
+#### Assigned roles and active permissions
+
+The setup already grants `ROLE_SALES_ANALYTICS_POC`, `ROLE_CUSTOMERS_ANALYTICS_POC`, and `ROLE_ALL_ANALYTICS_POC` directly to the current user. The customers-only session's sales denial therefore occurred even though that user already held the sales role. Repeating the same user grant will not activate that role in the existing OAuth session. Run `SHOW GRANTS` to inspect the current user's assigned roles, and `SHOW GRANTS TO ROLE ROLE_ALL_ANALYTICS_POC` to inspect the combined role's inherited grants. These read-only queries are also in [verify_poc.sql](verify_poc.sql). [SHOW GRANTS][sf-show-grants]
+
+With `OAUTH_USE_SECONDARY_ROLES = NONE` and `OAUTH_ANY_ROLE_MODE = DISABLE`, the OAuth session uses its authorized primary role and the privileges that role inherits. Granting a domain role **to a user** makes it available for authorization; granting it **to a parent role** adds its privileges to that parent's hierarchy. The existing `ROLE_ALL_ANALYTICS_POC` inherits both domain roles and is the intended primary role for this two-domain audience. Preserve the restricted roles' separate meanings when testing them. [Role inheritance][sf-role-inheritance]
+
+The default-role changes in this trial simulate different audiences with one user. A normal deployment can use a stable analytics primary role per audience that inherits its permitted domain roles, so users do not need to change defaults for each question. A client can also request a named primary role through `session:role:<role_name>` instead of relying on `DEFAULT_ROLE`; whether ChatGPT honors that configuration needs a separate test. Enabling implicit secondary roles is a different access model and cannot be combined with the current `ALLOWED_ROLES_LIST`. [OAuth configuration][sf-oauth-custom], [MCP role scopes][sf-mcp]
+
+#### Reconnect procedure
+
+1. In [connect_chatgpt.sql](connect_chatgpt.sql), set `DEFAULT_ROLE = 'ROLE_SALES_ANALYTICS_POC'` inside the user-update block, leaving `DEFAULT_WAREHOUSE = 'AGENTIC_ACCESS_POC_WH'`. Run `USE ROLE ACCOUNTADMIN`, then execute only that entire `EXECUTE IMMEDIATE` block.
+1. Open ChatGPT **Plugins → Snowflake POC → Connected accounts**.
+1. Open the **…** menu at the right of the current Snowflake account row and choose the account disconnection/removal action.
+1. Select **Connect another account**, sign in with the same trial Snowflake user, and complete OAuth authorization again. Check the role shown on Snowflake's consent screen when displayed.
+1. Start a fresh Work chat, invoke **Snowflake POC** with `@`, and ask the three fixture questions below. Inspect the actual `analytics` tool calls and access warnings. A fresh chat avoids carrying answers from the previous, broader connection into the restricted-role test.
+1. Repeat the default-role change, account disconnection, OAuth reconnection, and fresh-chat test with `ROLE_CUSTOMERS_ANALYTICS_POC`.
+1. Restore `DEFAULT_ROLE = 'ROLE_ALL_ANALYTICS_POC'` and reconnect again before returning to the all-access demo.
+
+| OAuth primary role | September 2026 completed revenue | All-fixture completed revenue | Registered customers |
+| --- | --- | --- | --- |
+| `ROLE_SALES_ANALYTICS_POC` | USD 1,000 | USD 2,000 | Access limitation; no customer result |
+| `ROLE_CUSTOMERS_ANALYTICS_POC` | Access limitation; no sales result | Access limitation; no sales result | 6 |
+| `ROLE_ALL_ANALYTICS_POC` | USD 1,000 | USD 2,000 | 6 |
+
+For a denied domain, a refusal or access warning is the expected outcome; a guessed number or a substitution from the accessible domain is a failure. Record each role's actual result and available tool/run evidence, distinguishing manual confirmations from independently reproduced traces as in the observed matrix above. Reconnection for this experiment is separate from the explicit Snowflake authorization-revocation test in the lifecycle and cleanup stages.
+
 ## 4. Certify a bounded sales workflow
 
 Start with about 30 analyst-reviewed cases, covering counts, groupings, dates/history, rates, ambiguity, follow-ups, and unsupported requests. Agree entity/grain, order-status meaning, absolute date boundaries/timezone, exclusions, history, and freshness before assigning expected results. Run representative prompts more than once to expose variation.
@@ -184,9 +244,13 @@ Keep reproducible evidence with the implementation review: date/environment, eff
 [sf-mcp]: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-mcp
 [sf-monitors]: https://docs.snowflake.com/en/user-guide/resource-monitors
 [sf-oauth]: https://docs.snowflake.com/en/sql-reference/sql/alter-security-integration-oauth-snowflake
+[sf-oauth-custom]: https://docs.snowflake.com/en/user-guide/oauth-custom#allowing-clients-to-switch-roles
 [sf-partial]: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-inaccessible-tool-handling
 [sf-privileges]: https://docs.snowflake.com/en/user-guide/security-access-control-privileges
 [sf-quotas]: https://docs.snowflake.com/en/user-guide/budgets/per-user-quotas
+[sf-role-inheritance]: https://docs.snowflake.com/en/user-guide/security-access-control-overview#authorization-through-primary-role-and-secondary-roles
+[sf-show-grants]: https://docs.snowflake.com/en/sql-reference/sql/show-grants
+[sf-trial]: https://docs.snowflake.com/en/user-guide/admin-trial-account#current-limitations-for-trial-accounts
 [sigma-sv]: https://help.sigmacomputing.com/docs/query-and-extend-snowflake-semantic-views-in-sigma
 [tf-1-11]: https://github.com/hashicorp/terraform/blob/v1.11.0/CHANGELOG.md
 [tf-mocking]: https://developer.hashicorp.com/terraform/language/tests/mocking
