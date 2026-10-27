@@ -1,29 +1,30 @@
-# The proposal in brief
+# Brief
 
-**Goal:** define business metrics once in Snowflake semantic views and reuse them in Sigma and a ChatGPT Analytics plugin. Dashboard and chat answers should agree; that consistency must be demonstrated before rollout.
+Business stakeholders want to ask questions about organizational data in plain language and trust the answers as much as their dashboards. This doc provides sa high level overview of how to accomplish that.
 
-**Expected value:** let stakeholders answer routine business questions in plain language while reducing duplicated metric definitions and reliance on custom analyst queries.
+**Goal:** define business metrics once in Snowflake semantic views and reuse them in Sigma and a ChatGPT Analytics plugin. Dashboard and chat answers should agree.
 
-**Architecture:** ChatGPT uses each person's OAuth sign-in to call one Snowflake-hosted MCP endpoint exposing an `analytics` tool. A shared Cortex Agent uses domain-specific Analyst tools to generate SQL and executes it with the caller's permissions. Sigma queries the semantic views directly.
+**Expected Outcome:** let stakeholders ask routine business questions in plain language while reducing duplicated metric definitions and reliance on ad-hoc Analyst resources.
 
-**Access model:** Snowflake roles determine which data each person can retrieve. Consumers share the endpoint, Agent, and OAuth client registration; their personal identity and role determine access.
+**Architecture:** ChatGPT uses each person's OAuth sign-in to call one Snowflake-hosted MCP endpoint exposing an `analytics` tool. ChatGPT invokes this when relevant questions inquiring about data are asked. A shared Cortex Agent uses domain-specific Analyst tools to generate SQL and executes it with the person's permissions. Sigma queries the semantic views directly.
 
-- The POC defines sales-only, customers-only, and all-domains roles; the combined role inherits both domain roles.
-- The Agent skips inaccessible domain views and returns warnings. ChatGPT must preserve those limitations and avoid guessed answers.
+**Access model:** Snowflake roles determine which data each person can retrieve. Consumers share the MCP endpoint, Agent, and OAuth client registration; their personal identity and role determine access.
 
-**Scaling:** new metrics extend existing definitions; new domains add semantic views, Agent tools, and grants. Additional Agents or MCP endpoints are introduced when ownership, security boundaries, or measured routing quality require separation.
+- Stakeholders can only get relevant data returned based on their Snowflake role permissions.
+- The Agent skips inaccessible domain views and returns warnings. ChatGPT preserves those limitations and communicates them clearly to users.
 
-**Reference design:** use a Snowflake-managed MCP endpoint with sales and customers as example domains. Adapt the definitions, role assignments, and workspace configuration to the target environment.
+**Scaling:** 1 semantic view per domain with however many metric definitions we need, and as much AI context we want to give. Each domain gets a Snowflake Role we assign in Okta to stakeholders for access. All semantic views get bundled up into the Snowflake Cortex Agent for context. That agent is what gets used in the MCP that we connect to ChatGPT.
 
-**Decisions before rollout:**
+**Pilot:** We should pilot this across 1 specific domain (subscriptions -> growth?) first. Validate that it works end to end on a single domain, and then pick a second domain to incorporate next which will let us prove out scalability.
 
-- **G1 — Data boundary:** may consumers read approved underlying data, or must access be limited to named metrics? The managed Agent path requires source-data permissions.
-- **G2 — User experience:** does the target ChatGPT workspace support ordinary-user plugin distribution, personal OAuth, and accurate access warnings?
+**Downsides**
 
-**Pilot:** dummy-data access checks → a certified sales question set → prove release, support, and acceptable cost → expand one domain at a time. [Suggested execution plan](pilot_suggestions.md)
+- Requires business stakeholders to receive a Snowflake login for ChatGPT Plugin permissions/auth to work. Snowflake users are free to create, but now Snowflake will pop up in their Okta Apps and could potentially cause confusion. We should make stakeholder-facing documentation stating this, along with how to setup and use the ChatGPT plugin.
+- Cortex Agent, MCP, ChatGPT OAuth are all in Terraform. We'll have to loop through the semantic views here too, but those are created in dbt, so potential for things to become out of sync (unlikely, but possible).
+- We can't answer everything. 80/20 principle; lets identify the most common things we're asked or expected to answer so that our semantic views can solve those cases and be used downstream.
 
-**Status as of 2026-10-24:** the minimum personal POC passed its three-role ChatGPT matrix using a separate SQL deployment on a Snowflake trial. All-access answers matched the fixtures: USD 1,000 September revenue, USD 2,000 total revenue, and six registered customers. Sales-only returned both revenue figures and preserved the customer-access limitation; the user also confirmed customers-only returned six customers while sales remained unavailable. These are manual, single-user trial results; separate-user identity isolation, Sigma parity, cost, and stakeholder rollout remain unproven. [Observed results and optional follow-ups](pilot_suggestions.md#observed-personal-trial-results-2026-10-24)
+**Things to Know**
 
-Terraform validation and nine mocked checks pass; the Terraform stack itself has not been deployed. The runnable SQL path is [setup](setup_poc.sql) → [verification](verify_poc.sql) → [ChatGPT OAuth](connect_chatgpt.sql).
-
-**Further detail:** [Design summary](investigation_spike_summary.md) · [Roles and permissioning](roles_and_permissioning.md) · [Supporting investigation](investigation_spike_details.md) · [Terraform POC](analytics_mcp_poc.tf)
+- If we decide to enable agentic access to Snowflake data outside of this ChatGPT plugin, we'll need the same semantic views and Cortex Agent anyways. The OAuth and role pattern might change. If we have plans to do this, like put it in the CMS or elsewhere, communicate it ASAP.
+- We're charged for both Snowflake AI credits on these agent invocations, as well as query executions (normal warehouse usage). I expect this to be low and that we'll be covered fine in our current contract, but it's not free.
+- This is entirely dependent upon solid Mart models and the Semantic Views reporting accurate data. The infrastructure, access permissions, and cross-platform boundary are separate.
