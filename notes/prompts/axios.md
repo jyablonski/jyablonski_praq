@@ -53,3 +53,21 @@ please make a new jira epic with the x tickets for the work. keep the tickets br
 my colleague was having a hard time with the fides-validation ci/cd workflow this week where it was failing in PRs. i impelemnted tihs last friday and it worked fine, but on some PRs like this one, it errors out and i dont know what the issue is.
 
 please review and investigate.
+
+## pipeline doc epic
+
+can you please make a new jira epic to create pipelines docs in pipelines/dags/docs for each of the following pipelines if not already created or setup with the existing template:
+
+- sailthru
+- recurly
+- ga4
+- hubspot
+- predicthq
+- pac to snowflake
+- retention ones
+- sailthru ads report
+- user profile
+- airflow failure logs
+- domain to snowflake
+
+dont make a ticket for a pipeline that already has a doc that's using the template.

@@ -25,3 +25,5 @@ add api agents.md since it's a critical service.
 > build out some kind of query performance modeling or tooling
 
 - easier said than done. scope out what this looks like first
+
+change reddit post feed to only 5 at a time.
