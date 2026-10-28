@@ -1,0 +1,5 @@
+can you walk through in a typical online video game how packets move from client -> server -> fan out to all clients? there's tons of optimizations that have to happen here, right? like only fan out client packets to other clients if that client is rendered on the person's screen, etc? in an mmo context.
+
+does server processing power help out here, or is there basically a limit with how efficiently you can move packets, or large volumes of packets, across networks and back to clients regardless of how beefy your server process runs.
+
+> and these servers, specifically ones that run game servers or mmo realms etc, are typically running on a single node, correct? other services like queuing, chat etc, could maybe be running in parallelized services, but the core server process is running as a single node?
