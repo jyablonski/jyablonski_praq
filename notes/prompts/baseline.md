@@ -27,3 +27,5 @@ add api agents.md since it's a critical service.
 - easier said than done. scope out what this looks like first
 
 change reddit post feed to only 5 at a time.
+
+upon successful catchup re-runs, remove the needs review items in the admin overview. and also the last run. think of the most effective way to visualize this.
