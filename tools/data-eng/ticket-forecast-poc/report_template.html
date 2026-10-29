@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game 31 · Ticket forecast lab</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; color: #203338; background: #f4f6f4; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    header { background: #173b3a; color: white; padding: 36px max(24px, calc((100vw - 1160px)/2)); }
+    header p { color: #c5dcd4; max-width: 790px; }
+    h1 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -1.3px; margin: 12px 0; }
+    h2 { font-size: 21px; margin: 0 0 16px; }
+    h3 { font-size: 16px; margin: 18px 0 8px; }
+    p, li { line-height: 1.6; }
+    p { margin: 8px 0 16px; }
+    main { max-width: 1208px; margin: auto; padding: 28px 24px 60px; }
+    section, .card { background: white; border: 1px solid #dce5df; border-radius: 12px; padding: 24px; margin-bottom: 22px; }
+    .tag { text-transform: uppercase; font-size: 12px; letter-spacing: 1.8px; font-weight: 700; }
+    .muted { color: #5e7277; font-size: 14px; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat { padding: 16px 0; }
+    .stat strong { display: block; font-size: 30px; letter-spacing: -.8px; }
+    .stat span { font-size: 13px; color: #5e7277; }
+    .explorer { display: grid; grid-template-columns: 265px minmax(0, 1fr); gap: 30px; }
+    label { display: block; font-size: 14px; margin: 20px 0 10px; }
+    input[type=range] { width: 100%; accent-color: #087c70; }
+    input[type=checkbox] { accent-color: #087c70; }
+    button { background: #edf5f0; border: 1px solid #c8dbd0; border-radius: 7px; color: #205f53; padding: 9px 12px; cursor: pointer; font: inherit; font-size: 13px; margin: 4px 3px 4px 0; }
+    button:hover { background: #d4e9df; }
+    .result { background: #edf6f0; padding: 16px; border-radius: 9px; margin-top: 18px; }
+    .result strong { font-size: 34px; display: block; }
+    .chart { width: 100%; display: block; height: auto; }
+    .chart text { font-family: system-ui, sans-serif; font-size: 12px; fill: #566d72; }
+    .legend { font-size: 13px; display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+    .legend span::before { content: ''; display: inline-block; width: 16px; height: 3px; vertical-align: middle; margin-right: 6px; background: var(--line); }
+    .table-scroll { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; font-size: 14px; white-space: nowrap; }
+    th { font-weight: 600; color: #5e7277; font-size: 12px; }
+    th, td { text-align: right; padding: 12px; border-bottom: 1px solid #e5ece7; }
+    th:first-child, td:first-child { text-align: left; }
+    .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .note { background: #fff6e5; padding: 16px; border-radius: 8px; font-size: 14px; }
+    a { color: #126d60; }
+    code { font-size: 12px; background: #eff3f0; padding: 3px 5px; border-radius: 4px; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; background: #eff3f0; border-radius: 8px; padding: 16px; line-height: 1.7; font-size: 12px; }
+    details { margin-top: 16px; }
+    summary { cursor: pointer; color: #126d60; padding: 8px 0; }
+    @media (max-width: 800px) { .explorer, .columns { grid-template-columns: 1fr; } .grid { grid-template-columns: 1fr 1fr; } section { padding: 18px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="tag">River City basketball · Synthetic data PoC</div>
+    <h1>What will Game 31 sell?</h1>
+    <p>Change the price or matchup and watch the remaining sales forecast move. Every scenario starts with the same tickets already sold; future sales come from a model fitted to historical orders.</p>
+    <div id="header-context"></div>
+  </header>
+  <main>
+    <section aria-label="Data overview">
+      <div class="grid" id="overview"></div>
+      <p class="muted" id="sample-note"></p>
+    </section>
+
+    <section>
+      <h2>Try a different future</h2>
+      <div class="explorer">
+        <div>
+          <label for="price">New ticket price: <strong id="price-label"></strong></label>
+          <input id="price" type="range" min="16" max="60" value="40" step="1">
+          <label for="duration">Keep this price for <strong id="duration-label"></strong></label>
+          <input id="duration" type="range" min="1" max="14" value="14" step="1">
+          <p class="muted">Starts at the forecast cutoff. Afterwards, the price returns to $40.</p>
+          <label><input id="profile" type="checkbox"> High-profile matchup from today</label>
+          <p class="muted">Assume new star-player or matchup news now. Historical sales stay fixed so we can isolate the future change.</p>
+          <div>
+            <button type="button" data-preset="baseline">Keep $40</button>
+            <button type="button" data-preset="discount">50% cut</button>
+            <button type="button" data-preset="profile">High profile</button>
+            <button type="button" data-preset="flash">3-day flash sale</button>
+          </div>
+          <div class="result" aria-live="polite">
+            <span>Expected final tickets sold</span>
+            <strong id="final"></strong>
+            <div id="range"></div>
+            <p id="change" class="muted"></p>
+          </div>
+        </div>
+        <div>
+          <div class="legend">
+            <span style="--line:#203f50">Observed sales</span>
+            <span style="--line:#a8b5ba">Keep $40 forecast</span>
+            <span style="--line:#087c70">Your scenario</span>
+          </div>
+          <svg id="curve" class="chart" viewBox="0 0 740 345" role="img" aria-label="Observed and forecast cumulative ticket sales"></svg>
+          <div class="grid" id="live-metrics"></div>
+          <p class="muted" id="live-reason"></p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Same game, meaningful changes</h2>
+      <p class="muted">Only the remaining 14 selling days change. Revenue includes observed purchases at their original prices. Click a scenario to explore it.</p>
+      <div class="table-scroll"><table><thead><tr><th>Scenario</th><th>Final sold</th><th>Additional sold</th><th>Next 3 days</th><th>Sell-through</th><th>80% range</th><th>Total ticket revenue</th></tr></thead><tbody id="scenarios"></tbody></table></div>
+      <p class="muted">Revenue is gross ticket revenue, before costs, fees, taxes, refunds, and substitution from other games. More tickets can still mean less revenue at some prices.</p>
+    </section>
+
+    <section>
+      <h2>Why does the forecast move?</h2>
+      <div class="columns">
+        <div>
+          <h3>The model learns the response</h3>
+          <p id="learned-effects"></p>
+          <p>Each day, the model estimates the probability that a still-unsold seat sells. It multiplies that probability by the remaining inventory, adds expected sales, then repeats for the next day. Sales naturally accelerate near the game and stop at the 1,000-seat capacity.</p>
+          <p id="inventory-reason"></p>
+          <p class="muted">The price and matchup multipliers refer to daily sale <em>odds</em> per unsold seat. They are not multipliers for total tickets sold; inventory and the time left limit the final effect.</p>
+        </div>
+        <div>
+          <h3>What is actually being estimated?</h3>
+          <pre id="equation"></pre>
+          <p class="muted">This is a binomial logistic regression, fitted with NumPy using the count sold and the inventory at the start of each day. Coefficients are estimated from sales; the forecasting code never reads the generator's hidden demand parameters.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How much trust has it earned?</h2>
+      <div class="grid" id="validation-metrics"></div>
+      <p id="split-explanation"></p>
+      <p id="interval-explanation"></p>
+      <p id="bias-explanation"></p>
+      <div class="note"><strong>What this proves:</strong> the fitted model can recover useful relationships in this synthetic world and predict later synthetic games. Price plans were assigned independently of hidden demand before sales began, including 50% cuts. In real ticketing, slow games often get discounted and popular games get higher prices, so changing a price input alone does not establish its causal effect. Real deployment needs credible price experiments and evaluation on actual future games. The range is pooled across historical price plans, not validated separately for every scenario.</div>
+      <details>
+        <summary>Inspect the untouched holdout games</summary>
+        <div class="table-scroll"><table><thead><tr><th>Game ID</th><th>Event date</th><th>Actual sold</th><th>Forecast</th><th>Error</th><th>Pacing baseline</th><th>80% range</th></tr></thead><tbody id="backtest"></tbody></table></div>
+      </details>
+    </section>
+
+    <section>
+      <h2>Inspect the dummy sales</h2>
+      <p id="data-description"></p>
+      <p><a href="games.csv">Games</a> · <a href="orders.csv">Individual orders</a> · <a href="price_changes.csv">Price changes</a> · <a href="daily_sales.csv">Daily sales / inventory</a> · <a href="scenarios.csv">Scenarios</a> · <a href="daily_forecasts.csv">Daily forecasts</a> · <a href="backtest.csv">Holdout predictions</a> · <a href="calibration.csv">Calibration predictions</a> · <a href="model_and_results.json">Model and results</a></p>
+      <p class="muted">One sellable seat pool per game; purchases are final. No refunds, holds, season plans, seat tiers, competitor events, or cross-game substitution. All historical future price plans were announced before onsale, so replaying them is point-in-time valid. Game 31 has only observed sales through 15 days out; its future is never generated.</p>
+      <details>
+        <summary>View historical sell-through and assigned offers</summary>
+        <p class="muted" id="cohort-description"></p>
+        <div class="table-scroll"><table><thead><tr><th>Game ID</th><th>Season / game</th><th>Opponent</th><th>High profile</th><th>Base / offer price</th><th>Final sold</th><th>Sell-through</th></tr></thead><tbody id="history"></tbody></table></div>
+      </details>
+      <details>
+        <summary>Run and reproduce</summary>
+        <pre>.venv/bin/python tools/data-eng/ticket-forecast-poc/run.py
+.venv/bin/python tools/data-eng/ticket-forecast-poc/run.py --price 20 --sale-days 3 --high-profile
+.venv/bin/python tools/data-eng/ticket-forecast-poc/run.py --history-games 30 --output-dir /tmp/ticket-forecast-30
+.venv/bin/python -m pytest tools/data-eng/ticket-forecast-poc/test_forecasting.py -q</pre>
+        <p class="muted">Run from the repository root. Dependencies: NumPy and pandas (also listed in this folder's requirements.txt). The report works directly from disk with no server or network requests. The default seed is 42; use --seed to generate another sample. CLI runs regenerate files in output/ unless --output-dir is supplied.</p>
+      </details>
+    </section>
+  </main>
+  <script id="forecast-data" type="application/json">__FORECAST_DATA__</script>
+  <script>
+    'use strict';
+    const DATA = JSON.parse(document.getElementById('forecast-data').textContent);
+    const {target: game, metrics: m, summary: s, coefficients: b} = DATA;
+    const el = id => document.getElementById(id);
+    const count = n => Math.round(n).toLocaleString('en-US');
+    const money = n => new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD', maximumFractionDigits: 0}).format(n);
+    const percent = n => `${(100 * n).toFixed(0)}%`;
+    const stat = (value, label) => `<div class="stat"><strong>${value}</strong><span>${label}</span></div>`;
+    const signed = n => `${n >= 0 ? '+' : '−'}${count(Math.abs(n))}`;
+
+    function forecast(price, highProfile, duration) {
+      let sold = game.observed_sold, revenue = game.observed_revenue_usd;
+      const curve = [];
+      for (let day = 14; day >= 1; day--) {
+        const dayPrice = day > 14 - duration ? price : 40;
+        const logOdds = b.intercept + b.log_price_ratio * Math.log(dayPrice / 40) + b.high_profile * Number(highProfile) + b.weekend_game * game.weekend_game + b.urgency * Math.log(43 / (day + 1));
+        const probability = 1 / (1 + Math.exp(-Math.max(-30, Math.min(30, logOdds))));
+        const sales = Math.max(0, game.capacity - sold) * probability;
+        sold += sales;
+        revenue += sales * dayPrice;
+        curve.push({days_out: day, tickets_sold: sales, cumulative_sold: sold, revenue});
+      }
+      return curve;
+    }
+    const baseline = forecast(40, false, 14);
+
+    function drawChart(curve) {
+      const x = day => 50 + (42 - day) / 41 * 665;
+      const y = sold => 290 - sold / 1000 * 255;
+      const path = points => points.map((p, i) => `${i ? 'L' : 'M'}${x(p.days_out).toFixed(2)},${y(p.cumulative_sold).toFixed(2)}`).join(' ');
+      const anchor = DATA.observed[DATA.observed.length - 1];
+      const finalSold = curve[13].cumulative_sold;
+      const upperY = y(Math.min(1000, finalSold + m.interval_radius));
+      const lowerY = y(Math.max(game.observed_sold, finalSold - m.interval_radius));
+      let svg = '';
+      for (const n of [0, 250, 500, 750, 1000]) svg += `<line x1="50" y1="${y(n)}" x2="715" y2="${y(n)}" stroke="#e5ece7"/><text x="40" y="${y(n) + 4}" text-anchor="end">${n}</text>`;
+      for (const d of [42, 28, 14, 7, 1]) svg += `<text x="${x(d)}" y="315" text-anchor="middle">${d}d</text>`;
+      svg += '<text x="380" y="338" text-anchor="middle">Days before the game · end-of-day cumulative sales</text>';
+      svg += `<line x1="715" x2="715" y1="${upperY}" y2="${lowerY}" stroke="#087c70" stroke-width="12" opacity=".18"/><line x1="709" x2="721" y1="${upperY}" y2="${upperY}" stroke="#087c70"/><line x1="709" x2="721" y1="${lowerY}" y2="${lowerY}" stroke="#087c70"/>`;
+      svg += `<line x1="${x(14)}" x2="${x(14)}" y1="25" y2="290" stroke="#91a79c" stroke-dasharray="4 4"/><text x="${x(14) - 6}" y="18" text-anchor="end">Forecast cutoff</text>`;
+      svg += `<path d="${path(DATA.observed)}" fill="none" stroke="#203f50" stroke-width="3"/>`;
+      svg += `<path d="${path([anchor, ...baseline])}" fill="none" stroke="#a8b5ba" stroke-width="3" stroke-dasharray="5 4"/>`;
+      svg += `<path d="${path([anchor, ...curve])}" fill="none" stroke="#087c70" stroke-width="3"/>`;
+      svg += `<circle cx="${x(1)}" cy="${y(curve[13].cumulative_sold)}" r="4" fill="#087c70"/>`;
+      el('curve').innerHTML = svg;
+    }
+
+    function update() {
+      const price = Number(el('price').value), profile = el('profile').checked, duration = Number(el('duration').value);
+      const curve = forecast(price, profile, duration), final = curve[13], base = baseline[13];
+      el('price-label').textContent = money(price);
+      el('duration-label').textContent = `${duration} day${duration === 1 ? '' : 's'}`;
+      el('final').textContent = `${count(final.cumulative_sold)} / 1,000`;
+      el('range').textContent = `80% empirical range: ${count(Math.max(game.observed_sold, final.cumulative_sold - m.interval_radius))}–${count(Math.min(1000, final.cumulative_sold + m.interval_radius))} tickets`;
+      el('change').textContent = `${signed(final.cumulative_sold - base.cumulative_sold)} tickets versus keeping $40`;
+      const next3 = curve.slice(0, 3).reduce((sum, p) => sum + p.tickets_sold, 0);
+      el('live-metrics').innerHTML = stat(count(final.cumulative_sold - game.observed_sold), 'Additional tickets') + stat(count(next3), 'Sales in the next 3 days') + stat(money(final.revenue), 'Total ticket revenue') + stat(percent(final.cumulative_sold / 1000), 'Final sell-through');
+      const odds = Math.exp(b.log_price_ratio * Math.log(price / 40) + b.high_profile * Number(profile));
+      el('live-reason').textContent = `For the first ${duration} day${duration === 1 ? '' : 's'}, these inputs multiply daily sale odds by ${odds.toFixed(2)}× versus an ordinary $40 game. Afterward, price returns to $40${profile ? ' and the high-profile effect continues' : ''}. Expected additional revenue is ${money(final.revenue - game.observed_revenue_usd)}. The vertical bar at the endpoint shows the pooled 80% final-sales range.`;
+      drawChart(curve);
+    }
+
+    el('header-context').textContent = `Forecast as of ${DATA.forecast_date} · Game date ${game.event_date} · ${game.observed_sold} sold · ${1000 - game.observed_sold} seats remaining`;
+    el('overview').innerHTML = stat(s.history_games, 'Completed historical games') + stat(count(s.order_rows), 'Synthetic purchase orders') + stat(count(s.daily_rows), 'Daily sales / inventory rows') + stat(`${percent(s.min_sellthrough)}–${percent(s.max_sellthrough)}`, 'Historical final sell-through');
+    el('sample-note').textContent = `${s.history_games / 30} season${s.history_games > 30 ? 's' : ''} of 30 games, with 42 selling days per game. More independent games help separate price, matchup, and calendar effects. Daily rows from the same game are related; they are never split randomly across training and evaluation.`;
+    el('scenarios').innerHTML = DATA.scenarios.map((r, index) => `<tr><td><button type="button" data-scenario="${index}">${r.scenario}</button></td><td>${count(r.final_sold)}</td><td>${count(r.additional_sold)}</td><td>${count(r.first_3_day_sales)}</td><td>${percent(r.sellthrough)}</td><td>${count(r.lower_80)}–${count(r.upper_80)}</td><td>${money(r.total_revenue_usd)}</td></tr>`).join('');
+    el('learned-effects').textContent = `The learned log-price coefficient is ${b.log_price_ratio.toFixed(2)}. Halving price multiplies daily sale odds by ${Math.exp(b.log_price_ratio * Math.log(0.5)).toFixed(2)}×. The high-profile coefficient is ${b.high_profile.toFixed(2)}, corresponding to ${Math.exp(b.high_profile).toFixed(2)}× daily odds at the same price, weekend status, and days remaining.`;
+    el('inventory-reason').textContent = `For this game, ${game.observed_sold} seats are already sold and ${1000 - game.observed_sold} remain. A 50% cut changes only future purchases; it never discounts the ${money(game.observed_revenue_usd)} already collected.`;
+    el('equation').textContent = `daily_log_odds = ${b.intercept.toFixed(3)}\n  ${b.log_price_ratio.toFixed(3)} × ln(price / $40)\n  + ${b.high_profile.toFixed(3)} × high_profile\n  + ${b.weekend_game.toFixed(3)} × weekend_game\n  + ${b.urgency.toFixed(3)} × ln(43 / (days_out + 1))\n\ndaily_probability = 1 / (1 + exp(-daily_log_odds))\nexpected_sales = remaining_seats × daily_probability`;
+    el('validation-metrics').innerHTML = stat(`${m.mae_tickets.toFixed(1)} tickets`, 'Model mean absolute error') + stat(`${m.baseline_mae_tickets.toFixed(1)} tickets`, 'Historical pacing baseline error') + stat(percent(m.coverage_80), 'Holdout coverage of 80% range') + stat(m.test_games, 'Untouched test games');
+    el('split-explanation').textContent = `The first ${m.train_games} completed games train the model (through ${m.training_last_event}). ${m.calibration_games} later games set the error range (${m.calibration_first_event} to ${m.calibration_last_event}). The final ${m.test_games} games test it (${m.test_first_event} to ${m.test_last_event}). ${m.embargo_games} games separate these periods so every earlier outcome exists before the next period's 14-day forecast cutoff. The model is frozen after training and used unchanged for both the test and Game 31.`;
+    el('interval-explanation').textContent = `The 80% range uses a finite-sample quantile of absolute forecast errors from the ${m.calibration_games} calibration games: ±${count(m.interval_radius)} tickets, clipped between already-sold tickets and capacity. Actual held-out coverage is ${percent(m.coverage_80)}. This small sample and chronological drift limit how precisely coverage can be assessed; the nominal 80% level is not a guarantee for future games or individual scenarios.`;
+    el('bias-explanation').textContent = `Average signed holdout error is ${m.bias_tickets.toFixed(1)} tickets (forecast minus actual), so the model ${m.bias_tickets < 0 ? 'underpredicted' : 'overpredicted'} on average in this sample. The pacing baseline estimates final sales by dividing current sold tickets by the median fraction historically sold at this same checkpoint, with a capacity cap.`;
+    el('backtest').innerHTML = DATA.backtest.map(r => `<tr><td>${r.game_id}</td><td>${r.event_date}</td><td>${count(r.actual_final_sold)}</td><td>${count(r.forecast_final_sold)}</td><td>${signed(r.error)}</td><td>${count(r.pacing_baseline)}</td><td>${count(r.lower_80)}–${count(r.upper_80)}</td></tr>`).join('');
+    el('data-description').textContent = `${count(s.order_rows)} individual purchase orders roll up to ${count(s.daily_rows)} daily inventory snapshots, with ${s.price_changes} starting-price / price-change records. Historical prices range from ${money(s.min_price)} to ${money(s.max_price)}. Offers include assigned 25% and 50% cuts, unchanged prices, and 25% increases, with varying timing and duration. Opponent profile, weekend status, event-level interest, and daily noise create different sales curves. Seed: ${DATA.seed}.`;
+    el('cohort-description').textContent = DATA.cohorts.map(r => `${r.high_profile ? 'High-profile' : 'Ordinary'} / ${r.price_cut ? 'price-cut plan' : 'unchanged or raised price'}: ${r.games} games`).join(' · ');
+    el('history').innerHTML = DATA.history.map(r => `<tr><td>${r.game_id}</td><td>${r.season} / ${r.game_number}</td><td>${r.opponent}</td><td>${r.high_profile ? 'Yes' : 'No'}</td><td>${money(r.base_price_usd)} / ${money(r.offer_price_usd)}</td><td>${count(r.final_sold)}</td><td>${percent(r.sellthrough)}</td></tr>`).join('');
+    for (const id of ['price', 'duration', 'profile']) el(id).addEventListener('input', update);
+    document.querySelectorAll('[data-preset]').forEach(button => button.addEventListener('click', () => {
+      const preset = button.dataset.preset;
+      el('price').value = ['discount', 'flash'].includes(preset) ? 20 : 40;
+      el('profile').checked = preset === 'profile';
+      el('duration').value = preset === 'flash' ? 3 : 14;
+      update();
+    }));
+    document.querySelectorAll('[data-scenario]').forEach(button => button.addEventListener('click', () => {
+      const scenario = DATA.scenarios[Number(button.dataset.scenario)];
+      el('price').value = scenario.price_usd;
+      el('profile').checked = scenario.high_profile;
+      el('duration').value = scenario.sale_days;
+      update();
+    }));
+    update();
+  </script>
+</body>
+</html>
